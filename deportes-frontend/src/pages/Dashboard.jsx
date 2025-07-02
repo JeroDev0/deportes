@@ -29,7 +29,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/deportistas")
+    fetch("https://deportes-backend-nhs5.onrender.com/deportistas")
       .then((res) => res.json())
       .then((data) => {
         setAthletes(data);

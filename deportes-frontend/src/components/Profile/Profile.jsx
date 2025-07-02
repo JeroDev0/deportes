@@ -11,7 +11,7 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/deportistas/${id}`)
+    fetch(`https://deportes-backend-nhs5.onrender.com/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
