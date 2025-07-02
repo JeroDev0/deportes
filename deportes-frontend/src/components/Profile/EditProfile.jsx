@@ -42,7 +42,7 @@ function EditProfile() {
   const [profileType, setProfileType] = useState("atleta");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/deportistas/${id}`)
+    fetch(`https://deportes-backend-nhs5.onrender.com/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -132,7 +132,7 @@ function EditProfile() {
       }
     });
 
-    const res = await fetch(`http://localhost:5000/deportistas/${id}`, {
+    const res = await fetch(`https://deportes-backend-nhs5.onrender.com/deportistas/${id}`, {
       method: "PUT",
       body: formData,
     });
