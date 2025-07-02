@@ -6,7 +6,10 @@ const cors = require("cors");
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: 'https://deportes-directory.netlify.app',
+  credentials: true
+}));
 app.use(express.json());
 
 const authRoutes = require("./routes/auth");
