@@ -19,7 +19,7 @@ function SidebarProfiles() {
       { _id: "3", name: "Carlos", lastName: "Ruiz", photo: "" },
     ]);
     // Sugerencias
-    fetch("https://deportes-backend-nhs5.onrender.com/deportistas")
+    fetch("https://deportes-production.up.railway.app/deportistas")
       .then((res) => res.json())
       .then((data) => {
         setProfiles(

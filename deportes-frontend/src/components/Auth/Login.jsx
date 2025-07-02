@@ -14,7 +14,7 @@ function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     setMsg('');
-    const res = await fetch('https://deportes-backend-nhs5.onrender.com/auth/login', {
+    const res = await fetch('https://deportes-production.up.railway.app/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
