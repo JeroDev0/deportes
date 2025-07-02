@@ -1,0 +1,156 @@
+.editProfileBg {
+  min-height: 100vh;
+  background: #0d2635;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.editProfileCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(13,38,53,0.13);
+  max-width: 820px;
+  width: 100%;
+  padding: 36px 32px 28px 32px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: left;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #222;
+  margin-bottom: 18px;
+  letter-spacing: -0.5px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.col {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+label {
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 2px;
+  font-size: 1.01rem;
+  letter-spacing: 0.1px;
+}
+
+input, textarea {
+  border: 1.5px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #f7f8fa;
+  margin-bottom: 2px;
+  transition: border 0.18s;
+  color: #222;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  border: 1.5px solid #53fb52;
+  outline: none;
+}
+
+textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.arrayField {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 2px;
+  width: 100%;
+}
+
+.arrayField input {
+  flex: 1 1 0;
+  width: 100%;
+}
+
+.addBtn, .removeBtn {
+  background: #53fb52;
+  color: #0d2635;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  margin-left: 2px;
+}
+
+.removeBtn {
+  background: #e74c3c;
+  color: #fff;
+  padding: 4px 10px;
+}
+
+.addBtn:hover {
+  background: #38b838;
+  color: #fff;
+}
+.removeBtn:hover {
+  background: #c0392b;
+}
+
+.saveBtn {
+  width: 100%;
+  background: #53fb52;
+  color: #0d2635;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 0;
+  font-size: 1.18rem;
+  font-weight: 800;
+  margin-top: 18px;
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px #53fb5230;
+}
+
+.saveBtn:hover {
+  background: #38b838;
+  color: #fff;
+}
+
+.success {
+  color: #53fb52;
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .editProfileCard {
+    padding: 18px 6px 18px 6px;
+  }
+  .form {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
