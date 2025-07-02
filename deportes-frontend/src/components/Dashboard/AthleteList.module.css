@@ -1,0 +1,81 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+  align-items: stretch;
+}
+
+.filtersBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  background: #53fb52;
+  border-radius: 18px;
+  padding: 1.2rem 1rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 2px 12px rgba(58,12,163,0.07);
+  position: relative;
+}
+
+.filterSelect {
+  padding: 0.7rem 2.2rem 0.7rem 2.5rem;
+  border-radius: 8px;
+  border: 2px solid #53fb52;
+  background: #0d2635;
+  color: #ffffff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(58,12,163,0.07);
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+  position: relative;
+}
+
+.filterSelect:focus {
+  border: 2px solid #53fb52;
+  box-shadow: 0 0 0 2px #53fb5233;
+}
+
+.clearBtn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  background: linear-gradient(270deg, #53fb52 0%, #56c9d6 100%);
+  color: #0d2635;
+  font-weight: 700;
+  border: none;
+  font-size: 1.08rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: 0 2px 8px rgba(50,255,106,0.13);
+}
+
+.clearBtn:hover, .clearBtn:focus {
+  background: #0d2635;
+  color: #53fb52;
+}
+
+.gridDashboard {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(270px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: start;
+}
+@media (max-width: 1200px) {
+  .gridDashboard {
+    grid-template-columns: repeat(3, minmax(270px, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .gridDashboard {
+    grid-template-columns: repeat(2, minmax(270px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .gridDashboard {
+    grid-template-columns: 1fr;
+  }
+}

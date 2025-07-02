@@ -1,0 +1,57 @@
+.bannerTitle {
+  font-size: 2.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 1.2rem;
+  letter-spacing: -1px;
+}
+
+.bannerText {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  max-width: 600px;
+}
+
+.registerBtn {
+  display: inline-block;
+  background: #53fb52;
+  color: #0d2635;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.textSection {
+  width: 100%;
+  background: #14191c;
+  padding: 1.0rem 0;
+  text-align: center;
+  padding-bottom: 50px;
+  margin-bottom: 80px;
+}
+
+.textSectionTitle {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.textSectionDesc {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.athleteListWrapper {
+  max-width: 1280px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}

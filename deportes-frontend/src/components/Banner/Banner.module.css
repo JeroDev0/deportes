@@ -1,0 +1,41 @@
+.banner {
+  width: 100%;
+  min-height: 650px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('https://res.cloudinary.com/dx9l2xf44/image/upload/v1751331117/1st_slider_evrsud.jpg') center center/cover no-repeat;
+  box-sizing: border-box;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 38, 53, 0.45); /* Oscurece para mejor contraste */
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Cambia a center si quieres el texto centrado */
+}
+
+@media (max-width: 900px) {
+  .banner {
+    min-height: 220px;
+    padding: 1rem 0;
+  }
+  .content {
+    padding: 1rem;
+  }
+}
