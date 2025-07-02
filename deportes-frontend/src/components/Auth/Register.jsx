@@ -16,7 +16,7 @@ function Register() {
     e.preventDefault();
     setMsg('');
 
-    const res = await fetch('https://deportes-backend-nhs5.onrender.com/auth/register', {
+    const res = await fetch('https://deportes-production.up.railway.app/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
