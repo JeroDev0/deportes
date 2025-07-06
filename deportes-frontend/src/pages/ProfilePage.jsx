@@ -11,7 +11,6 @@ function ProfilePage() {
       </aside>
       <main className={styles.center}>
         <ProfileMain />
-        {/* Aquí después puedes poner el módulo de pestañas */}
       </main>
       <aside className={styles.right}>
         <SidebarProfiles />
