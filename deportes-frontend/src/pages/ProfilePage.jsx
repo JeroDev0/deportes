@@ -1,7 +1,6 @@
 import ProfileSidebar from "../components/Profile/ProfileSidebar";
 import ProfileMain from "../components/Profile/ProfileMain";
-import ProfileTabs from "../components/Profile/ProfileTabs";
-import ProfileRightbar from "../components/Profile/SidebarProfiles";
+import SidebarProfiles from "../components/Profile/SidebarProfiles";
 import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
@@ -11,12 +10,8 @@ function ProfilePage() {
         <ProfileSidebar />
       </aside>
       <main className={styles.center}>
-        <div className={styles.mainTop}>
-          <ProfileMain />
-        </div>
-        {/* <div className={styles.mainBottom}>
-          <ProfileTabs />
-        </div> */}
+        <ProfileMain />
+        {/* Aquí después puedes poner el módulo de pestañas */}
       </main>
       <aside className={styles.right}>
         <SidebarProfiles />
