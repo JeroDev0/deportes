@@ -7,7 +7,10 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: 'https://deportes-directory.netlify.app',
+  origin: [
+    'https://deportes-directory.netlify.app',
+    'http://localhost:5173'
+  ],
   credentials: true
 }));
 app.use(express.json());
