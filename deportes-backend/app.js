@@ -24,9 +24,13 @@ mongoose
   .then(() => console.log("Conectado a MongoDB"))
   .catch((err) => console.error("Error de conexión:", err));
 
-// Rutas de ejemplo
+// Rutas de deportistas
 const deportistasRoutes = require("./routes/deportistas");
 app.use("/deportistas", deportistasRoutes);
+
+// Rutas de publicaciones
+const publicacionesRoutes = require("./routes/publicaciones");
+app.use("/publicaciones", publicacionesRoutes);
 
 // Puerto
 const PORT = process.env.PORT || 5000;
