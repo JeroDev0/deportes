@@ -1,4 +1,3 @@
-// src/components/Profile/ProfileSidebar.jsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth.js";
 import { useEffect, useState } from "react";
@@ -42,6 +41,21 @@ function ProfileSidebar() {
         {profile.city && <span>• {profile.city}</span>}
         {profile.country && <span>• {profile.country}</span>}
       </div>
+
+      {/* Skills Section */}
+      <div className={styles.skillsSection}>
+        <h3>Skills</h3>
+        {profile.skills && profile.skills.length > 0 ? (
+          <ul className={styles.skillsList}>
+            {profile.skills.map((skill, idx) => (
+              <li key={idx}>{skill}</li>
+            ))}
+          </ul>
+        ) : (
+          <div className={styles.empty}>Sin skills</div>
+        )}
+      </div>
+
       {isMyProfile && (
         <button
           className={styles.editBtn}

@@ -1,8 +1,10 @@
-// src/components/Profile/ProfileMain.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/useAuth.js";
 import styles from "./ProfileMain.module.css";
+
+// IMPORTA EL NUEVO FEED
+import ProfileFeed from "./ProfileFeed";
 
 function ProfileMain() {
   const { id } = useParams();
@@ -28,6 +30,7 @@ function ProfileMain() {
 
   return (
     <div className={styles.profileMain}>
+      {/* Info básica del perfil */}
       <Section title="Acerca de">
         {profile.about || <span className={styles.empty}>Sin descripción</span>}
       </Section>
@@ -49,17 +52,6 @@ function ProfileMain() {
           <span className={styles.empty}>Sin reconocimientos</span>
         )}
       </Section>
-      <Section title="Skills">
-        {profile.skills && profile.skills.length > 0 ? (
-          <ul className={styles.skillsList}>
-            {profile.skills.map((skill, i) => (
-              <li key={i}>{skill}</li>
-            ))}
-          </ul>
-        ) : (
-          <span className={styles.empty}>Sin skills</span>
-        )}
-      </Section>
       {(profile.profileType === "scout" || profile.profileType === "sponsor") && (
         <Section title="Certificaciones">
           {profile.certifications && profile.certifications.length > 0 ? (
@@ -78,6 +70,9 @@ function ProfileMain() {
           <span>{profile.phone}</span>
         </Section>
       )}
+
+      {/* --- AQUÍ VA EL MURO DE PUBLICACIONES --- */}
+      <ProfileFeed profileId={profile._id} isMyProfile={isMyProfile} />
     </div>
   );
 }

@@ -3,23 +3,28 @@
   grid-template-columns: 320px 1fr 340px;
   gap: 24px;
   max-width: 1400px;
-  margin: 40px auto 0 auto;
-  min-height: 80vh;
+  margin: 0 auto;
+  height: calc(100vh - 64px); /* 64px = altura de tu header, ajusta si es diferente */
   background: #0d2635;
   padding: 0 12px;
+  box-sizing: border-box;
 }
 
-.left {
-  grid-column: 1;
+.left, .right {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: calc(100vh - 64px); /* igual que el grid */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .center {
-  grid-column: 2;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto; /* <--- SOLO el main scrollea */
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
-
-.right {
-  grid-column: 3;
 }
