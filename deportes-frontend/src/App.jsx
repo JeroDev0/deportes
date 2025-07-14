@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
 import PrivateRoute from './components/PrivateRoute';
 import EditProfile from './components/Profile/EditProfile';
 import Header from './components/Header/Header';
@@ -13,8 +11,8 @@ import ProfilePage from './pages/ProfilePage';
 function App() {
   return (
     <Router>
-      <main style={{ padding: 0, height: '100vh', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header />
+      <div className="app-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -29,9 +27,9 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
           <Route path="/profile/:id/edit" element={<EditProfile />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      </main>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

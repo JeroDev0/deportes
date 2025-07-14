@@ -1,8 +1,23 @@
 html, body, #root {
-  height: 100%;
-  min-height: 100vh;
   background: #0d2635;
   margin: 0;
   padding: 0;
   font-family: 'Inter', Arial, sans-serif;
+}
+
+.app-content {
+  height: calc(100vh - 64px); /* 64px igual al header */
+  margin-top: 64px;
+  background: #0d2635;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evita scroll en el body */
+}
+
+/* Si tienes nav inferior en móvil */
+@media (max-width: 700px) {
+  .app-content {
+    height: calc(100vh - 56px - 56px); /* header + nav */
+    margin-top: 56px;
+  }
 }
