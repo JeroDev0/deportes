@@ -49,21 +49,7 @@ function AthleteList({ limit = 12, showSeeMore = false }) {
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
           <button
             onClick={handleSeeMore}
-            style={{
-              display: 'inline-block',
-              background: '#53fb52',
-              color: '#0d2635',
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              padding: '0.8rem 2.2rem',
-              borderRadius: '0.4rem',
-              textDecoration: 'none',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-              transition: 'background 0.2s',
-              letterSpacing: '0.5px',
-              border: 'none',
-              cursor: 'pointer'
-            }}
+            className={styles.seeMoreBtn}
           >
             See more profiles →
           </button>
