@@ -2,8 +2,11 @@ import Banner from '../components/Banner/Banner';
 import AthleteList from '../components/Dashboard/AthleteList';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
+import { useAuth } from '../context/useAuth'; // Asegúrate de importar el hook
 
 function Home() {
+  const { user } = useAuth(); // Obtén el usuario del contexto
+
   return (
     <>
       <Banner>
@@ -14,12 +17,14 @@ function Home() {
         <p className={styles.bannerText}>
           Linking passionate sponsors with the brightest local athletes to help them reach their full potential.
         </p>
-        <Link to="/register" className={styles.registerBtn}>
-          Register <span style={{ marginLeft: 8, fontWeight: 'bold', fontSize: '1.3em' }}>→</span>
-        </Link>
+        {/* Solo muestra el botón si NO hay usuario logueado */}
+        {!user && (
+          <Link to="/register" className={styles.registerBtn}>
+            Register <span style={{ marginLeft: 8, fontWeight: 'bold', fontSize: '1.3em' }}>→</span>
+          </Link>
+        )}
       </Banner>
 
-      {/* Franja de texto con fondo diferente */}
       <div className={styles.textSection}>
         <h2 className={styles.textSectionTitle}>
           Discover Top Local Athletes
@@ -29,7 +34,6 @@ function Home() {
         </p>
       </div>
 
-      {/* Lista de atletas */}
       <div className={styles.athleteListWrapper}>
         <AthleteList limit={12} showSeeMore={true} />
       </div>

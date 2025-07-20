@@ -40,6 +40,7 @@ function EditProfile() {
   });
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
+  const [photoPreview, setPhotoPreview] = useState("");
 
   useEffect(() => {
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
@@ -54,6 +55,9 @@ function EditProfile() {
           certifications: data.certifications || [""],
         });
         setProfileType(data.profileType);
+        if (data.photo && typeof data.photo === "string") {
+          setPhotoPreview(data.photo);
+        }
       });
     // eslint-disable-next-line
   }, [id]);
@@ -65,7 +69,6 @@ function EditProfile() {
   const handleArrayChange = (e, field, idx) => {
     const arr = [...form[field]];
     let value = e.target.value;
-    // Para skills: solo una palabra
     if (field === "skills") {
       value = value.replace(/\s/g, "");
     }
@@ -86,22 +89,25 @@ function EditProfile() {
   };
 
   const handlePhotoChange = (e) => {
-    setForm({ ...form, photo: e.target.files[0] });
+    const file = e.target.files[0];
+    setForm({ ...form, photo: file });
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPhotoPreview(reader.result);
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMsg("");
 
-    // Prepara los arrays para que no tengan strings vacíos
     const cleanForm = { ...form };
 
-    // Capitaliza campos de una sola palabra o nombre propio
     ["name", "lastName", "city", "country", "sport", "gender"].forEach((field) => {
       if (cleanForm[field]) cleanForm[field] = capitalizeWords(cleanForm[field]);
     });
 
-    // Capitaliza arrays de palabras (skills, certificaciones)
     ["skills", "certifications"].forEach((field) => {
       if (Array.isArray(cleanForm[field])) {
         cleanForm[field] = cleanForm[field]
@@ -110,7 +116,6 @@ function EditProfile() {
       }
     });
 
-    // Capitaliza arrays de párrafos (experiencia, reconocimientos)
     ["experience", "recognitions"].forEach((field) => {
       if (Array.isArray(cleanForm[field])) {
         cleanForm[field] = cleanForm[field]
@@ -119,10 +124,8 @@ function EditProfile() {
       }
     });
 
-    // Capitaliza el campo "about" como párrafo
     if (cleanForm.about) cleanForm.about = capitalizeParagraph(cleanForm.about);
 
-    // Usa FormData para enviar archivos y arrays
     const formData = new FormData();
     Object.entries(cleanForm).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -152,14 +155,73 @@ function EditProfile() {
     }
   };
 
+  // Render chips para arrays
+  const renderChipList = (field, placeholder, max = 10) => (
+    <div className={styles.chipList}>
+      {form[field].map((item, idx) => (
+        <div key={idx} className={styles.chip}>
+          <input
+            value={item}
+            onChange={(e) => handleArrayChange(e, field, idx)}
+            className={styles.chipInput}
+            placeholder={placeholder}
+            pattern={field === "skills" ? "^\\S+$" : undefined}
+            title={field === "skills" ? "Solo una palabra por skill" : undefined}
+          />
+          {form[field].length > 1 && (
+            <button
+              type="button"
+              className={styles.chipRemove}
+              onClick={() => removeArrayField(field, idx)}
+              title="Eliminar"
+            >
+              <svg width="16" height="16" fill="#e74c3c" viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11l4.89 4.89-4.89 4.89a1 1 0 1 0 1.41 1.41l4.89-4.89 4.89 4.89a1 1 0 0 0 1.41-1.41l-4.89-4.89 4.89-4.89a1 1 0 0 0 0-1.41z"/></svg>
+            </button>
+          )}
+        </div>
+      ))}
+      {form[field].length < max && (
+        <button
+          type="button"
+          className={styles.chipAdd}
+          onClick={() => addArrayField(field)}
+          title="Agregar"
+        >
+          <svg width="18" height="18" fill="#53fb52" viewBox="0 0 24 24"><path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
         <h2 className={styles.title}>Editar tu perfil</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.col}>
-            <label>Foto de perfil</label>
-            <input type="file" accept="image/*" onChange={handlePhotoChange} />
+            <label className={styles.photoP}>Foto de perfil</label>
+              <div className={styles.photoUpload}>
+                <input
+                  type="file"
+                  id="photo"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handlePhotoChange}
+                />
+                <label htmlFor="photo" className={styles.photoLabel}>
+                  {photoPreview ? (
+                    <>
+                      <img src={photoPreview} alt="Foto de perfil" className={styles.photoPreview} />
+                      <span>Cambiar o subir foto</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg width="28" height="28" fill="#53fb52" style={{ marginRight: 12, verticalAlign: "middle" }} viewBox="0 0 24 24"><path d="M12 5c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm7-13h-3.586l-1.707-1.707c-.391-.391-1.023-.391-1.414 0l-1.707 1.707h-3.586c-1.104 0-2 .896-2 2v14c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-14c0-1.104-.896-2-2-2zm0 16h-14v-14h3.586l1.707-1.707c.391-.391 1.023-.391 1.414 0l1.707 1.707h3.586v14z"/></svg>
+                      <span>Subir foto de perfil</span>
+                    </>
+                  )}
+                </label>
+              </div>
             <label>Nombre</label>
             <input
               name="name"
@@ -214,121 +276,24 @@ function EditProfile() {
             />
           </div>
           <div className={styles.col}>
-            <label>Acerca de (máx 250 caracteres)</label>
+            <label>Acerca de (máx 1000 caracteres)</label>
             <textarea
               name="about"
               value={form.about}
               onChange={handleChange}
-              maxLength={250}
+              maxLength={1000}
+              className={styles.textareaAbout}
             />
             <label>Experiencia deportiva</label>
-            {form.experience.map((exp, idx) => (
-              <div key={idx} className={styles.arrayField}>
-                <input
-                  value={exp}
-                  onChange={(e) => handleArrayChange(e, "experience", idx)}
-                />
-                {form.experience.length > 1 && (
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => removeArrayField("experience", idx)}
-                  >
-                    -
-                  </button>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              className={styles.addBtn}
-              onClick={() => addArrayField("experience")}
-            >
-              + Experiencia
-            </button>
+            {renderChipList("experience", "Describe tu experiencia")}
             <label>Reconocimientos deportivos</label>
-            {form.recognitions.map((rec, idx) => (
-              <div key={idx} className={styles.arrayField}>
-                <input
-                  value={rec}
-                  onChange={(e) => handleArrayChange(e, "recognitions", idx)}
-                />
-                {form.recognitions.length > 1 && (
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => removeArrayField("recognitions", idx)}
-                  >
-                    -
-                  </button>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              className={styles.addBtn}
-              onClick={() => addArrayField("recognitions")}
-            >
-              + Reconocimiento
-            </button>
+            {renderChipList("recognitions", "Reconocimiento")}
             <label>Skills (máx 5, solo una palabra)</label>
-            {form.skills.map((skill, idx) => (
-              <div key={idx} className={styles.arrayField}>
-                <input
-                  value={skill}
-                  onChange={(e) => handleArrayChange(e, "skills", idx)}
-                  pattern="^\S+$"
-                  title="Solo una palabra por skill"
-                />
-                {form.skills.length > 1 && (
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => removeArrayField("skills", idx)}
-                  >
-                    -
-                  </button>
-                )}
-              </div>
-            ))}
-            {form.skills.length < 5 && (
-              <button
-                type="button"
-                className={styles.addBtn}
-                onClick={() => addArrayField("skills")}
-              >
-                + Skill
-              </button>
-            )}
+            {renderChipList("skills", "Skill", 5)}
             {(profileType === "scout" || profileType === "sponsor") && (
               <>
                 <label>Certificaciones</label>
-                {form.certifications.map((cert, idx) => (
-                  <div key={idx} className={styles.arrayField}>
-                    <input
-                      value={cert}
-                      onChange={(e) =>
-                        handleArrayChange(e, "certifications", idx)
-                      }
-                    />
-                    {form.certifications.length > 1 && (
-                      <button
-                        type="button"
-                        className={styles.removeBtn}
-                        onClick={() => removeArrayField("certifications", idx)}
-                      >
-                        -
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  className={styles.addBtn}
-                  onClick={() => addArrayField("certifications")}
-                >
-                  + Certificación
-                </button>
+                {renderChipList("certifications", "Certificación")}
               </>
             )}
           </div>

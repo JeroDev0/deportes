@@ -1,21 +1,13 @@
-.authBg {
-  min-height: 100vh;
-  background: #0d2635;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
 .authPanel {
   display: flex;
-  width: 820px;
+  width: 100%;
+  max-width: 820px;
   min-height: 480px;
   background: #fff;
   border-radius: 32px;
   box-shadow: 0 8px 40px rgba(58,12,163,0.13);
   overflow: hidden;
-  transition: flex-direction 0.5s;
+  margin: 0 auto;
 }
 
 .side {
@@ -38,7 +30,7 @@
 }
 
 .illustration {
-  width: 100px;
+  width: 120px;
   max-width: 90%;
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 2px 12px rgba(58,12,163,0.07));
@@ -96,17 +88,40 @@
 .register .sideForm { order: 0; }
 
 /* Responsive */
-@media (max-width: 900px) {
+
+@media (max-width: 700px) {
   .authPanel {
     flex-direction: column;
-    width: 98vw;
-    min-height: 0;
+    min-height: calc(80vh - 56px);
+    width: 90vw;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(58,12,163,0.10);
+    margin: auto;
+    padding: 0;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
   }
-  .sideImage, .sideForm {
-    min-height: 220px;
-    padding: 2rem 1rem;
+  .sideImage {
+    display: none !important;
+  }
+  .sideForm {
+    width: 100%;
+    min-height: 320px;
+    padding: 2.2rem 1.2rem 2.2rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 18px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 24px rgba(58,12,163,0.10);
   }
   .formBox {
-    max-width: 100%;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
   }
 }

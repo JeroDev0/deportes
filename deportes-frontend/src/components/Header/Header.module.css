@@ -30,7 +30,46 @@
   letter-spacing: 1px;
 }
 
-nav .link {
+/* --- HAMBURGER BUTTON --- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+  margin-left: 1rem;
+}
+
+.hamburgerLine {
+  width: 26px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.active:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.active:nth-child(2) {
+  opacity: 0;
+}
+.active:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* --- NAVIGATION --- */
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.link {
   color: #fff;
   margin-left: 1.2rem;
   text-decoration: none;
@@ -38,12 +77,12 @@ nav .link {
   transition: color 0.2s;
 }
 
-nav .link:hover {
+.link:hover {
   color: #7ed6df;
   text-decoration: underline;
 }
 
-/* Responsive header */
+/* --- RESPONSIVE --- */
 @media (max-width: 700px) {
   .header {
     height: 56px;
@@ -54,8 +93,49 @@ nav .link:hover {
   .container {
     padding: 0 0.7rem;
   }
-  nav .link {
-    font-size: 1rem;
-    margin-left: 0.7rem;
+  .hamburger {
+    display: flex;
+  }
+  .nav {
+    position: fixed;
+    top: 56px;
+    right: -260px;
+    width: 220px;
+    height: calc(100vh - 56px);
+    background: #0d2635;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.2rem 1rem 1.2rem;
+    box-shadow: -2px 0 10px #0002;
+    transition: right 0.3s;
+    z-index: 1050;
+    gap: 0;
+  }
+  .navOpen {
+    right: 0;
+  }
+  .greeting {
+    margin-bottom: 1.2rem;
+    width: 100%;
+    color: #7ed6df;
+    font-weight: 500;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #17344a;
+  }
+  .link {
+    margin: 0 0 1.2rem 0;
+    width: 100%;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #17344a;
+    text-align: left;
+  }
+}
+
+/* Opcional: para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .nav {
+    width: 65vw;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
   }
 }
