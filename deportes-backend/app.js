@@ -9,7 +9,8 @@ const app = express();
 app.use(cors({
   origin: [
     'https://deportes-directory.netlify.app',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://192.168.1.6:5173/'
   ],
   credentials: true
 }));
