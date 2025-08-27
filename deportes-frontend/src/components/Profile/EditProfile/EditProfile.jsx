@@ -1,16 +1,76 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/useAuth.js";
+import { useAuth } from "../../../context/useAuth.js";
+import Select from "react-select";
+import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
 
-// Solo la primera letra del párrafo en mayúscula, el resto en minúscula
+// Opciones para género y deportes
+const GENDERS = [
+  { value: "Hombre", label: "Hombre" },
+  { value: "Mujer", label: "Mujer" },
+];
+
+const SPORTS = [
+  { value: "Fútbol", label: "Fútbol" },
+  { value: "Básquetbol", label: "Básquetbol" },
+  { value: "Tenis", label: "Tenis" },
+  { value: "Voleibol", label: "Voleibol" },
+  { value: "Natación", label: "Natación" },
+  { value: "Atletismo", label: "Atletismo" },
+  { value: "Ciclismo", label: "Ciclismo" },
+  { value: "Boxeo", label: "Boxeo" },
+  { value: "Ajedrez", label: "Ajedrez" },
+  { value: "Golf", label: "Golf" },
+  { value: "Béisbol", label: "Béisbol" },
+  { value: "Rugby", label: "Rugby" },
+  { value: "Hockey", label: "Hockey" },
+  { value: "Gimnasia", label: "Gimnasia" },
+  { value: "Karate", label: "Karate" },
+  { value: "Judo", label: "Judo" },
+  { value: "Taekwondo", label: "Taekwondo" },
+  { value: "Esgrima", label: "Esgrima" },
+  { value: "Halterofilia", label: "Halterofilia" },
+  { value: "Triatlón", label: "Triatlón" },
+];
+
+// Estilos para react-select
+const selectStyles = {
+  control: (provided) => ({
+    ...provided,
+    minHeight: '40px',
+    border: '1px solid #253b4d',
+    borderRadius: '10px',
+    fontSize: '1.12rem',
+    background: '#1a334a',
+    color: '#eaf6ff',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    background: '#1a334a',
+    color: '#eaf6ff',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#53fb52' : state.isFocused ? '#223c54' : '#1a334a',
+    color: state.isSelected ? '#0d2635' : '#eaf6ff',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#eaf6ff',
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: '#eaf6ff',
+  }),
+};
+
 function capitalizeParagraph(str) {
   if (!str) return "";
   const s = str.trim().toLowerCase();
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// Cada palabra con la primera letra en mayúscula
 function capitalizeWords(str) {
   if (!str) return "";
   return str
@@ -41,7 +101,11 @@ function EditProfile() {
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
   const [photoPreview, setPhotoPreview] = useState("");
+  const [cityOptions, setCityOptions] = useState([]);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const countryOptions = countryList().getData();
 
+  // Cargar datos del perfil
   useEffect(() => {
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
       .then((res) => res.json())
@@ -62,8 +126,49 @@ function EditProfile() {
     // eslint-disable-next-line
   }, [id]);
 
+  // Cargar ciudades cuando cambia el país
+  useEffect(() => {
+    if (form.country) {
+      setLoadingCities(true);
+      const username = "jerodev0"; // Tu usuario de GeoNames
+      fetch(
+        `https://secure.geonames.org/searchJSON?country=${form.country}&featureClass=P&maxRows=1000&username=${username}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const uniqueCities = Array.from(
+            new Set(data.geonames.map((city) => city.name))
+          );
+          setCityOptions(
+            uniqueCities.map((city) => ({
+              value: city,
+              label: city,
+            }))
+          );
+          setLoadingCities(false);
+        })
+        .catch(() => {
+          setCityOptions([]);
+          setLoadingCities(false);
+        });
+    } else {
+      setCityOptions([]);
+      setLoadingCities(false);
+    }
+  }, [form.country]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // Para selects
+  const handleSelectChange = (selectedOption, fieldName) => {
+    const value = selectedOption ? selectedOption.value : "";
+    if (fieldName === "country") {
+      setForm((prev) => ({ ...prev, country: value, city: "" }));
+    } else {
+      setForm((prev) => ({ ...prev, [fieldName]: value }));
+    }
   };
 
   const handleArrayChange = (e, field, idx) => {
@@ -216,7 +321,7 @@ function EditProfile() {
                     </>
                   ) : (
                     <>
-                      <svg width="28" height="28" fill="#53fb52" style={{ marginRight: 12, verticalAlign: "middle" }} viewBox="0 0 24 24"><path d="M12 5c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm7-13h-3.586l-1.707-1.707c-.391-.391-1.023-.391-1.414 0l-1.707 1.707h-3.586c-1.104 0-2 .896-2 2v14c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-14c0-1.104-.896-2-2-2zm0 16h-14v-14h3.586l1.707-1.707c.391-.391 1.023-.391 1.414 0l1.707 1.707h3.586v14z"/></svg>
+                      <svg width="28" height="28" fill="#53fb52" style={{ marginRight: 12, verticalAlign: "middle" }} viewBox="0 0 24 24"><path d="M12 5c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm7-13h-3.586l-1.707-1.707c-.391-.391-1.023-.391-1.414 0l-1.707 1.707h-3.586c-1.104 0-2 .896-2 2v14c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-14c0-1.104-.896-2-2-2zm0 16h-14v-14h3.586l1.707-1.707c.391-.391 1.023-.391 1.414 0l1.707 1.707h-3.586v14z"/></svg>
                       <span>Subir foto de perfil</span>
                     </>
                   )}
@@ -245,16 +350,24 @@ function EditProfile() {
               required
             />
             <label>Género</label>
-            <input
-              name="gender"
-              value={form.gender}
-              onChange={handleChange}
+            <Select
+              value={GENDERS.find(g => g.value === form.gender) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, "gender")}
+              options={GENDERS}
+              placeholder="Selecciona tu género"
+              isClearable
+              isSearchable={false}
+              styles={selectStyles}
             />
             <label>Deporte</label>
-            <input
-              name="sport"
-              value={form.sport}
-              onChange={handleChange}
+            <Select
+              value={SPORTS.find(s => s.value === form.sport) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, "sport")}
+              options={SPORTS}
+              placeholder="Selecciona tu deporte"
+              isClearable
+              isSearchable
+              styles={selectStyles}
             />
             <label>Teléfono (+código país)</label>
             <input
@@ -263,16 +376,31 @@ function EditProfile() {
               onChange={handleChange}
             />
             <label>País</label>
-            <input
-              name="country"
-              value={form.country}
-              onChange={handleChange}
+            <Select
+              value={countryOptions.find(c => c.value === form.country) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, "country")}
+              options={countryOptions}
+              placeholder="Selecciona tu país"
+              isClearable
+              isSearchable
+              styles={selectStyles}
             />
             <label>Ciudad</label>
-            <input
-              name="city"
-              value={form.city}
-              onChange={handleChange}
+            <Select
+              value={cityOptions.find(c => c.value === form.city) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, "city")}
+              options={cityOptions}
+              placeholder={
+                loadingCities
+                  ? "Cargando ciudades..."
+                  : form.country
+                  ? "Selecciona tu ciudad"
+                  : "Primero selecciona un país"
+              }
+              isClearable
+              isSearchable
+              isDisabled={!form.country || loadingCities || cityOptions.length === 0}
+              styles={selectStyles}
             />
           </div>
           <div className={styles.col}>

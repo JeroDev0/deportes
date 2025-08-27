@@ -1,0 +1,27 @@
+.tabsContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.tabBtn {
+  background: none;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #888;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+
+.tabBtn:hover {
+  color: #fff;
+}
+
+.activeTab {
+  color: #53fb52;
+  border-bottom: 3px solid #53fb52;
+  font-weight: bold;
+}

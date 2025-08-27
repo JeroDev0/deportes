@@ -1,0 +1,549 @@
+.feedContainer {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 1000px;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Pestañas mejoradas */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: 600;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.tabs .active {
+  background: #53fb52;
+  color: #0d2635;
+}
+
+.tabs button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Formulario de nueva publicación */
+.newPostCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newPostCard h4 {
+  color: #53fb52;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.newPostForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.postTextarea {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.postTextarea::placeholder {
+  color: #ccc;
+}
+
+.formRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.typeSelect {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.fileLabel {
+  background: rgba(83, 251, 82, 0.2);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.fileLabel:hover {
+  background: rgba(83, 251, 82, 0.3);
+}
+
+.fileInput {
+  display: none;
+}
+
+.submitBtn {
+  background: #53fb52;
+  color: #0d2635;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(83, 251, 82, 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selectedFile {
+  color: #53fb52;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Publicaciones estilo tarjeta mejorado */
+.postCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 0;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.postCard:hover {
+  transform: translateY(-2px);
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.postUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.postUserAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #53fb52;
+}
+
+.postUserDetails h4 {
+  color: white;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.postDate {
+  color: #ccc;
+  font-size: 0.85rem;
+  margin: 2px 0 0 0;
+}
+
+.postActions {
+  display: flex;
+  gap: 8px;
+}
+
+.editBtn, .deleteBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.editBtn:hover {
+  background: rgba(83, 251, 82, 0.2);
+  color: #53fb52;
+}
+
+.deleteBtn:hover {
+  background: rgba(255, 82, 82, 0.2);
+  color: #ff5252;
+}
+
+.postContent {
+  padding: 0;
+}
+
+.postImage, .postVideo {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.postText {
+  color: white;
+  padding: 15px 20px;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.postFooter {
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.likeBtn, .likedBtn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.likeBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.likedBtn {
+  color: #ff5252;
+  background: rgba(255, 82, 82, 0.1);
+}
+
+/* Grid responsivo mejorado */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.gridItem {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gridItem:hover {
+  transform: scale(1.02);
+  border-color: #53fb52;
+}
+
+.gridImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Estados de carga y vacío */
+.loading, .empty {
+  color: #ccc;
+  text-align: center;
+  font-style: italic;
+  padding: 40px 20px;
+  font-size: 1rem;
+}
+
+.featuredLabel {
+  background: rgba(83, 251, 82, 0.2);
+  color: #53fb52;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(83, 251, 82, 0.3);
+}
+
+/* Modal mejorado */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: #0d2635;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow-y: auto;
+}
+
+.modalImg {
+  max-width: 100%;
+  max-height: 60vh;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.editTextarea {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  font-size: 0.9rem;
+  resize: vertical;
+  min-height: 60px;
+  width: 100%;
+}
+
+.saveBtn, .deleteBtn, .featureBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.saveBtn {
+  background: #53fb52;
+  color: #0d2635;
+}
+
+.deleteBtn {
+  background: #ff5252;
+  color: white;
+}
+
+.featureBtn {
+  background: rgba(83, 251, 82, 0.2);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.3);
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  .feedContainer {
+    margin-top: 5px;
+    gap: 15px;
+    padding: 0px;
+  }
+
+  .tabs {
+    gap: 6px;
+    margin-bottom: 15px;
+  }
+
+  .tabs button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .newPostCard {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .postCard {
+    margin-bottom: 15px;
+  }
+
+  .postHeader {
+    padding: 12px 15px 8px 15px;
+  }
+
+  .postUserAvatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .postUserDetails h4 {
+    font-size: 0.9rem;
+  }
+
+  .postDate {
+    font-size: 0.8rem;
+  }
+
+  .postText {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+
+  .postFooter {
+    padding: 12px 15px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .formRow {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .typeSelect, .fileLabel, .submitBtn {
+    width: auto;
+    text-align: center;
+  }
+
+  .modalContent {
+    padding: 15px;
+    max-width: 95vw;
+  }
+
+  .modalImg {
+    max-height: 50vh;
+  }
+}
+
+/* Responsive para pantallas muy pequeñas */
+@media (max-width: 380px) {
+  .feedContainer {
+    padding: 0 12px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .gridItem {
+    border-radius: 8px;
+  }
+
+  .postCard {
+    border-radius: 12px;
+  }
+
+  .tabs button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .newPostCard {
+    padding: 12px;
+  }
+
+  .postHeader {
+    padding: 10px 12px 6px 12px;
+  }
+
+  .postText {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .postFooter {
+    padding: 10px 12px;
+  }
+}

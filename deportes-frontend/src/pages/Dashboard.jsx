@@ -57,7 +57,7 @@ function Dashboard() {
 
   return (
     <div style={{ maxWidth: 1280, margin: "2rem auto", padding: "0 1rem" }}>
-      <h2 style={{ color: "#0d2635", marginBottom: "1.5rem" }}>
+      <h2 style={{ color: "#fff", marginBottom: "1.5rem" }}>
         Athlete Profiles
       </h2>
       <div className={styles.filtersBar}>
