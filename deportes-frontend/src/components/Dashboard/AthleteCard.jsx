@@ -4,15 +4,23 @@ function AthleteCard({ athlete, onClick }) {
   return (
     <div className={styles.card} onClick={onClick} tabIndex={0}>
       <div className={styles.photoWrapper}>
-        <img src={athlete.photo} alt={`${athlete.name} ${athlete.lastName}`} className={styles.photo} />
+        <img
+          src={athlete.photo}
+          alt={`${athlete.name} ${athlete.lastName}`}
+          className={styles.photo}
+        />
         <span className={styles.sportBadge}>{athlete.sport}</span>
       </div>
       <div className={styles.info}>
-        <h3>{athlete.name} {athlete.lastName}</h3>
-        <p className={styles.city}><i className="fa fa-map-marker-alt" /> {athlete.location}</p>
-        <p className={styles.age}>Age: <span>{athlete.age}</span></p>
-        <button className={styles.profileBtn}>View Profile</button>
+        <h3>
+          <div>{athlete.name}</div>
+          <div>{athlete.lastName}</div>
+        </h3>
+        <p className={styles.levelAge}>
+          {athlete.level} | {athlete.age}
+        </p>
       </div>
+      <div className={styles.animatedBar}></div>
     </div>
   );
 }

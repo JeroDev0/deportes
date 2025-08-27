@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AthleteCard from "../components/Dashboard/AthleteCard";
-import styles from "../components/Dashboard/AthleteList.module.css";
+import styles from "./Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ageRanges = [
@@ -12,7 +12,7 @@ const ageRanges = [
 ];
 
 const genders = [
-  { label: "All Genders", value: "" },
+  { label: "Any", value: "" },
   { label: "Female", value: "femenino" },
   { label: "Male", value: "masculino" },
 ];
@@ -24,8 +24,10 @@ function Dashboard() {
   const [sport, setSport] = useState("");
   const [ageRange, setAgeRange] = useState("");
   const [gender, setGender] = useState("");
+  const [level, setLevel] = useState("");
   const [cities, setCities] = useState([]);
   const [sports, setSports] = useState([]);
+  const [levels, setLevels] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +38,7 @@ function Dashboard() {
         setFiltered(data);
         setCities([...new Set(data.map((a) => a.city))]);
         setSports([...new Set(data.map((a) => a.sport))]);
+        setLevels([...new Set(data.map((a) => a.level))]);
       });
   }, []);
 
@@ -48,47 +51,22 @@ function Dashboard() {
       result = result.filter((a) => a.age >= range.min && a.age <= range.max);
     }
     if (gender) result = result.filter((a) => a.gender === gender);
+    if (level) result = result.filter((a) => a.level === level);
     setFiltered(result);
-  }, [city, sport, ageRange, gender, athletes]);
+  }, [city, sport, ageRange, gender, level, athletes]);
 
   const handleCardClick = (athleteId) => {
     navigate(`/profile/${athleteId}`);
   };
 
   return (
-    <div style={{ maxWidth: 1280, margin: "2rem auto", padding: "0 1rem" }}>
-      <h2 style={{ color: "#fff", marginBottom: "1.5rem" }}>
-        Athlete Profiles
-      </h2>
-      <div className={styles.filtersBar}>
+    <div className={styles.dashboardContainer}>
+      <aside className={styles.filtersSidebar}>
+        <label>Age</label>
         <select
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
           className={styles.filterSelect}
-        >
-          <option value="">All Cities</option>
-          {cities.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        <select
-          value={sport}
-          onChange={(e) => setSport(e.target.value)}
-          className={styles.filterSelect}
-        >
-          <option value="">All Sports</option>
-          {sports.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-        <select
           value={ageRange}
           onChange={(e) => setAgeRange(e.target.value)}
-          className={styles.filterSelect}
         >
           <option value="">All Ages</option>
           {ageRanges.map((r) => (
@@ -97,10 +75,12 @@ function Dashboard() {
             </option>
           ))}
         </select>
+
+        <label>Gender</label>
         <select
+          className={styles.filterSelect}
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className={styles.filterSelect}
         >
           {genders.map((g) => (
             <option key={g.value} value={g.value}>
@@ -108,21 +88,51 @@ function Dashboard() {
             </option>
           ))}
         </select>
-        {(city || sport || ageRange || gender) && (
-          <button
-            onClick={() => {
-              setCity("");
-              setSport("");
-              setAgeRange("");
-              setGender("");
-            }}
-            className={styles.clearBtn}
-          >
-            Clear filters
-          </button>
-        )}
-      </div>
-      <div className={styles.gridDashboard}>
+
+        <label>Sport</label>
+        <select
+          className={styles.filterSelect}
+          value={sport}
+          onChange={(e) => setSport(e.target.value)}
+        >
+          <option value="">Any</option>
+          {sports.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+
+        <label>Level</label>
+        <select
+          className={styles.filterSelect}
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
+        >
+          <option value="">All Levels</option>
+          {levels.map((lvl) => (
+            <option key={lvl} value={lvl}>
+              {lvl}
+            </option>
+          ))}
+        </select>
+
+        <label>City of Birth</label>
+        <select
+          className={styles.filterSelect}
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        >
+          <option value="">All Cities</option>
+          {cities.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </aside>
+
+      <main className={styles.cardsContainer}>
         {filtered.length === 0 ? (
           <p style={{ color: "#0d2635", fontWeight: 600 }}>
             No athletes found.
@@ -136,7 +146,7 @@ function Dashboard() {
             />
           ))
         )}
-      </div>
+      </main>
     </div>
   );
 }

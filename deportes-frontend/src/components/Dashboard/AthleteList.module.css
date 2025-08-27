@@ -94,7 +94,7 @@
   font-weight: bold;
   font-size: 1.1rem;
   padding: 0.8rem 2.2rem;
-  border-radius: 0.4rem;
+  border-radius: 0px;
   text-decoration: none;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: background 0.2s;
@@ -110,8 +110,8 @@
 /* --- Ajuste para el tamaño de la tarjeta y la foto --- */
 .athleteCard {
   width: 100%;
-  max-width: 350px;
-  min-width: 270px;
+  max-width: 260px; /* Reducido de 350px a 260px */
+  min-width: 220px; /* Reducido de 270px a 220px */
   min-height: 370px;
   max-height: 420px;
   height: 100%;

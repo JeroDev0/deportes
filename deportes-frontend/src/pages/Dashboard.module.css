@@ -1,0 +1,144 @@
+.dashboardContainer {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  gap: 2rem;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+
+.filtersSidebar {
+  flex: 0 0 280px;
+  background: transparent; /* quitar fondo */
+  border-radius: 0; /* quitar bordes redondeados */
+  padding-left: 1rem;
+  box-shadow: none; /* quitar sombra */
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* sin gap, usaremos border-bottom para separar */
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #ccc;
+  border-left: 1px solid #2a2a2a; /* línea divisoria izquierda */
+  height: fit-content;
+}
+
+.filtersSidebar label {
+  margin: 1.2rem 0 0.3rem 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.filterSelect {
+  width: 100%;
+  padding: 0.3rem 0;
+  border: none;
+  border-bottom: 1px solid #444;
+  background: transparent;
+  color: #eee;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  box-shadow: none;
+  appearance: none; /* quitar flecha por defecto en algunos navegadores */
+  cursor: pointer;
+}
+
+.filterSelect option {
+  color: #000;
+}
+
+.filterSelect:focus {
+  border-bottom: 1px solid #53fb52;
+  outline: none;
+  box-shadow: none;
+}
+
+.searchInputWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.3rem 0;
+  border: none;
+  border-bottom: 1px solid #444;
+  background: transparent;
+  color: #eee;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  box-shadow: none;
+}
+
+.searchInput:focus {
+  border-bottom: 1px solid #53fb52;
+  outline: none;
+  box-shadow: none;
+}
+
+.searchButton {
+  display: none; /* ocultar botón de búsqueda para diseño limpio */
+}
+
+/* Opcional: para que el select tenga flecha personalizada o nada */
+.filterSelect::-ms-expand {
+  display: none;
+}
+
+.cardsContainer {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr)); /* tarjetas más pequeñas */
+  gap: 2rem 2rem; /* espacio entre tarjetas */
+  justify-content: center;
+  align-items: start;
+  padding-bottom: 2rem;
+  justify-items: center;
+}
+
+.athleteCard {
+  width: 100%;
+  max-width: 260px; /* tamaño máximo reducido */
+  min-width: 220px; /* tamaño mínimo reducido */
+  min-height: 370px;
+  max-height: 420px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media (max-width: 1366px) {
+  .cardsContainer {
+    grid-template-columns: repeat(3, minmax(270px, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .cardsContainer {
+    grid-template-columns: repeat(2, minmax(270px, 1fr));
+    gap: 1.2rem;
+  }
+}
+@media (max-width: 600px) {
+  .dashboardContainer {
+    flex-direction: column;
+  }
+  .cardsContainer {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1rem;
+  }
+  .filtersSidebar {
+    width: 100%;
+    flex: none;
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+  }
+}
