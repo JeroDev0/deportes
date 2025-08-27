@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import styles from "./ProfileFeed.module.css";
 
@@ -10,14 +10,32 @@ function NewPostForm({ userId, onNewPost }) {
   const [file, setFile] = useState(null);
   const [type, setType] = useState("image");
   const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef();
+
+  const handleTypeChange = e => {
+    setType(e.target.value);
+    setFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleFileChange = e => {
+    setFile(e.target.files[0]);
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (!text.trim()) {
+      alert("El texto es obligatorio");
+      return;
+    }
+    if (!file) {
+      alert("Debes seleccionar un archivo");
+      return;
+    }
     setLoading(true);
 
     let mediaUrl = "";
     if (file) {
-      // Subir a Cloudinary
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -32,7 +50,6 @@ function NewPostForm({ userId, onNewPost }) {
       }
     }
 
-    // Crear publicación en backend
     try {
       const res = await axios.post("https://deportes-production.up.railway.app/publicaciones", {
         user: userId,
@@ -43,6 +60,7 @@ function NewPostForm({ userId, onNewPost }) {
       onNewPost(res.data);
       setText("");
       setFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
       alert("Error creando publicación");
     }
@@ -52,26 +70,46 @@ function NewPostForm({ userId, onNewPost }) {
   return (
     <form className={styles.newPostForm} onSubmit={handleSubmit}>
       <textarea
+        className={styles.postTextarea}
         placeholder="¿Qué quieres compartir?"
         value={text}
         onChange={e => setText(e.target.value)}
         required
       />
       <div className={styles.formRow}>
-        <select value={type} onChange={e => setType(e.target.value)}>
+        <select 
+          className={styles.typeSelect}
+          value={type} 
+          onChange={handleTypeChange}
+        >
           <option value="image">Imagen</option>
           <option value="video">Video</option>
         </select>
-        <input
-          type="file"
-          accept={type === "image" ? "image/*" : "video/*"}
-          onChange={e => setFile(e.target.files[0])}
-          required
-        />
-        <button type="submit" disabled={loading}>
+        {/* Label personalizado */}
+        <label className={styles.fileLabel}>
+          <span>{file ? "Cambiar archivo" : "Seleccionar archivo"}</span>
+          <input
+            className={styles.fileInput}
+            type="file"
+            accept={type === "image" ? "image/*" : "video/*"}
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            required
+          />
+        </label>
+        <button 
+          type="submit" 
+          disabled={loading}
+          className={styles.submitBtn}
+        >
           {loading ? "Publicando..." : "Publicar"}
         </button>
       </div>
+      {file && (
+        <div className={styles.selectedFile}>
+          Archivo seleccionado: <strong>{file.name}</strong>
+        </div>
+      )}
     </form>
   );
 }
