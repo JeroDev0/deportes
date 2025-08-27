@@ -1,130 +1,113 @@
 .editProfileBg {
   min-height: 100vh;
-  background: #0d2635;
+  background: #f0f2f5;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 32px 0;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
 
 .editProfileCard {
-  background: #14293d;
-  border-radius: 22px;
-  box-shadow: 0 8px 32px rgba(13,38,53,0.22);
-  max-width: 1200px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+  max-width: 1100px;
   width: 100%;
-  padding: 48px 56px 36px 56px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  border: 1.5px solid #1e3a56;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  position: relative;
 }
 
-.title {
-  text-align: left;
-  font-size: 2.3rem;
+.backBtn {
+  background: none;
+  border: none;
+  color: #555;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.header {
   font-weight: 900;
-  color: #53fb52;
-  margin-bottom: 24px;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 8px #0d2635cc;
+  font-size: 2.5rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 32px;
+  color: #222;
 }
 
 .form {
   display: flex;
-  flex-wrap: wrap;
   gap: 48px;
+  flex-wrap: wrap;
 }
 
-.col {
-  flex: 1 1 420px;
+.leftCol {
+  flex: 1;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 32px;
+  align-items: center;
 }
 
-label {
-  font-weight: 700;
-  color: #b6c9d6;
-  margin-bottom: 2px;
-  font-size: 1.08rem;
-  letter-spacing: 0.1px;
+.photoSection {
+  position: relative;
+  width: 280px;
+  height: 350px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
 }
 
-input, textarea {
-  border: 1.5px solid #253b4d;
-  border-radius: 10px;
-  padding: 14px 18px;
-  font-size: 1.12rem;
-  font-family: inherit;
-  background: #1a334a;
-  margin-bottom: 2px;
-  transition: border 0.18s, background 0.18s;
-  color: #eaf6ff;
+.photoSection img.photo {
   width: 100%;
-  box-sizing: border-box;
+  height: 100%;
+  object-fit: cover;
 }
 
-input:focus, textarea:focus {
-  border: 1.5px solid #53fb52;
-  background: #223c54;
-  outline: none;
-}
-
-.textareaAbout {
-  min-height: 220px;   /* antes 110px */
-  max-height: 500px;   /* antes 220px */
-  resize: vertical;
-  scrollbar-width: thin;
-  scrollbar-color: #53fb52 #1a334a;
-}
-.textareaAbout::-webkit-scrollbar {
-  width: 6px;
-  background: #1a334a;
-}
-.textareaAbout::-webkit-scrollbar-thumb {
-  background: #53fb52;
-  border-radius: 6px;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.photoUpload {
+.photoPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #ddd;
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 18px;
+  justify-content: center;
+  color: #999;
+  font-size: 1.2rem;
 }
-.photoLabel {
-  background: #1a334a;
-  color: #53fb52;
-  border: 2px solid #53fb52;
-  border-radius: 50px;
-  padding: 18px 32px;
-  font-weight: 700;
-  font-size: 1.18rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  transition: background 0.18s, color 0.18s, border 0.18s;
-  margin-bottom: 8px;
-}
-.photoLabel:hover {
+
+.photoEditBtn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
   background: #53fb52;
   color: #0d2635;
-  border: 2px solid #53fb52;
-}
-.photoPreview {
-  width: 72px;
-  height: 72px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2.5px solid #53fb52;
-  margin-right: 18px;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  line-height: 36px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(83 251 82 / 0.6);
+  transition: background 0.3s;
+}
+
+.photoEditBtn:hover {
+  background: #38b838;
+}
+
+.skillsSection {
+  width: 100%;
+}
+
+.skillsSection h3 {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #222;
 }
 
 .chipList {
@@ -133,6 +116,7 @@ input[type="file"] {
   gap: 10px;
   margin-bottom: 8px;
 }
+
 .chip {
   display: flex;
   align-items: center;
@@ -143,6 +127,7 @@ input[type="file"] {
   gap: 4px;
   min-width: 0;
 }
+
 .chipInput {
   background: transparent;
   border: none;
@@ -153,9 +138,11 @@ input[type="file"] {
   outline: none;
   padding: 4px 0;
 }
+
 .chipInput:focus {
   background: #223c54;
 }
+
 .chipRemove {
   background: none;
   border: none;
@@ -166,10 +153,12 @@ input[type="file"] {
   align-items: center;
   transition: background 0.18s;
 }
+
 .chipRemove:hover {
   background: #e74c3c22;
   border-radius: 50%;
 }
+
 .chipAdd {
   background: #1a334a;
   border: 1.5px dashed #53fb52;
@@ -183,25 +172,343 @@ input[type="file"] {
   margin-left: 6px;
   transition: background 0.18s, border 0.18s;
 }
+
 .chipAdd:hover {
   background: #53fb52;
   border: 1.5px solid #53fb52;
 }
 
-.saveBtn {
+.rightCol {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 320px;
+}
+
+label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #222;
+  display: block;
+}
+
+.introTextarea {
   width: 100%;
-  background: linear-gradient(90deg, #53fb52 60%, #38b838 100%);
-  color: #0d2635;
-  border: none;
-  border-radius: 10px;
-  padding: 18px 0;
-  font-size: 1.22rem;
+  min-height: 140px;
+  border-radius: 12px;
+  border: 1.5px solid #ccc;
+  padding: 16px;
+  font-size: 1rem;
+  resize: vertical;
+  font-family: inherit;
+  box-sizing: border-box;
+  color: #333;
+}
+
+.charCount {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: right;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.personalInfo {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.personalInfo input {
+  flex: 1 1 150px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  box-sizing: border-box;
+}
+
+.sportCareer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sportCareerFields {
+  display: flex;
+  gap: 16px;
+  max-width: 400px;
+}
+
+/* Headers */
+.achievementsHeader, .careerHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #444;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* Headers */
+.achievementsHeader, .careerHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #444;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.trophyIcon {
+  flex-shrink: 0;
+}
+
+/* Achievements description */
+.achievementsDescription {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 16px;
+  max-width: 600px;
+}
+
+/* Achievement items */
+.achievementItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+  color: #a56a2f; /* marrón */
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.achievementItem:last-child {
+  border-bottom: none;
+}
+
+.star {
+  color: #a56a2f;
+  font-size: 1.3rem;
   font-weight: 900;
-  margin-top: 28px;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 12px #53fb5230;
-  text-shadow: 0 1px 2px #0d2635cc;
+  flex-shrink: 0;
+}
+
+.achievementInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #a56a2f;
+  font-weight: 600;
+  outline: none;
+  padding: 4px 0;
+}
+
+.achievementInput::placeholder {
+  color: #bfa67a;
+  font-weight: 400;
+}
+
+.removeAchievementBtn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.removeAchievementBtn:hover {
+  color: #c0392b;
+}
+
+.addAchievementBtn {
+  margin-top: 12px;
+  width: 100%;
+  border: 2px dashed #b3b3b3;
+  background: transparent;
+  color: #555;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.addAchievementBtn:hover {
+  background: #eaeaea;
+  color: #333;
+}
+
+/* Career items */
+.careerSection {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+.careerItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+  color: #444;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.careerItem:last-child {
+  border-bottom: none;
+}
+
+.careerInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 600;
+  outline: none;
+  padding: 4px 0;
+}
+
+.careerInput::placeholder {
+  color: #999;
+  font-weight: 400;
+}
+
+.removeCareerBtn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.removeCareerBtn:hover {
+  color: #c0392b;
+}
+
+.addCareerBtn {
+  margin-top: 12px;
+  width: 100%;
+  border: 2px dashed #b3b3b3;
+  background: transparent;
+  color: #555;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.addCareerBtn:hover {
+  background: #eaeaea;
+  color: #333;
+}
+
+/* Plus icon for add buttons */
+.plusIcon {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.listInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listInputItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.listInput {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+}
+
+.listRemoveBtn {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.listRemoveBtn:hover {
+  background: #c0392b;
+}
+
+.listAddBtn {
+  background: none;
+  border: 2px dashed #53fb52;
+  color: #53fb52;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.3s, color 0.3s;
+  align-self: flex-start;
+}
+
+.listAddBtn:hover {
+  background: #53fb52;
+  color: #0d2635;
+}
+
+.saveBtn {
+  margin-top: 24px;
+  background: linear-gradient(90deg, #53fb52 60%, #38b838 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 16px 0;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #0d2635;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(83 251 82 / 0.4);
+  transition: background 0.3s, color 0.3s;
 }
 
 .saveBtn:hover {
@@ -211,78 +518,41 @@ input[type="file"] {
 
 .success {
   color: #53fb52;
+  font-weight: 700;
+  margin-top: 12px;
   text-align: center;
-  margin-top: 16px;
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: 0.2px;
 }
 
 .error {
   color: #e74c3c;
+  font-weight: 700;
+  margin-top: 12px;
   text-align: center;
-  margin-top: 16px;
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: 0.2px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1280px) {
-  .editProfileCard {
-    max-width: 98vw;
-    padding: 32px 10vw 24px 10vw;
-  }
-}
+/* Responsive */
 
 @media (max-width: 900px) {
-  .editProfileCard {
-    padding: 24px 4vw 20px 4vw;
-    max-width: 99vw;
-  }
-  .form {
-    gap: 24px;
-  }
-}
-
-@media (max-width: 700px) {
-  .editProfileBg {
-    padding: 8px 0;
-    min-height: 100vh;
-  }
-  .editProfileCard {
-    padding: 10px 2vw 10px 2vw;
-    border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(13,38,53,0.13);
-  }
   .form {
     flex-direction: column;
-    gap: 14px;
   }
-  .col {
-    gap: 10px;
+  .leftCol {
+    max-width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
   }
-  .saveBtn {
-    font-size: 1.05rem;
-    padding: 12px 0;
-    margin-top: 12px;
+  .photoSection {
+    width: 180px;
+    height: 230px;
   }
-  .title {
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-    text-align: center;
+  .rightCol {
+    width: 100%;
   }
-  .photoP {
-    text-align: center;
+  .personalInfo {
+    flex-direction: column;
   }
-}
-
-@media (max-width: 480px) {
-  .editProfileCard {
-    padding: 6px 1vw 6px 1vw;
-    border-radius: 10px;
-  }
-  .form {
-    gap: 8px;
+  .sportCareerFields {
+    flex-direction: column;
   }
 }

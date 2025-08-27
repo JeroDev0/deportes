@@ -9,13 +9,17 @@ html, body, #root {
   min-height: calc(100vh - 64px);
   height: auto;
   margin-top: 64px;
-  background: #14191c;
+  background-color: #14191c;
+  background-image: url("data:image/svg+xml;utf8,<svg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'><rect width='40' height='40' fill='%2314191c'/><path d='M10 0 L20 10 L10 20 L0 10 Z' fill='none' stroke='%23222a30' stroke-width='1'/></svg>");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 40px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centrado vertical */
+  justify-content: center;
   box-sizing: border-box;
-  padding: 0; /* Padding lateral para móvil */
+  padding: 0;
 }
 
 @media (max-width: 700px) {

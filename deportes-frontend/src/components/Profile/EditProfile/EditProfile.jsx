@@ -5,36 +5,42 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
 
-// Opciones para género y deportes
+// Opciones para género, deportes y niveles
 const GENDERS = [
-  { value: "Hombre", label: "Hombre" },
-  { value: "Mujer", label: "Mujer" },
+  { value: "male", label: "male" },
+  { value: "female", label: "female" },
 ];
 
 const SPORTS = [
-  { value: "Fútbol", label: "Fútbol" },
-  { value: "Básquetbol", label: "Básquetbol" },
-  { value: "Tenis", label: "Tenis" },
-  { value: "Voleibol", label: "Voleibol" },
-  { value: "Natación", label: "Natación" },
-  { value: "Atletismo", label: "Atletismo" },
-  { value: "Ciclismo", label: "Ciclismo" },
-  { value: "Boxeo", label: "Boxeo" },
-  { value: "Ajedrez", label: "Ajedrez" },
+  { value: "Soccer", label: "Soccer" },
+  { value: "Basketball", label: "Basketball" },
+  { value: "Tennis", label: "Tennis" },
+  { value: "Volleyball", label: "Volleyball" },
+  { value: "Swimming", label: "Swimming" },
+  { value: "Athletics", label: "Athletics" },
+  { value: "Cycling", label: "Cycling" },
+  { value: "Boxing", label: "Boxing" },
+  { value: "Chess", label: "Chess" },
   { value: "Golf", label: "Golf" },
-  { value: "Béisbol", label: "Béisbol" },
+  { value: "Baseball", label: "Baseball" },
   { value: "Rugby", label: "Rugby" },
   { value: "Hockey", label: "Hockey" },
-  { value: "Gimnasia", label: "Gimnasia" },
+  { value: "Gymnastics", label: "Gymnastics" },
   { value: "Karate", label: "Karate" },
   { value: "Judo", label: "Judo" },
   { value: "Taekwondo", label: "Taekwondo" },
-  { value: "Esgrima", label: "Esgrima" },
-  { value: "Halterofilia", label: "Halterofilia" },
-  { value: "Triatlón", label: "Triatlón" },
+  { value: "Fencing", label: "Fencing" },
+  { value: "Weightlifting", label: "Weightlifting" },
+  { value: "Triathlon", label: "Triathlon" },
 ];
 
-// Estilos para react-select
+const LEVELS = [
+  { value: "Beginner", label: "Beginner" },
+  { value: "SemiPro", label: "SemiPro" },
+  { value: "Pro", label: "Pro" },
+];
+
+// Estilos para react-select (manteniendo tu estilo original)
 const selectStyles = {
   control: (provided) => ({
     ...provided,
@@ -82,12 +88,14 @@ function EditProfile() {
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     lastName: "",
     age: "",
     gender: "",
     sport: "",
+    level: "",
     phone: "",
     country: "",
     city: "",
@@ -98,6 +106,7 @@ function EditProfile() {
     skills: [""],
     certifications: [""],
   });
+
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
   const [photoPreview, setPhotoPreview] = useState("");
@@ -117,6 +126,7 @@ function EditProfile() {
           recognitions: data.recognitions || [""],
           skills: data.skills || [""],
           certifications: data.certifications || [""],
+          level: data.level || "",
         });
         setProfileType(data.profileType);
         if (data.photo && typeof data.photo === "string") {
@@ -182,7 +192,7 @@ function EditProfile() {
   };
 
   const addArrayField = (field) => {
-    if (form[field].length < (field === "skills" ? 5 : 10)) {
+    if (form[field].length < (field === "skills" ? 7 : 10)) {
       setForm({ ...form, [field]: [...form[field], ""] });
     }
   };
@@ -260,7 +270,7 @@ function EditProfile() {
     }
   };
 
-  // Render chips para arrays
+  // Render chips para arrays (skills, experience, recognitions, certifications)
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>
       {form[field].map((item, idx) => (
@@ -298,142 +308,250 @@ function EditProfile() {
     </div>
   );
 
+  // Render achievements and career with editable inputs (array of strings)
+  const renderListInput = (field, placeholder) => (
+    <div className={styles.listInputContainer}>
+      {form[field].map((item, idx) => (
+        <div key={idx} className={styles.listInputItem}>
+          <input
+            type="text"
+            value={item}
+            onChange={(e) => handleArrayChange(e, field, idx)}
+            placeholder={placeholder}
+            className={styles.listInput}
+          />
+          {form[field].length > 1 && (
+            <button
+              type="button"
+              className={styles.listRemoveBtn}
+              onClick={() => removeArrayField(field, idx)}
+              title="Eliminar"
+            >
+              &times;
+            </button>
+          )}
+        </div>
+      ))}
+      {form[field].length < 10 && (
+        <button
+          type="button"
+          className={styles.listAddBtn}
+          onClick={() => addArrayField(field)}
+          title="Agregar"
+        >
+          + Add {placeholder}
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
-        <h2 className={styles.title}>Editar tu perfil</h2>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.col}>
-            <label className={styles.photoP}>Foto de perfil</label>
-              <div className={styles.photoUpload}>
-                <input
-                  type="file"
-                  id="photo"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handlePhotoChange}
-                />
-                <label htmlFor="photo" className={styles.photoLabel}>
-                  {photoPreview ? (
-                    <>
-                      <img src={photoPreview} alt="Foto de perfil" className={styles.photoPreview} />
-                      <span>Cambiar o subir foto</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg width="28" height="28" fill="#53fb52" style={{ marginRight: 12, verticalAlign: "middle" }} viewBox="0 0 24 24"><path d="M12 5c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm7-13h-3.586l-1.707-1.707c-.391-.391-1.023-.391-1.414 0l-1.707 1.707h-3.586c-1.104 0-2 .896-2 2v14c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-14c0-1.104-.896-2-2-2zm0 16h-14v-14h3.586l1.707-1.707c.391-.391 1.023-.391 1.414 0l1.707 1.707h-3.586v14z"/></svg>
-                      <span>Subir foto de perfil</span>
-                    </>
-                  )}
-                </label>
-              </div>
-            <label>Nombre</label>
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-            <label>Apellido</label>
-            <input
-              name="lastName"
-              value={form.lastName}
-              onChange={handleChange}
-              required
-            />
-            <label>Edad</label>
-            <input
-              name="age"
-              type="number"
-              value={form.age}
-              onChange={handleChange}
-              required
-            />
-            <label>Género</label>
-            <Select
-              value={GENDERS.find(g => g.value === form.gender) || null}
-              onChange={(selectedOption) => handleSelectChange(selectedOption, "gender")}
-              options={GENDERS}
-              placeholder="Selecciona tu género"
-              isClearable
-              isSearchable={false}
-              styles={selectStyles}
-            />
-            <label>Deporte</label>
-            <Select
-              value={SPORTS.find(s => s.value === form.sport) || null}
-              onChange={(selectedOption) => handleSelectChange(selectedOption, "sport")}
-              options={SPORTS}
-              placeholder="Selecciona tu deporte"
-              isClearable
-              isSearchable
-              styles={selectStyles}
-            />
-            <label>Teléfono (+código país)</label>
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-            />
-            <label>País</label>
-            <Select
-              value={countryOptions.find(c => c.value === form.country) || null}
-              onChange={(selectedOption) => handleSelectChange(selectedOption, "country")}
-              options={countryOptions}
-              placeholder="Selecciona tu país"
-              isClearable
-              isSearchable
-              styles={selectStyles}
-            />
-            <label>Ciudad</label>
-            <Select
-              value={cityOptions.find(c => c.value === form.city) || null}
-              onChange={(selectedOption) => handleSelectChange(selectedOption, "city")}
-              options={cityOptions}
-              placeholder={
-                loadingCities
-                  ? "Cargando ciudades..."
-                  : form.country
-                  ? "Selecciona tu ciudad"
-                  : "Primero selecciona un país"
-              }
-              isClearable
-              isSearchable
-              isDisabled={!form.country || loadingCities || cityOptions.length === 0}
-              styles={selectStyles}
-            />
+        <button className={styles.backBtn} onClick={() => navigate(-1)}>← Back to Profile</button>
+        <h1 className={styles.header}>EDIT PROFILE</h1>
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          {/* Left column: photo, skills */}
+          <div className={styles.leftCol}>
+            <div className={styles.photoSection}>
+              {photoPreview ? (
+                <img src={photoPreview} alt="Profile" className={styles.photo} />
+              ) : (
+                <div className={styles.photoPlaceholder}>No Photo</div>
+              )}
+              <label htmlFor="photoUpload" className={styles.photoEditBtn}>✎</label>
+              <input type="file" id="photoUpload" accept="image/*" onChange={handlePhotoChange} hidden />
+            </div>
+
+            <div className={styles.skillsSection}>
+              <h3>Skills</h3>
+              {renderChipList("skills", "Skill", 7)}
+            </div>
           </div>
-          <div className={styles.col}>
-            <label>Acerca de (máx 1000 caracteres)</label>
+
+          {/* Right column: all other fields */}
+          <div className={styles.rightCol}>
+            <label>Introduction</label>
             <textarea
               name="about"
+              maxLength={300}
               value={form.about}
               onChange={handleChange}
-              maxLength={1000}
-              className={styles.textareaAbout}
+              placeholder="Create a short bio that introduces your athlete career and character"
+              className={styles.introTextarea}
             />
-            <label>Experiencia deportiva</label>
-            {renderChipList("experience", "Describe tu experiencia")}
-            <label>Reconocimientos deportivos</label>
-            {renderChipList("recognitions", "Reconocimiento")}
-            <label>Skills (máx 5, solo una palabra)</label>
-            {renderChipList("skills", "Skill", 5)}
+            <div className={styles.charCount}>{form.about.length} of 300 characters</div>
+
+            <div className={styles.personalInfo}>
+              <input name="name" placeholder="First Name" value={form.name} onChange={handleChange} required />
+              <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
+              <Select
+                options={GENDERS}
+                value={GENDERS.find(g => g.value === form.gender) || null}
+                onChange={(opt) => handleSelectChange(opt, "gender")}
+                placeholder="Gender"
+                styles={selectStyles}
+                isClearable
+              />
+              <input
+                type="number"
+                name="age"
+                placeholder="Age"
+                value={form.age}
+                onChange={handleChange}
+                required
+                min={1}
+                max={120}
+              />
+              <input
+                name="phone"
+                placeholder="Phone (+country code)"
+                value={form.phone}
+                onChange={handleChange}
+              />
+              <Select
+                options={countryOptions}
+                value={countryOptions.find(c => c.value === form.country) || null}
+                onChange={(opt) => handleSelectChange(opt, "country")}
+                placeholder="Country"
+                styles={selectStyles}
+                isClearable
+              />
+              <Select
+                options={cityOptions}
+                value={cityOptions.find(c => c.value === form.city) || null}
+                onChange={(opt) => handleSelectChange(opt, "city")}
+                placeholder={
+                  loadingCities
+                    ? "Loading cities..."
+                    : form.country
+                    ? "Select your city"
+                    : "Select a country first"
+                }
+                isClearable
+                isDisabled={!form.country || loadingCities || cityOptions.length === 0}
+                styles={selectStyles}
+              />
+            </div>
+
+            <div className={styles.sportCareer}>
+              <label>Sport Career</label>
+              <div className={styles.sportCareerFields}>
+                <Select
+                  options={SPORTS}
+                  value={SPORTS.find(s => s.value === form.sport) || null}
+                  onChange={(opt) => handleSelectChange(opt, "sport")}
+                  placeholder="Discipline"
+                  styles={selectStyles}
+                  isClearable
+                />
+                <Select
+                  options={LEVELS}
+                  value={LEVELS.find(l => l.value === form.level) || null}
+                  onChange={(opt) => handleSelectChange(opt, "level")}
+                  placeholder="Level"
+                  styles={selectStyles}
+                  isClearable
+                />
+              </div>
+            </div>
+
+            <div className={styles.achievementsSection}>
+              <div className={styles.achievementsHeader}>
+                <svg className={styles.trophyIcon} viewBox="0 0 24 24" fill="#999" width="20" height="20" aria-hidden="true">
+                  <path d="M7 3v2H5v3a5 5 0 0 0 4 4.9V15H7v2h10v-2h-2v-2.1a5 5 0 0 0 4-4.9V5h-2V3H7zM6 8V5h2v3a3 3 0 0 1-2 2.83V8zm12 0v2.83A3 3 0 0 1 16 8V5h2v3z"/>
+                </svg>
+                <h3>Achievements</h3>
+              </div>
+              <p className={styles.achievementsDescription}>
+                List your most important accomplishments as an athlete — from awards, titles, and rankings to national team selections, standout performances, or recognitions from clubs and organizations. Focus on what sets you apart.
+              </p>
+              {form.recognitions.map((ach, idx) => (
+                <div key={idx} className={styles.achievementItem}>
+                  <span className={styles.star}>★</span>
+                  <input
+                    type="text"
+                    value={ach}
+                    onChange={(e) => handleArrayChange(e, "recognitions", idx)}
+                    placeholder="Add achievement"
+                    className={styles.achievementInput}
+                  />
+                  {form.recognitions.length > 1 && (
+                    <button
+                      type="button"
+                      className={styles.removeAchievementBtn}
+                      onClick={() => removeArrayField("recognitions", idx)}
+                      title="Remove achievement"
+                    >
+                      &times;
+                    </button>
+                  )}
+                </div>
+              ))}
+              {form.recognitions.length < 10 && (
+                <button
+                  type="button"
+                  className={styles.addAchievementBtn}
+                  onClick={() => addArrayField("recognitions")}
+                  title="Add achievement"
+                >
+                  Add Achievement <span className={styles.plusIcon}>+</span>
+                </button>
+              )}
+            </div>
+
+            <div className={styles.careerSection}>
+              <div className={styles.careerHeader}>
+                <svg className={styles.trophyIcon} viewBox="0 0 24 24" fill="#999" width="20" height="20" aria-hidden="true">
+                  <path d="M7 3v2H5v3a5 5 0 0 0 4 4.9V15H7v2h10v-2h-2v-2.1a5 5 0 0 0 4-4.9V5h-2V3H7zM6 8V5h2v3a3 3 0 0 1-2 2.83V8zm12 0v2.83A3 3 0 0 1 16 8V5h2v3z"/>
+                </svg>
+                <h3>Career</h3>
+              </div>
+              {form.experience.map((item, idx) => (
+                <div key={idx} className={styles.careerItem}>
+                  <input
+                    type="text"
+                    value={item}
+                    onChange={(e) => handleArrayChange(e, "experience", idx)}
+                    placeholder="Add career milestone"
+                    className={styles.careerInput}
+                  />
+                  {form.experience.length > 1 && (
+                    <button
+                      type="button"
+                      className={styles.removeCareerBtn}
+                      onClick={() => removeArrayField("experience", idx)}
+                      title="Remove career item"
+                    >
+                      &times;
+                    </button>
+                  )}
+                </div>
+              ))}
+              {form.experience.length < 10 && (
+                <button
+                  type="button"
+                  className={styles.addCareerBtn}
+                  onClick={() => addArrayField("experience")}
+                  title="Add career item"
+                >
+                  Add Career <span className={styles.plusIcon}>+</span>
+                </button>
+              )}
+            </div>
+
             {(profileType === "scout" || profileType === "sponsor") && (
               <>
-                <label>Certificaciones</label>
-                {renderChipList("certifications", "Certificación")}
+                <label>Certifications</label>
+                {renderChipList("certifications", "Certification")}
               </>
             )}
+
+            <button type="submit" className={styles.saveBtn}>Save Changes</button>
+            {msg && <p className={msg.includes("error") ? styles.error : styles.success}>{msg}</p>}
           </div>
-          <button type="submit" className={styles.saveBtn}>
-            Guardar cambios
-          </button>
         </form>
-        {msg && (
-          <p className={msg.includes("error") ? styles.error : styles.success}>
-            {msg}
-          </p>
-        )}
       </div>
     </div>
   );

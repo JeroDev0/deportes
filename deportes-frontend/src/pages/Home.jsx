@@ -2,7 +2,8 @@ import Banner from '../components/Banner/Banner';
 import AthleteList from '../components/Dashboard/AthleteList';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
-import { useAuth } from '../context/useAuth'; // Asegúrate de importar el hook
+import { useAuth } from '../context/useAuth';
+import TalentSearch from '../components/TalentSearch/TalentSearch';
 
 function Home() {
   const { user } = useAuth(); // Obtén el usuario del contexto
@@ -25,17 +26,10 @@ function Home() {
         )}
       </Banner>
 
-      <div className={styles.textSection}>
-        <h2 className={styles.textSectionTitle}>
-          Discover Top Local Athletes
-        </h2>
-        <p className={styles.textSectionDesc}>
-          Explore our curated list of talented athletes ready to take their careers to the next level.
-        </p>
-      </div>
+      <TalentSearch />
 
       <div className={styles.athleteListWrapper}>
-        <AthleteList limit={12} showSeeMore={true} />
+        <AthleteList limit={4} showSeeMore={true} />
       </div>
     </>
   );
