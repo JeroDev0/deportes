@@ -1,22 +1,72 @@
 .centerCard {
-  background: #f9fafb;
-  border-radius: 12px;
+  background: #E4ECF0;
   padding: 20px;
   color: #222;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.header {
+/* --- nav superior --- */
+.navMenu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 16px;
 }
 
-.header h1 {
-  font-size: 2rem;
-  font-weight: 700;
+.navLeft {
+  display: flex;
+  gap: 24px;
+}
+
+.navLeft a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.navLeft a:hover {
+  text-decoration: underline;
+}
+
+/* botón Edit Profile */
+.editProfileBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+}
+
+.editProfileBtn img {
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.nameBlock {
+  line-height: 1;
+}
+
+.firstName {
+  font-size: 50px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.lastName {
+  font-size: 50px;
+  font-weight: 900;
   margin: 0;
 }
 
@@ -43,8 +93,19 @@
   background: #1e40af;
 }
 
+/* --- Sponsorship --- */
 .sponsorship {
   margin-bottom: 20px;
+  background: #1F4534;
+  padding: 10px;
+  border-radius: 10px;
+  color: #BCFFBC;
+}
+
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .progressBar {
@@ -52,75 +113,84 @@
   border-radius: 10px;
   height: 12px;
   overflow: hidden;
-  margin-bottom: 6px;
+  flex: 1;
+  margin-right: 10px;
 }
 
 .progress {
-  background: #22c55e;
+  background: #BCFFBC;
   height: 100%;
-  width: 0;
   transition: width 0.3s ease;
 }
 
-.sponsorInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
 .sponsorBtn {
-  background: #22c55e;
-  color: white;
+  background: #BCFFBC;
+  color: #1F4534;
   border: none;
   padding: 6px 14px;
   border-radius: 20px;
   cursor: pointer;
   font-weight: 700;
-  transition: background 0.3s ease;
 }
 
-.sponsorBtn:hover {
-  background: #15803d;
+.sponsorInfo {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 5px;
 }
 
-.aboutSection, .gallerySection, .achievementsSection, .careerSection {
+/* --- Sections --- */
+.aboutSection,
+.gallerySection,
+.achievementsSection,
+.careerSection {
   margin-bottom: 20px;
 }
 
-.aboutSection h2, .gallerySection h2, .achievementsSection h2, .careerSection h2 {
-  font-weight: 700;
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 10px;
+}
+
+.sectionHeader h2 {
+  margin: 0;
+  font-weight: 700;
   color: #111827;
 }
 
+/* --- Título de Achievements en marrón --- */
+.achievementsSection .sectionHeader h2 {
+  color: #925518;
+}
+
+.achievements-list li,
+.career-list li {
+  border-bottom: 1px solid #ddd; /* separador */
+  padding: 10px 0; /* espacio arriba y abajo */
+}
+
+.achievements-list li:last-child,
+.career-list li:last-child {
+  border-bottom: none; /* quitar separador al último */
+}
+
+.showAll {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000000;
+  cursor: pointer;
+}
+
+/* --- Gallery --- */
 .galleryGrid {
   display: flex;
   gap: 10px;
-}
-
-.galleryGrid img {
-  width: 100px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.galleryGrid img:hover {
-  transform: scale(1.05);
-}
-
-.achievementsSection ul, .careerSection ul {
-  list-style: none;
-  padding-left: 0;
-  color: #374151;
-}
-
-.achievementsSection li, .careerSection li {
-  margin-bottom: 6px;
 }
 
 .postItem {
@@ -129,19 +199,113 @@
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   position: relative;
 }
 
-.postItem img, .postItem video {
+.postItem img,
+.postItem video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.postItem p {
-  font-size: 0.9rem;
-  color: #444;
+/* --- Achievements --- */
+.achievementsSection ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.achievementsSection li {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #925518;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Section Header --- */
+.sectionHeader img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Flechita de "Show all" */
+.showAll img {
+  width: 20px;
+  height: 20px;
+}
+
+.achievementsSection .sectionHeader img {
+  /* Solo la copa en marrón */
+  filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  /* Estrellas en marrón */
+  filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
+}
+
+/* --- Career --- */
+.careerSection ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.careerSection li {
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+/* --- listas con separador entre items (solo entre items) --- */
+.achievementsList,
+.careerList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* separador entre items, no al último */
+.achievementsList li,
+.careerList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08); /* línea suave */
+}
+
+.achievementsList li:last-child,
+.careerList li:last-child {
+  border-bottom: none;
+}
+
+/* texto del item */
+.itemText {
+  font-weight: 600;
+  color: inherit;
+}
+
+/* iconos dentro de items */
+.sectionHeader img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.showAll img {
+  width: 20px;
+  height: 20px;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
 }

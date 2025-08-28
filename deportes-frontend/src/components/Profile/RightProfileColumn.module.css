@@ -1,5 +1,5 @@
 .container {
-  color: #fff;
+  color: #8CBFDE;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0;
   background: transparent;
@@ -13,7 +13,7 @@
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 12px;
-  color: #a0aec0; /* gris claro */
+  color: #8CBFDE; /* gris claro */
   text-transform: uppercase;
 }
 
@@ -34,7 +34,7 @@
 .icon {
   width: 28px;
   height: 28px;
-  background-color: #a4a8a4;
+  background-color: #d4d5d6;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -47,10 +47,10 @@
 .institution {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #e2e8f0; /* gris muy claro */
+  color: #8CBFDE; /* gris muy claro */
 }
 
 .location {
   font-size: 0.8rem;
-  color: #94a3b8; /* gris medio */
+  color: #8CBFDE; /* gris medio */
 }
