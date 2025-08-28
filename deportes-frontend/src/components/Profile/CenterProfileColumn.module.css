@@ -1,0 +1,147 @@
+.centerCard {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+  color: #222;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.followers {
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.followBtn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.followBtn:hover {
+  background: #1e40af;
+}
+
+.sponsorship {
+  margin-bottom: 20px;
+}
+
+.progressBar {
+  background: #d1d5db;
+  border-radius: 10px;
+  height: 12px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress {
+  background: #22c55e;
+  height: 100%;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.sponsorInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.sponsorBtn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.3s ease;
+}
+
+.sponsorBtn:hover {
+  background: #15803d;
+}
+
+.aboutSection, .gallerySection, .achievementsSection, .careerSection {
+  margin-bottom: 20px;
+}
+
+.aboutSection h2, .gallerySection h2, .achievementsSection h2, .careerSection h2 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.galleryGrid {
+  display: flex;
+  gap: 10px;
+}
+
+.galleryGrid img {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.galleryGrid img:hover {
+  transform: scale(1.05);
+}
+
+.achievementsSection ul, .careerSection ul {
+  list-style: none;
+  padding-left: 0;
+  color: #374151;
+}
+
+.achievementsSection li, .careerSection li {
+  margin-bottom: 6px;
+}
+
+.postItem {
+  width: 200px;
+  height: 300px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.postItem img, .postItem video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.postItem p {
+  font-size: 0.9rem;
+  color: #444;
+}

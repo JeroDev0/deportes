@@ -1,7 +1,8 @@
 .header {
   position: fixed;
   top: 0;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   height: 64px;
   background: #0d2635;
@@ -10,6 +11,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 8px #0001;
+  overflow: visible; /* permitir que el logo sobresalga */
 }
 
 .container {
@@ -19,28 +21,49 @@
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* mantiene logo a la izquierda y nav a la derecha */
   padding: 0 1.5rem;
 }
 
 /* Logo a la izquierda */
-.logo a {
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 1.3rem;
+.logo {
+  position: relative; /* referencia para el logoMask absoluto */
+  width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.logoLink {
+  display: inline-block;
   text-decoration: none;
+  color: inherit;
 }
 
-/* Menú desktop centrado */
+/* El logo en mask que sobresale por debajo */
+.logoMask {
+  position: absolute;
+  left: 0;
+  bottom: -14px; /* cuánto sobresale por debajo del header (ajusta aquí) */
+  width: 140px;
+  height: 60px;
+  display: inline-block;
+  background-color: #53F953; /* color del logo */
+  -webkit-mask: url('https://res.cloudinary.com/dx9l2xf44/image/upload/v1756348175/BKME_logo_black_wnaxjj.svg') no-repeat center/contain;
+  mask: url('https://res.cloudinary.com/dx9l2xf44/image/upload/v1756348175/BKME_logo_black_wnaxjj.svg') no-repeat center/contain;
+  z-index: 1200;
+  pointer-events: none; /* opcional: que no interfiera con clicks */
+}
+
+/* Menú desktop centrado a la derecha */
 .navDesktop {
   display: flex;
   gap: 2rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end; /* alineado a la derecha */
   flex: 1;
 }
 
-/* Links íconos desktop */
+/* Links desktop solo texto */
 .iconLink {
   color: white;
   font-size: 1rem;
@@ -49,7 +72,6 @@
   background: none;
   border: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   transition: color 0.2s;
@@ -61,35 +83,25 @@
   outline: none;
 }
 
-/* Icono y texto dentro del link */
-.icon {
-  width: 24px;
-  height: 24px;
-  stroke: white;
-  fill: none;
-  user-select: none;
+/* Ocultar iconos en desktop */
+.iconLink svg {
+  display: none;
 }
 
+/* IconLabel desktop */
 .iconLabel {
-  font-size: 0.75rem;
-  margin-top: 4px;
+  font-size: 0.9rem;
   color: white;
   user-select: none;
 }
 
-/* Icono notificaciones a la derecha */
-.notifications {
-  color: white;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-
-/* Menú móvil fijo abajo */
+/* Menú móvil fijo abajo (oculto por defecto) */
 .navMobile {
-  display: none; /* Oculto por defecto */
+  display: none;
   position: fixed;
   bottom: 0;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   height: 56px;
   background: #0d2635;
   box-shadow: 0 -2px 8px #0003;
@@ -124,15 +136,15 @@
   outline: none;
 }
 
-/* Icono y texto dentro del link móvil */
-.iconLinkMobile .icon {
+/* Iconos visibles en móvil */
+.iconLinkMobile svg {
+  display: block;
   width: 24px;
   height: 24px;
-  stroke: white;
-  fill: none;
   user-select: none;
 }
 
+/* IconLabel móvil */
 .iconLinkMobile .iconLabel {
   font-size: 0.65rem;
   margin-top: 4px;
@@ -140,7 +152,7 @@
   user-select: none;
 }
 
-/* Responsive */
+/* Responsive: en pantallas pequeñas mostrar solo navMobile y ocultar navDesktop */
 @media (max-width: 700px) {
   .header {
     height: 56px;
@@ -155,10 +167,14 @@
   .navDesktop {
     display: none;
   }
-  .notifications {
-    display: none;
-  }
   .navMobile {
     display: flex;
+  }
+
+  /* ajustar cuánto sobresale el logo en móvil */
+  .logoMask {
+    bottom: -8px;
+    width: 120px;
+    height: 48px;
   }
 }

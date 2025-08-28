@@ -1,0 +1,125 @@
+.profileCard {
+  background: #fff; /* fondo blanco como en la referencia */
+  overflow: hidden; /* evita que algo se salga */
+  text-align: center;
+  color: #222;
+  max-width: 320px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Badge Boosted */
+.boostedBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #f9d342;
+  color: #222;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  user-select: none;
+  z-index: 10;
+}
+
+/* Foto */
+.avatarContainer {
+  position: relative;
+  width: 100%;
+}
+
+.avatar {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+/* Sport Badge centrado sobre el borde inferior de la imagen */
+.sportBadge {
+  position: absolute;
+  bottom: -15px; /* sobresale un poco sobre la foto */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d4edf5; 
+  color: #1e3a8a;
+  font-weight: 700;
+  padding: 7px 15px;
+  border-radius: 0px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 5;
+}
+
+/* Contenido */
+.contentBelow {
+  padding: 25px 15px 15px 15px; /* arriba más espacio para no pisar el sport badge */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Separadores de secciones */
+.contentBelow > div {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+/* Nivel y edad */
+.levelAge {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #222;
+}
+
+/* Ciudad y país */
+.location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+  gap: 6px;
+}
+
+.locationIcon {
+  width: 16px;
+  height: 16px;
+  filter: invert(35%) sepia(10%) saturate(500%) hue-rotate(160deg) brightness(80%) contrast(85%);
+}
+
+/* Skills */
+.skillsContainer {
+  text-align: center;
+}
+
+.skillsContainer h4 {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #222;
+  text-transform: capitalize;
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.skillTag {
+  background: #1b433d;
+  color: #f1faee;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}

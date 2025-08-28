@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 import { useAuth } from '../context/useAuth';
 import TalentSearch from '../components/TalentSearch/TalentSearch';
+import HomeCarousel from '../components/home/HomeCarousel';
 
 function Home() {
   const { user } = useAuth(); // Obtén el usuario del contexto
@@ -31,6 +32,7 @@ function Home() {
       <div className={styles.athleteListWrapper}>
         <AthleteList limit={4} showSeeMore={true} />
       </div>
+      <HomeCarousel />
     </>
   );
 }
