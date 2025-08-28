@@ -43,7 +43,7 @@
 .logoMask {
   position: absolute;
   left: 0;
-  bottom: -14px; /* cuánto sobresale por debajo del header (ajusta aquí) */
+  bottom: -45px; /* cuánto sobresale por debajo del header (ajusta aquí) */
   width: 140px;
   height: 60px;
   display: inline-block;
