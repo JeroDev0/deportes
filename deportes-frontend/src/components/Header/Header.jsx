@@ -90,12 +90,12 @@ function Header() {
           <Link to="/dashboard" className={styles.iconLink} title="Buscar">
             <span className={styles.iconLabel}>Buscar</span>
           </Link>
-          <Link to="/publish" className={styles.iconLink} title="Publicar">
+          {/* <Link to="/publish" className={styles.iconLink} title="Publicar">
             <span className={styles.iconLabel}>Publicar</span>
           </Link>
           <Link to="/network" className={styles.iconLink} title="Red">
             <span className={styles.iconLabel}>Red</span>
-          </Link>
+          </Link> */}
 
           {user ? (
             <>
@@ -134,14 +134,14 @@ function Header() {
           <IconSearch />
           <span className={styles.iconLabel}>Buscar</span>
         </Link>
-        <Link to="/publish" className={styles.iconLinkMobile} title="Publicar">
+        {/* <Link to="/publish" className={styles.iconLinkMobile} title="Publicar">
           <IconPlus />
           <span className={styles.iconLabel}>Publicar</span>
         </Link>
         <Link to="/network" className={styles.iconLinkMobile} title="Red">
           <IconNetwork />
           <span className={styles.iconLabel}>Red</span>
-        </Link>
+        </Link> */}
 
         {user ? (
           <>

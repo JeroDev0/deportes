@@ -5,6 +5,8 @@ import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
 import styles from "./ProfilePage.module.css";
+import SponsorSection from "../components/Profile/SponsorSection/SponsorSection.jsx";
+
 
 function ProfilePage() {
   const { id } = useParams();
@@ -54,6 +56,7 @@ function ProfilePage() {
           profile={profile} 
           isMyProfile={isMyProfile} 
         />
+        <SponsorSection />
       </div>
 
       {/* Columna derecha */}
