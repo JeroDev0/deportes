@@ -1,3 +1,4 @@
+
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
@@ -22,15 +23,25 @@ function LeftProfileColumn({ profile }) {
 
       {/* Contenido debajo de la foto */}
       <div className={styles.contentBelow}>
-        {/* Level y Edad */}
+        {/* ✅ CORREGIDO: Level y Edad - ahora usa el nivel real de la DB */}
         <div className={styles.levelAge}>
           <span>
-            <strong>Level:</strong> {profile.level || "N/A"}
-          </span>|
+            <strong>Level:</strong> {profile.level || "Amateur"}
+          </span>
+          |
           <span>
             <strong>Age:</strong> {profile.age || "N/A"}
           </span>
         </div>
+
+        {/* ✅ AGREGADO: Género */}
+        {profile.gender && (
+          <div className={styles.gender}>
+            <span>
+              <strong>Gender:</strong> {profile.gender === "male" ? "Male" : "Female"}
+            </span>
+          </div>
+        )}
 
         {/* Ciudad y País con icono */}
         <div className={styles.location}>
@@ -43,6 +54,77 @@ function LeftProfileColumn({ profile }) {
             <strong>{profile.city || "Ciudad"}</strong> | {profile.country || "País"}
           </span>
         </div>
+
+        {/* ✅ AGREGADO: Scout asociado */}
+        {profile.scout && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/icon_scout.svg"
+                alt="scout icon"
+                className={styles.relationIcon}
+              />
+              <h4>Scout</h4>
+            </div>
+            <div className={styles.relationInfo}>
+              <span className={styles.relationName}>
+                {profile.scout.name} {profile.scout.lastName}
+              </span>
+              {profile.scout.specialization && (
+                <span className={styles.relationSpecialty}>
+                  {profile.scout.specialization}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ✅ AGREGADO: Sponsor asociado */}
+        {profile.sponsor && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/icon_sponsor.svg"
+                alt="sponsor icon"
+                className={styles.relationIcon}
+              />
+              <h4>Sponsor</h4>
+            </div>
+            <div className={styles.relationInfo}>
+              <span className={styles.relationName}>
+                {profile.sponsor.name || profile.sponsor.companyName}
+              </span>
+              {profile.sponsor.industry && (
+                <span className={styles.relationSpecialty}>
+                  {profile.sponsor.industry}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ✅ AGREGADO: Club asociado */}
+        {profile.club && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/icon_club.svg"
+                alt="club icon"
+                className={styles.relationIcon}
+              />
+              <h4>Club</h4>
+            </div>
+            <div className={styles.relationInfo}>
+              <span className={styles.relationName}>{profile.club.name}</span>
+              {profile.club.city && (
+                <span className={styles.relationSpecialty}>
+                  {profile.club.city}
+                  {profile.club.country && `, ${profile.club.country}`}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Skills */}
         {profile.skills && profile.skills.length > 0 && (

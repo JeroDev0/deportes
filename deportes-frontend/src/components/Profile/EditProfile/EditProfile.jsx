@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
@@ -5,10 +6,10 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
 
-// Opciones para género, deportes y niveles
+// Opciones para género, deportes y niveles CORREGIDOS
 const GENDERS = [
-  { value: "male", label: "male" },
-  { value: "female", label: "female" },
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
 ];
 
 const SPORTS = [
@@ -34,10 +35,11 @@ const SPORTS = [
   { value: "Triathlon", label: "Triathlon" },
 ];
 
+// ✅ CORREGIDO: Los valores coinciden con el backend
 const LEVELS = [
-  { value: "Beginner", label: "Beginner" },
-  { value: "SemiPro", label: "SemiPro" },
-  { value: "Pro", label: "Pro" },
+  { value: "amateur", label: "Amateur" },
+  { value: "semi profesional", label: "Semi Professional" },
+  { value: "profesional", label: "Professional" },
 ];
 
 // Estilos para react-select (manteniendo tu estilo original)
@@ -105,6 +107,10 @@ function EditProfile() {
     recognitions: [""],
     skills: [""],
     certifications: [""],
+    // ✅ AGREGADO: campos para scout, sponsor, club
+    scout: "",
+    sponsor: "",
+    club: "",
   });
 
   const [msg, setMsg] = useState("");
@@ -112,35 +118,101 @@ function EditProfile() {
   const [photoPreview, setPhotoPreview] = useState("");
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
+  
+  // ✅ AGREGADO: Estados para scouts, sponsors y clubs
+  const [scoutOptions, setScoutOptions] = useState([]);
+  const [sponsorOptions, setSponsorOptions] = useState([]);
+  const [clubOptions, setClubOptions] = useState([]);
+  const [loadingScouts, setLoadingScouts] = useState(false);
+  const [loadingSponsors, setLoadingSponsors] = useState(false);
+  const [loadingClubs, setLoadingClubs] = useState(false);
+  
   const countryOptions = countryList().getData();
 
-  // Cargar datos del perfil
+  // ✅ CORREGIDO: Cargar datos del perfil
   useEffect(() => {
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log("Datos recibidos:", data); // Para debug
         setForm({
-          ...form,
-          ...data,
+          name: data.name || "",
+          lastName: data.lastName || "",
+          age: data.age || "",
+          gender: data.gender || "",
+          sport: data.sport || "",
+          level: data.level || "", // ✅ CORREGIDO: Ahora toma el nivel de la DB
+          phone: data.phone || "",
+          country: data.country || "",
+          city: data.city || "",
+          photo: data.photo || "",
+          about: data.about || "",
           experience: data.experience || [""],
           recognitions: data.recognitions || [""],
           skills: data.skills || [""],
           certifications: data.certifications || [""],
-          level: data.level || "",
+          // ✅ AGREGADO: Cargar relaciones
+          scout: data.scout?._id || "",
+          sponsor: data.sponsor?._id || "",
+          club: data.club?._id || "",
         });
         setProfileType(data.profileType);
         if (data.photo && typeof data.photo === "string") {
           setPhotoPreview(data.photo);
         }
       });
-    // eslint-disable-next-line
   }, [id]);
+
+  // ✅ AGREGADO: Cargar scouts para autocompletado
+  useEffect(() => {
+    setLoadingScouts(true);
+    fetch("https://deportes-production.up.railway.app/scouts")
+      .then((res) => res.json())
+      .then((data) => {
+        setScoutOptions(data.map(scout => ({
+          value: scout._id,
+          label: `${scout.name} ${scout.lastName}` + (scout.specialization ? ` - ${scout.specialization}` : "")
+        })));
+      })
+      .catch(() => setScoutOptions([]))
+      .finally(() => setLoadingScouts(false));
+  }, []);
+
+  // ✅ AGREGADO: Cargar sponsors para autocompletado
+  useEffect(() => {
+    setLoadingSponsors(true);
+    fetch("https://deportes-production.up.railway.app/sponsors")
+      .then((res) => res.json())
+      .then((data) => {
+        setSponsorOptions(data.map(sponsor => ({
+          value: sponsor._id,
+          label: `${sponsor.name || sponsor.companyName}` + (sponsor.industry ? ` - ${sponsor.industry}` : "")
+        })));
+      })
+      .catch(() => setSponsorOptions([]))
+      .finally(() => setLoadingSponsors(false));
+  }, []);
+
+  // ✅ AGREGADO: Cargar clubs para autocompletado
+  useEffect(() => {
+    setLoadingClubs(true);
+    fetch("https://deportes-production.up.railway.app/clubs")
+      .then((res) => res.json())
+      .then((data) => {
+        setClubOptions(data.map(club => ({
+          value: club._id,
+          label: `${club.name}` + (club.city ? ` - ${club.city}` : "")
+        })));
+      })
+      .catch(() => setClubOptions([]))
+      .finally(() => setLoadingClubs(false));
+  }, []);
 
   // Cargar ciudades cuando cambia el país
   useEffect(() => {
     if (form.country) {
       setLoadingCities(true);
-      const username = "jerodev0"; // Tu usuario de GeoNames
+      const username = "jerodev0";
       fetch(
         `https://secure.geonames.org/searchJSON?country=${form.country}&featureClass=P&maxRows=1000&username=${username}`
       )
@@ -290,7 +362,7 @@ function EditProfile() {
               onClick={() => removeArrayField(field, idx)}
               title="Eliminar"
             >
-              <svg width="16" height="16" fill="#e74c3c" viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11l4.89 4.89-4.89 4.89a1 1 0 1 0 1.41 1.41l4.89-4.89 4.89 4.89a1 1 0 0 0 1.41-1.41l-4.89-4.89 4.89-4.89a1 1 0 0 0 0-1.41z"/></svg>
+              ×
             </button>
           )}
         </div>
@@ -302,44 +374,7 @@ function EditProfile() {
           onClick={() => addArrayField(field)}
           title="Agregar"
         >
-          <svg width="18" height="18" fill="#53fb52" viewBox="0 0 24 24"><path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-        </button>
-      )}
-    </div>
-  );
-
-  // Render achievements and career with editable inputs (array of strings)
-  const renderListInput = (field, placeholder) => (
-    <div className={styles.listInputContainer}>
-      {form[field].map((item, idx) => (
-        <div key={idx} className={styles.listInputItem}>
-          <input
-            type="text"
-            value={item}
-            onChange={(e) => handleArrayChange(e, field, idx)}
-            placeholder={placeholder}
-            className={styles.listInput}
-          />
-          {form[field].length > 1 && (
-            <button
-              type="button"
-              className={styles.listRemoveBtn}
-              onClick={() => removeArrayField(field, idx)}
-              title="Eliminar"
-            >
-              &times;
-            </button>
-          )}
-        </div>
-      ))}
-      {form[field].length < 10 && (
-        <button
-          type="button"
-          className={styles.listAddBtn}
-          onClick={() => addArrayField(field)}
-          title="Agregar"
-        >
-          + Add {placeholder}
+          +
         </button>
       )}
     </div>
@@ -453,6 +488,40 @@ function EditProfile() {
                   placeholder="Level"
                   styles={selectStyles}
                   isClearable
+                />
+              </div>
+            </div>
+
+            {/* ✅ AGREGADO: Sección de relaciones */}
+            <div className={styles.relationsSection}>
+              <label>Professional Relations</label>
+              <div className={styles.relationsFields}>
+                <Select
+                  options={scoutOptions}
+                  value={scoutOptions.find(s => s.value === form.scout) || null}
+                  onChange={(opt) => handleSelectChange(opt, "scout")}
+                  placeholder={loadingScouts ? "Loading scouts..." : "Select Scout"}
+                  styles={selectStyles}
+                  isClearable
+                  isDisabled={loadingScouts}
+                />
+                <Select
+                  options={sponsorOptions}
+                  value={sponsorOptions.find(s => s.value === form.sponsor) || null}
+                  onChange={(opt) => handleSelectChange(opt, "sponsor")}
+                  placeholder={loadingSponsors ? "Loading sponsors..." : "Select Sponsor"}
+                  styles={selectStyles}
+                  isClearable
+                  isDisabled={loadingSponsors}
+                />
+                <Select
+                  options={clubOptions}
+                  value={clubOptions.find(c => c.value === form.club) || null}
+                  onChange={(opt) => handleSelectChange(opt, "club")}
+                  placeholder={loadingClubs ? "Loading clubs..." : "Select Club"}
+                  styles={selectStyles}
+                  isClearable
+                  isDisabled={loadingClubs}
                 />
               </div>
             </div>

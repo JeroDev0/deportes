@@ -1,3 +1,4 @@
+
 .profileCard {
   background: #fff; /* fondo blanco como en la referencia */
   overflow: hidden; /* evita que algo se salga */
@@ -45,7 +46,7 @@
   bottom: -15px; /* sobresale un poco sobre la foto */
   left: 50%;
   transform: translateX(-50%);
-  background: #d4edf5; 
+  background: #d4edf5;
   color: #1e3a8a;
   font-weight: 700;
   padding: 7px 15px;
@@ -79,6 +80,15 @@
   color: #222;
 }
 
+/* ✅ AGREGADO: Género */
+.gender {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #222;
+}
+
 /* Ciudad y país */
 .location {
   display: flex;
@@ -93,6 +103,53 @@
   width: 16px;
   height: 16px;
   filter: invert(35%) sepia(10%) saturate(500%) hue-rotate(160deg) brightness(80%) contrast(85%);
+}
+
+/* ✅ AGREGADO: Estilos para relaciones (Scout, Sponsor, Club) */
+.relationItem {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px;
+  border-left: 4px solid #53fb52;
+}
+
+.relationHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.relationHeader h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.relationIcon {
+  width: 16px;
+  height: 16px;
+  filter: invert(23%) sepia(99%) saturate(2612%) hue-rotate(216deg) brightness(92%) contrast(93%);
+}
+
+.relationInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.relationName {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #222;
+}
+
+.relationSpecialty {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
 }
 
 /* Skills */
@@ -122,4 +179,29 @@
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: lowercase;
+}
+
+/* ✅ AGREGADO: Estilos responsivos mejorados */
+@media (max-width: 768px) {
+  .profileCard {
+    max-width: 100%;
+  }
+  
+  .levelAge {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .relationItem {
+    padding: 10px;
+  }
+  
+  .skillsList {
+    gap: 6px;
+  }
+  
+  .skillTag {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
 }

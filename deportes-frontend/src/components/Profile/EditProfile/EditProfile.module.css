@@ -1,3 +1,4 @@
+
 .editProfileBg {
   min-height: 100vh;
   display: flex;
@@ -241,15 +242,22 @@ label {
   max-width: 400px;
 }
 
-/* Headers */
-.achievementsHeader, .careerHeader {
+/* ✅ AGREGADO: Estilos para la sección de relaciones */
+.relationsSection {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  margin-bottom: 8px;
-  color: #444;
-  font-weight: 700;
-  font-size: 1.2rem;
+}
+
+.relationsFields {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.relationsFields > div {
+  flex: 1 1 200px;
+  min-width: 200px;
 }
 
 /* Headers */
@@ -530,7 +538,6 @@ label {
 }
 
 /* Responsive */
-
 @media (max-width: 900px) {
   .form {
     flex-direction: column;
@@ -552,6 +559,9 @@ label {
     flex-direction: column;
   }
   .sportCareerFields {
+    flex-direction: column;
+  }
+  .relationsFields {
     flex-direction: column;
   }
 }

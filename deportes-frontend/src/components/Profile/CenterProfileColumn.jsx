@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
 
 function CenterProfileColumn({ profile = {} }) {
-  const navigate = useNavigate(); // 👈 ya está dentro de la función
+  const navigate = useNavigate();
   const [followers, setFollowers] = useState(219);
   const [isFollowing, setIsFollowing] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -34,20 +35,20 @@ function CenterProfileColumn({ profile = {} }) {
   return (
     <div className={styles.centerCard}>
       {/* --- Nav menu --- */}
-      <nav className={styles.navMenu}>
+      <div className={styles.navMenu}>
         <div className={styles.navLeft}>
           <a href="#aboutSection">About</a>
           <a href="#gallerySection">Gallery</a>
           <a href="#achievementsSection">Achievements</a>
         </div>
         <button
-  className={styles.editProfileBtn}
-  onClick={() => navigate(`/profile/${profile._id}/edit`)}
->
-  <img src="/assets/icon_edit.svg" alt="edit icon" />
-  Edit Profile
-</button>
-      </nav>
+          className={styles.editProfileBtn}
+          onClick={() => navigate(`/profile/${profile._id}/edit`)}
+        >
+          <img src="/assets/icon_edit.svg" alt="edit" />
+          Edit Profile
+        </button>
+      </div>
 
       {/* Header */}
       <div className={styles.header}>
