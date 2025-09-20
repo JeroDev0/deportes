@@ -2,6 +2,10 @@ console.log("Cargando rutas de deportistas");
 const express = require("express");
 const router = express.Router();
 const Deportista = require("../models/Deportista");
+const Scout = require("../models/Scout");
+const Sponsor = require("../models/Sponsor");
+const Club = require("../models/Club");
+
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
@@ -16,10 +20,17 @@ cloudinary.config({
 // Configura multer (solo memoria, no disco)
 const upload = multer();
 
-// Obtener todos los deportistas
+// ============================
+// RUTAS DE DEPORTISTAS
+// ============================
+
+// Obtener todos los deportistas (con populate)
 router.get("/", async (req, res) => {
   try {
-    const deportistas = await Deportista.find();
+    const deportistas = await Deportista.find()
+      .populate("scout")
+      .populate("sponsor")
+      .populate("club");
     res.json(deportistas);
   } catch (err) {
     res.status(500).json({ error: "Error al obtener los deportistas" });
@@ -47,7 +58,12 @@ router.post("/", async (req, res) => {
       recognitions,
       skills,
       certifications,
+      level,
+      scout,
+      sponsor,
+      club,
     } = req.body;
+
     const nuevoDeportista = new Deportista({
       email,
       password,
@@ -66,35 +82,34 @@ router.post("/", async (req, res) => {
       recognitions,
       skills,
       certifications,
+      level,
+      scout,
+      sponsor,
+      club,
     });
+
     await nuevoDeportista.save();
     res.status(201).json(nuevoDeportista);
   } catch (err) {
-    res
-      .status(400)
-      .json({
-        error: "Error al registrar el deportista",
-        details: err.message,
-      });
+    res.status(400).json({
+      error: "Error al registrar el deportista",
+      details: err.message,
+    });
   }
 });
 
-// Actualizar perfil de un deportista (con foto)
+// Actualizar perfil de un deportista (con foto y relaciones)
 router.put("/:id", upload.single("photo"), async (req, res) => {
   try {
-    console.log("--- ACTUALIZANDO PERFIL ---");
-    console.log("req.body:", req.body);
-    console.log("req.file:", req.file);
     let updateFields = { ...req.body };
 
-    // Convierte arrays que vienen como string a array real
+    // Convertir arrays enviados como string a array
     ["experience", "recognitions", "skills", "certifications"].forEach(
       (field) => {
         if (updateFields[field]) {
           if (Array.isArray(updateFields[field])) {
-            // Ya es array
+            // ya es array
           } else if (typeof updateFields[field] === "string") {
-            // Puede venir como string si solo hay un elemento
             updateFields[field] = [updateFields[field]];
           } else {
             updateFields[field] = [];
@@ -103,35 +118,41 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
       }
     );
 
-    // Si hay foto nueva, súbela a Cloudinary
+    // Manejar foto en Cloudinary
     if (req.file) {
       const streamUpload = (fileBuffer) => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
             { folder: "deportistas" },
             (error, result) => {
-              if (result) {
-                resolve(result);
-              } else {
-                reject(error);
-              }
+              if (result) resolve(result);
+              else reject(error);
             }
           );
           streamifier.createReadStream(fileBuffer).pipe(stream);
         });
       };
-
       const result = await streamUpload(req.file.buffer);
       updateFields.photo = result.secure_url;
     }
+
+    // ✅ Manejar relaciones (scout, sponsor, club)
+    if (updateFields.scout === "") updateFields.scout = null;
+    if (updateFields.sponsor === "") updateFields.sponsor = null;
+    if (updateFields.club === "") updateFields.club = null;
 
     const deportista = await Deportista.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
-    );
+    )
+      .populate("scout")
+      .populate("sponsor")
+      .populate("club");
+
     if (!deportista)
       return res.status(404).json({ error: "Deportista no encontrado" });
+
     res.json(deportista);
   } catch (err) {
     res
@@ -143,7 +164,10 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
 // Obtener un deportista por ID
 router.get("/:id", async (req, res) => {
   try {
-    const deportista = await Deportista.findById(req.params.id, "-password");
+    const deportista = await Deportista.findById(req.params.id, "-password")
+      .populate("scout")
+      .populate("sponsor")
+      .populate("club");
     if (!deportista)
       return res.status(404).json({ error: "Deportista no encontrado" });
     res.json(deportista);

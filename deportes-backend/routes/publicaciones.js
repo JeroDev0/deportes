@@ -48,4 +48,30 @@ router.post("/:id/like", async (req, res) => {
   }
 });
 
+// Editar publicación
+router.put("/:id", async (req, res) => {
+  try {
+    const { text, mediaUrl, type } = req.body;
+    const updated = await Publicacion.findByIdAndUpdate(
+      req.params.id,
+      { text, mediaUrl, type },
+      { new: true }
+    );
+    if (!updated) return res.status(404).json({ error: "No encontrada" });
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: "Error al editar", details: err.message });
+  }
+});
+
+// Eliminar publicación
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Publicacion.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "No encontrada" });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json({ error: "Error al eliminar", details: err.message });
+  }
+});
 module.exports = router;
