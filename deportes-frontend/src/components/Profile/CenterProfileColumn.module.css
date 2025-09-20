@@ -1,9 +1,11 @@
+
 .centerCard {
   background: #E4ECF0;
   padding: 20px;
   color: #222;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 /* --- nav superior --- */
 .navMenu {
   display: flex;
@@ -163,17 +165,6 @@
 /* --- Título de Achievements en marrón --- */
 .achievementsSection .sectionHeader h2 {
   color: #925518;
-}
-
-.achievements-list li,
-.career-list li {
-  border-bottom: 1px solid #ddd; /* separador */
-  padding: 10px 0; /* espacio arriba y abajo */
-}
-
-.achievements-list li:last-child,
-.career-list li:last-child {
-  border-bottom: none; /* quitar separador al último */
 }
 
 .showAll {
