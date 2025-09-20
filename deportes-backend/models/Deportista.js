@@ -30,6 +30,15 @@ const DeportistaSchema = new mongoose.Schema({
   skills: [String],
   certifications: [String], // solo scout y sponsor
   registrationDate: { type: Date, default: Date.now },
+  scout: { type: mongoose.Schema.Types.ObjectId, ref: "Scout", default: null },
+  sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Sponsor", default: null },
+  club: { type: mongoose.Schema.Types.ObjectId, ref: "Club", default: null },
+  // Nuevo campo para nivel del deportista
+  level: {
+    type: String,
+    enum: ["amateur", "semi profesional", "profesional"],
+    default: "amateur",
+  },
 });
 
 module.exports = mongoose.model("Deportista", DeportistaSchema);

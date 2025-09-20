@@ -8,6 +8,9 @@ import Dashboard from './pages/Dashboard';
 import AuthPage from './components/Auth/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 
+// ⬇️ Importamos el botón flotante
+import FloatingButton from './components/common/FloatingButton';
+
 function App() {
   return (
     <Router>
@@ -30,6 +33,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+
+      {/* ⬇️ Botón flotante global */}
+      <FloatingButton />
     </Router>
   );
 }
