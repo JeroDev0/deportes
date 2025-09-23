@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
@@ -6,7 +5,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
 
-// Opciones para género, deportes y niveles CORREGIDOS
+// Opciones para género, deportes y niveles
 const GENDERS = [
   { value: "male", label: "Male" },
   { value: "female", label: "Female" },
@@ -35,56 +34,43 @@ const SPORTS = [
   { value: "Triathlon", label: "Triathlon" },
 ];
 
-// ✅ CORREGIDO: Los valores coinciden con el backend
+// Niveles con los valores exactos que espera backend
 const LEVELS = [
   { value: "amateur", label: "Amateur" },
   { value: "semi profesional", label: "Semi Professional" },
   { value: "profesional", label: "Professional" },
 ];
 
-// Estilos para react-select (manteniendo tu estilo original)
+// Estilos para react-select
 const selectStyles = {
   control: (provided) => ({
     ...provided,
-    minHeight: '40px',
-    border: '1px solid #253b4d',
-    borderRadius: '10px',
-    fontSize: '1.12rem',
-    background: '#1a334a',
-    color: '#eaf6ff',
+    minHeight: "40px",
+    border: "1px solid #253b4d",
+    borderRadius: "10px",
+    fontSize: "1.12rem",
+    background: "#1a334a",
+    color: "#eaf6ff",
   }),
   menu: (provided) => ({
     ...provided,
-    background: '#1a334a',
-    color: '#eaf6ff',
+    background: "#1a334a",
+    color: "#eaf6ff",
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? '#53fb52' : state.isFocused ? '#223c54' : '#1a334a',
-    color: state.isSelected ? '#0d2635' : '#eaf6ff',
+    backgroundColor: state.isSelected ? "#53fb52" : state.isFocused ? "#223c54" : "#1a334a",
+    color: state.isSelected ? "#0d2635" : "#eaf6ff",
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: '#eaf6ff',
+    color: "#eaf6ff",
   }),
   input: (provided) => ({
     ...provided,
-    color: '#eaf6ff',
+    color: "#eaf6ff",
   }),
 };
-
-function capitalizeParagraph(str) {
-  if (!str) return "";
-  const s = str.trim().toLowerCase();
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function capitalizeWords(str) {
-  if (!str) return "";
-  return str
-    .toLowerCase()
-    .replace(/\b\w/g, (l) => l.toUpperCase());
-}
 
 function EditProfile() {
   const { id } = useParams();
@@ -107,7 +93,6 @@ function EditProfile() {
     recognitions: [""],
     skills: [""],
     certifications: [""],
-    // ✅ AGREGADO: campos para scout, sponsor, club
     scout: "",
     sponsor: "",
     club: "",
@@ -118,30 +103,28 @@ function EditProfile() {
   const [photoPreview, setPhotoPreview] = useState("");
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
-  
-  // ✅ AGREGADO: Estados para scouts, sponsors y clubs
+
   const [scoutOptions, setScoutOptions] = useState([]);
   const [sponsorOptions, setSponsorOptions] = useState([]);
   const [clubOptions, setClubOptions] = useState([]);
   const [loadingScouts, setLoadingScouts] = useState(false);
   const [loadingSponsors, setLoadingSponsors] = useState(false);
   const [loadingClubs, setLoadingClubs] = useState(false);
-  
+
   const countryOptions = countryList().getData();
 
-  // ✅ CORREGIDO: Cargar datos del perfil
+  // Cargar datos iniciales del perfil
   useEffect(() => {
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Datos recibidos:", data); // Para debug
         setForm({
           name: data.name || "",
           lastName: data.lastName || "",
           age: data.age || "",
           gender: data.gender || "",
           sport: data.sport || "",
-          level: data.level || "", // ✅ CORREGIDO: Ahora toma el nivel de la DB
+          level: data.level || "",
           phone: data.phone || "",
           country: data.country || "",
           city: data.city || "",
@@ -151,7 +134,6 @@ function EditProfile() {
           recognitions: data.recognitions || [""],
           skills: data.skills || [""],
           certifications: data.certifications || [""],
-          // ✅ AGREGADO: Cargar relaciones
           scout: data.scout?._id || "",
           sponsor: data.sponsor?._id || "",
           club: data.club?._id || "",
@@ -163,52 +145,58 @@ function EditProfile() {
       });
   }, [id]);
 
-  // ✅ AGREGADO: Cargar scouts para autocompletado
+  // Scouts
   useEffect(() => {
     setLoadingScouts(true);
     fetch("https://deportes-production.up.railway.app/scouts")
       .then((res) => res.json())
       .then((data) => {
-        setScoutOptions(data.map(scout => ({
-          value: scout._id,
-          label: `${scout.name} ${scout.lastName}` + (scout.specialization ? ` - ${scout.specialization}` : "")
-        })));
+        setScoutOptions(
+          data.map((scout) => ({
+            value: scout._id,
+            label: `${scout.name} ${scout.lastName}` + (scout.specialization ? ` - ${scout.specialization}` : ""),
+          }))
+        );
       })
       .catch(() => setScoutOptions([]))
       .finally(() => setLoadingScouts(false));
   }, []);
 
-  // ✅ AGREGADO: Cargar sponsors para autocompletado
+  // Sponsors
   useEffect(() => {
     setLoadingSponsors(true);
     fetch("https://deportes-production.up.railway.app/sponsors")
       .then((res) => res.json())
       .then((data) => {
-        setSponsorOptions(data.map(sponsor => ({
-          value: sponsor._id,
-          label: `${sponsor.name || sponsor.companyName}` + (sponsor.industry ? ` - ${sponsor.industry}` : "")
-        })));
+        setSponsorOptions(
+          data.map((sponsor) => ({
+            value: sponsor._id,
+            label: `${sponsor.name || sponsor.companyName}` + (sponsor.industry ? ` - ${sponsor.industry}` : ""),
+          }))
+        );
       })
       .catch(() => setSponsorOptions([]))
       .finally(() => setLoadingSponsors(false));
   }, []);
 
-  // ✅ AGREGADO: Cargar clubs para autocompletado
+  // Clubs
   useEffect(() => {
     setLoadingClubs(true);
     fetch("https://deportes-production.up.railway.app/clubs")
       .then((res) => res.json())
       .then((data) => {
-        setClubOptions(data.map(club => ({
-          value: club._id,
-          label: `${club.name}` + (club.city ? ` - ${club.city}` : "")
-        })));
+        setClubOptions(
+          data.map((club) => ({
+            value: club._id,
+            label: `${club.name}` + (club.city ? ` - ${club.city}` : ""),
+          }))
+        );
       })
       .catch(() => setClubOptions([]))
       .finally(() => setLoadingClubs(false));
   }, []);
 
-  // Cargar ciudades cuando cambia el país
+  // Ciudades por país
   useEffect(() => {
     if (form.country) {
       setLoadingCities(true);
@@ -218,15 +206,8 @@ function EditProfile() {
       )
         .then((res) => res.json())
         .then((data) => {
-          const uniqueCities = Array.from(
-            new Set(data.geonames.map((city) => city.name))
-          );
-          setCityOptions(
-            uniqueCities.map((city) => ({
-              value: city,
-              label: city,
-            }))
-          );
+          const uniqueCities = Array.from(new Set(data.geonames.map((city) => city.name)));
+          setCityOptions(uniqueCities.map((city) => ({ value: city, label: city })));
           setLoadingCities(false);
         })
         .catch(() => {
@@ -289,29 +270,8 @@ function EditProfile() {
     e.preventDefault();
     setMsg("");
 
+    // 🚀 Ya no se transforman mayúsculas/minúsculas
     const cleanForm = { ...form };
-
-    ["name", "lastName", "city", "country", "sport", "gender"].forEach((field) => {
-      if (cleanForm[field]) cleanForm[field] = capitalizeWords(cleanForm[field]);
-    });
-
-    ["skills", "certifications"].forEach((field) => {
-      if (Array.isArray(cleanForm[field])) {
-        cleanForm[field] = cleanForm[field]
-          .filter((v) => v && v.trim() !== "")
-          .map((v) => capitalizeWords(v));
-      }
-    });
-
-    ["experience", "recognitions"].forEach((field) => {
-      if (Array.isArray(cleanForm[field])) {
-        cleanForm[field] = cleanForm[field]
-          .filter((v) => v && v.trim() !== "")
-          .map((v) => capitalizeParagraph(v));
-      }
-    });
-
-    if (cleanForm.about) cleanForm.about = capitalizeParagraph(cleanForm.about);
 
     const formData = new FormData();
     Object.entries(cleanForm).forEach(([key, value]) => {
@@ -342,7 +302,7 @@ function EditProfile() {
     }
   };
 
-  // Render chips para arrays (skills, experience, recognitions, certifications)
+  // Render chips para campos array
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>
       {form[field].map((item, idx) => (
@@ -383,11 +343,13 @@ function EditProfile() {
   return (
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
-        <button className={styles.backBtn} onClick={() => navigate(-1)}>← Back to Profile</button>
+        <button className={styles.backBtn} onClick={() => navigate(-1)}>
+          ← Back to Profile
+        </button>
         <h1 className={styles.header}>EDIT PROFILE</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          {/* Left column: photo, skills */}
+          {/* Columna izquierda */}
           <div className={styles.leftCol}>
             <div className={styles.photoSection}>
               {photoPreview ? (
@@ -395,7 +357,9 @@ function EditProfile() {
               ) : (
                 <div className={styles.photoPlaceholder}>No Photo</div>
               )}
-              <label htmlFor="photoUpload" className={styles.photoEditBtn}>✎</label>
+              <label htmlFor="photoUpload" className={styles.photoEditBtn}>
+                ✎
+              </label>
               <input type="file" id="photoUpload" accept="image/*" onChange={handlePhotoChange} hidden />
             </div>
 
@@ -405,12 +369,12 @@ function EditProfile() {
             </div>
           </div>
 
-          {/* Right column: all other fields */}
+          {/* Columna derecha */}
           <div className={styles.rightCol}>
             <label>Introduction</label>
             <textarea
               name="about"
-              maxLength={300}
+              maxLength={1000}
               value={form.about}
               onChange={handleChange}
               placeholder="Create a short bio that introduces your athlete career and character"
@@ -423,7 +387,7 @@ function EditProfile() {
               <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
               <Select
                 options={GENDERS}
-                value={GENDERS.find(g => g.value === form.gender) || null}
+                value={GENDERS.find((g) => g.value === form.gender) || null}
                 onChange={(opt) => handleSelectChange(opt, "gender")}
                 placeholder="Gender"
                 styles={selectStyles}
@@ -439,15 +403,10 @@ function EditProfile() {
                 min={1}
                 max={120}
               />
-              <input
-                name="phone"
-                placeholder="Phone (+country code)"
-                value={form.phone}
-                onChange={handleChange}
-              />
+              <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
               <Select
                 options={countryOptions}
-                value={countryOptions.find(c => c.value === form.country) || null}
+                value={countryOptions.find((c) => c.value === form.country) || null}
                 onChange={(opt) => handleSelectChange(opt, "country")}
                 placeholder="Country"
                 styles={selectStyles}
@@ -455,14 +414,10 @@ function EditProfile() {
               />
               <Select
                 options={cityOptions}
-                value={cityOptions.find(c => c.value === form.city) || null}
+                value={cityOptions.find((c) => c.value === form.city) || null}
                 onChange={(opt) => handleSelectChange(opt, "city")}
                 placeholder={
-                  loadingCities
-                    ? "Loading cities..."
-                    : form.country
-                    ? "Select your city"
-                    : "Select a country first"
+                  loadingCities ? "Loading cities..." : form.country ? "Select your city" : "Select a country first"
                 }
                 isClearable
                 isDisabled={!form.country || loadingCities || cityOptions.length === 0}
@@ -475,7 +430,7 @@ function EditProfile() {
               <div className={styles.sportCareerFields}>
                 <Select
                   options={SPORTS}
-                  value={SPORTS.find(s => s.value === form.sport) || null}
+                  value={SPORTS.find((s) => s.value === form.sport) || null}
                   onChange={(opt) => handleSelectChange(opt, "sport")}
                   placeholder="Discipline"
                   styles={selectStyles}
@@ -483,7 +438,7 @@ function EditProfile() {
                 />
                 <Select
                   options={LEVELS}
-                  value={LEVELS.find(l => l.value === form.level) || null}
+                  value={LEVELS.find((l) => l.value === form.level) || null}
                   onChange={(opt) => handleSelectChange(opt, "level")}
                   placeholder="Level"
                   styles={selectStyles}
@@ -492,13 +447,13 @@ function EditProfile() {
               </div>
             </div>
 
-            {/* ✅ AGREGADO: Sección de relaciones */}
+            {/* Relaciones */}
             <div className={styles.relationsSection}>
               <label>Professional Relations</label>
               <div className={styles.relationsFields}>
                 <Select
                   options={scoutOptions}
-                  value={scoutOptions.find(s => s.value === form.scout) || null}
+                  value={scoutOptions.find((s) => s.value === form.scout) || null}
                   onChange={(opt) => handleSelectChange(opt, "scout")}
                   placeholder={loadingScouts ? "Loading scouts..." : "Select Scout"}
                   styles={selectStyles}
@@ -507,7 +462,7 @@ function EditProfile() {
                 />
                 <Select
                   options={sponsorOptions}
-                  value={sponsorOptions.find(s => s.value === form.sponsor) || null}
+                  value={sponsorOptions.find((s) => s.value === form.sponsor) || null}
                   onChange={(opt) => handleSelectChange(opt, "sponsor")}
                   placeholder={loadingSponsors ? "Loading sponsors..." : "Select Sponsor"}
                   styles={selectStyles}
@@ -516,7 +471,7 @@ function EditProfile() {
                 />
                 <Select
                   options={clubOptions}
-                  value={clubOptions.find(c => c.value === form.club) || null}
+                  value={clubOptions.find((c) => c.value === form.club) || null}
                   onChange={(opt) => handleSelectChange(opt, "club")}
                   placeholder={loadingClubs ? "Loading clubs..." : "Select Club"}
                   styles={selectStyles}
@@ -526,16 +481,9 @@ function EditProfile() {
               </div>
             </div>
 
+            {/* Achievements */}
             <div className={styles.achievementsSection}>
-              <div className={styles.achievementsHeader}>
-                <svg className={styles.trophyIcon} viewBox="0 0 24 24" fill="#999" width="20" height="20" aria-hidden="true">
-                  <path d="M7 3v2H5v3a5 5 0 0 0 4 4.9V15H7v2h10v-2h-2v-2.1a5 5 0 0 0 4-4.9V5h-2V3H7zM6 8V5h2v3a3 3 0 0 1-2 2.83V8zm12 0v2.83A3 3 0 0 1 16 8V5h2v3z"/>
-                </svg>
-                <h3>Achievements</h3>
-              </div>
-              <p className={styles.achievementsDescription}>
-                List your most important accomplishments as an athlete — from awards, titles, and rankings to national team selections, standout performances, or recognitions from clubs and organizations. Focus on what sets you apart.
-              </p>
+              <h3>Achievements</h3>
               {form.recognitions.map((ach, idx) => (
                 <div key={idx} className={styles.achievementItem}>
                   <span className={styles.star}>★</span>
@@ -547,36 +495,22 @@ function EditProfile() {
                     className={styles.achievementInput}
                   />
                   {form.recognitions.length > 1 && (
-                    <button
-                      type="button"
-                      className={styles.removeAchievementBtn}
-                      onClick={() => removeArrayField("recognitions", idx)}
-                      title="Remove achievement"
-                    >
+                    <button type="button" onClick={() => removeArrayField("recognitions", idx)}>
                       &times;
                     </button>
                   )}
                 </div>
               ))}
               {form.recognitions.length < 10 && (
-                <button
-                  type="button"
-                  className={styles.addAchievementBtn}
-                  onClick={() => addArrayField("recognitions")}
-                  title="Add achievement"
-                >
-                  Add Achievement <span className={styles.plusIcon}>+</span>
+                <button type="button" onClick={() => addArrayField("recognitions")}>
+                  Add Achievement +
                 </button>
               )}
             </div>
 
+            {/* Career */}
             <div className={styles.careerSection}>
-              <div className={styles.careerHeader}>
-                <svg className={styles.trophyIcon} viewBox="0 0 24 24" fill="#999" width="20" height="20" aria-hidden="true">
-                  <path d="M7 3v2H5v3a5 5 0 0 0 4 4.9V15H7v2h10v-2h-2v-2.1a5 5 0 0 0 4-4.9V5h-2V3H7zM6 8V5h2v3a3 3 0 0 1-2 2.83V8zm12 0v2.83A3 3 0 0 1 16 8V5h2v3z"/>
-                </svg>
-                <h3>Career</h3>
-              </div>
+              <h3>Career</h3>
               {form.experience.map((item, idx) => (
                 <div key={idx} className={styles.careerItem}>
                   <input
@@ -587,25 +521,15 @@ function EditProfile() {
                     className={styles.careerInput}
                   />
                   {form.experience.length > 1 && (
-                    <button
-                      type="button"
-                      className={styles.removeCareerBtn}
-                      onClick={() => removeArrayField("experience", idx)}
-                      title="Remove career item"
-                    >
+                    <button type="button" onClick={() => removeArrayField("experience", idx)}>
                       &times;
                     </button>
                   )}
                 </div>
               ))}
               {form.experience.length < 10 && (
-                <button
-                  type="button"
-                  className={styles.addCareerBtn}
-                  onClick={() => addArrayField("experience")}
-                  title="Add career item"
-                >
-                  Add Career <span className={styles.plusIcon}>+</span>
+                <button type="button" onClick={() => addArrayField("experience")}>
+                  Add Career +
                 </button>
               )}
             </div>
@@ -617,7 +541,9 @@ function EditProfile() {
               </>
             )}
 
-            <button type="submit" className={styles.saveBtn}>Save Changes</button>
+            <button type="submit" className={styles.saveBtn}>
+              Save Changes
+            </button>
             {msg && <p className={msg.includes("error") ? styles.error : styles.success}>{msg}</p>}
           </div>
         </form>
