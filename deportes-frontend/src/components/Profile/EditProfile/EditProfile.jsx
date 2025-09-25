@@ -314,65 +314,54 @@ function EditProfile() {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMsg("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMsg("");
 
-  // 🔥 SOLUCIÓN: Limpiar y normalizar TODOS los campos antes de enviar
-  const cleanForm = { ...form };
-  
-  // Asegurar que los campos problemáticos sean strings válidos
-  const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
-  stringFields.forEach(field => {
-    if (cleanForm[field] === null || cleanForm[field] === undefined || cleanForm[field] === 'undefined') {
-      cleanForm[field] = '';
-    }
-    // Convertir a string explícitamente
-    cleanForm[field] = String(cleanForm[field] || '');
-  });
+    const cleanForm = { ...form };
+    
+    // Asegurar que los campos problemáticos sean strings válidos
+    const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
+    stringFields.forEach(field => {
+      if (cleanForm[field] === null || cleanForm[field] === undefined || cleanForm[field] === 'undefined') {
+        cleanForm[field] = '';
+      }
+      cleanForm[field] = String(cleanForm[field] || '');
+    });
 
-  console.log("🔍 Datos antes de FormData:", cleanForm);
-
-  const formData = new FormData();
-  Object.entries(cleanForm).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      value.forEach((v) => {
-        // Asegurar que los valores del array no sean null/undefined
-        const cleanValue = v === null || v === undefined ? '' : String(v);
+    const formData = new FormData();
+    Object.entries(cleanForm).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => {
+          const cleanValue = v === null || v === undefined ? '' : String(v);
+          formData.append(key, cleanValue);
+        });
+      } else {
+        const cleanValue = value === null || value === undefined ? '' : value;
         formData.append(key, cleanValue);
-      });
-    } else {
-      // Para campos no-array, asegurar que no sean null/undefined
-      const cleanValue = value === null || value === undefined ? '' : value;
-      formData.append(key, cleanValue);
+      }
+    });
+
+    const res = await fetch(`https://deportes-production.up.railway.app/deportistas/${id}`, {
+      method: "PUT",
+      body: formData,
+    });
+
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = { error: "Respuesta inválida del servidor" };
     }
-  });
 
-  // 🔍 Debug: Ver qué se está enviando en FormData
-  console.log("📤 FormData entries:");
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}: ${value} (type: ${typeof value})`);
-  }
+    if (res.ok) {
+      setMsg("Perfil actualizado");
+      setTimeout(() => navigate(`/profile/${id}`), 800);
+    } else {
+      setMsg(data.error || "Error al actualizar");
+    }
+  };
 
-  const res = await fetch(`https://deportes-production.up.railway.app/deportistas/${id}`, { // Cambiado a localhost
-    method: "PUT",
-    body: formData,
-  });
-
-  let data;
-  try {
-    data = await res.json();
-  } catch (e) {
-    data = { error: "Respuesta inválida del servidor" };
-  }
-
-  if (res.ok) {
-    setMsg("Perfil actualizado");
-    setTimeout(() => navigate(`/profile/${id}`), 800);
-  } else {
-    setMsg(data.error || "Error al actualizar");
-  }
-};
   // Render chips para campos array
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>

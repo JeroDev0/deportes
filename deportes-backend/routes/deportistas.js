@@ -1,4 +1,3 @@
-console.log("Cargando rutas de deportistas");
 const express = require("express");
 const router = express.Router();
 const Deportista = require("../models/Deportista");
@@ -62,10 +61,7 @@ router.put("/:id", (req, res, next) => {
   }
 }, async (req, res) => {
   try {
-    console.log("📥 Datos recibidos en el backend:", req.body);
-    console.log("📥 Tipo de content-type:", req.headers["content-type"]);
-
-    // 🔥 SOLUCIÓN MEJORADA: Procesar campos string problemáticos
+    // Procesar campos string problemáticos
     const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
     stringFields.forEach(field => {
       const value = req.body[field];
@@ -77,14 +73,6 @@ router.put("/:id", (req, res, next) => {
         // Asegurar que sea string
         req.body[field] = String(value).trim();
       }
-    });
-
-    console.log("📋 Campos string después del procesamiento:", {
-      postalCode: `"${req.body.postalCode}" (${typeof req.body.postalCode})`,
-      address: `"${req.body.address}" (${typeof req.body.address})`,
-      birthCountry: `"${req.body.birthCountry}" (${typeof req.body.birthCountry})`,
-      birthCity: `"${req.body.birthCity}" (${typeof req.body.birthCity})`,
-      shortDescription: `"${req.body.shortDescription}" (${typeof req.body.shortDescription})`
     });
 
     // Normalizar age a número
@@ -120,8 +108,6 @@ router.put("/:id", (req, res, next) => {
       if (req.body[ref] === "" || req.body[ref] === "null") req.body[ref] = null;
     });
 
-    console.log("📤 Datos finales para actualizar:", req.body);
-
     const deportista = await Deportista.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
@@ -135,10 +121,9 @@ router.put("/:id", (req, res, next) => {
       return res.status(404).json({ error: "Deportista no encontrado" });
     }
 
-    console.log("✅ Deportista actualizado correctamente");
     res.json(deportista);
   } catch (err) {
-    console.error("❌ Error actualizando deportista:", err);
+    console.error("Error actualizando deportista:", err);
     res.status(400).json({ error: "Error al actualizar el perfil", details: err.message });
   }
 });
