@@ -85,10 +85,18 @@ function EditProfile() {
     sport: "",
     level: "",
     phone: "",
+    // 🌍 Información actual/residencia
     country: "",
     city: "",
+    postalCode: "",
+    address: "",
+    // 🏠 Información de nacimiento
+    birthCountry: "",
+    birthCity: "",
     photo: "",
+    // 📝 Descripciones
     about: "",
+    shortDescription: "",
     experience: [""],
     recognitions: [""],
     skills: [""],
@@ -101,8 +109,14 @@ function EditProfile() {
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
   const [photoPreview, setPhotoPreview] = useState("");
+  
+  // Estados para ciudades actuales
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
+  
+  // Estados para ciudades de nacimiento
+  const [birthCityOptions, setBirthCityOptions] = useState([]);
+  const [loadingBirthCities, setLoadingBirthCities] = useState(false);
 
   const [scoutOptions, setScoutOptions] = useState([]);
   const [sponsorOptions, setSponsorOptions] = useState([]);
@@ -126,10 +140,18 @@ function EditProfile() {
           sport: data.sport || "",
           level: data.level || "",
           phone: data.phone || "",
+          // 🌍 Información actual/residencia
           country: data.country || "",
           city: data.city || "",
+          postalCode: data.postalCode || "",
+          address: data.address || "",
+          // 🏠 Información de nacimiento
+          birthCountry: data.birthCountry || "",
+          birthCity: data.birthCity || "",
           photo: data.photo || "",
+          // 📝 Descripciones
           about: data.about || "",
+          shortDescription: data.shortDescription || "",
           experience: data.experience || [""],
           recognitions: data.recognitions || [""],
           skills: data.skills || [""],
@@ -196,7 +218,7 @@ function EditProfile() {
       .finally(() => setLoadingClubs(false));
   }, []);
 
-  // Ciudades por país
+  // Ciudades por país actual
   useEffect(() => {
     if (form.country) {
       setLoadingCities(true);
@@ -220,6 +242,30 @@ function EditProfile() {
     }
   }, [form.country]);
 
+  // Ciudades por país de nacimiento
+  useEffect(() => {
+    if (form.birthCountry) {
+      setLoadingBirthCities(true);
+      const username = "jerodev0";
+      fetch(
+        `https://secure.geonames.org/searchJSON?country=${form.birthCountry}&featureClass=P&maxRows=1000&username=${username}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const uniqueCities = Array.from(new Set(data.geonames.map((city) => city.name)));
+          setBirthCityOptions(uniqueCities.map((city) => ({ value: city, label: city })));
+          setLoadingBirthCities(false);
+        })
+        .catch(() => {
+          setBirthCityOptions([]);
+          setLoadingBirthCities(false);
+        });
+    } else {
+      setBirthCityOptions([]);
+      setLoadingBirthCities(false);
+    }
+  }, [form.birthCountry]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -229,6 +275,8 @@ function EditProfile() {
     const value = selectedOption ? selectedOption.value : "";
     if (fieldName === "country") {
       setForm((prev) => ({ ...prev, country: value, city: "" }));
+    } else if (fieldName === "birthCountry") {
+      setForm((prev) => ({ ...prev, birthCountry: value, birthCity: "" }));
     } else {
       setForm((prev) => ({ ...prev, [fieldName]: value }));
     }
@@ -266,42 +314,65 @@ function EditProfile() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMsg("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setMsg("");
 
-    // 🚀 Ya no se transforman mayúsculas/minúsculas
-    const cleanForm = { ...form };
-
-    const formData = new FormData();
-    Object.entries(cleanForm).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((v) => formData.append(key, v));
-      } else {
-        formData.append(key, value);
-      }
-    });
-
-    const res = await fetch(`https://deportes-production.up.railway.app/deportistas/${id}`, {
-      method: "PUT",
-      body: formData,
-    });
-
-    let data;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = { error: "Respuesta inválida del servidor" };
+  // 🔥 SOLUCIÓN: Limpiar y normalizar TODOS los campos antes de enviar
+  const cleanForm = { ...form };
+  
+  // Asegurar que los campos problemáticos sean strings válidos
+  const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
+  stringFields.forEach(field => {
+    if (cleanForm[field] === null || cleanForm[field] === undefined || cleanForm[field] === 'undefined') {
+      cleanForm[field] = '';
     }
+    // Convertir a string explícitamente
+    cleanForm[field] = String(cleanForm[field] || '');
+  });
 
-    if (res.ok) {
-      setMsg("Perfil actualizado");
-      setTimeout(() => navigate(`/profile/${id}`), 800);
+  console.log("🔍 Datos antes de FormData:", cleanForm);
+
+  const formData = new FormData();
+  Object.entries(cleanForm).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => {
+        // Asegurar que los valores del array no sean null/undefined
+        const cleanValue = v === null || v === undefined ? '' : String(v);
+        formData.append(key, cleanValue);
+      });
     } else {
-      setMsg(data.error || "Error al actualizar");
+      // Para campos no-array, asegurar que no sean null/undefined
+      const cleanValue = value === null || value === undefined ? '' : value;
+      formData.append(key, cleanValue);
     }
-  };
+  });
 
+  // 🔍 Debug: Ver qué se está enviando en FormData
+  console.log("📤 FormData entries:");
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value} (type: ${typeof value})`);
+  }
+
+  const res = await fetch(`https://deportes-production.up.railway.app/deportistas/${id}`, { // Cambiado a localhost
+    method: "PUT",
+    body: formData,
+  });
+
+  let data;
+  try {
+    data = await res.json();
+  } catch (e) {
+    data = { error: "Respuesta inválida del servidor" };
+  }
+
+  if (res.ok) {
+    setMsg("Perfil actualizado");
+    setTimeout(() => navigate(`/profile/${id}`), 800);
+  } else {
+    setMsg(data.error || "Error al actualizar");
+  }
+};
   // Render chips para campos array
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>
@@ -371,17 +442,31 @@ function EditProfile() {
 
           {/* Columna derecha */}
           <div className={styles.rightCol}>
+            {/* 📝 Descripciones */}
+            <label>Short Description</label>
+            <textarea
+              name="shortDescription"
+              maxLength={200}
+              value={form.shortDescription}
+              onChange={handleChange}
+              placeholder="Brief description for profile preview (max 200 characters)"
+              className={styles.shortDescTextarea}
+              rows="3"
+            />
+            <div className={styles.charCount}>{form.shortDescription.length} of 200 characters</div>
+
             <label>Introduction</label>
             <textarea
               name="about"
               maxLength={1000}
               value={form.about}
               onChange={handleChange}
-              placeholder="Create a short bio that introduces your athlete career and character"
+              placeholder="Create a detailed bio that introduces your athlete career and character"
               className={styles.introTextarea}
             />
-            <div className={styles.charCount}>{form.about.length} of 300 characters</div>
+            <div className={styles.charCount}>{form.about.length} of 1000 characters</div>
 
+            {/* 📋 Información Personal */}
             <div className={styles.personalInfo}>
               <input name="name" placeholder="First Name" value={form.name} onChange={handleChange} required />
               <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
@@ -404,11 +489,40 @@ function EditProfile() {
                 max={120}
               />
               <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
+            </div>
+
+            {/* 🏠 Información de Nacimiento */}
+            <div className={styles.birthInfo}>
+              <h3>Birth Information</h3>
+              <Select
+                options={countryOptions}
+                value={countryOptions.find((c) => c.value === form.birthCountry) || null}
+                onChange={(opt) => handleSelectChange(opt, "birthCountry")}
+                placeholder="Birth Country"
+                styles={selectStyles}
+                isClearable
+              />
+              <Select
+                options={birthCityOptions}
+                value={birthCityOptions.find((c) => c.value === form.birthCity) || null}
+                onChange={(opt) => handleSelectChange(opt, "birthCity")}
+                placeholder={
+                  loadingBirthCities ? "Loading cities..." : form.birthCountry ? "Select birth city" : "Select birth country first"
+                }
+                isClearable
+                isDisabled={!form.birthCountry || loadingBirthCities || birthCityOptions.length === 0}
+                styles={selectStyles}
+              />
+            </div>
+
+            {/* 🌍 Información Actual/Residencia */}
+            <div className={styles.currentLocation}>
+              <h3>Current Location</h3>
               <Select
                 options={countryOptions}
                 value={countryOptions.find((c) => c.value === form.country) || null}
                 onChange={(opt) => handleSelectChange(opt, "country")}
-                placeholder="Country"
+                placeholder="Current Country"
                 styles={selectStyles}
                 isClearable
               />
@@ -417,14 +531,27 @@ function EditProfile() {
                 value={cityOptions.find((c) => c.value === form.city) || null}
                 onChange={(opt) => handleSelectChange(opt, "city")}
                 placeholder={
-                  loadingCities ? "Loading cities..." : form.country ? "Select your city" : "Select a country first"
+                  loadingCities ? "Loading cities..." : form.country ? "Select current city" : "Select country first"
                 }
                 isClearable
                 isDisabled={!form.country || loadingCities || cityOptions.length === 0}
                 styles={selectStyles}
               />
+              <input 
+                name="postalCode" 
+                placeholder="Postal Code" 
+                value={form.postalCode} 
+                onChange={handleChange} 
+              />
+              <input 
+                name="address" 
+                placeholder="Full Address" 
+                value={form.address} 
+                onChange={handleChange} 
+              />
             </div>
 
+            {/* 🏅 Carrera Deportiva */}
             <div className={styles.sportCareer}>
               <label>Sport Career</label>
               <div className={styles.sportCareerFields}>
@@ -447,7 +574,7 @@ function EditProfile() {
               </div>
             </div>
 
-            {/* Relaciones */}
+            {/* 🔗 Relaciones Profesionales */}
             <div className={styles.relationsSection}>
               <label>Professional Relations</label>
               <div className={styles.relationsFields}>
@@ -481,7 +608,7 @@ function EditProfile() {
               </div>
             </div>
 
-            {/* Achievements */}
+            {/* 🏆 Logros */}
             <div className={styles.achievementsSection}>
               <h3>Achievements</h3>
               {form.recognitions.map((ach, idx) => (
@@ -508,7 +635,7 @@ function EditProfile() {
               )}
             </div>
 
-            {/* Career */}
+            {/* 📈 Experiencia/Carrera */}
             <div className={styles.careerSection}>
               <h3>Career</h3>
               {form.experience.map((item, idx) => (
@@ -534,11 +661,12 @@ function EditProfile() {
               )}
             </div>
 
+            {/* 🎓 Certificaciones (solo para scout y sponsor) */}
             {(profileType === "scout" || profileType === "sponsor") && (
-              <>
+              <div className={styles.certificationsSection}>
                 <label>Certifications</label>
                 {renderChipList("certifications", "Certification")}
-              </>
+              </div>
             )}
 
             <button type="submit" className={styles.saveBtn}>

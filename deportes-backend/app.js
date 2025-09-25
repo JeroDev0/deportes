@@ -13,7 +13,7 @@ app.use(
     origin: [
       "https://deportes-directory.netlify.app",
       "http://localhost:5173",
-      "http://192.168.1.6:5173",
+      "http://192.168.1.6:5173"
     ],
     credentials: true,
   })
@@ -37,24 +37,18 @@ mongoose
 // ============================
 // Rutas principales
 // ============================
-
-// Rutas de deportistas
 const deportistasRoutes = require("./routes/deportistas");
 app.use("/deportistas", deportistasRoutes);
 
-// Rutas de publicaciones
 const publicacionesRoutes = require("./routes/publicaciones");
 app.use("/publicaciones", publicacionesRoutes);
 
-// Rutas de scouts
 const scoutsRoutes = require("./routes/scouts");
 app.use("/scouts", scoutsRoutes);
 
-// Rutas de sponsors
 const sponsorsRoutes = require("./routes/sponsors");
 app.use("/sponsors", sponsorsRoutes);
 
-// Rutas de clubs
 const clubsRoutes = require("./routes/clubs");
 app.use("/clubs", clubsRoutes);
 

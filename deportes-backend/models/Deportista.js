@@ -14,26 +14,45 @@ const DeportistaSchema = new mongoose.Schema({
       return this.profileType === "atleta";
     },
   },
-  // Campos de perfil extendido:
-  name: String,
-  lastName: String,
-  age: Number,
-  sport: String,
-  gender: String,
-  phone: String,
-  country: String,
-  city: String,
-  photo: String,
-  about: String,
-  experience: [String],
-  recognitions: [String],
-  skills: [String],
-  certifications: [String], // solo scout y sponsor
+
+  // 📋 Datos básicos
+  name: { type: String, default: "" },
+  lastName: { type: String, default: "" },
+  age: { type: Number, default: null },
+  sport: { type: String, default: "" },
+  gender: { type: String, default: "" },
+  phone: { type: String, default: "" },
+
+  // 🏠 Información de nacimiento - ESTOS SON LOS CAMPOS PROBLEMÁTICOS
+  birthCountry: { type: String, default: "" },
+  birthCity: { type: String, default: "" },
+
+  // 🌍 Información actual/residencia - ESTOS SON LOS CAMPOS PROBLEMÁTICOS
+  country: { type: String, default: "" },       // País actual
+  city: { type: String, default: "" },          // Ciudad actual
+  postalCode: { type: String, default: "" },    // Código postal - PROBLEMÁTICO
+  address: { type: String, default: "" },       // Dirección completa - PROBLEMÁTICO
+
+  photo: { type: String, default: "" },
+
+  // 📝 Descripciones - ESTE ES PROBLEMÁTICO
+  about: { type: String, default: "" },              // Descripción larga
+  shortDescription: { type: String, default: "" },   // Descripción corta - PROBLEMÁTICO
+
+  // 🏅 Experiencias y logros
+  experience: { type: [String], default: [] },
+  recognitions: { type: [String], default: [] },
+  skills: { type: [String], default: [] },
+  certifications: { type: [String], default: [] }, // solo scout y sponsor
+
   registrationDate: { type: Date, default: Date.now },
+
+  // 🔗 Relaciones
   scout: { type: mongoose.Schema.Types.ObjectId, ref: "Scout", default: null },
   sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Sponsor", default: null },
   club: { type: mongoose.Schema.Types.ObjectId, ref: "Club", default: null },
-  // Nuevo campo para nivel del deportista
+
+  // ⚡ Nivel
   level: {
     type: String,
     enum: ["amateur", "semi profesional", "profesional"],
