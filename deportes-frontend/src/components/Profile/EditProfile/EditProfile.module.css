@@ -1,64 +1,91 @@
-
 .editProfileBg {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 0px;
   font-family: 'Arial', sans-serif;
   color: #333;
 }
 
 .editProfileCard {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-  max-width: 1100px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  max-width: 1200px;
   width: 100%;
-  padding: 40px 48px;
+  padding: 30px 40px;
   box-sizing: border-box;
   position: relative;
+  backdrop-filter: blur(10px);
 }
 
 .backBtn {
   background: none;
-  border: none;
-  color: #555;
+  border: 2px solid #53fb52;
+  color: #53fb52;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.backBtn:hover {
+  background: #53fb52;
+  color: #0d2635;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
 }
 
 .header {
-  font-weight: 900;
-  font-size: 2.5rem;
-  letter-spacing: 1.5px;
-  margin-bottom: 32px;
-  color: #222;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  color: #1a334a;
+  text-align: center;
+  background: linear-gradient(135deg, #1a334a 0%, #53fb52 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  padding-bottom: 20px;
 }
 
 .form {
   display: flex;
-  gap: 48px;
+  gap: 30px;
   flex-wrap: wrap;
 }
 
 .leftCol {
   flex: 1;
-  max-width: 320px;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   align-items: center;
 }
 
 .photoSection {
   position: relative;
-  width: 280px;
-  height: 350px;
-  border-radius: 16px;
+  width: 300px;
+  height: 380px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border: 3px solid #53fb52;
+  transition: all 0.3s ease;
+}
+
+.photoSection:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
 }
 
 .photoSection img.photo {
@@ -70,62 +97,80 @@
 .photoPlaceholder {
   width: 100%;
   height: 100%;
-  background: #ddd;
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
-  font-size: 1.2rem;
+  color: #6c757d;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .photoEditBtn {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: #53fb52;
-  color: #0d2635;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 20px;
-  line-height: 36px;
-  text-align: center;
+  bottom: 16px;
+  right: 16px;
+  background: none;
+  color: #53fb52;
+  border: 2px solid #53fb52;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgb(83 251 82 / 0.6);
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .photoEditBtn:hover {
-  background: #38b838;
+  background: #53fb52;
+  color: #0d2635;
+  transform: scale(1.05);
 }
 
 .skillsSection {
   width: 100%;
+  background: linear-gradient(135deg, #1a334a 0%, #223c54 100%);
+  padding: 16px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(26, 51, 74, 0.3);
 }
 
 .skillsSection h3 {
   font-weight: 700;
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  color: #222;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #eaf6ff;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .chipList {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 12px;
+  margin-bottom: 12px;
+  justify-content: center;
 }
 
 .chip {
   display: flex;
   align-items: center;
-  background: #1a334a;
-  border: 1.5px solid #53fb52;
-  border-radius: 22px;
-  padding: 4px 10px 4px 14px;
-  gap: 4px;
+  background: rgba(26, 51, 74, 0.8);
+  border: 2px solid #53fb52;
+  border-radius: 25px;
+  padding: 6px 12px 6px 16px;
+  gap: 6px;
   min-width: 0;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
 }
 
 .chipInput {
@@ -133,166 +178,272 @@
   border: none;
   color: #eaf6ff;
   font-size: 1rem;
-  min-width: 80px;
-  max-width: 180px;
+  min-width: 90px;
+  max-width: 200px;
   outline: none;
-  padding: 4px 0;
+  padding: 6px 0;
+  font-weight: 500;
 }
 
 .chipInput:focus {
-  background: #223c54;
+  background: rgba(34, 60, 84, 0.7);
+  border-radius: 15px;
+  padding: 6px 10px;
+}
+
+.chipInput::placeholder {
+  color: rgba(234, 246, 255, 0.6);
 }
 
 .chipRemove {
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: 4px;
-  padding: 2px;
+  margin-left: 6px;
+  padding: 4px;
   display: flex;
   align-items: center;
-  transition: background 0.18s;
+  transition: all 0.2s ease;
+  color: #eaf6ff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50%;
 }
 
 .chipRemove:hover {
-  background: #e74c3c22;
-  border-radius: 50%;
+  background: rgba(231, 76, 60, 0.8);
+  color: #fff;
+  transform: scale(1.1);
 }
 
 .chipAdd {
-  background: #1a334a;
-  border: 1.5px dashed #53fb52;
+  background: rgba(26, 51, 74, 0.8);
+  border: 2px dashed #53fb52;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 6px;
-  transition: background 0.18s, border 0.18s;
+  margin-left: 8px;
+  transition: all 0.3s ease;
+  color: #53fb52;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .chipAdd:hover {
   background: #53fb52;
-  border: 1.5px solid #53fb52;
+  border: 2px solid #53fb52;
+  color: #0d2635;
+  transform: scale(1.1);
 }
 
 .rightCol {
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  min-width: 320px;
+  gap: 18px;
+  min-width: 400px;
 }
 
 label {
   font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-  color: #222;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #1a334a;
   display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 0px;
 }
 
+.shortDescTextarea,
 .introTextarea {
   width: 100%;
-  min-height: 140px;
-  border-radius: 12px;
-  border: 1.5px solid #ccc;
-  padding: 16px;
+  min-height: 120px;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+  padding: 18px;
   font-size: 1rem;
   resize: vertical;
   font-family: inherit;
   box-sizing: border-box;
-  color: #333;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  background: #1a334a;
+}
+
+.introTextarea {
+  min-height: 160px;
+}
+
+.shortDescTextarea:focus,
+.introTextarea:focus {
+  border-color: #53fb52;
+  outline: none;
+  box-shadow: 0 0 20px rgba(83, 251, 82, 0.2);
+  background: #1a334a;
 }
 
 .charCount {
   font-size: 0.9rem;
-  color: #666;
+  color: #6c757d;
   text-align: right;
-  margin-top: 4px;
+  margin-top: 6px;
   font-weight: 600;
 }
 
 .personalInfo {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
-  flex-wrap: wrap;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.personalInfo input {
-  flex: 1 1 150px;
-  padding: 10px 14px;
+/* TODOS los inputs - estilo unificado */
+.personalInfo input,
+.currentLocation input,
+input[name="postalCode"],
+input[name="address"] {
+  padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #1a334a !important;
+  color: #ffffff;
 }
 
-.sportCareer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.personalInfo input:focus,
+.currentLocation input:focus,
+input[name="postalCode"]:focus,
+input[name="address"]:focus {
+  border-color: #53fb52;
+  outline: none;
+  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
+  transform: translateY(-1px);
 }
 
-.sportCareerFields {
-  display: flex;
-  gap: 16px;
-  max-width: 400px;
-}
-
-/* ✅ AGREGADO: Estilos para la sección de relaciones */
+/* Secciones con encabezados - padding reducido */
+.birthInfo,
+.currentLocation,
+.sportCareer,
 .relationsSection {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  padding: 18px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(83, 251, 82, 0.2);
+}
+
+.birthInfo h3,
+.currentLocation h3,
+.sportCareer h3,
+.relationsSection label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #1a334a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #53fb52;
+  padding-bottom: 6px;
+}
+
+.sportCareerFields,
+.relationsFields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.sportCareer input[name="postalCode"],
+.sportCareer input[name="address"] {
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #fff;
+  color: #333;
+  margin-top: 12px;
+}
+
+.sportCareer input[name="postalCode"]:focus,
+.sportCareer input[name="address"]:focus {
+  border-color: #53fb52;
+  outline: none;
+  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Current Location - grid para inputs uniformes */
+.currentLocation {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
-.relationsFields {
-  display: flex;
+.currentLocation h3 {
+  margin-bottom: 12px;
+}
+
+.currentLocationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
-  flex-wrap: wrap;
 }
 
-.relationsFields > div {
-  flex: 1 1 200px;
-  min-width: 200px;
+/* Sección de logros - más compacta */
+.achievementsSection {
+  background: linear-gradient(135deg, #fff7e6 0%, #fff3cd 100%);
+  padding: 16px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(181, 129, 52, 0.15);
+  border: 2px solid #ffc107;
 }
 
-/* Headers */
-.achievementsHeader, .careerHeader {
+.achievementsSection h3,
+.careerSection h3 {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-  color: #444;
+  margin-bottom: 12px;
   font-weight: 700;
   font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.trophyIcon {
-  flex-shrink: 0;
+.achievementsSection h3::before {
+  content: "🏆";
+  font-size: 1.6rem;
 }
 
-/* Achievements description */
-.achievementsDescription {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 16px;
-  max-width: 600px;
-}
-
-/* Achievement items */
 .achievementItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #ddd;
-  padding: 8px 0;
-  color: #a56a2f; /* marrón */
+  border-bottom: 1px solid rgba(165, 106, 47, 0.2);
+  padding: 10px 0;
+  color: #a56a2f;
   font-weight: 600;
   font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.achievementItem:hover {
+  background: rgba(255, 193, 7, 0.1);
+  margin: 0 -16px;
+  padding: 16px;
+  border-radius: 12px;
 }
 
 .achievementItem:last-child {
@@ -300,268 +451,453 @@ label {
 }
 
 .star {
-  color: #a56a2f;
-  font-size: 1.3rem;
+  color: #ffc107;
+  font-size: 1.5rem;
   font-weight: 900;
   flex-shrink: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.achievementInput {
+.achievementInput, .yearInput {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #a56a2f;
   font-weight: 600;
   outline: none;
-  padding: 4px 0;
+  padding: 8px 0;
 }
 
 .achievementInput::placeholder {
-  color: #bfa67a;
+  color: rgba(165, 106, 47, 0.6);
   font-weight: 400;
 }
 
-.removeAchievementBtn {
+.achievementInput:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.achievementsSection button[type="button"]:last-of-type {
+  margin-top: 0px;
+  border: 3px dashed #ffc107;
+  background: transparent;
+  color: #a56a2f;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 16px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.achievementsSection button[type="button"]:last-of-type:hover {
+  background: #ffc107;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+}
+
+/* Botones de eliminar pequeños */
+.achievementItem button,
+.careerItem button {
   background: none;
   border: none;
-  color: #e74c3c;
-  font-size: 1.2rem;
+  color: #dc3545;
+  font-size: 16px;
   cursor: pointer;
-  padding: 0 6px;
+  padding: 2px 4px;
   line-height: 1;
-  transition: color 0.2s;
-}
-
-.removeAchievementBtn:hover {
-  color: #c0392b;
-}
-
-.addAchievementBtn {
-  margin-top: 12px;
-  width: 100%;
-  border: 2px dashed #b3b3b3;
-  background: transparent;
-  color: #555;
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 12px 16px;
-  border-radius: 12px;
-  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  width: 20px;
+  height: 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: background 0.2s, color 0.2s;
+  justify-content: center;
 }
 
-.addAchievementBtn:hover {
-  background: #eaeaea;
-  color: #333;
-}
-
-/* Career items */
+/* Sección de carrera */
+/* Sección de carrera - más compacta */
 .careerSection {
-  margin-top: 24px;
-  padding: 16px 20px;
-  background: #f5f5f5;
-  border-radius: 12px;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+  padding: 16px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.15);
+  border: 2px solid #28a745;
+}
+
+.achievementsSection h3 {
+  color: #a56a2f;
+}
+
+.careerSection h3 {
+  color: #155724;
+}
+
+.careerSection h3::before {
+  content: "📈";
+  font-size: 1.6rem;
 }
 
 .careerItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #ddd;
-  padding: 8px 0;
-  color: #444;
+  border-bottom: 1px solid rgba(21, 87, 36, 0.2);
+  padding: 10px 0;
+  color: #155724;
   font-weight: 600;
   font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.careerItem:hover {
+  background: rgba(40, 167, 69, 0.1);
+  margin: 0 -16px;
+  padding: 16px;
+  border-radius: 12px;
 }
 
 .careerItem:last-child {
   border-bottom: none;
 }
 
-.careerInput {
+.careerInput, .yearInput2 {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1rem;
-  color: #444;
+  font-size: 1.1rem;
+  color: #155724;
   font-weight: 600;
   outline: none;
-  padding: 4px 0;
+  padding: 8px 0;
 }
 
-.careerInput::placeholder {
-  color: #999;
+.careerInput::placeholder, .yearInput2::placeholder {
+  color: rgba(21, 87, 36, 0.6);
   font-weight: 400;
 }
 
-.removeCareerBtn {
-  background: none;
-  border: none;
-  color: #e74c3c;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0 6px;
-  line-height: 1;
-  transition: color 0.2s;
+.careerInput:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 8px 12px;
 }
 
-.removeCareerBtn:hover {
-  color: #c0392b;
-}
-
-.addCareerBtn {
-  margin-top: 12px;
-  width: 100%;
-  border: 2px dashed #b3b3b3;
+.careerSection button[type="button"]:last-of-type {
+  margin-top: 0px;
+  border: 3px dashed #28a745;
   background: transparent;
-  color: #555;
+  color: #155724;
   font-weight: 700;
-  font-size: 1rem;
-  padding: 12px 16px;
-  border-radius: 12px;
+  font-size: 1.1rem;
+  padding: 16px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s ease;
 }
 
-.addCareerBtn:hover {
-  background: #eaeaea;
-  color: #333;
+.careerSection button[type="button"]:last-of-type:hover {
+  background: #28a745;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
 }
 
-/* Plus icon for add buttons */
-.plusIcon {
-  font-size: 1.5rem;
+.achievementItem button:hover,
+.careerItem button:hover {
+  background: rgba(220, 53, 69, 0.1);
+  color: #c82333;
+  transform: scale(1.1);
+}
+
+/* Sección de certificaciones */
+.certificationsSection {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+  border: 2px solid #2196f3;
+}
+
+.certificationsSection label {
+  color: #0d47a1;
+  border-bottom: 2px solid #2196f3;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+/* Botón principal de guardar */
+.saveBtn {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
+  border: none;
+  border-radius: 15px;
+  padding: 16px 0;
   font-weight: 900;
-  line-height: 1;
+  font-size: 1.3rem;
+  color: #0d2635;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(83, 251, 82, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
 }
 
+.saveBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.saveBtn:hover::before {
+  left: 100%;
+}
+
+.saveBtn:hover {
+  background: linear-gradient(135deg, #38b838 0%, #53fb52 100%);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(83, 251, 82, 0.5);
+}
+
+.saveBtn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(83, 251, 82, 0.3);
+}
+
+/* Mensajes */
+.success {
+  color: #28a745;
+  font-weight: 700;
+  margin-top: 16px;
+  text-align: center;
+  background: #d4edda;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #c3e6cb;
+}
+
+.error {
+  color: #dc3545;
+  font-weight: 700;
+  margin-top: 16px;
+  text-align: center;
+  background: #f8d7da;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #f5c6cb;
+}
+
+/* Lista genérica para inputs */
 .listInputContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .listInputItem {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  padding: 8px 0;
 }
 
 .listInput {
   flex: 1;
-  padding: 8px 12px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.listInput:focus {
+  border-color: #53fb52;
+  outline: none;
+  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
 }
 
 .listRemoveBtn {
-  background: #e74c3c;
+  background: #dc3545;
   border: none;
   color: white;
   font-size: 1.2rem;
   font-weight: 700;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .listRemoveBtn:hover {
-  background: #c0392b;
+  background: #c82333;
+  transform: scale(1.1);
 }
 
 .listAddBtn {
   background: none;
   border: 2px dashed #53fb52;
   color: #53fb52;
-  border-radius: 20px;
-  padding: 8px 16px;
+  border-radius: 25px;
+  padding: 12px 20px;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 8px;
-  transition: background 0.3s, color 0.3s;
+  margin-top: 12px;
+  transition: all 0.3s ease;
   align-self: flex-start;
 }
 
 .listAddBtn:hover {
   background: #53fb52;
   color: #0d2635;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
 }
 
-.saveBtn {
-  margin-top: 24px;
-  background: linear-gradient(90deg, #53fb52 60%, #38b838 100%);
-  border: none;
-  border-radius: 12px;
-  padding: 16px 0;
-  font-weight: 900;
-  font-size: 1.3rem;
-  color: #0d2635;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgb(83 251 82 / 0.4);
-  transition: background 0.3s, color 0.3s;
+/* Estilos para la nueva sección de skills por categorías */
+.skillsSection {
+  margin-bottom: 2rem;
 }
 
-.saveBtn:hover {
-  background: linear-gradient(90deg, #38b838 60%, #53fb52 100%);
-  color: #fff;
-}
-
-.success {
+.skillsSection h3 {
   color: #53fb52;
-  font-weight: 700;
-  margin-top: 12px;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-.error {
-  color: #e74c3c;
-  font-weight: 700;
-  margin-top: 12px;
-  text-align: center;
+.skillCategory {
+  margin-bottom: 1.5rem;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+.categoryLabel {
+  display: block;
+  color: #eaf6ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.skillSelect {
+  width: 100%;
+}
+
+/* Responsive para skills */
+@media (max-width: 768px) {
+  .skillsSection {
+    margin-bottom: 1.5rem;
+  }
+  
+  .skillsSection h3 {
+    font-size: 1.2rem;
+  }
+  
+  .categoryLabel {
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .form {
     flex-direction: column;
+    gap: 40px;
   }
+  
   .leftCol {
     max-width: 100%;
     flex-direction: row;
     justify-content: center;
-    gap: 24px;
+    gap: 32px;
   }
+  
   .photoSection {
-    width: 180px;
-    height: 230px;
+    width: 250px;
+    height: 320px;
   }
+  
   .rightCol {
     width: 100%;
+    min-width: auto;
   }
+}
+
+@media (max-width: 768px) {
+  .editProfileCard {
+    padding: 32px 24px;
+  }
+  
+  .header {
+    font-size: 2.2rem;
+  }
+  
+  .leftCol {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .photoSection {
+    width: 200px;
+    height: 260px;
+  }
+  
   .personalInfo {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
-  .sportCareerFields {
-    flex-direction: column;
-  }
+  
+  .sportCareerFields,
   .relationsFields {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  
+  .achievementsSection,
+  .careerSection {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editProfileBg {
+    padding: 20px 10px;
+  }
+  
+  .editProfileCard {
+    padding: 24px 16px;
+  }
+  
+  .header {
+    font-size: 1.8rem;
+  }
+  
+  .form {
+    gap: 24px;
+  }
+  
+  .birthInfo,
+  .currentLocation,
+  .sportCareer,
+  .relationsSection,
+  .achievementsSection,
+  .careerSection {
+    padding: 20px;
   }
 }

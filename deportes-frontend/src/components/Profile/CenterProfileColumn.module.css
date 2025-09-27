@@ -1,4 +1,3 @@
-
 .centerCard {
   background: #E4ECF0;
   padding: 20px;
@@ -142,11 +141,19 @@
 }
 
 /* --- Sections --- */
+.shortDescSection,
 .aboutSection,
 .gallerySection,
 .achievementsSection,
 .careerSection {
   margin-bottom: 20px;
+}
+
+/* --- Short Description sin estilos extra --- */
+.shortDescText {
+  margin: 0;
+  line-height: 1.5;
+  color: #222;
 }
 
 .sectionHeader {

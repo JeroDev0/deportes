@@ -41,6 +41,84 @@ const LEVELS = [
   { value: "profesional", label: "Professional" },
 ];
 
+// Categorías de habilidades
+const SKILLS_CATEGORIES = {
+  cognitive: {
+    label: "Cognitive & Tactical Skills",
+    options: [
+      { value: "Game/situation reading", label: "Game/situation reading" },
+      { value: "Decision making under pressure", label: "Decision making under pressure" },
+      { value: "Movement or play anticipation", label: "Movement or play anticipation" },
+      { value: "Tactical adaptability", label: "Tactical adaptability" },
+      { value: "Emotional management in competition", label: "Emotional management in competition" },
+      { value: "Sustained concentration", label: "Sustained concentration" },
+      { value: "Motor memory / rapid technical learning", label: "Motor memory / rapid technical learning" }
+    ]
+  },
+  physical: {
+    label: "General Physical Skills",
+    options: [
+      { value: "Reaction speed", label: "Reaction speed" },
+      { value: "Acceleration / maximum speed", label: "Acceleration / maximum speed" },
+      { value: "Aerobic endurance", label: "Aerobic endurance" },
+      { value: "Anaerobic endurance", label: "Anaerobic endurance" },
+      { value: "Muscular power", label: "Muscular power" },
+      { value: "Functional strength", label: "Functional strength" },
+      { value: "Motor coordination", label: "Motor coordination" },
+      { value: "Balance and body stability", label: "Balance and body stability" },
+      { value: "Agility and direction changes", label: "Agility and direction changes" },
+      { value: "Flexibility / joint mobility", label: "Flexibility / joint mobility" },
+      { value: "Vertical / horizontal jump", label: "Vertical / horizontal jump" },
+      { value: "Postural control in movement", label: "Postural control in movement" }
+    ]
+  },
+  technical: {
+    label: "Transversal Technical Skills",
+    options: [
+      { value: "Technical execution precision", label: "Technical execution precision" },
+      { value: "Sport-specific gesture mastery", label: "Sport-specific gesture mastery" },
+      { value: "Object/implement control", label: "Object/implement control (ball, racket, weapon, etc.)" },
+      { value: "Movement synchronization", label: "Movement synchronization" },
+      { value: "Energy efficiency in technique", label: "Energy efficiency in technique" },
+      { value: "Technical automation capacity", label: "Technical automation capacity" },
+      { value: "Smooth transition between movement phases", label: "Smooth transition between movement phases" }
+    ]
+  },
+  social: {
+    label: "Social & Team Skills",
+    options: [
+      { value: "Effective communication", label: "Effective communication (verbal and non-verbal)" },
+      { value: "Teamwork / cooperation", label: "Teamwork / cooperation" },
+      { value: "Sports leadership", label: "Sports leadership" },
+      { value: "Respect for roles and strategies", label: "Respect for roles and strategies" },
+      { value: "Positive and motivating attitude", label: "Positive and motivating attitude" },
+      { value: "Discipline and group commitment", label: "Discipline and group commitment" }
+    ]
+  },
+  psychological: {
+    label: "High Performance Psychological Skills",
+    options: [
+      { value: "Resilience in adversity", label: "Resilience in adversity" },
+      { value: "Self-confidence in competition", label: "Self-confidence in competition" },
+      { value: "Competitive stress management", label: "Competitive stress management" },
+      { value: "Visualization / mental preparation", label: "Visualization / mental preparation" },
+      { value: "Focus and activation routines", label: "Focus and activation routines" },
+      { value: "Continuous improvement mindset", label: "Continuous improvement mindset" }
+    ]
+  },
+  trainability: {
+    label: "Trainability & Progress Skills",
+    options: [
+      { value: "Ability to receive and apply feedback", label: "Ability to receive and apply feedback" },
+      { value: "Training consistency", label: "Training consistency" },
+      { value: "Autonomy in improvement process", label: "Autonomy in improvement process" },
+      { value: "Technical / tactical curiosity", label: "Technical / tactical curiosity" },
+      { value: "Adaptability to new environments", label: "Adaptability to new environments" },
+      { value: "Commitment to sports objectives", label: "Commitment to sports objectives" }
+    ]
+  }
+};
+
 // Estilos para react-select
 const selectStyles = {
   control: (provided) => ({
@@ -72,6 +150,59 @@ const selectStyles = {
   }),
 };
 
+// Función para parsear un string a año y texto
+const parseYearText = (str) => {
+  if (!str) return { year: "", text: "" };
+  
+  // Buscar si empieza con 4 dígitos seguidos de un espacio, guión o dos puntos
+  const match = str.match(/^(\d{4})[\s\-:]+(.+)$/);
+  if (match) {
+    return { year: match[1], text: match[2] };
+  }
+  
+  // Si no encuentra el patrón, poner todo en texto
+  return { year: "", text: str };
+};
+
+// Función para combinar año y texto en un string
+const combineYearText = (year, text) => {
+  if (!year && !text) return "";
+  if (!year) return text;
+  if (!text) return year;
+  return `${year} - ${text}`;
+};
+
+// Función para convertir skills object a array para el backend
+const convertSkillsToArray = (skillsObject) => {
+  return Object.values(skillsObject).filter(skill => skill !== "");
+};
+
+// Función para convertir skills array del backend a object para el frontend
+const convertSkillsToObject = (skillsArray) => {
+  const skillsObj = {
+    cognitive: "",
+    physical: "",
+    technical: "",
+    social: "",
+    psychological: "",
+    trainability: ""
+  };
+  
+  if (Array.isArray(skillsArray)) {
+    skillsArray.forEach(skill => {
+      // Buscar en qué categoría está esta skill
+      Object.keys(SKILLS_CATEGORIES).forEach(category => {
+        const found = SKILLS_CATEGORIES[category].options.find(option => option.value === skill);
+        if (found) {
+          skillsObj[category] = skill;
+        }
+      });
+    });
+  }
+  
+  return skillsObj;
+};
+
 function EditProfile() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -99,12 +230,23 @@ function EditProfile() {
     shortDescription: "",
     experience: [""],
     recognitions: [""],
-    skills: [""],
+    skills: {
+      cognitive: "",
+      physical: "",
+      technical: "",
+      social: "",
+      psychological: "",
+      trainability: ""
+    },
     certifications: [""],
     scout: "",
     sponsor: "",
     club: "",
   });
+
+  // Estados para manejar los campos divididos visualmente
+  const [recognitionsFields, setRecognitionsFields] = useState([{ year: "", text: "" }]);
+  const [experienceFields, setExperienceFields] = useState([{ year: "", text: "" }]);
 
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
@@ -154,18 +296,38 @@ function EditProfile() {
           shortDescription: data.shortDescription || "",
           experience: data.experience || [""],
           recognitions: data.recognitions || [""],
-          skills: data.skills || [""],
+          skills: convertSkillsToObject(data.skills || []),
           certifications: data.certifications || [""],
           scout: data.scout?._id || "",
           sponsor: data.sponsor?._id || "",
           club: data.club?._id || "",
         });
+        
+        // Parsear recognitions para los campos divididos
+        const parsedRecognitions = (data.recognitions || [""]).map(parseYearText);
+        setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ year: "", text: "" }]);
+        
+        // Parsear experience para los campos divididos
+        const parsedExperience = (data.experience || [""]).map(parseYearText);
+        setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ year: "", text: "" }]);
+        
         setProfileType(data.profileType);
         if (data.photo && typeof data.photo === "string") {
           setPhotoPreview(data.photo);
         }
       });
   }, [id]);
+
+  // Sincronizar los campos divididos con el form cuando cambien
+  useEffect(() => {
+    const recognitionsStrings = recognitionsFields.map(field => combineYearText(field.year, field.text));
+    setForm(prev => ({ ...prev, recognitions: recognitionsStrings }));
+  }, [recognitionsFields]);
+
+  useEffect(() => {
+    const experienceStrings = experienceFields.map(field => combineYearText(field.year, field.text));
+    setForm(prev => ({ ...prev, experience: experienceStrings }));
+  }, [experienceFields]);
 
   // Scouts
   useEffect(() => {
@@ -282,26 +444,66 @@ function EditProfile() {
     }
   };
 
+  // Función para manejar cambios en skills por categoría
+  const handleSkillChange = (selectedOption, category) => {
+    const value = selectedOption ? selectedOption.value : "";
+    setForm(prev => ({
+      ...prev,
+      skills: {
+        ...prev.skills,
+        [category]: value
+      }
+    }));
+  };
+
   const handleArrayChange = (e, field, idx) => {
     const arr = [...form[field]];
-    let value = e.target.value;
-    if (field === "skills") {
-      value = value.replace(/\s/g, "");
-    }
-    arr[idx] = value;
+    arr[idx] = e.target.value;
     setForm({ ...form, [field]: arr });
   };
 
+  // Manejar cambios en campos divididos (recognitions)
+  const handleRecognitionFieldChange = (idx, fieldType, value) => {
+    const newFields = [...recognitionsFields];
+    newFields[idx] = { ...newFields[idx], [fieldType]: value };
+    setRecognitionsFields(newFields);
+  };
+
+  // Manejar cambios en campos divididos (experience)
+  const handleExperienceFieldChange = (idx, fieldType, value) => {
+    const newFields = [...experienceFields];
+    newFields[idx] = { ...newFields[idx], [fieldType]: value };
+    setExperienceFields(newFields);
+  };
+
   const addArrayField = (field) => {
-    if (form[field].length < (field === "skills" ? 7 : 10)) {
+    if (field === "recognitions") {
+      if (recognitionsFields.length < 10) {
+        setRecognitionsFields([...recognitionsFields, { year: "", text: "" }]);
+      }
+    } else if (field === "experience") {
+      if (experienceFields.length < 10) {
+        setExperienceFields([...experienceFields, { year: "", text: "" }]);
+      }
+    } else if (form[field].length < 10) {
       setForm({ ...form, [field]: [...form[field], ""] });
     }
   };
 
   const removeArrayField = (field, idx) => {
-    const arr = [...form[field]];
-    arr.splice(idx, 1);
-    setForm({ ...form, [field]: arr });
+    if (field === "recognitions") {
+      const newFields = [...recognitionsFields];
+      newFields.splice(idx, 1);
+      setRecognitionsFields(newFields);
+    } else if (field === "experience") {
+      const newFields = [...experienceFields];
+      newFields.splice(idx, 1);
+      setExperienceFields(newFields);
+    } else {
+      const arr = [...form[field]];
+      arr.splice(idx, 1);
+      setForm({ ...form, [field]: arr });
+    }
   };
 
   const handlePhotoChange = (e) => {
@@ -319,6 +521,9 @@ function EditProfile() {
     setMsg("");
 
     const cleanForm = { ...form };
+    
+    // Convertir las skills a array para el backend
+    cleanForm.skills = convertSkillsToArray(form.skills);
     
     // Asegurar que los campos problemáticos sean strings válidos
     const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
@@ -362,7 +567,7 @@ function EditProfile() {
     }
   };
 
-  // Render chips para campos array
+  // Render chips para campos array normales
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>
       {form[field].map((item, idx) => (
@@ -372,8 +577,6 @@ function EditProfile() {
             onChange={(e) => handleArrayChange(e, field, idx)}
             className={styles.chipInput}
             placeholder={placeholder}
-            pattern={field === "skills" ? "^\\S+$" : undefined}
-            title={field === "skills" ? "Solo una palabra por skill" : undefined}
           />
           {form[field].length > 1 && (
             <button
@@ -400,6 +603,27 @@ function EditProfile() {
     </div>
   );
 
+  // Componente para renderizar las skills por categorías
+  const renderSkillsSection = () => (
+    <div className={styles.skillsSection}>
+      <h3>Skills (Select one from each category)</h3>
+      {Object.entries(SKILLS_CATEGORIES).map(([categoryKey, category]) => (
+        <div key={categoryKey} className={styles.skillCategory}>
+          <label className={styles.categoryLabel}>{category.label}</label>
+          <Select
+            options={category.options}
+            value={category.options.find(option => option.value === form.skills[categoryKey]) || null}
+            onChange={(selectedOption) => handleSkillChange(selectedOption, categoryKey)}
+            placeholder={`Select ${category.label.toLowerCase()}`}
+            styles={selectStyles}
+            isClearable
+            className={styles.skillSelect}
+          />
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
@@ -423,10 +647,8 @@ function EditProfile() {
               <input type="file" id="photoUpload" accept="image/*" onChange={handlePhotoChange} hidden />
             </div>
 
-            <div className={styles.skillsSection}>
-              <h3>Skills</h3>
-              {renderChipList("skills", "Skill", 7)}
-            </div>
+            {/* Nueva sección de Skills por categorías */}
+            {renderSkillsSection()}
           </div>
 
           {/* Columna derecha */}
@@ -444,7 +666,7 @@ function EditProfile() {
             />
             <div className={styles.charCount}>{form.shortDescription.length} of 200 characters</div>
 
-            <label>Introduction</label>
+            <label>My Story</label>
             <textarea
               name="about"
               maxLength={1000}
@@ -597,53 +819,83 @@ function EditProfile() {
               </div>
             </div>
 
-            {/* 🏆 Logros */}
+            {/* 🏆 Logros - CAMPOS DIVIDIDOS */}
             <div className={styles.achievementsSection}>
               <h3>Achievements</h3>
-              {form.recognitions.map((ach, idx) => (
+              {recognitionsFields.map((field, idx) => (
                 <div key={idx} className={styles.achievementItem}>
                   <span className={styles.star}>★</span>
                   <input
-                    type="text"
-                    value={ach}
-                    onChange={(e) => handleArrayChange(e, "recognitions", idx)}
-                    placeholder="Add achievement"
-                    className={styles.achievementInput}
+                    type="number"
+                    value={field.year}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "year", e.target.value)}
+                    placeholder="Year"
+                    className={styles.yearInput}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "80px", marginRight: "10px" }}
                   />
-                  {form.recognitions.length > 1 && (
-                    <button type="button" onClick={() => removeArrayField("recognitions", idx)}>
+                  <input
+                    type="text"
+                    value={field.text}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "text", e.target.value)}
+                    placeholder="Achievement description"
+                    className={styles.achievementInput}
+                    style={{ flex: 1 }}
+                  />
+                  {recognitionsFields.length > 1 && (
+                    <button 
+                      type="button" 
+                      onClick={() => removeArrayField("recognitions", idx)}
+                      style={{ marginLeft: "10px" }}
+                    >
                       &times;
                     </button>
                   )}
                 </div>
               ))}
-              {form.recognitions.length < 10 && (
+              {recognitionsFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("recognitions")}>
                   Add Achievement +
                 </button>
               )}
             </div>
 
-            {/* 📈 Experiencia/Carrera */}
+            {/* 📈 Experiencia/Carrera - CAMPOS DIVIDIDOS */}
             <div className={styles.careerSection}>
               <h3>Career</h3>
-              {form.experience.map((item, idx) => (
+              {experienceFields.map((field, idx) => (
                 <div key={idx} className={styles.careerItem}>
                   <input
-                    type="text"
-                    value={item}
-                    onChange={(e) => handleArrayChange(e, "experience", idx)}
-                    placeholder="Add career milestone"
-                    className={styles.careerInput}
+                    type="number"
+                    value={field.year}
+                    onChange={(e) => handleExperienceFieldChange(idx, "year", e.target.value)}
+                    placeholder="Year"
+                    className={styles.yearInput2}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "80px", marginRight: "10px" }}
                   />
-                  {form.experience.length > 1 && (
-                    <button type="button" onClick={() => removeArrayField("experience", idx)}>
+                  <input
+                    type="text"
+                    value={field.text}
+                    onChange={(e) => handleExperienceFieldChange(idx, "text", e.target.value)}
+                    placeholder="Career milestone"
+                    className={styles.careerInput}
+                    style={{ flex: 1 }}
+                  />
+                  {experienceFields.length > 1 && (
+                    <button 
+                      type="button" 
+                      onClick={() => removeArrayField("experience", idx)}
+                      style={{ marginLeft: "10px" }}
+                    >
                       &times;
                     </button>
                   )}
                 </div>
               ))}
-              {form.experience.length < 10 && (
+              {experienceFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("experience")}>
                   Add Career +
                 </button>
