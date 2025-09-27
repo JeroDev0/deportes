@@ -1,4 +1,3 @@
-
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
@@ -23,7 +22,7 @@ function LeftProfileColumn({ profile }) {
 
       {/* Contenido debajo de la foto */}
       <div className={styles.contentBelow}>
-        {/* ✅ CORREGIDO: Level y Edad - ahora usa el nivel real de la DB */}
+        {/* Level y Edad */}
         <div className={styles.levelAge}>
           <span>
             <strong>Level:</strong> {profile.level || "Amateur"}
@@ -34,7 +33,7 @@ function LeftProfileColumn({ profile }) {
           </span>
         </div>
 
-        {/* ✅ AGREGADO: Género */}
+        {/* Género */}
         {profile.gender && (
           <div className={styles.gender}>
             <span>
@@ -43,7 +42,7 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* Ciudad y País con icono */}
+        {/* Ciudad y País con icono - Current Location */}
         <div className={styles.location}>
           <img
             src="/assets/icon_loaction.svg"
@@ -55,12 +54,58 @@ function LeftProfileColumn({ profile }) {
           </span>
         </div>
 
-        {/* ✅ AGREGADO: Scout asociado */}
+        {/* NUEVO: Información adicional de Current Location */}
+        {(profile.postalCode || profile.address) && (
+          <div className={styles.addressInfo}>
+            {profile.address && (
+              <div className={styles.addressItem}>
+                <span className={styles.addressLabel}>Address:</span>
+                <span className={styles.addressValue}>{profile.address}</span>
+              </div>
+            )}
+            {profile.postalCode && (
+              <div className={styles.addressItem}>
+                <span className={styles.addressLabel}>Postal Code:</span>
+                <span className={styles.addressValue}>{profile.postalCode}</span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Skills */}
+        {profile.skills && profile.skills.length > 0 && (
+          <div className={styles.skillsContainer}>
+            <h4>Style</h4>
+            <div className={styles.skillsList}>
+              {profile.skills.map((skill, idx) => (
+                <span key={idx} className={styles.skillTag}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* NUEVO: Birth Information */}
+        {(profile.birthCountry || profile.birthCity) && (
+          <div className={styles.birthInfo}>
+            <div className={styles.sectionHeader}>
+              <h4>Birth Place</h4>
+            </div>
+            <div className={styles.birthLocation}>
+              {profile.birthCity && <strong>{profile.birthCity}</strong>}
+              {profile.birthCity && profile.birthCountry && " | "}
+              {profile.birthCountry}
+            </div>
+          </div>
+        )}
+
+        {/* Scout asociado */}
         {profile.scout && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
-                src="/assets/icon_scout.svg"
+                src="/assets/scout-logo.png"
                 alt="scout icon"
                 className={styles.relationIcon}
               />
@@ -79,12 +124,12 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* ✅ AGREGADO: Sponsor asociado */}
+        {/* Sponsor asociado */}
         {profile.sponsor && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
-                src="/assets/icon_sponsor.svg"
+                src="/assets/sponsor-logo.png"
                 alt="sponsor icon"
                 className={styles.relationIcon}
               />
@@ -103,12 +148,12 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* ✅ AGREGADO: Club asociado */}
+        {/* Club asociado */}
         {profile.club && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
-                src="/assets/icon_club.svg"
+                src="/assets/club-logo.png"
                 alt="club icon"
                 className={styles.relationIcon}
               />
@@ -126,19 +171,7 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* Skills */}
-        {profile.skills && profile.skills.length > 0 && (
-          <div className={styles.skillsContainer}>
-            <h4>Style</h4>
-            <div className={styles.skillsList}>
-              {profile.skills.map((skill, idx) => (
-                <span key={idx} className={styles.skillTag}>
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+        
       </div>
     </div>
   );

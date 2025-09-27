@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +7,8 @@ function CenterProfileColumn({ profile = {} }) {
   const [followers, setFollowers] = useState(219);
   const [isFollowing, setIsFollowing] = useState(false);
   const [posts, setPosts] = useState([]);
-  const sponsorshipGoal = 2000;
-  const sponsorshipFunded = 650;
+  // const sponsorshipGoal = 2000;
+  // const sponsorshipFunded = 650;
 
   useEffect(() => {
     if (!profile?._id) return;
@@ -36,11 +35,12 @@ function CenterProfileColumn({ profile = {} }) {
     <div className={styles.centerCard}>
       {/* --- Nav menu --- */}
       <div className={styles.navMenu}>
-        <div className={styles.navLeft}>
-          <a href="#aboutSection">About</a>
+        {/* <div className={styles.navLeft}>
+          <a href="#shortDescSection">Short Description</a>
+          <a href="#aboutSection">My Story</a>
           <a href="#gallerySection">Gallery</a>
           <a href="#achievementsSection">Achievements</a>
-        </div>
+        </div> */}
         <button
           className={styles.editProfileBtn}
           onClick={() => navigate(`/profile/${profile._id}/edit`)}
@@ -64,7 +64,7 @@ function CenterProfileColumn({ profile = {} }) {
         </div>
       </div>
 
-      {/* Sponsorship bar */}
+      {/* Sponsorship bar
       <div className={styles.sponsorship}>
         <div className={styles.progressWrapper}>
           <div className={styles.progressBar}>
@@ -80,11 +80,24 @@ function CenterProfileColumn({ profile = {} }) {
         <div className={styles.sponsorInfo}>
           €{sponsorshipFunded} funded of €{sponsorshipGoal} goal
         </div>
-      </div>
+      </div> */}
 
-      {/* About */}
+      {/* Short Description */}
+      <section id="shortDescSection" className={styles.shortDescSection}>
+        <div className={styles.sectionHeader}>
+          <h2>Short Description</h2>
+        </div>
+        <p className={styles.shortDescText}>
+          {profile?.shortDescription || "No short description available."}
+        </p>
+      </section>
+
+      {/* About - My Story */}
       <section id="aboutSection" className={styles.aboutSection}>
-        <p>{profile?.about || "No description available."}</p>
+        <div className={styles.sectionHeader}>
+          <h2>My Story</h2>
+        </div>
+        <p>{profile?.about || "No story available."}</p>
       </section>
 
       {/* Gallery */}
