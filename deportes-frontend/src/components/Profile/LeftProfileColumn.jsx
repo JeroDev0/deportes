@@ -6,23 +6,18 @@ function LeftProfileColumn({ profile }) {
 
   return (
     <div className={styles.profileCard}>
-      {/* Etiqueta Boosted (opcional) */}
       {profile.boosted && <div className={styles.boostedBadge}>Boosted</div>}
 
-      {/* Foto de perfil */}
       <div className={styles.avatarContainer}>
         <img
           src={profile.photo || "https://placehold.co/400x400?text=Sin+Foto"}
           alt={`${profile.name} ${profile.lastName}`}
           className={styles.avatar}
         />
-        {/* Sport Badge justo sobre el borde inferior de la foto */}
         <div className={styles.sportBadge}>{profile.sport || "Deportista"}</div>
       </div>
 
-      {/* Contenido debajo de la foto */}
       <div className={styles.contentBelow}>
-        {/* Level y Edad */}
         <div className={styles.levelAge}>
           <span>
             <strong>Level:</strong> {profile.level || "Amateur"}
@@ -33,7 +28,6 @@ function LeftProfileColumn({ profile }) {
           </span>
         </div>
 
-        {/* Género */}
         {profile.gender && (
           <div className={styles.gender}>
             <span>
@@ -42,7 +36,6 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* Ciudad y País con icono - Current Location */}
         <div className={styles.location}>
           <img
             src="/assets/icon_loaction.svg"
@@ -54,7 +47,6 @@ function LeftProfileColumn({ profile }) {
           </span>
         </div>
 
-        {/* NUEVO: Información adicional de Current Location */}
         {(profile.postalCode || profile.address) && (
           <div className={styles.addressInfo}>
             {profile.address && (
@@ -72,7 +64,6 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* Skills */}
         {profile.skills && profile.skills.length > 0 && (
           <div className={styles.skillsContainer}>
             <h4>Style</h4>
@@ -86,7 +77,6 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
         
-        {/* NUEVO: Birth Information */}
         {(profile.birthCountry || profile.birthCity) && (
           <div className={styles.birthInfo}>
             <div className={styles.sectionHeader}>
@@ -100,8 +90,8 @@ function LeftProfileColumn({ profile }) {
           </div>
         )}
 
-        {/* Scout asociado */}
-        {profile.scout && (
+        {/* Scout: muestra objeto de BD O texto libre */}
+        {(profile.scout || profile.scoutName) && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
@@ -112,20 +102,26 @@ function LeftProfileColumn({ profile }) {
               <h4>Scout</h4>
             </div>
             <div className={styles.relationInfo}>
-              <span className={styles.relationName}>
-                {profile.scout.name} {profile.scout.lastName}
-              </span>
-              {profile.scout.specialization && (
-                <span className={styles.relationSpecialty}>
-                  {profile.scout.specialization}
-                </span>
-              )}
+              {profile.scout?._id ? (
+                <>
+                  <span className={styles.relationName}>
+                    {profile.scout.name} {profile.scout.lastName}
+                  </span>
+                  {profile.scout.specialization && (
+                    <span className={styles.relationSpecialty}>
+                      {profile.scout.specialization}
+                    </span>
+                  )}
+                </>
+              ) : profile.scoutName ? (
+                <span className={styles.relationName}>{profile.scoutName}</span>
+              ) : null}
             </div>
           </div>
         )}
 
-        {/* Sponsor asociado */}
-        {profile.sponsor && (
+        {/* Sponsor: muestra objeto de BD O texto libre */}
+        {(profile.sponsor || profile.sponsorName) && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
@@ -136,20 +132,26 @@ function LeftProfileColumn({ profile }) {
               <h4>Sponsor</h4>
             </div>
             <div className={styles.relationInfo}>
-              <span className={styles.relationName}>
-                {profile.sponsor.name || profile.sponsor.companyName}
-              </span>
-              {profile.sponsor.industry && (
-                <span className={styles.relationSpecialty}>
-                  {profile.sponsor.industry}
-                </span>
-              )}
+              {profile.sponsor?._id ? (
+                <>
+                  <span className={styles.relationName}>
+                    {profile.sponsor.name || profile.sponsor.companyName}
+                  </span>
+                  {profile.sponsor.industry && (
+                    <span className={styles.relationSpecialty}>
+                      {profile.sponsor.industry}
+                    </span>
+                  )}
+                </>
+              ) : profile.sponsorName ? (
+                <span className={styles.relationName}>{profile.sponsorName}</span>
+              ) : null}
             </div>
           </div>
         )}
 
-        {/* Club asociado */}
-        {profile.club && (
+        {/* Club: muestra objeto de BD O texto libre */}
+        {(profile.club || profile.clubName) && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
@@ -160,18 +162,22 @@ function LeftProfileColumn({ profile }) {
               <h4>Club</h4>
             </div>
             <div className={styles.relationInfo}>
-              <span className={styles.relationName}>{profile.club.name}</span>
-              {profile.club.city && (
-                <span className={styles.relationSpecialty}>
-                  {profile.club.city}
-                  {profile.club.country && `, ${profile.club.country}`}
-                </span>
-              )}
+              {profile.club?._id ? (
+                <>
+                  <span className={styles.relationName}>{profile.club.name}</span>
+                  {profile.club.city && (
+                    <span className={styles.relationSpecialty}>
+                      {profile.club.city}
+                      {profile.club.country && `, ${profile.club.country}`}
+                    </span>
+                  )}
+                </>
+              ) : profile.clubName ? (
+                <span className={styles.relationName}>{profile.clubName}</span>
+              ) : null}
             </div>
           </div>
         )}
-
-        
       </div>
     </div>
   );

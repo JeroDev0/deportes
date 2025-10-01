@@ -23,34 +23,39 @@ const DeportistaSchema = new mongoose.Schema({
   gender: { type: String, default: "" },
   phone: { type: String, default: "" },
 
-  // 🏠 Información de nacimiento - ESTOS SON LOS CAMPOS PROBLEMÁTICOS
+  // 🏠 Información de nacimiento
   birthCountry: { type: String, default: "" },
   birthCity: { type: String, default: "" },
 
-  // 🌍 Información actual/residencia - ESTOS SON LOS CAMPOS PROBLEMÁTICOS
-  country: { type: String, default: "" },       // País actual
-  city: { type: String, default: "" },          // Ciudad actual
-  postalCode: { type: String, default: "" },    // Código postal - PROBLEMÁTICO
-  address: { type: String, default: "" },       // Dirección completa - PROBLEMÁTICO
+  // 🌍 Información actual/residencia
+  country: { type: String, default: "" },
+  city: { type: String, default: "" },
+  postalCode: { type: String, default: "" },
+  address: { type: String, default: "" },
 
   photo: { type: String, default: "" },
 
-  // 📝 Descripciones - ESTE ES PROBLEMÁTICO
-  about: { type: String, default: "" },              // Descripción larga
-  shortDescription: { type: String, default: "" },   // Descripción corta - PROBLEMÁTICO
+  // 📝 Descripciones
+  about: { type: String, default: "" },
+  shortDescription: { type: String, default: "" },
 
   // 🏅 Experiencias y logros
   experience: { type: [String], default: [] },
   recognitions: { type: [String], default: [] },
   skills: { type: [String], default: [] },
-  certifications: { type: [String], default: [] }, // solo scout y sponsor
+  certifications: { type: [String], default: [] },
 
   registrationDate: { type: Date, default: Date.now },
 
-  // 🔗 Relaciones
+  // 🔗 Relaciones con BD (IDs)
   scout: { type: mongoose.Schema.Types.ObjectId, ref: "Scout", default: null },
   sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Sponsor", default: null },
   club: { type: mongoose.Schema.Types.ObjectId, ref: "Club", default: null },
+
+  // ⭐ NUEVOS CAMPOS - Relaciones como texto libre
+  scoutName: { type: String, default: "" },
+  sponsorName: { type: String, default: "" },
+  clubName: { type: String, default: "" },
 
   // ⚡ Nivel
   level: {
