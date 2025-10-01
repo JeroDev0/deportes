@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
 import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
 
@@ -34,7 +35,6 @@ const SPORTS = [
   { value: "Triathlon", label: "Triathlon" },
 ];
 
-// Niveles con los valores exactos que espera backend
 const LEVELS = [
   { value: "amateur", label: "Amateur" },
   { value: "semi profesional", label: "Semi Professional" },
@@ -150,21 +150,15 @@ const selectStyles = {
   }),
 };
 
-// Función para parsear un string a año y texto
 const parseYearText = (str) => {
   if (!str) return { year: "", text: "" };
-  
-  // Buscar si empieza con 4 dígitos seguidos de un espacio, guión o dos puntos
   const match = str.match(/^(\d{4})[\s\-:]+(.+)$/);
   if (match) {
     return { year: match[1], text: match[2] };
   }
-  
-  // Si no encuentra el patrón, poner todo en texto
   return { year: "", text: str };
 };
 
-// Función para combinar año y texto en un string
 const combineYearText = (year, text) => {
   if (!year && !text) return "";
   if (!year) return text;
@@ -172,12 +166,10 @@ const combineYearText = (year, text) => {
   return `${year} - ${text}`;
 };
 
-// Función para convertir skills object a array para el backend
 const convertSkillsToArray = (skillsObject) => {
   return Object.values(skillsObject).filter(skill => skill !== "");
 };
 
-// Función para convertir skills array del backend a object para el frontend
 const convertSkillsToObject = (skillsArray) => {
   const skillsObj = {
     cognitive: "",
@@ -190,7 +182,6 @@ const convertSkillsToObject = (skillsArray) => {
   
   if (Array.isArray(skillsArray)) {
     skillsArray.forEach(skill => {
-      // Buscar en qué categoría está esta skill
       Object.keys(SKILLS_CATEGORIES).forEach(category => {
         const found = SKILLS_CATEGORIES[category].options.find(option => option.value === skill);
         if (found) {
@@ -216,16 +207,13 @@ function EditProfile() {
     sport: "",
     level: "",
     phone: "",
-    // 🌍 Información actual/residencia
     country: "",
     city: "",
     postalCode: "",
     address: "",
-    // 🏠 Información de nacimiento
     birthCountry: "",
     birthCity: "",
     photo: "",
-    // 📝 Descripciones
     about: "",
     shortDescription: "",
     experience: [""],
@@ -244,7 +232,6 @@ function EditProfile() {
     club: "",
   });
 
-  // Estados para manejar los campos divididos visualmente
   const [recognitionsFields, setRecognitionsFields] = useState([{ year: "", text: "" }]);
   const [experienceFields, setExperienceFields] = useState([{ year: "", text: "" }]);
 
@@ -252,11 +239,9 @@ function EditProfile() {
   const [profileType, setProfileType] = useState("atleta");
   const [photoPreview, setPhotoPreview] = useState("");
   
-  // Estados para ciudades actuales
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
   
-  // Estados para ciudades de nacimiento
   const [birthCityOptions, setBirthCityOptions] = useState([]);
   const [loadingBirthCities, setLoadingBirthCities] = useState(false);
 
@@ -266,6 +251,11 @@ function EditProfile() {
   const [loadingScouts, setLoadingScouts] = useState(false);
   const [loadingSponsors, setLoadingSponsors] = useState(false);
   const [loadingClubs, setLoadingClubs] = useState(false);
+
+  // Estados para display (lo que ve el usuario)
+  const [scoutDisplay, setScoutDisplay] = useState(null);
+  const [sponsorDisplay, setSponsorDisplay] = useState(null);
+  const [clubDisplay, setClubDisplay] = useState(null);
 
   const countryOptions = countryList().getData();
 
@@ -282,16 +272,13 @@ function EditProfile() {
           sport: data.sport || "",
           level: data.level || "",
           phone: data.phone || "",
-          // 🌍 Información actual/residencia
           country: data.country || "",
           city: data.city || "",
           postalCode: data.postalCode || "",
           address: data.address || "",
-          // 🏠 Información de nacimiento
           birthCountry: data.birthCountry || "",
           birthCity: data.birthCity || "",
           photo: data.photo || "",
-          // 📝 Descripciones
           about: data.about || "",
           shortDescription: data.shortDescription || "",
           experience: data.experience || [""],
@@ -303,11 +290,9 @@ function EditProfile() {
           club: data.club?._id || "",
         });
         
-        // Parsear recognitions para los campos divididos
         const parsedRecognitions = (data.recognitions || [""]).map(parseYearText);
         setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ year: "", text: "" }]);
         
-        // Parsear experience para los campos divididos
         const parsedExperience = (data.experience || [""]).map(parseYearText);
         setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ year: "", text: "" }]);
         
@@ -315,10 +300,56 @@ function EditProfile() {
         if (data.photo && typeof data.photo === "string") {
           setPhotoPreview(data.photo);
         }
+
+        // Configurar displays para scout
+        if (data.scout?._id) {
+          // Es de BD
+          setScoutDisplay({
+            value: data.scout._id,
+            label: `${data.scout.name} ${data.scout.lastName}` + (data.scout.specialization ? ` - ${data.scout.specialization}` : ""),
+            isFromDB: true
+          });
+        } else if (data.scoutName) {
+          // Es texto libre guardado
+          setScoutDisplay({
+            value: data.scoutName,
+            label: data.scoutName,
+            isFromDB: false
+          });
+        }
+
+        // Configurar displays para sponsor
+        if (data.sponsor?._id) {
+          setSponsorDisplay({
+            value: data.sponsor._id,
+            label: `${data.sponsor.name || data.sponsor.companyName}` + (data.sponsor.industry ? ` - ${data.sponsor.industry}` : ""),
+            isFromDB: true
+          });
+        } else if (data.sponsorName) {
+          setSponsorDisplay({
+            value: data.sponsorName,
+            label: data.sponsorName,
+            isFromDB: false
+          });
+        }
+
+        // Configurar displays para club
+        if (data.club?._id) {
+          setClubDisplay({
+            value: data.club._id,
+            label: `${data.club.name}` + (data.club.city ? ` - ${data.club.city}` : ""),
+            isFromDB: true
+          });
+        } else if (data.clubName) {
+          setClubDisplay({
+            value: data.clubName,
+            label: data.clubName,
+            isFromDB: false
+          });
+        }
       });
   }, [id]);
 
-  // Sincronizar los campos divididos con el form cuando cambien
   useEffect(() => {
     const recognitionsStrings = recognitionsFields.map(field => combineYearText(field.year, field.text));
     setForm(prev => ({ ...prev, recognitions: recognitionsStrings }));
@@ -329,7 +360,7 @@ function EditProfile() {
     setForm(prev => ({ ...prev, experience: experienceStrings }));
   }, [experienceFields]);
 
-  // Scouts
+  // Cargar scouts
   useEffect(() => {
     setLoadingScouts(true);
     fetch("https://deportes-production.up.railway.app/scouts")
@@ -339,6 +370,7 @@ function EditProfile() {
           data.map((scout) => ({
             value: scout._id,
             label: `${scout.name} ${scout.lastName}` + (scout.specialization ? ` - ${scout.specialization}` : ""),
+            isFromDB: true
           }))
         );
       })
@@ -346,7 +378,7 @@ function EditProfile() {
       .finally(() => setLoadingScouts(false));
   }, []);
 
-  // Sponsors
+  // Cargar sponsors
   useEffect(() => {
     setLoadingSponsors(true);
     fetch("https://deportes-production.up.railway.app/sponsors")
@@ -356,6 +388,7 @@ function EditProfile() {
           data.map((sponsor) => ({
             value: sponsor._id,
             label: `${sponsor.name || sponsor.companyName}` + (sponsor.industry ? ` - ${sponsor.industry}` : ""),
+            isFromDB: true
           }))
         );
       })
@@ -363,7 +396,7 @@ function EditProfile() {
       .finally(() => setLoadingSponsors(false));
   }, []);
 
-  // Clubs
+  // Cargar clubs
   useEffect(() => {
     setLoadingClubs(true);
     fetch("https://deportes-production.up.railway.app/clubs")
@@ -373,6 +406,7 @@ function EditProfile() {
           data.map((club) => ({
             value: club._id,
             label: `${club.name}` + (club.city ? ` - ${club.city}` : ""),
+            isFromDB: true
           }))
         );
       })
@@ -380,7 +414,6 @@ function EditProfile() {
       .finally(() => setLoadingClubs(false));
   }, []);
 
-  // Ciudades por país actual
   useEffect(() => {
     if (form.country) {
       setLoadingCities(true);
@@ -404,7 +437,6 @@ function EditProfile() {
     }
   }, [form.country]);
 
-  // Ciudades por país de nacimiento
   useEffect(() => {
     if (form.birthCountry) {
       setLoadingBirthCities(true);
@@ -432,7 +464,6 @@ function EditProfile() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Para selects
   const handleSelectChange = (selectedOption, fieldName) => {
     const value = selectedOption ? selectedOption.value : "";
     if (fieldName === "country") {
@@ -444,7 +475,29 @@ function EditProfile() {
     }
   };
 
-  // Función para manejar cambios en skills por categoría
+  // Función para manejar cambios en relaciones profesionales
+  const handleRelationChange = (selectedOption, field) => {
+    if (field === 'scout') {
+      setScoutDisplay(selectedOption);
+      setForm(prev => ({
+        ...prev,
+        scout: selectedOption?.isFromDB ? selectedOption.value : ""
+      }));
+    } else if (field === 'sponsor') {
+      setSponsorDisplay(selectedOption);
+      setForm(prev => ({
+        ...prev,
+        sponsor: selectedOption?.isFromDB ? selectedOption.value : ""
+      }));
+    } else if (field === 'club') {
+      setClubDisplay(selectedOption);
+      setForm(prev => ({
+        ...prev,
+        club: selectedOption?.isFromDB ? selectedOption.value : ""
+      }));
+    }
+  };
+
   const handleSkillChange = (selectedOption, category) => {
     const value = selectedOption ? selectedOption.value : "";
     setForm(prev => ({
@@ -462,14 +515,12 @@ function EditProfile() {
     setForm({ ...form, [field]: arr });
   };
 
-  // Manejar cambios en campos divididos (recognitions)
   const handleRecognitionFieldChange = (idx, fieldType, value) => {
     const newFields = [...recognitionsFields];
     newFields[idx] = { ...newFields[idx], [fieldType]: value };
     setRecognitionsFields(newFields);
   };
 
-  // Manejar cambios en campos divididos (experience)
   const handleExperienceFieldChange = (idx, fieldType, value) => {
     const newFields = [...experienceFields];
     newFields[idx] = { ...newFields[idx], [fieldType]: value };
@@ -522,10 +573,8 @@ function EditProfile() {
 
     const cleanForm = { ...form };
     
-    // Convertir las skills a array para el backend
     cleanForm.skills = convertSkillsToArray(form.skills);
     
-    // Asegurar que los campos problemáticos sean strings válidos
     const stringFields = ['postalCode', 'address', 'birthCountry', 'birthCity', 'shortDescription'];
     stringFields.forEach(field => {
       if (cleanForm[field] === null || cleanForm[field] === undefined || cleanForm[field] === 'undefined') {
@@ -547,6 +596,25 @@ function EditProfile() {
       }
     });
 
+    // IMPORTANTE: Agregar los nombres de texto libre
+    if (scoutDisplay && !scoutDisplay.isFromDB) {
+      formData.append('scoutName', scoutDisplay.value);
+    } else {
+      formData.append('scoutName', '');
+    }
+
+    if (sponsorDisplay && !sponsorDisplay.isFromDB) {
+      formData.append('sponsorName', sponsorDisplay.value);
+    } else {
+      formData.append('sponsorName', '');
+    }
+
+    if (clubDisplay && !clubDisplay.isFromDB) {
+      formData.append('clubName', clubDisplay.value);
+    } else {
+      formData.append('clubName', '');
+    }
+
     const res = await fetch(`https://deportes-production.up.railway.app/deportistas/${id}`, {
       method: "PUT",
       body: formData,
@@ -567,7 +635,6 @@ function EditProfile() {
     }
   };
 
-  // Render chips para campos array normales
   const renderChipList = (field, placeholder, max = 10) => (
     <div className={styles.chipList}>
       {form[field].map((item, idx) => (
@@ -603,7 +670,6 @@ function EditProfile() {
     </div>
   );
 
-  // Componente para renderizar las skills por categorías
   const renderSkillsSection = () => (
     <div className={styles.skillsSection}>
       <h3>Skills (Select one from each category)</h3>
@@ -633,7 +699,6 @@ function EditProfile() {
         <h1 className={styles.header}>EDIT PROFILE</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          {/* Columna izquierda */}
           <div className={styles.leftCol}>
             <div className={styles.photoSection}>
               {photoPreview ? (
@@ -647,13 +712,10 @@ function EditProfile() {
               <input type="file" id="photoUpload" accept="image/*" onChange={handlePhotoChange} hidden />
             </div>
 
-            {/* Nueva sección de Skills por categorías */}
             {renderSkillsSection()}
           </div>
 
-          {/* Columna derecha */}
           <div className={styles.rightCol}>
-            {/* 📝 Descripciones */}
             <label>Short Description</label>
             <textarea
               name="shortDescription"
@@ -677,7 +739,6 @@ function EditProfile() {
             />
             <div className={styles.charCount}>{form.about.length} of 1000 characters</div>
 
-            {/* 📋 Información Personal */}
             <div className={styles.personalInfo}>
               <input name="name" placeholder="First Name" value={form.name} onChange={handleChange} required />
               <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
@@ -702,7 +763,6 @@ function EditProfile() {
               <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
             </div>
 
-            {/* 🏠 Información de Nacimiento */}
             <div className={styles.birthInfo}>
               <h3>Birth Information</h3>
               <Select
@@ -726,7 +786,6 @@ function EditProfile() {
               />
             </div>
 
-            {/* 🌍 Información Actual/Residencia */}
             <div className={styles.currentLocation}>
               <h3>Current Location</h3>
               <Select
@@ -762,7 +821,6 @@ function EditProfile() {
               />
             </div>
 
-            {/* 🏅 Carrera Deportiva */}
             <div className={styles.sportCareer}>
               <label>Sport Career</label>
               <div className={styles.sportCareerFields}>
@@ -785,41 +843,42 @@ function EditProfile() {
               </div>
             </div>
 
-            {/* 🔗 Relaciones Profesionales */}
             <div className={styles.relationsSection}>
-              <label>Professional Relations</label>
+              <label>Professional Relations (Select from list or type manually)</label>
               <div className={styles.relationsFields}>
-                <Select
+                <CreatableSelect
                   options={scoutOptions}
-                  value={scoutOptions.find((s) => s.value === form.scout) || null}
-                  onChange={(opt) => handleSelectChange(opt, "scout")}
-                  placeholder={loadingScouts ? "Loading scouts..." : "Select Scout"}
+                  value={scoutDisplay}
+                  onChange={(opt) => handleRelationChange(opt, 'scout')}
+                  placeholder={loadingScouts ? "Loading scouts..." : "Select or type Scout name"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingScouts}
+                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
                 />
-                <Select
+                <CreatableSelect
                   options={sponsorOptions}
-                  value={sponsorOptions.find((s) => s.value === form.sponsor) || null}
-                  onChange={(opt) => handleSelectChange(opt, "sponsor")}
-                  placeholder={loadingSponsors ? "Loading sponsors..." : "Select Sponsor"}
+                  value={sponsorDisplay}
+                  onChange={(opt) => handleRelationChange(opt, 'sponsor')}
+                  placeholder={loadingSponsors ? "Loading sponsors..." : "Select or type Sponsor name"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingSponsors}
+                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
                 />
-                <Select
+                <CreatableSelect
                   options={clubOptions}
-                  value={clubOptions.find((c) => c.value === form.club) || null}
-                  onChange={(opt) => handleSelectChange(opt, "club")}
-                  placeholder={loadingClubs ? "Loading clubs..." : "Select Club"}
+                  value={clubDisplay}
+                  onChange={(opt) => handleRelationChange(opt, 'club')}
+                  placeholder={loadingClubs ? "Loading clubs..." : "Select or type Club name"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingClubs}
+                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
                 />
               </div>
             </div>
 
-            {/* 🏆 Logros - CAMPOS DIVIDIDOS */}
             <div className={styles.achievementsSection}>
               <h3>Achievements</h3>
               {recognitionsFields.map((field, idx) => (
@@ -861,7 +920,6 @@ function EditProfile() {
               )}
             </div>
 
-            {/* 📈 Experiencia/Carrera - CAMPOS DIVIDIDOS */}
             <div className={styles.careerSection}>
               <h3>Career</h3>
               {experienceFields.map((field, idx) => (
@@ -902,7 +960,6 @@ function EditProfile() {
               )}
             </div>
 
-            {/* 🎓 Certificaciones (solo para scout y sponsor) */}
             {(profileType === "scout" || profileType === "sponsor") && (
               <div className={styles.certificationsSection}>
                 <label>Certifications</label>
