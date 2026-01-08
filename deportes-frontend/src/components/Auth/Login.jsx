@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth.js';
 import styles from './AuthForm.module.css';
+import API_URL from '../../config/api';
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -16,7 +17,7 @@ function Login() {
     e.preventDefault();
     setMsg('');
     try {
-      const res = await fetch('http://localhost:5000/auth/login', {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
