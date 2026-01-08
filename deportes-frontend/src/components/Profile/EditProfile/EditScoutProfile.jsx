@@ -5,6 +5,7 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
+import API_URL from '../../config/api';
 
 const GENDERS = [
   { value: "male", label: "Male" },
@@ -161,7 +162,7 @@ function EditScoutProfile() {
   const countryOptions = countryList().getData();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/scouts/${id}`)
+    fetch(`${API_URL}/scouts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -214,7 +215,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingAthletes(true);
-    fetch("http://localhost:5000/deportistas")
+    fetch("${API_URL}/deportistas")
       .then((res) => res.json())
       .then((data) => {
         setAthleteOptions(
@@ -230,7 +231,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingClubs(true);
-    fetch("http://localhost:5000/clubs")
+    fetch("${API_URL}/clubs")
       .then((res) => res.json())
       .then((data) => {
         setClubOptions(
@@ -246,7 +247,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingSponsors(true);
-    fetch("http://localhost:5000/sponsors")
+    fetch("${API_URL}/sponsors")
       .then((res) => res.json())
       .then((data) => {
         setSponsorOptions(
@@ -446,7 +447,7 @@ function EditScoutProfile() {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/scouts/${id}`, {
+      const res = await fetch(`${API_URL}/scouts/${id}`, {
         method: "PUT",
         body: formData,
       });
