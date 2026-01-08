@@ -65,7 +65,7 @@ const IconRegister = () => (
 );
 
 function Header() {
-  const { user, logout } = useAuth();
+  const { user, logou, getProfileRoute } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -99,7 +99,7 @@ function Header() {
 
           {user ? (
             <>
-              <Link to={`/profile/${user.id}`} className={styles.iconLink} title="Perfil">
+              <Link to={getProfileRoute()} className={styles.iconLink} title="Perfil">
                 <span className={styles.iconLabel}>Perfil</span>
               </Link>
               <button
@@ -145,7 +145,7 @@ function Header() {
 
         {user ? (
           <>
-            <Link to={`/profile/${user.id}`} className={styles.iconLinkMobile} title="Perfil">
+            <Link to={getProfileRoute()} className={styles.iconLinkMobile} title="Perfil">
               <IconProfile />
               <span className={styles.iconLabel}>Perfil</span>
             </Link>

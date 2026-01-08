@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
-import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
-import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
+import LeftScoutProfileColumn from "../components/Profile/LeftScoutProfileColumn.jsx";
+import CenterScoutProfileColumn from "../components/Profile/CenterScoutProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
 import styles from "./ProfilePage.module.css";
-import SponsorSection from "../components/Profile/SponsorSection/SponsorSection.jsx";
 
-
-function ProfilePage() {
+function ScoutProfilePage() {
   const { id } = useParams();
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
@@ -16,14 +14,14 @@ function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
+    fetch(`https://deportes-production.up.railway.app/scouts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching profile:", error);
+        console.error("Error fetching scout profile:", error);
         setLoading(false);
       });
   }, [id]);
@@ -35,7 +33,6 @@ function ProfilePage() {
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
-    // Aquí iría la lógica para seguir/dejar de seguir
   };
 
   return (
@@ -49,11 +46,10 @@ function ProfilePage() {
         />
       </div>
 
-      {/* Contenido del perfil */}
+      {/* Contenido del perfil scout */}
       <div className={styles.pageContainer}>
-        {/* Columna izquierda */}
         <div className={styles.leftColumn}>
-          <LeftProfileColumn 
+          <LeftScoutProfileColumn 
             profile={profile} 
             isMyProfile={isMyProfile} 
             isFollowing={isFollowing}
@@ -61,16 +57,13 @@ function ProfilePage() {
           />
         </div>
 
-        {/* Columna central */}
         <div className={styles.centerColumn}>
-          <CenterProfileColumn 
+          <CenterScoutProfileColumn 
             profile={profile} 
             isMyProfile={isMyProfile} 
           />
-          <SponsorSection />
         </div>
 
-        {/* Columna derecha */}
         <div className={styles.rightColumn}>
           <RightProfileColumn 
             profile={profile} 
@@ -82,4 +75,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default ScoutProfilePage;

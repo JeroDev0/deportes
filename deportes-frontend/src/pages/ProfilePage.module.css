@@ -60,3 +60,24 @@
     padding: 0;
   }
 }
+
+/* Banner */
+.bannerWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.bannerImage {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1920 / 400;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .bannerImage {
+    aspect-ratio: 16 / 5;
+  }
+}

@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './AuthForm.module.css';
 
 function Register() {
   const [form, setForm] = useState({
     email: '',
     password: '',
-    profileType: 'atleta', // default
+    profileType: 'atleta',
   });
   const [msg, setMsg] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = e =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,18 +18,25 @@ function Register() {
     e.preventDefault();
     setMsg('');
 
-    const res = await fetch('https://deportes-production.up.railway.app/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch('http://localhost:5000/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
 
-    const data = await res.json();
-    if (res.ok) {
-      setMsg('Registration successful! You can now log in.');
-      setForm({ email: '', password: '', profileType: 'atleta' });
-    } else {
-      setMsg(data.error || 'Registration error');
+      const data = await res.json();
+      if (res.ok) {
+        setMsg('Registration successful! You can now log in.');
+        setForm({ email: '', password: '', profileType: 'atleta' });
+        
+        setTimeout(() => navigate('/login'), 1500);
+      } else {
+        setMsg(data.error || 'Registration error');
+      }
+    } catch (error) {
+      setMsg('Error de conexión. Inténtalo de nuevo.');
+      console.error('Registration error:', error);
     }
   };
 
@@ -60,8 +69,9 @@ function Register() {
           className={styles.input}
         >
           <option value="atleta">Athlete</option>
-          <option value="scout">Scout</option>
+          <option value="scout">Sports Professionals</option>
           <option value="sponsor">Sponsor</option>
+          <option value="club">Club</option>
         </select>
         <button type="submit" className={styles.button}>
           Register
