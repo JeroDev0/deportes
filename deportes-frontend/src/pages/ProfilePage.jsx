@@ -39,34 +39,46 @@ function ProfilePage() {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      {/* Columna izquierda */}
-      <div className={styles.leftColumn}>
-        <LeftProfileColumn 
-          profile={profile} 
-          isMyProfile={isMyProfile} 
-          isFollowing={isFollowing}
-          onFollow={handleFollow}
+    <>
+      {/* Banner superior */}
+      <div className={styles.bannerWrapper}>
+        <img
+          src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1767898680/Talento_y_Reserva_Indervalle_banner_uasxge.webp"
+          alt="Banner Talento y Reserva Indervalle"
+          className={styles.bannerImage}
         />
       </div>
 
-      {/* Columna central */}
-      <div className={styles.centerColumn}>
-        <CenterProfileColumn 
-          profile={profile} 
-          isMyProfile={isMyProfile} 
-        />
-        <SponsorSection />
-      </div>
+      {/* Contenido del perfil */}
+      <div className={styles.pageContainer}>
+        {/* Columna izquierda */}
+        <div className={styles.leftColumn}>
+          <LeftProfileColumn 
+            profile={profile} 
+            isMyProfile={isMyProfile} 
+            isFollowing={isFollowing}
+            onFollow={handleFollow}
+          />
+        </div>
 
-      {/* Columna derecha */}
-      <div className={styles.rightColumn}>
-        <RightProfileColumn 
-          profile={profile} 
-          isMyProfile={isMyProfile} 
-        />
+        {/* Columna central */}
+        <div className={styles.centerColumn}>
+          <CenterProfileColumn 
+            profile={profile} 
+            isMyProfile={isMyProfile} 
+          />
+          <SponsorSection />
+        </div>
+
+        {/* Columna derecha */}
+        <div className={styles.rightColumn}>
+          <RightProfileColumn 
+            profile={profile} 
+            isMyProfile={isMyProfile} 
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

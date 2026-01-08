@@ -1,3 +1,4 @@
+// src/components/Auth/AuthPage.jsx
 import { useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -55,4 +56,5 @@ function AuthPage() {
   );
 }
 
+// Asegúrate de exportar el componente como predeterminado
 export default AuthPage;

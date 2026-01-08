@@ -938,7 +938,7 @@ function EditProfile() {
                     type="text"
                     value={field.text}
                     onChange={(e) => handleExperienceFieldChange(idx, "text", e.target.value)}
-                    placeholder="Career milestone"
+                    placeholder="team / club"
                     className={styles.careerInput}
                     style={{ flex: 1 }}
                   />
