@@ -5,7 +5,7 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
-import API_URL from '../../config/api';
+import API_URL from "../../../config/api";
 
 const GENDERS = [
   { value: "male", label: "Male" },
