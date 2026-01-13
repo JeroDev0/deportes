@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './AuthForm.module.css';
+import API_URL from "../../config/api";
 
 function Register() {
   const [form, setForm] = useState({
