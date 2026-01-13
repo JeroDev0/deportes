@@ -185,13 +185,22 @@ function EditSponsorProfile() {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
+  // Creamos una copia para no modificar el estado visual
+  const dataTosSend = { ...form };
+
+  // 🚨 SI EL LOGO ES UN ARCHIVO (objeto), NO LO ENVIAMOS COMO JSON
+  // Solo enviamos el logo si es una URL (string)
+  if (typeof dataTosSend.logo !== "string") {
+    delete dataTosSend.logo; 
+  }
+
   try {
-    const res = await fetch(`${API_URL}/sponsors/${id}`, {  // ✅ SIN < >
+    const res = await fetch(`${API_URL}/sponsors/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(form)
+      body: JSON.stringify(dataTosSend) // Enviamos la copia limpia
     });
 
     const data = await res.json();
