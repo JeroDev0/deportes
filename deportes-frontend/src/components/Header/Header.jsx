@@ -65,7 +65,7 @@ const IconRegister = () => (
 );
 
 function Header() {
-  const { user, logou, getProfileRoute } = useAuth();
+  const { user, logout, getProfileRoute } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
