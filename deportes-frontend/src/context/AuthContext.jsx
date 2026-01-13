@@ -9,19 +9,18 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
-    
+
     if (token && userData) {
       try {
         const parsedUserData = JSON.parse(userData);
         setUser(parsedUserData);
         setIsAuthenticated(true);
       } catch (e) {
-        // Si hay error al parsear, limpiar localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       }
     }
-    
+
     setLoading(false);
   }, []);
 
@@ -39,33 +38,40 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
   };
 
-  // Función para determinar la ruta de perfil según el modelType
+  /**
+   * Retorna la ruta de perfil según el tipo de usuario
+   * Sponsor = empresa
+   */
   const getProfileRoute = (userId) => {
     if (!user) return '/';
-    
+
+    const id = userId || user.id;
+
     switch (user.modelType) {
       case 'deportista':
-        return `/profile/${userId || user.id}`;
+        return `/profile/${id}`;
       case 'scout':
-        return `/scout-profile/${userId || user.id}`;
+        return `/scout-profile/${id}`;
       case 'sponsor':
-        return `/sponsor-profile/${userId || user.id}`;
+        return `/sponsor-profile/${id}`;
       case 'club':
-        return `/club-profile/${userId || user.id}`;
+        return `/club-profile/${id}`;
       default:
         return '/';
     }
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      login, 
-      logout, 
-      isAuthenticated,
-      loading,
-      getProfileRoute 
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        isAuthenticated,
+        loading,
+        getProfileRoute,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
