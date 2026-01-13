@@ -1,4 +1,3 @@
-// routes/auth.js
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -8,18 +7,18 @@ const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
 const Club = require("../models/Club");
 
-// Registro
+// ==================== REGISTRO ====================
 router.post("/register", async (req, res) => {
   try {
     const { email, password, profileType } = req.body;
 
-    console.log("Registro de usuario:", { email, profileType }); // Para debug
+    console.log("📝 Registro de usuario:", { email, profileType });
 
-    // Validar que todos los campos requeridos estén presentes
+    // Validar campos requeridos
     if (!email || !password || !profileType) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: "Todos los campos son requeridos",
-        details: "Email, password y profileType son obligatorios" 
+        details: "Email, password y profileType son obligatorios",
       });
     }
 
@@ -30,6 +29,7 @@ router.post("/register", async (req, res) => {
     if (!existingUser) existingUser = await Club.findOne({ email });
 
     if (existingUser) {
+      console.log("❌ Email ya registrado:", email);
       return res.status(400).json({ error: "El email ya está registrado" });
     }
 
@@ -38,69 +38,94 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password.toString(), salt);
 
     let newUser;
+
     // Crear usuario según su tipo
     switch (profileType) {
       case "atleta":
-        console.log("Creando usuario deportista");
+        console.log("✅ Creando deportista");
         newUser = new Deportista({
           email,
           password: hashedPassword,
-          profileType: "atleta"
+          profileType: "atleta",
         });
         break;
+
       case "scout":
-        console.log("Creando usuario scout");
+        console.log("✅ Creando scout");
         newUser = new Scout({
           email,
           password: hashedPassword,
-          profileType: "scout" // Aseguramos que tenga este campo
+          profileType: "scout",
         });
         break;
+
       case "sponsor":
-        console.log("Creando usuario sponsor");
+        console.log("✅ Creando sponsor");
         newUser = new Sponsor({
           email,
           password: hashedPassword,
-          profileType: "sponsor"
+          profileType: "sponsor",
+          company: "Company Name", // ✅ valor por defecto temporal
         });
         break;
+
       case "club":
-        console.log("Creando usuario club");
+        console.log("✅ Creando club");
         newUser = new Club({
           email,
           password: hashedPassword,
-          profileType: "club"
+          profileType: "club",
         });
         break;
+
       default:
         return res.status(400).json({ error: "Tipo de perfil no válido" });
     }
 
     await newUser.save();
-    console.log(`Usuario ${profileType} registrado correctamente`);
-    res.status(201).json({ 
+    console.log(`✅ Usuario ${profileType} registrado correctamente`);
+
+    res.status(201).json({
       message: "Usuario registrado correctamente",
-      profileType: profileType 
+      profileType: profileType,
     });
   } catch (err) {
-    console.error("Error en registro:", err);
-    res.status(500).json({ 
-      error: "Error al registrar usuario", 
-      details: err.message 
+    console.error("❌ Error en registro:", err);
+
+    // Manejo específico de errores Mongoose
+    if (err.name === "ValidationError") {
+      return res.status(400).json({
+        error: "Error de validación",
+        details: Object.values(err.errors).map((e) => e.message),
+      });
+    }
+
+    if (err.code === 11000) {
+      return res.status(400).json({
+        error: "Email duplicado",
+        details: "Este email ya está registrado",
+      });
+    }
+
+    res.status(500).json({
+      error: "Error al registrar usuario",
+      details: err.message,
     });
   }
 });
 
-// Login
+// ==================== LOGIN ====================
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validar que todos los campos requeridos estén presentes
+    console.log("🔐 Intento de login:", email);
+
+    // Validar campos requeridos
     if (!email || !password) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: "Todos los campos son requeridos",
-        details: "Email y password son obligatorios" 
+        details: "Email y password son obligatorios",
       });
     }
 
@@ -124,50 +149,49 @@ router.post("/login", async (req, res) => {
     }
 
     if (!user) {
+      console.log("❌ Usuario no encontrado:", email);
       return res.status(400).json({ error: "Credenciales inválidas" });
     }
 
     // Validar contraseña
     const isMatch = await bcrypt.compare(password.toString(), user.password);
     if (!isMatch) {
+      console.log("❌ Contraseña incorrecta para:", email);
       return res.status(400).json({ error: "Credenciales inválidas" });
     }
 
-    // Generar JWT
+    // Generar JWT (SINCRÓNICO - sin callback)
     const payload = {
       user: {
         id: user._id,
         email: user.email,
-        modelType: modelType
-      }
+        modelType: modelType,
+      },
     };
 
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: "30d" },
-      (err, token) => {
-        if (err) throw err;
-        // Enviar token y datos básicos del usuario
-        console.log(`Usuario ${modelType} ha iniciado sesión`);
-        res.json({
-          token,
-          user: {
-            id: user._id,
-            email: user.email,
-            name: user.name || "",
-            lastName: user.lastName || "",
-            photo: user.photo || "",
-            modelType: modelType
-          }
-        });
-      }
-    );
+    // ✅ CAMBIO CLAVE: jwt.sign sin callback
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+
+    console.log(`✅ Login exitoso: ${modelType} - ${email}`);
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name || "",
+        lastName: user.lastName || "",
+        photo: user.photo || user.logo || "",
+        modelType: modelType,
+      },
+    });
   } catch (err) {
-    console.error("Error en login:", err);
-    res.status(500).json({ 
-      error: "Error en el servidor", 
-      details: err.message 
+    console.error("❌ Error en login:", err);
+    res.status(500).json({
+      error: "Error en el servidor",
+      details: err.message,
     });
   }
 });
