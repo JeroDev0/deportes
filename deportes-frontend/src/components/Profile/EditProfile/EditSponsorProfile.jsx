@@ -183,34 +183,33 @@ function EditSponsorProfile() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    
-    Object.keys(form).forEach(key => {
-      if (Array.isArray(form[key])) {
-        formData.append(key, JSON.stringify(form[key]));
-      } else if (key === 'logo' && form[key] instanceof File) {
-        formData.append('logo', form[key]);
-      } else {
-        formData.append(key, form[key]);
-      }
+  e.preventDefault();
+
+  try {
+    const res = await fetch(`${API_URL}/sponsors/${id}`, {  // ✅ SIN < >
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
     });
 
-    try {
-      const res = await fetch(`${API_URL}/sponsors/${id}`, {
-        method: "PUT",
-        body: formData,
-      });
-      if (res.ok) {
-        setMsg("✅ Sponsor profile updated!");
-        setTimeout(() => navigate(`/sponsor-profile/${id}`), 1000);
-      } else {
-        setMsg("❌ Error updating profile");
-      }
-    } catch (error) {
-      setMsg("❌ Connection error");
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error("❌ Error del servidor:", data);
+      setMsg("❌ Error al guardar perfil");
+      return;
     }
-  };
+
+    console.log("✅ Perfil guardado:", data);
+    setMsg("✅ Perfil actualizado correctamente");
+    setTimeout(() => navigate(`/sponsor-profile/${id}`), 1000);
+  } catch (err) {
+    console.error("❌ Error de conexión:", err);
+    setMsg("❌ Error de conexión");
+  }
+};
 
   return (
     <div className={styles.editProfileBg}>
