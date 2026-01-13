@@ -173,26 +173,20 @@ function EditSponsorProfile() {
   };
 
   const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    setForm({ ...form, logo: file });
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setLogoPreview(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      setLogoPreview(base64String); // Vista previa
+      setForm({ ...form, logo: base64String }); // ✅ Guardamos como string Base64
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-
-  // Creamos una copia para no modificar el estado visual
-  const dataTosSend = { ...form };
-
-  // 🚨 SI EL LOGO ES UN ARCHIVO (objeto), NO LO ENVIAMOS COMO JSON
-  // Solo enviamos el logo si es una URL (string)
-  if (typeof dataTosSend.logo !== "string") {
-    delete dataTosSend.logo; 
-  }
 
   try {
     const res = await fetch(`${API_URL}/sponsors/${id}`, {
@@ -200,7 +194,7 @@ function EditSponsorProfile() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(dataTosSend) // Enviamos la copia limpia
+      body: JSON.stringify(form) // ✅ Ahora logo es string (Base64 o URL)
     });
 
     const data = await res.json();
