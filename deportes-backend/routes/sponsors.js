@@ -1,18 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Sponsor = require("../models/Sponsor");
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const streamifier = require("streamifier");
-
-// ==================== CONFIGURACIÓN CLOUDINARY ====================
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const upload = multer();
 
 // ==================== GET ALL SPONSORS ====================
 router.get("/", async (req, res) => {
@@ -56,13 +44,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ==================== UPDATE SPONSOR (CON CLOUDINARY) ====================
-router.put("/:id", upload.single("logo"), async (req, res) => {
+// ==================== UPDATE SPONSOR ====================
+router.put("/:id", async (req, res) => {
   try {
-    console.log("=== INICIO UPDATE SPONSOR ===");
-    console.log("Body recibido:", req.body);
-    console.log("Archivo recibido:", req.file ? "Sí" : "No");
-
     const updateData = { ...req.body };
 
     // ✅ CLAVE: Parsear arrays que vienen como JSON string desde FormData
@@ -91,27 +75,6 @@ router.put("/:id", upload.single("logo"), async (req, res) => {
       updateData.clubs = parseIfString(updateData.clubs);
     }
 
-    // ✅ SUBIR LOGO A CLOUDINARY SI VIENE ARCHIVO
-    if (req.file) {
-      console.log("📤 Subiendo logo a Cloudinary...");
-      const streamUpload = (fileBuffer) => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: "sponsors" },
-            (error, result) => {
-              if (result) resolve(result);
-              else reject(error);
-            }
-          );
-          streamifier.createReadStream(fileBuffer).pipe(stream);
-        });
-      };
-      
-      const result = await streamUpload(req.file.buffer);
-      updateData.logo = result.secure_url;
-      console.log("✅ Logo subido exitosamente:", updateData.logo);
-    }
-
     const sponsor = await Sponsor.findByIdAndUpdate(
       req.params.id,
       updateData,
@@ -126,7 +89,6 @@ router.put("/:id", upload.single("logo"), async (req, res) => {
     }
 
     console.log("✅ Sponsor actualizado:", sponsor.company);
-    console.log("=== FIN UPDATE SPONSOR ===");
     res.json(sponsor);
   } catch (err) {
     console.error("❌ Error actualizando sponsor:", err);
