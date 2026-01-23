@@ -85,19 +85,6 @@ function CenterProfileColumn({ profile = {}, isMyProfile, onNavigateToFeed }) {
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="gallery icon" />
           <h2>Gallery</h2>
-
-          <div
-            className={styles.showAll}
-            onClick={goToFeed}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") goToFeed();
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            Show all <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
-          </div>
         </div>
 
         <div className={styles.galleryGrid}>
