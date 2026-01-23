@@ -13,9 +13,6 @@ function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
-
-  // "professional" = info del perfil (CenterProfileColumn)
-  // "social" = publicaciones (ProfileFeed)
   const [viewMode, setViewMode] = useState("professional");
 
   useEffect(() => {
@@ -39,7 +36,6 @@ function ProfilePage() {
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
-    // Aquí iría la lógica para seguir/dejar de seguir
   };
 
   return (
@@ -67,7 +63,7 @@ function ProfilePage() {
 
         {/* Columna central */}
         <div className={styles.centerColumn}>
-          {/* Toggle Profesional / Social */}
+          {/* Toggle entre vistas */}
           <div className={styles.viewToggle}>
             <button
               className={`${styles.toggleBtn} ${
@@ -76,9 +72,8 @@ function ProfilePage() {
               onClick={() => setViewMode("professional")}
               type="button"
             >
-              Perfil profesional
+              Perfil Profesional
             </button>
-
             <button
               className={`${styles.toggleBtn} ${
                 viewMode === "social" ? styles.active : ""
@@ -86,14 +81,14 @@ function ProfilePage() {
               onClick={() => setViewMode("social")}
               type="button"
             >
-              Feed / Social
+              Perfil Social
             </button>
           </div>
 
+          {/* Renderizado condicional */}
           {viewMode === "professional" ? (
             <CenterProfileColumn
               profile={profile}
-              isMyProfile={isMyProfile}
               onNavigateToFeed={() => setViewMode("social")}
             />
           ) : (

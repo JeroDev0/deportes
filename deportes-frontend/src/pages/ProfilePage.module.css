@@ -89,58 +89,37 @@
 
 .viewToggle {
   display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 16px;
   background: rgba(255, 255, 255, 0.05);
   padding: 8px;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toggleBtn {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  color: #ccc;
-  font-weight: 600;
-  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cfcfcf;
+  padding: 10px 14px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.toggleBtn img {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0.7);
-  transition: filter 0.3s ease;
+  font-weight: 700;
+  transition: 0.2s ease;
 }
 
 .toggleBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.toggleBtn:hover img {
-  filter: brightness(1);
+  color: #fff;
 }
 
 .toggleBtn.active {
   background: #53fb52;
   color: #0d2635;
+  border-color: rgba(83, 251, 82, 0.6);
 }
 
-.toggleBtn.active img {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(18%) saturate(1234%) hue-rotate(157deg);
-}
-
-/* Responsive */
 @media (max-width: 768px) {
   .viewToggle {
     gap: 8px;
@@ -148,26 +127,7 @@
   }
 
   .toggleBtn {
-    padding: 10px 16px;
-    font-size: 0.85rem;
-  }
-
-  .toggleBtn img {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-@media (max-width: 480px) {
-  .toggleBtn {
-    flex-direction: column;
-    gap: 4px;
     padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-
-  .toggleBtn img {
-    width: 16px;
-    height: 16px;
+    font-size: 0.9rem;
   }
 }
