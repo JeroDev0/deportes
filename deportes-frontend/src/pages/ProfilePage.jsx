@@ -4,7 +4,7 @@ import { useAuth } from "../context/useAuth.js";
 import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
-import ProfileFeed from "../components/Profile/ProfileFeed/ProfileFeed.jsx";
+import ProfileFeed from "../components/Profile/Feed/ProfileFeed.jsx";
 import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
@@ -13,9 +13,13 @@ function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [viewMode, setViewMode] = useState("professional"); // "professional" o "social"
+
+  // "professional" = info del perfil (CenterProfileColumn)
+  // "social" = publicaciones (ProfileFeed)
+  const [viewMode, setViewMode] = useState("professional");
 
   useEffect(() => {
+    setLoading(true);
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -53,9 +57,9 @@ function ProfilePage() {
       <div className={styles.pageContainer}>
         {/* Columna izquierda */}
         <div className={styles.leftColumn}>
-          <LeftProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
+          <LeftProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
             isFollowing={isFollowing}
             onFollow={handleFollow}
           />
@@ -63,44 +67,43 @@ function ProfilePage() {
 
         {/* Columna central */}
         <div className={styles.centerColumn}>
-          {/* Toggle entre vistas */}
+          {/* Toggle Profesional / Social */}
           <div className={styles.viewToggle}>
             <button
-              className={`${styles.toggleBtn} ${viewMode === "professional" ? styles.active : ""}`}
+              className={`${styles.toggleBtn} ${
+                viewMode === "professional" ? styles.active : ""
+              }`}
               onClick={() => setViewMode("professional")}
+              type="button"
             >
-              <img src="/assets/icon_list.svg" alt="professional" />
-              Perfil Profesional
+              Perfil profesional
             </button>
+
             <button
-              className={`${styles.toggleBtn} ${viewMode === "social" ? styles.active : ""}`}
+              className={`${styles.toggleBtn} ${
+                viewMode === "social" ? styles.active : ""
+              }`}
               onClick={() => setViewMode("social")}
+              type="button"
             >
-              <img src="/assets/icon_achievements.svg" alt="social" />
-              Perfil Social
+              Feed / Social
             </button>
           </div>
 
-          {/* Renderizado condicional */}
           {viewMode === "professional" ? (
-            <CenterProfileColumn 
-              profile={profile} 
-              isMyProfile={isMyProfile} 
+            <CenterProfileColumn
+              profile={profile}
+              isMyProfile={isMyProfile}
+              onNavigateToFeed={() => setViewMode("social")}
             />
           ) : (
-            <ProfileFeed 
-              profileId={profile._id} 
-              isMyProfile={isMyProfile} 
-            />
+            <ProfileFeed profileId={profile._id} isMyProfile={isMyProfile} />
           )}
         </div>
 
         {/* Columna derecha */}
         <div className={styles.rightColumn}>
-          <RightProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
-          />
+          <RightProfileColumn profile={profile} isMyProfile={isMyProfile} />
         </div>
       </div>
     </>

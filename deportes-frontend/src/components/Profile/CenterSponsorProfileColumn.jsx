@@ -1,101 +1,188 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
+import { useNavigate } from "react-router-dom";
 
-function CenterSponsorProfileColumn({ profile, isMyProfile }) {
+function CenterProfileColumn({ profile = {}, isMyProfile, onNavigateToFeed }) {
   const navigate = useNavigate();
+  const [followers, setFollowers] = useState(219);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    if (!profile?._id) return;
+
+    fetch(
+      `https://deportes-production.up.railway.app/publicaciones?user=${profile._id}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const sortedPosts = data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPosts(sortedPosts.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error fetching posts:", err);
+      });
+  }, [profile]);
+
+  const toggleFollow = () => {
+    setIsFollowing(!isFollowing);
+    setFollowers((prev) => (isFollowing ? prev - 1 : prev + 1));
+  };
+
+  const goToFeed = () => {
+    if (typeof onNavigateToFeed === "function") onNavigateToFeed();
+  };
 
   return (
     <div className={styles.centerCard}>
-      {isMyProfile && (
-        <div className={styles.navMenu}>
-          <button
-            className={styles.editProfileBtn}
-            onClick={() =>
-              navigate(`/sponsor-profile/${profile._id}/edit`)
-            }
-          >
-            <img src="/assets/icon_edit.svg" alt="edit" />
-            Edit Profile
-          </button>
-        </div>
-      )}
+      {/* --- Nav menu --- */}
+      <div className={styles.navMenu}>
+        <button
+          className={styles.editProfileBtn}
+          onClick={() => navigate(`/profile/${profile._id}/edit`)}
+        >
+          <img src="/assets/icon_edit.svg" alt="edit" />
+          Edit Profile
+        </button>
+      </div>
 
+      {/* Header */}
       <div className={styles.header}>
         <div className={styles.nameBlock}>
-          <h1 className={styles.firstName}>{profile.company}</h1>
+          <h1 className={styles.firstName}>{profile?.name || ""}</h1>
+          <h1 className={styles.lastName}>{profile?.lastName || ""}</h1>
+        </div>
+        <div className={styles.followers}>
+          {followers} Followers
+          <button onClick={toggleFollow} className={styles.followBtn}>
+            {isFollowing ? "Following" : "Follow"}
+          </button>
         </div>
       </div>
 
-      <section className={styles.shortDescSection}>
+      {/* Short Description */}
+      <section id="shortDescSection" className={styles.shortDescSection}>
         <div className={styles.sectionHeader}>
-          <h2>About the Company</h2>
+          <h2>Short Description</h2>
         </div>
-        <p>
-          {profile.shortDescription ||
-            "No short description available."}
+        <p className={styles.shortDescText}>
+          {profile?.shortDescription || "No short description available."}
         </p>
       </section>
 
-      <section className={styles.aboutSection}>
+      {/* About - My Story */}
+      <section id="aboutSection" className={styles.aboutSection}>
         <div className={styles.sectionHeader}>
-          <h2>Company Profile</h2>
+          <h2>My Story</h2>
         </div>
-        <p>{profile.about || "No company description provided."}</p>
+        <p>{profile?.about || "No story available."}</p>
       </section>
 
-      {profile.athletes?.length > 0 && (
-        <section className={styles.networkSection}>
-          <div className={styles.sectionHeader}>
-            <img src="/assets/icon_network.svg" alt="network" />
-            <h2>Sponsored Athletes</h2>
-          </div>
+      {/* Gallery */}
+      <section id="gallerySection" className={styles.gallerySection}>
+        <div className={styles.sectionHeader}>
+          <img src="/assets/icon_list.svg" alt="gallery icon" />
+          <h2>Gallery</h2>
 
-          <div className={styles.athletesGrid}>
-            {profile.athletes.map((athlete) => (
+          <div
+            className={styles.showAll}
+            onClick={goToFeed}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") goToFeed();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Show all <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
+          </div>
+        </div>
+
+        <div className={styles.galleryGrid}>
+          {posts?.length > 0 ? (
+            posts.map((post) => (
               <div
-                key={athlete._id}
-                className={styles.athleteCard}
-                onClick={() => navigate(`/profile/${athlete._id}`)}
+                key={post._id}
+                className={styles.postItem}
+                onClick={goToFeed}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") goToFeed();
+                }}
               >
-                <img
-                  src={athlete.photo || "https://placehold.co/100x100"}
-                  alt={athlete.name}
-                  className={styles.athleteAvatar}
-                />
-                <div className={styles.athleteInfo}>
-                  <h4>
-                    {athlete.name} {athlete.lastName}
-                  </h4>
-                  <span className={styles.athleteSport}>
-                    {athlete.sport}
-                  </span>
-                </div>
+                {post.type === "image" && (
+                  <img src={post.mediaUrl} alt="Post media" />
+                )}
+                {post.type === "video" && (
+                  <video muted>
+                    <source src={post.mediaUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+            ))
+          ) : (
+            <p>No recent posts.</p>
+          )}
+        </div>
+      </section>
 
-      {profile.clubs?.length > 0 && (
-        <section className={styles.networkSection}>
-          <div className={styles.sectionHeader}>
-            <img src="/assets/club-logo.png" alt="club" />
-            <h2>Partner Clubs</h2>
-          </div>
+      {/* Achievements */}
+      <section id="achievementsSection" className={styles.achievementsSection}>
+        <div className={styles.sectionHeader}>
+          <img src="/assets/icon_achievements.svg" alt="trophy" />
+          <h2>Achievements</h2>
+        </div>
 
-          <ul className={styles.careerList}>
-            {profile.clubs.map((club) => (
-              <li key={club._id}>
-                {club.name}
-                {club.city && ` - ${club.city}`}
+        <ul className={styles.achievementsList}>
+          {Array.isArray(profile?.recognitions) &&
+          profile.recognitions.length > 0 ? (
+            profile.recognitions.map((rec, idx) => (
+              <li key={idx}>
+                <img
+                  src="/assets/icon_star.svg"
+                  className={styles.starIcon}
+                  alt="star"
+                />
+                <span className={styles.itemText}>{rec}</span>
               </li>
-            ))}
-          </ul>
-        </section>
-      )}
+            ))
+          ) : (
+            <li>
+              <span className={styles.itemText}>No achievements listed.</span>
+            </li>
+          )}
+        </ul>
+      </section>
+
+      {/* Career */}
+      <section className={styles.careerSection}>
+        <div className={styles.sectionHeader}>
+          <img src="/assets/icon_list.svg" alt="career icon" />
+          <h2>Career</h2>
+        </div>
+
+        <ul className={styles.careerList}>
+          {Array.isArray(profile?.experience) && profile.experience.length > 0 ? (
+            profile.experience.map((exp, idx) => (
+              <li key={idx}>
+                <span className={styles.itemText}>{exp}</span>
+              </li>
+            ))
+          ) : (
+            <li>
+              <span className={styles.itemText}>
+                No career information available.
+              </span>
+            </li>
+          )}
+        </ul>
+      </section>
     </div>
   );
 }
 
-export default CenterSponsorProfileColumn;
+export default CenterProfileColumn;
