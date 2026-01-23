@@ -4,9 +4,8 @@ import { useAuth } from "../context/useAuth.js";
 import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
+import ProfileFeed from "../components/Profile/ProfileFeed/ProfileFeed.jsx";
 import styles from "./ProfilePage.module.css";
-import SponsorSection from "../components/Profile/SponsorSection/SponsorSection.jsx";
-
 
 function ProfilePage() {
   const { id } = useParams();
@@ -14,6 +13,7 @@ function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [viewMode, setViewMode] = useState("professional"); // "professional" o "social"
 
   useEffect(() => {
     fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
@@ -63,11 +63,36 @@ function ProfilePage() {
 
         {/* Columna central */}
         <div className={styles.centerColumn}>
-          <CenterProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
-          />
-          <SponsorSection />
+          {/* Toggle entre vistas */}
+          <div className={styles.viewToggle}>
+            <button
+              className={`${styles.toggleBtn} ${viewMode === "professional" ? styles.active : ""}`}
+              onClick={() => setViewMode("professional")}
+            >
+              <img src="/assets/icon_list.svg" alt="professional" />
+              Perfil Profesional
+            </button>
+            <button
+              className={`${styles.toggleBtn} ${viewMode === "social" ? styles.active : ""}`}
+              onClick={() => setViewMode("social")}
+            >
+              <img src="/assets/icon_achievements.svg" alt="social" />
+              Perfil Social
+            </button>
+          </div>
+
+          {/* Renderizado condicional */}
+          {viewMode === "professional" ? (
+            <CenterProfileColumn 
+              profile={profile} 
+              isMyProfile={isMyProfile} 
+            />
+          ) : (
+            <ProfileFeed 
+              profileId={profile._id} 
+              isMyProfile={isMyProfile} 
+            />
+          )}
         </div>
 
         {/* Columna derecha */}
