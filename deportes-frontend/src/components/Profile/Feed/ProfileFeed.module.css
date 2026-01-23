@@ -1,23 +1,33 @@
 .feedContainer {
-  margin-top: 24px;
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  width: 1000px;
-  max-width: 100%;
+  width: 100%;
+  max-width: none;
   overflow-x: hidden;
-  padding: 0 15px;
+  padding: 20px;
   box-sizing: border-box;
+  background: #E4ECF0;
+  border-radius: 15px;
+  color: #222;
+}
+
+.feedContainer {
+  background: #E4ECF0;
+  border-radius: 15px;
+  padding: 20px;
+  color: #222;
 }
 
 /* Pestañas mejoradas */
 .tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  gap: 12px; /* Un poco más de espacio */
+  margin-bottom: 20px;
+  width: 100%; /* Asegura que el contenedor ocupe todo */
+  border-bottom: 1px solid rgba(0,0,0,0.05); /* Una línea sutil queda bien */
+  padding-bottom: 10px;
 }
 
 .tabs::-webkit-scrollbar {
@@ -25,21 +35,21 @@
 }
 
 .tabs button {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05); /* Fondo sutil para que se vean como botones */
   border: none;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: 10px 24px;
   font-weight: 600;
-  color: #ccc;
+  color: #555; /* Color más oscuro para que se lea bien en el fondo claro */
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-  min-width: fit-content;
 }
 
 .tabs .active {
   background: #53fb52;
-  color: #0d2635;
+  color: #0d2635; /* Texto oscuro sobre fondo verde para contraste */
+  box-shadow: 0 2px 8px rgba(83, 251, 82, 0.3);
 }
 
 .tabs button:hover:not(.active) {
@@ -49,12 +59,14 @@
 
 /* Formulario de nueva publicación */
 .newPostCard {
+  width: 100%;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
 }
 
 .newPostCard h4 {
@@ -150,18 +162,21 @@
 
 /* Publicaciones estilo tarjeta mejorado */
 .postCard {
-  background: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
   border-radius: 15px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  margin: 0;
   padding: 0;
-  margin-bottom: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease;
 }
 
 .postCard:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
 .postHeader {
@@ -280,11 +295,9 @@
 /* Grid responsivo mejorado */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
   width: 100%;
-  max-width: 100%;
 }
 
 .gridItem {

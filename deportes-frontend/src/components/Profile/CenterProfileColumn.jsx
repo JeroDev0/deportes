@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
 
-function CenterProfileColumn({ profile = {} }) {
+function CenterProfileColumn({ profile = {}, onNavigateToFeed }) {
   const navigate = useNavigate();
   const [followers, setFollowers] = useState(219);
   const [isFollowing, setIsFollowing] = useState(false);
   const [posts, setPosts] = useState([]);
-  // const sponsorshipGoal = 2000;
-  // const sponsorshipFunded = 650;
 
   useEffect(() => {
     if (!profile?._id) return;
@@ -31,16 +29,16 @@ function CenterProfileColumn({ profile = {} }) {
     setFollowers((prev) => (isFollowing ? prev - 1 : prev + 1));
   };
 
+  const goToFeed = () => {
+    if (typeof onNavigateToFeed === "function") {
+      onNavigateToFeed();
+    }
+  };
+
   return (
     <div className={styles.centerCard}>
       {/* --- Nav menu --- */}
       <div className={styles.navMenu}>
-        {/* <div className={styles.navLeft}>
-          <a href="#shortDescSection">Short Description</a>
-          <a href="#aboutSection">My Story</a>
-          <a href="#gallerySection">Gallery</a>
-          <a href="#achievementsSection">Achievements</a>
-        </div> */}
         <button
           className={styles.editProfileBtn}
           onClick={() => navigate(`/profile/${profile._id}/edit`)}
@@ -63,24 +61,6 @@ function CenterProfileColumn({ profile = {} }) {
           </button>
         </div>
       </div>
-
-      {/* Sponsorship bar
-      <div className={styles.sponsorship}>
-        <div className={styles.progressWrapper}>
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progress}
-              style={{
-                width: `${(sponsorshipFunded / sponsorshipGoal) * 100}%`,
-              }}
-            />
-          </div>
-          <button className={styles.sponsorBtn}>Sponsor now</button>
-        </div>
-        <div className={styles.sponsorInfo}>
-          €{sponsorshipFunded} funded of €{sponsorshipGoal} goal
-        </div>
-      </div> */}
 
       {/* Short Description */}
       <section id="shortDescSection" className={styles.shortDescSection}>
@@ -105,9 +85,13 @@ function CenterProfileColumn({ profile = {} }) {
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="gallery icon" />
           <h2>Gallery</h2>
-          <div className={styles.showAll}>
+          <button
+            className={styles.showAll}
+            onClick={goToFeed}
+            type="button"
+          >
             Show all <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
-          </div>
+          </button>
         </div>
         <div className={styles.galleryGrid}>
           {posts?.length > 0 ? (
@@ -115,11 +99,11 @@ function CenterProfileColumn({ profile = {} }) {
               <div
                 key={post._id}
                 className={styles.postItem}
-                onClick={() => window.open(post.mediaUrl, "_blank")}
+                onClick={goToFeed}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") window.open(post.mediaUrl, "_blank");
+                  if (e.key === "Enter") goToFeed();
                 }}
               >
                 {post.type === "image" && (
