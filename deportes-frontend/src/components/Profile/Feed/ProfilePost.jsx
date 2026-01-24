@@ -8,7 +8,6 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
   const [editText, setEditText] = useState(post.text);
   const [userInfo, setUserInfo] = useState(null);
 
-  // Obtener información del usuario que hizo la publicación
   useEffect(() => {
     if (post.user) {
       fetch(`https://deportes-production.up.railway.app/deportistas/${post.user}`)
@@ -60,7 +59,6 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
 
   return (
     <div className={styles.postCard}>
-      {/* Header con información del usuario */}
       <div className={styles.postHeader}>
         <div className={styles.postUserInfo}>
           <img
@@ -100,15 +98,27 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
         )}
       </div>
 
-      {/* Contenido de la publicación */}
       <div className={styles.postContent}>
+        {/* ✅ CAMBIO CLAVE: Contenedor Reel */}
         {post.type === "image" && post.mediaUrl && (
-          <img src={post.mediaUrl} alt="Publicación" className={styles.postImage} />
+          <div className={styles.reelContainer}>
+            <img 
+              src={post.mediaUrl} 
+              alt="Publicación" 
+              className={styles.reelMedia} 
+            />
+          </div>
         )}
+        
         {post.type === "video" && post.mediaUrl && (
-          <video controls className={styles.postVideo}>
-            <source src={post.mediaUrl} />
-          </video>
+          <div className={styles.reelContainer}>
+            <video 
+              controls 
+              className={styles.reelMedia}
+            >
+              <source src={post.mediaUrl} />
+            </video>
+          </div>
         )}
       
         {editing ? (
@@ -133,7 +143,6 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
         )}
       </div>
 
-      {/* Footer con likes */}
       <div className={styles.postFooter}>
         <button 
           className={liked ? styles.likedBtn : styles.likeBtn} 

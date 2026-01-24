@@ -1,4 +1,3 @@
-// GalleryGrid.jsx
 import { useState } from "react";
 import styles from "./ProfileFeed.module.css";
 
@@ -12,13 +11,22 @@ function GalleryGrid({ items, isMyProfile, onEdit, onDelete }) {
     setModal(null);
   };
 
+  const openModal = (item) => {
+    setModal(item);
+    setEditText(item.text);
+  };
+
   if (!items.length) return <div className={styles.empty}>Sin publicaciones</div>;
 
   return (
     <>
       <div className={styles.grid}>
         {items.map(item => (
-          <div key={item._id} className={styles.gridItem} onClick={() => { setModal(item); setEditText(item.text); }}>
+          <div 
+            key={item._id} 
+            className={styles.gridItem} 
+            onClick={() => openModal(item)}
+          >
             {item.type === "image" ? (
               <img src={item.mediaUrl} alt="Imagen" className={styles.gridImg} />
             ) : (
@@ -27,28 +35,71 @@ function GalleryGrid({ items, isMyProfile, onEdit, onDelete }) {
           </div>
         ))}
       </div>
+
       {modal && (
         <div className={styles.modal} onClick={() => setModal(null)}>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            
+            {/* ✅ Imagen o Video grande */}
             {modal.type === "image" ? (
-              <img src={modal.mediaUrl} alt="Imagen grande" className={styles.modalImg} />
+              <img 
+                src={modal.mediaUrl} 
+                alt="Imagen grande" 
+                className={styles.modalImg} 
+              />
             ) : (
-              <video src={modal.mediaUrl} controls className={styles.modalImg} />
+              <video 
+                src={modal.mediaUrl} 
+                controls 
+                className={styles.modalImg} 
+              />
             )}
+
+            {/* ✅ Acciones solo si es mi perfil */}
             {isMyProfile && (
               <div className={styles.modalActions}>
                 <textarea
                   value={editText}
                   onChange={e => setEditText(e.target.value)}
-                  className={styles.editTextarea}
+                  className={styles.modalTextarea}
+                  placeholder="Edita el texto de tu publicación..."
                 />
-                <button onClick={handleEdit} className={styles.saveBtn}>Guardar</button>
-                <button onClick={() => { onDelete(modal._id); setModal(null); }} className={styles.deleteBtn}>Eliminar</button>
-                <button className={styles.closeBtn} onClick={() => setModal(null)}>Cerrar</button>
+                <button 
+                  onClick={handleEdit} 
+                  className={styles.saveBtn}
+                  title="Guardar cambios"
+                >
+                  💾 Guardar
+                </button>
+                <button 
+                  onClick={() => { 
+                    if (window.confirm("¿Estás seguro de eliminar esta publicación?")) {
+                      onDelete(modal._id); 
+                      setModal(null); 
+                    }
+                  }} 
+                  className={styles.deleteBtn}
+                  title="Eliminar publicación"
+                >
+                  🗑️ Eliminar
+                </button>
+                <button 
+                  className={styles.closeBtn} 
+                  onClick={() => setModal(null)}
+                >
+                  ✖️ Cerrar
+                </button>
               </div>
             )}
+
+            {/* ✅ Solo botón cerrar si NO es mi perfil */}
             {!isMyProfile && (
-              <button className={styles.closeBtn} onClick={() => setModal(null)}>Cerrar</button>
+              <button 
+                className={styles.closeBtn} 
+                onClick={() => setModal(null)}
+              >
+                ✖️ Cerrar
+              </button>
             )}
           </div>
         </div>
