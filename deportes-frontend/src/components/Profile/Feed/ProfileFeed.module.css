@@ -1,32 +1,34 @@
+/* ProfileFeed.module.css */
+
 .feedContainer {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 18px;
+
   width: 100%;
   max-width: none;
+  min-width: 660px !important;
+  /* CLAVE: evita que el contenedor se encoja y cause el “salto” visual */
+  flex: 1;
+  min-width: 0;
+
   overflow-x: hidden;
   padding: 20px;
   box-sizing: border-box;
+
   background: #E4ECF0;
   border-radius: 15px;
-  color: #222;
+  color: #111827; /* texto oscuro */
 }
 
-.feedContainer {
-  background: #E4ECF0;
-  border-radius: 15px;
-  padding: 20px;
-  color: #222;
-}
-
-/* Pestañas mejoradas */
+/* Pestañas */
 .tabs {
   display: flex;
-  gap: 12px; /* Un poco más de espacio */
+  gap: 12px;
   margin-bottom: 20px;
-  width: 100%; /* Asegura que el contenedor ocupe todo */
-  border-bottom: 1px solid rgba(0,0,0,0.05); /* Una línea sutil queda bien */
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding-bottom: 10px;
 }
 
@@ -35,65 +37,68 @@
 }
 
 .tabs button {
-  background: rgba(0, 0, 0, 0.05); /* Fondo sutil para que se vean como botones */
-  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
   padding: 10px 24px;
-  font-weight: 600;
-  color: #555; /* Color más oscuro para que se lea bien en el fondo claro */
+  font-weight: 700;
+  color: #374151; /* texto oscuro */
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.tabs .active {
-  background: #53fb52;
-  color: #0d2635; /* Texto oscuro sobre fondo verde para contraste */
-  box-shadow: 0 2px 8px rgba(83, 251, 82, 0.3);
-}
-
 .tabs button:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  color: #111827;
 }
 
-/* Formulario de nueva publicación */
+.active {
+  background: #53fb52;
+  color: #0d2635;
+  border-color: rgba(83, 251, 82, 0.6);
+  box-shadow: 0 2px 10px rgba(83, 251, 82, 0.25);
+}
+
+/* Card de nueva publicación */
 .newPostCard {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 15px;
   padding: 20px;
   margin: 0 0 20px 0;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #111827;
 }
 
 .newPostCard h4 {
-  color: #53fb52;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
+  color: #0d2635;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  font-weight: 800;
 }
 
 .newPostForm {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
 .postTextarea {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
   border-radius: 10px;
   padding: 12px;
-  color: white;
+  color: #111827; /* texto oscuro */
   font-size: 1rem;
   resize: vertical;
-  min-height: 60px;
+  min-height: 70px;
+  box-sizing: border-box;
 }
 
 .postTextarea::placeholder {
-  color: #ccc;
+  color: #6b7280;
 }
 
 .formRow {
@@ -104,28 +109,28 @@
 }
 
 .typeSelect {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
   border-radius: 8px;
   padding: 8px 12px;
-  color: white;
-  font-size: 0.9rem;
+  color: #111827; /* texto oscuro */
+  font-size: 0.95rem;
 }
 
 .fileLabel {
-  background: rgba(83, 251, 82, 0.2);
-  color: #53fb52;
-  border: 1px solid rgba(83, 251, 82, 0.3);
+  background: rgba(83, 251, 82, 0.18);
+  color: #0d2635;
+  border: 1px solid rgba(83, 251, 82, 0.35);
   border-radius: 8px;
   padding: 8px 16px;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
 }
 
 .fileLabel:hover {
-  background: rgba(83, 251, 82, 0.3);
+  background: rgba(83, 251, 82, 0.25);
 }
 
 .fileInput {
@@ -137,16 +142,16 @@
   color: #0d2635;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 700;
+  padding: 10px 18px;
+  font-weight: 900;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
 }
 
 .submitBtn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(83, 251, 82, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(83, 251, 82, 0.25);
 }
 
 .submitBtn:disabled {
@@ -155,36 +160,41 @@
 }
 
 .selectedFile {
-  color: #53fb52;
-  font-size: 0.9rem;
-  margin-top: 5px;
+  color: #0d2635;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
-/* Publicaciones estilo tarjeta mejorado */
+/* Publicación (card) */
 .postCard {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  color: #111;
-  border-radius: 15px;
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  width: 100%;          /* CLAVE: que no se quede angosta */
+  max-width: 100%;
   box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #111827;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+
   margin: 0;
   padding: 0;
-  overflow: hidden;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .postCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.10);
 }
 
 .postHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px 10px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 18px 10px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .postUserInfo {
@@ -202,14 +212,14 @@
 }
 
 .postUserDetails h4 {
-  color: white;
+  color: #111827;
   font-size: 1rem;
   margin: 0;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .postDate {
-  color: #ccc;
+  color: #6b7280;
   font-size: 0.85rem;
   margin: 2px 0 0 0;
 }
@@ -219,80 +229,136 @@
   gap: 8px;
 }
 
-.editBtn, .deleteBtn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 6px;
+.editBtn,
+.deleteBtn {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   padding: 6px 8px;
-  color: #ccc;
+  color: #374151;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   font-size: 0.9rem;
 }
 
 .editBtn:hover {
-  background: rgba(83, 251, 82, 0.2);
-  color: #53fb52;
+  background: rgba(83, 251, 82, 0.18);
+  border-color: rgba(83, 251, 82, 0.35);
+  color: #0d2635;
 }
 
 .deleteBtn:hover {
-  background: rgba(255, 82, 82, 0.2);
-  color: #ff5252;
+  background: rgba(255, 82, 82, 0.14);
+  border-color: rgba(255, 82, 82, 0.35);
+  color: #b91c1c;
 }
 
 .postContent {
   padding: 0;
 }
 
-.postImage, .postVideo {
+.postImage,
+.postVideo {
   width: 100%;
-  max-height: 400px;
+  max-height: 420px;
   object-fit: cover;
   display: block;
 }
 
 .postText {
-  color: white;
-  padding: 15px 20px;
+  color: #111827;
+  padding: 14px 18px;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.55;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+/* Editor */
+.editForm {
+  padding: 14px 18px;
+}
+
+.editTextarea {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 10px;
+  padding: 10px;
+  color: #111827;
   font-size: 0.95rem;
+  resize: vertical;
+  min-height: 70px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.saveBtn,
+.cancelBtn {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saveBtn {
+  background: #53fb52;
+  color: #0d2635;
+}
+
+.cancelBtn {
+  background: rgba(0, 0, 0, 0.08);
+  color: #111827;
 }
 
 .postFooter {
-  padding: 15px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.likeBtn, .likedBtn {
+.likeBtn,
+.likedBtn {
   background: none;
   border: none;
-  color: #ccc;
+  color: #374151;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 900;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 20px;
-  transition: all 0.3s ease;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .likeBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(0, 0, 0, 0.06);
+  color: #111827;
 }
 
 .likedBtn {
-  color: #ff5252;
-  background: rgba(255, 82, 82, 0.1);
+  color: #b91c1c;
+  background: rgba(255, 82, 82, 0.14);
 }
 
-/* Grid responsivo mejorado */
+.postStats {
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -301,18 +367,19 @@
 }
 
 .gridItem {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   aspect-ratio: 1;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .gridItem:hover {
   transform: scale(1.02);
-  border-color: #53fb52;
+  border-color: rgba(83, 251, 82, 0.8);
+  box-shadow: 0 8px 16px rgba(83, 251, 82, 0.18);
 }
 
 .gridImg {
@@ -322,34 +389,22 @@
   display: block;
 }
 
-/* Estados de carga y vacío */
-.loading, .empty {
-  color: #ccc;
+/* Loading / Empty */
+.loading,
+.empty {
+  color: #6b7280;
   text-align: center;
   font-style: italic;
-  padding: 40px 20px;
+  padding: 36px 16px;
   font-size: 1rem;
+  font-weight: 700;
 }
 
-.featuredLabel {
-  background: rgba(83, 251, 82, 0.2);
-  color: #53fb52;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  margin-bottom: 15px;
-  text-align: center;
-  border: 1px solid rgba(83, 251, 82, 0.3);
-}
-
-/* Modal mejorado */
+/* Modal */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -358,23 +413,24 @@
 }
 
 .modalContent {
-  background: #0d2635;
+  background: #ffffff;
   border-radius: 20px;
-  padding: 20px;
+  padding: 18px;
   max-width: 90vw;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .modalImg {
   max-width: 100%;
   max-height: 60vh;
   border-radius: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   object-fit: contain;
 }
 
@@ -383,114 +439,52 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  margin-top: 15px;
-}
-
-.editTextarea {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 10px;
-  color: white;
-  font-size: 0.9rem;
-  resize: vertical;
-  min-height: 60px;
-  width: 100%;
-}
-
-.saveBtn, .deleteBtn, .featureBtn {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
-
-.saveBtn {
-  background: #53fb52;
-  color: #0d2635;
-}
-
-.deleteBtn {
-  background: #ff5252;
-  color: white;
+  margin-top: 12px;
 }
 
 .featureBtn {
-  background: rgba(83, 251, 82, 0.2);
-  color: #53fb52;
-  border: 1px solid rgba(83, 251, 82, 0.3);
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  border: 1px solid rgba(83, 251, 82, 0.35);
+  background: rgba(83, 251, 82, 0.18);
+  color: #0d2635;
 }
 
 .closeBtn {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-weight: 600;
+  background: rgba(0, 0, 0, 0.06);
+  color: #111827;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-weight: 900;
   cursor: pointer;
-  margin-top: 15px;
-  transition: all 0.3s ease;
+  margin-top: 10px;
+  transition: background 0.2s ease;
 }
 
 .closeBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.10);
 }
 
-/* Responsive para móviles */
+/* Responsive */
 @media (max-width: 480px) {
   .feedContainer {
-    margin-top: 5px;
-    gap: 15px;
-    padding: 0px;
+    margin-top: 8px;
+    padding: 14px;
+    gap: 14px;
+    min-width: auto !important;
   }
 
   .tabs {
-    gap: 6px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 14px;
   }
 
   .tabs button {
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 0.9rem;
-  }
-
-  .newPostCard {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
-
-  .postCard {
-    margin-bottom: 15px;
-  }
-
-  .postHeader {
-    padding: 12px 15px 8px 15px;
-  }
-
-  .postUserAvatar {
-    width: 35px;
-    height: 35px;
-  }
-
-  .postUserDetails h4 {
-    font-size: 0.9rem;
-  }
-
-  .postDate {
-    font-size: 0.8rem;
-  }
-
-  .postText {
-    padding: 12px 15px;
-    font-size: 0.9rem;
-  }
-
-  .postFooter {
-    padding: 12px 15px;
   }
 
   .grid {
@@ -499,64 +493,18 @@
   }
 
   .formRow {
-    flex-direction: row;
-    align-items: stretch;
     justify-content: center;
-  }
-
-  .typeSelect, .fileLabel, .submitBtn {
-    width: auto;
-    text-align: center;
-  }
-
-  .modalContent {
-    padding: 15px;
-    max-width: 95vw;
-  }
-
-  .modalImg {
-    max-height: 50vh;
   }
 }
 
-/* Responsive para pantallas muy pequeñas */
 @media (max-width: 380px) {
   .feedContainer {
-    padding: 0 12px;
+    padding: 12px;
+    min-width: auto !important;
   }
 
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
-  }
-
-  .gridItem {
-    border-radius: 8px;
-  }
-
-  .postCard {
-    border-radius: 12px;
-  }
-
-  .tabs button {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-  }
-
-  .newPostCard {
-    padding: 12px;
-  }
-
-  .postHeader {
-    padding: 10px 12px 6px 12px;
-  }
-
-  .postText {
-    padding: 10px 12px;
-    font-size: 0.85rem;
-  }
-
-  .postFooter {
-    padding: 10px 12px;
   }
 }
