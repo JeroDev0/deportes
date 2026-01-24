@@ -1,8 +1,18 @@
+/* CenterProfileColumn.module.css */
+
 .centerCard {
   background: #E4ECF0;
   padding: 20px;
-  color: #222;
+  color: #111827; /* texto oscuro */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* CLAVE: para que al alternar con ProfileFeed no “salte” el tamaño */
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 15px;
+
+  /* Esto evita que el grid/flex lo encoja en layouts complejos */
+  min-width: 0;
 }
 
 /* --- nav superior --- */
@@ -11,7 +21,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   margin-bottom: 16px;
 }
 
@@ -22,8 +32,8 @@
 
 .navLeft a {
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
+  color: #111827;
+  font-weight: 600;
 }
 
 .navLeft a:hover {
@@ -37,8 +47,8 @@
   gap: 8px;
   border: none;
   background: none;
-  font-weight: 600;
-  color: #333;
+  font-weight: 800;
+  color: #111827;
   cursor: pointer;
 }
 
@@ -59,35 +69,32 @@
   line-height: 1;
 }
 
-.firstName {
-  font-size: 50px;
-  font-weight: 900;
-  margin: 0;
-}
-
+.firstName,
 .lastName {
   font-size: 50px;
   font-weight: 900;
   margin: 0;
+  color: #111827;
 }
 
 .followers {
-  font-weight: 600;
+  font-weight: 800;
   font-size: 1rem;
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #111827;
 }
 
 .followBtn {
   background: #2563eb;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 6px 14px;
   border-radius: 20px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  font-weight: 800;
+  transition: background 0.2s ease;
 }
 
 .followBtn:hover {
@@ -121,7 +128,7 @@
 .progress {
   background: #BCFFBC;
   height: 100%;
-  transition: width 0.3s ease;
+  transition: width 0.2s ease;
 }
 
 .sponsorBtn {
@@ -131,11 +138,11 @@
   padding: 6px 14px;
   border-radius: 20px;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .sponsorInfo {
-  font-weight: 600;
+  font-weight: 800;
   font-size: 0.9rem;
   margin-top: 5px;
 }
@@ -149,11 +156,11 @@
   margin-bottom: 20px;
 }
 
-/* --- Short Description sin estilos extra --- */
 .shortDescText {
   margin: 0;
-  line-height: 1.5;
-  color: #222;
+  line-height: 1.6;
+  color: #111827;
+  font-weight: 600;
 }
 
 .sectionHeader {
@@ -165,7 +172,7 @@
 
 .sectionHeader h2 {
   margin: 0;
-  font-weight: 700;
+  font-weight: 900;
   color: #111827;
 }
 
@@ -179,16 +186,26 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #111827;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.showAll img {
+  width: 20px;
+  height: 20px;
 }
 
 /* --- Gallery --- */
 .galleryGrid {
   display: flex;
   gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 
 .postItem {
@@ -196,10 +213,12 @@
   height: 300px;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
   flex-shrink: 0;
   position: relative;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .postItem img,
@@ -211,57 +230,39 @@
 }
 
 /* --- Achievements --- */
-.achievementsSection ul {
+.achievementsSection ul,
+.careerSection ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .achievementsSection li {
   margin-bottom: 6px;
-  font-weight: 600;
+  font-weight: 800;
   color: #925518;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-/* --- Section Header --- */
 .sectionHeader img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
 }
 
-/* Flechita de "Show all" */
-.showAll img {
-  width: 20px;
-  height: 20px;
-}
-
 .achievementsSection .sectionHeader img {
-  /* Solo la copa en marrón */
   filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
 }
 
 .starIcon {
   width: 20px;
   height: 20px;
-  /* Estrellas en marrón */
   filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
 }
 
-/* --- Career --- */
-.careerSection ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.careerSection li {
-  margin-bottom: 6px;
-  color: #374151;
-}
-
-/* --- listas con separador entre items (solo entre items) --- */
+/* --- listas con separador entre items --- */
 .achievementsList,
 .careerList {
   list-style: none;
@@ -269,14 +270,13 @@
   margin: 0;
 }
 
-/* separador entre items, no al último */
 .achievementsList li,
 .careerList li {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.08); /* línea suave */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .achievementsList li:last-child,
@@ -284,33 +284,12 @@
   border-bottom: none;
 }
 
-/* texto del item */
 .itemText {
-  font-weight: 600;
+  font-weight: 800;
   color: inherit;
 }
 
-/* iconos dentro de items */
-.sectionHeader img {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-.showAll img {
-  width: 20px;
-  height: 20px;
-}
-
-.starIcon {
-  width: 20px;
-  height: 20px;
-  filter: invert(28%) sepia(23%) saturate(1683%) hue-rotate(16deg) brightness(92%) contrast(94%);
-}
-
-/* estylos SCOUT */
-
-/* Estilos para la sección de atletas */
+/* estylos SCOUT (se mantienen) */
 .athletesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -327,7 +306,7 @@
   align-items: center;
   gap: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .athleteCard:hover {
@@ -356,21 +335,22 @@
   margin: 0;
   color: #eaf6ff;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .athleteSport {
   color: #53fb52;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .athleteLocation {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: rgba(234, 246, 255, 0.7);
+  color: rgba(234, 246, 255, 0.85);
   font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .locationIconSmall {
