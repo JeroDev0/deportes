@@ -1,9 +1,8 @@
 .adminContainer {
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  padding: 30px;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
 .header {
@@ -11,96 +10,155 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 20px;
 }
 
-.header h1 {
-  font-size: 2rem;
-  color: #1a1a1a;
+.titleArea h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #1a202c;
 }
 
-.stats {
-  background: #e3f2fd;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  color: #1976d2;
+.titleArea p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
 }
 
-.controls {
-  margin-bottom: 20px;
+.statsCard {
+  background: #2d3748;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 12px;
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.statLabel {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.toolbar {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.searchBox {
+  flex: 1;
+}
+
+.searchBox input {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  outline: none;
 }
 
 .select {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  cursor: pointer;
+}
+
+.tableWrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  overflow: hidden;
 }
 
 .table th {
-  background: #2c3e50;
-  color: white;
+  background: #f8fafc;
   padding: 15px;
   text-align: left;
+  font-size: 13px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.userRow:hover {
+  background-color: #f1f5f9;
 }
 
 .table td {
   padding: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.userName {
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+}
+
+.userName:hover {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.userEmail {
+  font-size: 12px;
+  color: #718096;
 }
 
 .badge {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: bold;
-  background: #f0f0f0;
+  text-transform: uppercase;
 }
+
+/* Colores por tipo */
+.deportista { background: #ebf8ff; color: #2b6cb0; }
+.scout { background: #faf5ff; color: #6b46c1; }
+.sponsor { background: #f0fff4; color: #2f855a; }
+.club { background: #fffaf0; color: #c05621; }
 
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
-.editBtn {
-  background: #f39c12;
-  color: white;
+.viewBtn, .editBtn, .deleteBtn {
+  padding: 6px 12px;
+  border-radius: 6px;
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
   cursor: pointer;
-  transition: 0.3s;
+  font-size: 12px;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
-.deleteBtn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+.viewBtn { background: #edf2f7; color: #4a5568; }
+.editBtn { background: #3182ce; color: white; }
+.deleteBtn { background: #feb2b2; color: #9b2c2c; }
 
-.editBtn:hover { background: #d35400; }
-.deleteBtn:hover { background: #c0392b; }
+.viewBtn:hover { background: #e2e8f0; }
+.editBtn:hover { background: #2b6cb0; }
+.deleteBtn:hover { background: #f56565; }
 
 .loader {
-  text-align: center;
-  padding: 50px;
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #4a5568;
 }
