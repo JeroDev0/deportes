@@ -16,6 +16,7 @@ import ScoutProfilePage from './pages/ScoutProfilePage';
 import SponsorProfilePage from './pages/SponsorProfilePage';
 
 import FloatingButton from './components/common/FloatingButton';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/admin-panel" element={<AdminDashboard />} />
         </Routes>
       </div>
 

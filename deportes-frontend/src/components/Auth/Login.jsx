@@ -47,6 +47,9 @@ function Login() {
             case 'club':
               redirectPath = `/club-profile/${data.user.id}`;
               break;
+            case 'admin':
+              redirectPath = `/admin-panel`;
+              break;
             default:
               redirectPath = '/';
               break;
