@@ -1,38 +1,62 @@
-.floating-btn {
+.floating-wrapper {
   position: fixed;
-  right: 1rem;
-  bottom: 1.5rem;
-  background-color: #0d2635; /* principal */
-  color: #ffffff; /* texto blanco */
-  font-size: 0.8rem; /* más pequeño */
+  right: -0.8rem;
+  bottom: 2rem;
+  z-index: 1000;
+  transition: transform 0.4s ease;
+}
+
+/* Estado oculto */
+.floating-wrapper.hidden {
+  transform: translateX(85%);
+}
+
+/* Botón grande */
+.floating-btn {
+  background-color: #0d2635;
+  color: #ffffff;
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 0.7rem 0.9rem;
   border-radius: 8px;
   text-decoration: none;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-  line-height: 1.2; /* acomoda el salto de línea */
-  transition: all 0.25s ease-in-out;
-  z-index: 1000;
-  width: auto;
+  line-height: 1.2;
+  max-width: 120px;
   text-align: center;
-  max-width: 120px; /* limita que se expanda */
-  display: inline-block;
+  display: block;
 }
 
 /* Hover */
 .floating-btn:hover {
-  background-color: #53f953; /* verde resaltado */
+  background-color: #53f953;
   color: #0d2635;
-  transform: translateY(-2px);
 }
 
-/* Responsive ajuste extra */
+/* Pestaña */
+.floating-tab {
+  position: absolute;
+  left: -44px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #0d2635;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  border: solid 1px #53f953;
+}
+
+/* Mobile */
 @media (max-width: 640px) {
-  .floating-btn {
-    font-size: 0.75rem;
-    padding: 0.6rem 0.8rem;
-    right: 0.8rem;
-    bottom: 1rem;
-    max-width: 100px;
+  .floating-wrapper {
+    bottom: 4rem;
+    right: -0.5rem;
+  }
+
+  .floating-wrapper.hidden {
+    transform: translateX(90%);
   }
 }

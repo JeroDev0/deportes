@@ -42,6 +42,9 @@ app.use("/sponsors", sponsorsRoutes);
 const clubsRoutes = require("./routes/clubs");
 app.use("/clubs", clubsRoutes);
 
+const adminRoutes = require("./routes/admin");
+app.use("/admin", adminRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);

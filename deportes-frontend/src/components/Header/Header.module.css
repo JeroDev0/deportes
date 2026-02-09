@@ -1,3 +1,6 @@
+/* =====================================
+   HEADER PRINCIPAL
+===================================== */
 .header {
   position: fixed;
   top: 0;
@@ -10,10 +13,13 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 8px #0001;
-  overflow: visible; /* permitir que el logo sobresalga */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: visible;
 }
 
+/* =====================================
+   CONTENEDOR INTERNO
+===================================== */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -21,52 +27,62 @@
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* mantiene logo a la izquierda y nav a la derecha */
+  justify-content: space-between;
   padding: 0 1.5rem;
 }
 
-/* Logo a la izquierda */
+/* =====================================
+   LOGO A LA IZQUIERDA
+===================================== */
 .logo {
-  position: relative; /* referencia para el logoMask absoluto */
+  position: relative;
   width: 140px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
 .logoLink {
   display: inline-block;
   text-decoration: none;
   color: inherit;
+  padding-top: 20px;
 }
 
-/* El logo en mask que sobresale por debajo */
 .logoMask {
   position: absolute;
   left: 0;
-  bottom: -45px; /* cuánto sobresale por debajo del header (ajusta aquí) */
+  bottom: -32px;
   width: 140px;
   height: 60px;
   display: inline-block;
-  background-color: #53F953; /* color del logo */
+  background-color: #53F953;
   -webkit-mask: url('https://res.cloudinary.com/dx9l2xf44/image/upload/v1756348175/BKME_logo_black_wnaxjj.svg') no-repeat center/contain;
   mask: url('https://res.cloudinary.com/dx9l2xf44/image/upload/v1756348175/BKME_logo_black_wnaxjj.svg') no-repeat center/contain;
   z-index: 1200;
-  pointer-events: none; /* opcional: que no interfiera con clicks */
+  pointer-events: auto;
+  transition: transform 0.2s ease;
 }
 
-/* Menú desktop centrado a la derecha */
+.logoLink:hover .logoMask {
+  transform: scale(1.05);
+}
+
+/* =====================================
+   MENÚ DESKTOP (SOLO TEXTO)
+===================================== */
 .navDesktop {
   display: flex;
   gap: 2rem;
   align-items: center;
-  justify-content: flex-end; /* alineado a la derecha */
+  justify-content: flex-end;
   flex: 1;
 }
 
-/* Links desktop solo texto */
 .iconLink {
   color: white;
   font-size: 1rem;
+  font-weight: 500;
   text-decoration: none;
   cursor: pointer;
   background: none;
@@ -74,107 +90,273 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0;
 }
 
 .iconLink:hover,
 .iconLink:focus {
-  color: #7ed6df;
+  color: #53fb52;
   outline: none;
 }
 
-/* Ocultar iconos en desktop */
 .iconLink svg {
   display: none;
 }
 
-/* IconLabel desktop */
 .iconLabel {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: white;
   user-select: none;
 }
 
-/* Menú móvil fijo abajo (oculto por defecto) */
+/* =====================================
+   MENÚ MÓVIL PROFESIONAL (MEJORADO)
+===================================== */
 .navMobile {
   display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 56px;
-  background: #0d2635;
-  box-shadow: 0 -2px 8px #0003;
+  height: 68px;
+  background: rgba(13, 38, 53, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(83, 249, 83, 0.15);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
   justify-content: space-around;
   align-items: center;
   z-index: 1100;
-  padding: 0 0.5rem;
+  padding: 0 8px;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Links íconos móvil */
+/* Contenedor individual del link */
 .iconLinkMobile {
-  color: white;
-  font-size: 1rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 56px;
-  border-radius: 8px;
-  transition: background-color 0.2s, color 0.2s;
-  cursor: pointer;
+  flex: 1;
+  height: 100%;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   background: none;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 12px;
 }
 
-.iconLinkMobile:hover,
-.iconLinkMobile:focus {
-  color: #7ed6df;
-  background-color: #17344a;
-  outline: none;
-}
-
-/* Iconos visibles en móvil */
+/* Icono */
 .iconLinkMobile svg {
-  display: block;
-  width: 24px;
-  height: 24px;
-  user-select: none;
+  width: 26px;
+  height: 26px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  stroke-width: 2px;
+  margin-bottom: 2px;
 }
 
-/* IconLabel móvil */
+/* Etiqueta de texto */
 .iconLinkMobile .iconLabel {
-  font-size: 0.65rem;
-  margin-top: 4px;
-  color: white;
-  user-select: none;
+  font-size: 0.68rem;
+  margin-top: 3px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* Responsive: en pantallas pequeñas mostrar solo navMobile y ocultar navDesktop */
-@media (max-width: 700px) {
+/* =====================================
+   ESTADO ACTIVO (La sección donde estás)
+===================================== */
+.iconLinkMobile.active {
+  color: #53F953;
+}
+
+/* Indicador visual: Línea superior con glow */
+.iconLinkMobile.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #53F953, transparent);
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 0 12px rgba(83, 249, 83, 0.6), 0 0 24px rgba(83, 249, 83, 0.3);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Animación al pulsar (Feedback táctil) */
+.iconLinkMobile:active {
+  transform: scale(0.88);
+}
+
+.iconLinkMobile.active svg {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.iconLinkMobile.active .iconLabel {
+  transform: translateY(-1px);
+  font-weight: 700;
+}
+
+/* Hover sutil en móvil (para dispositivos con cursor) */
+@media (hover: hover) {
+  .iconLinkMobile:hover {
+    color: rgba(83, 249, 83, 0.8);
+    background: rgba(83, 249, 83, 0.08);
+  }
+}
+
+/* =====================================
+   RESPONSIVE — DESDE 1280px HACIA ABAJO
+===================================== */
+@media (max-width: 1280px) {
   .header {
     height: 56px;
   }
+
   .container {
+    max-width: 100%;
+    height: 56px;
     padding: 0 1rem;
     justify-content: center;
   }
-  .logo a {
-    font-size: 1.2rem;
-  }
+
   .navDesktop {
     display: none;
   }
+
   .navMobile {
     display: flex;
   }
 
-  /* ajustar cuánto sobresale el logo en móvil */
+  .logo {
+    justify-content: center;
+    width: 120px;
+  }
+
+  .logoMask {
+    bottom: -18px;
+    width: 120px;
+    height: 52px;
+  }
+}
+
+/* =====================================
+   RESPONSIVE — TABLETS PEQUEÑAS (≤768px)
+===================================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  .logo {
+    width: 110px;
+  }
+
+  .logoMask {
+    bottom: -14px;
+    width: 110px;
+    height: 48px;
+  }
+
+  .navMobile {
+    height: 64px;
+  }
+
+  .iconLinkMobile svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .iconLinkMobile .iconLabel {
+    font-size: 0.65rem;
+  }
+}
+
+/* =====================================
+   RESPONSIVE — MÓVILES PEQUEÑOS (≤600px)
+===================================== */
+@media (max-width: 600px) {
+  .header {
+    height: 56px;
+  }
+
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  .logoMask {
+    bottom: -10px;
+    width: 100px;
+    height: 44px;
+  }
+
+  .navMobile {
+    height: 62px;
+    padding: 0 4px;
+  }
+
+  .iconLinkMobile svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .iconLinkMobile .iconLabel {
+    font-size: 0.62rem;
+    margin-top: 2px;
+  }
+
+  .iconLinkMobile.active::before {
+    width: 32px;
+  }
+}
+
+/* =====================================
+   RESPONSIVE — MÓVILES MUY PEQUEÑOS (≤400px)
+===================================== */
+@media (max-width: 400px) {
+  .logo {
+    width: 90px;
+  }
+
   .logoMask {
     bottom: -8px;
-    width: 120px;
-    height: 48px;
+    width: 90px;
+    height: 40px;
+  }
+
+  .navMobile {
+    height: 60px;
+  }
+
+  .iconLinkMobile svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .iconLinkMobile .iconLabel {
+    font-size: 0.58rem;
+  }
+
+  .iconLinkMobile.active::before {
+    width: 28px;
   }
 }

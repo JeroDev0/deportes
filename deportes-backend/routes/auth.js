@@ -6,6 +6,7 @@ const Deportista = require("../models/Deportista");
 const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
 const Club = require("../models/Club");
+const Admin = require("../models/Admin");
 
 // ==================== REGISTRO ====================
 router.post("/register", async (req, res) => {
@@ -27,6 +28,7 @@ router.post("/register", async (req, res) => {
     if (!existingUser) existingUser = await Scout.findOne({ email });
     if (!existingUser) existingUser = await Sponsor.findOne({ email });
     if (!existingUser) existingUser = await Club.findOne({ email });
+    if (!existingUser) existingUser = await Admin.findOne({ email });
 
     if (existingUser) {
       console.log("❌ Email ya registrado:", email);
@@ -65,7 +67,7 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "sponsor",
-          company: "Company Name", // ✅ valor por defecto temporal
+          company: "Company Name",
         });
         break;
 
@@ -75,6 +77,17 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "club",
+        });
+        break;
+
+      case "admin":
+        console.log("✅ Creando admin");
+        newUser = new Admin({
+          email,
+          password: hashedPassword,
+          profileType: "admin",
+          role: "super_admin",
+          name: "Super Admin"
         });
         break;
 
@@ -92,7 +105,6 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     console.error("❌ Error en registro:", err);
 
-    // Manejo específico de errores Mongoose
     if (err.name === "ValidationError") {
       return res.status(400).json({
         error: "Error de validación",
@@ -121,7 +133,6 @@ router.post("/login", async (req, res) => {
 
     console.log("🔐 Intento de login:", email);
 
-    // Validar campos requeridos
     if (!email || !password) {
       return res.status(400).json({
         error: "Todos los campos son requeridos",
@@ -149,6 +160,11 @@ router.post("/login", async (req, res) => {
     }
 
     if (!user) {
+      user = await Admin.findOne({ email });
+      if (user) modelType = "admin";
+    }
+
+    if (!user) {
       console.log("❌ Usuario no encontrado:", email);
       return res.status(400).json({ error: "Credenciales inválidas" });
     }
@@ -160,16 +176,16 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Credenciales inválidas" });
     }
 
-    // Generar JWT (SINCRÓNICO - sin callback)
+    // Generar JWT
     const payload = {
       user: {
         id: user._id,
         email: user.email,
         modelType: modelType,
+        role: user.role || null,
       },
     };
 
-    // ✅ CAMBIO CLAVE: jwt.sign sin callback
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
@@ -185,6 +201,7 @@ router.post("/login", async (req, res) => {
         lastName: user.lastName || "",
         photo: user.photo || user.logo || "",
         modelType: modelType,
+        role: user.role || null,
       },
     });
   } catch (err) {
