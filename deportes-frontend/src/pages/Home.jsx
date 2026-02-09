@@ -12,19 +12,21 @@ function Home() {
   return (
     <>
       <Banner>
-        <h1 className={styles.bannerTitle}>
-          Empower Local Talent,<br />
-          Fuel the Future of Sport
-        </h1>
-        <p className={styles.bannerText}>
-          Linking passionate sponsors with the brightest local athletes to help them reach their full potential.
-        </p>
-        {/* Solo muestra el botón si NO hay usuario logueado */}
-        {!user && (
-          <Link to="/register" className={styles.registerBtn}>
-            Register <span style={{ marginLeft: 8, fontWeight: 'bold', fontSize: '1.3em' }}>→</span>
-          </Link>
-        )}
+        <div className={styles.bannerContent}>
+          <h1 className={styles.bannerTitle}>
+            Empower Local Talent,<br />
+            Fuel the Future of Sport
+          </h1>
+          <p className={styles.bannerText}>
+            Linking passionate sponsors with the brightest local athletes...
+          </p>
+
+          {!user && (
+            <Link to="/register" className={styles.registerBtn}>
+              Register <span style={{ marginLeft: 8, fontWeight: 'bold', fontSize: '1.3em' }}>→</span>
+            </Link>
+          )}
+        </div>
       </Banner>
 
       <TalentSearch />

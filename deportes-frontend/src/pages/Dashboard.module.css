@@ -10,17 +10,17 @@
 
 .filtersSidebar {
   flex: 0 0 280px;
-  background: transparent; /* quitar fondo */
-  border-radius: 0; /* quitar bordes redondeados */
+  background: transparent;
+  border-radius: 0;
   padding-left: 1rem;
-  box-shadow: none; /* quitar sombra */
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  gap: 0; /* sin gap, usaremos border-bottom para separar */
+  gap: 0;
   font-weight: 500;
   font-size: 0.95rem;
   color: #ccc;
-  border-left: 1px solid #2a2a2a; /* línea divisoria izquierda */
+  border-left: 1px solid #2a2a2a;
   height: fit-content;
 }
 
@@ -42,7 +42,7 @@
   font-weight: 500;
   outline: none;
   box-shadow: none;
-  appearance: none; /* quitar flecha por defecto en algunos navegadores */
+  appearance: none;
   cursor: pointer;
 }
 
@@ -82,10 +82,9 @@
 }
 
 .searchButton {
-  display: none; /* ocultar botón de búsqueda para diseño limpio */
+  display: none;
 }
 
-/* Opcional: para que el select tenga flecha personalizada o nada */
 .filterSelect::-ms-expand {
   display: none;
 }
@@ -93,46 +92,55 @@
 .cardsContainer {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(220px, 1fr)); /* tarjetas más pequeñas */
-  gap: 2rem 2rem; /* espacio entre tarjetas */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
   justify-content: center;
   align-items: start;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   justify-items: center;
+  overflow: visible;
 }
 
-.athleteCard {
-  width: 100%;
-  max-width: 260px; /* tamaño máximo reducido */
-  min-width: 220px; /* tamaño mínimo reducido */
-  min-height: 370px;
-  max-height: 420px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+/* 1920px - 4 columnas */
+@media (min-width: 1920px) {
+  .cardsContainer {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
 }
 
-@media (max-width: 1366px) {
+/* 1367px - 1919px - 4 columnas */
+@media (min-width: 1367px) and (max-width: 1919px) {
   .cardsContainer {
-    grid-template-columns: repeat(3, minmax(270px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
 }
-@media (max-width: 900px) {
+
+/* 1024px - 1366px - 3 columnas */
+@media (min-width: 1024px) and (max-width: 1366px) {
   .cardsContainer {
-    grid-template-columns: repeat(2, minmax(270px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 }
-@media (max-width: 600px) {
+
+/* 768px - 1023px (tablets) - 2 columnas */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cardsContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 601px - 767px - 2 columnas */
+@media (min-width: 601px) and (max-width: 767px) {
   .dashboardContainer {
     flex-direction: column;
   }
   .cardsContainer {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    padding-bottom: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
   .filtersSidebar {
     width: 100%;
@@ -140,5 +148,28 @@
     border-left: none;
     padding-left: 0;
     margin-bottom: 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 1rem;
+  }
+}
+
+/* 600px y menos (celulares) - 1 columna */
+@media (max-width: 600px) {
+  .dashboardContainer {
+    flex-direction: column;
+  }
+  .cardsContainer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+  .filtersSidebar {
+    width: 100%;
+    flex: none;
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 1rem;
   }
 }

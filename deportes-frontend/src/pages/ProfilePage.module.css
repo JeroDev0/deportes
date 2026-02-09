@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 280px 1fr 280px;
   gap: 20px;
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px 10px;
   box-sizing: border-box;
@@ -46,25 +46,11 @@
   margin-top: 100px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .pageContainer {
-    grid-template-columns: 1fr;
-    padding: 10px;
-  }
-  .leftColumn, .rightColumn {
-    display: none;
-  }
-  .centerColumn {
-    background: transparent;
-    padding: 0;
-  }
-}
-
 /* Banner */
 .bannerWrapper {
   width: 100%;
   overflow: hidden;
+  border-radius: 15px 15px 0 0;
 }
 
 .bannerImage {
@@ -75,18 +61,7 @@
   display: block;
 }
 
-/* Ajustes para móviles */
-@media (max-width: 768px) {
-  .bannerImage {
-    aspect-ratio: 16 / 5;
-  }
-}
-
-
-
-
-
-
+/* Toggle de vista */
 .viewToggle {
   display: flex;
   gap: 10px;
@@ -107,6 +82,7 @@
   cursor: pointer;
   font-weight: 700;
   transition: 0.2s ease;
+  font-size: 1rem;
 }
 
 .toggleBtn:hover {
@@ -120,14 +96,96 @@
   border-color: rgba(83, 251, 82, 0.6);
 }
 
-@media (max-width: 768px) {
+/* Responsive Breakpoints */
+
+/* Tablets grandes y laptops pequeñas (1024px - 1366px) */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .pageContainer {
+    grid-template-columns: 240px 1fr 240px;
+    gap: 16px;
+    max-width: 1280px;
+  }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pageContainer {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    gap: 0;
+  }
+  
+  .leftColumn, 
+  .rightColumn {
+    display: none;
+  }
+  
+  .centerColumn {
+    background: transparent;
+    padding: 0;
+  }
+  
+  .bannerImage {
+    aspect-ratio: 16 / 5;
+    border-radius: 12px 12px 0 0;
+  }
+}
+
+/* Móviles (menos de 768px) */
+@media (max-width: 767px) {
+  .pageContainer {
+    grid-template-columns: 1fr;
+    padding: 10px 5px;
+    gap: 0;
+    max-width: 100%;
+  }
+  
+  .leftColumn, 
+  .rightColumn {
+    display: none;
+  }
+  
+  .centerColumn {
+    background: transparent;
+    padding: 0;
+    border-radius: 12px;
+  }
+  
+  .bannerWrapper {
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .bannerImage {
+    aspect-ratio: 16 / 6;
+    border-radius: 12px 12px 0 0;
+  }
+  
   .viewToggle {
-    gap: 8px;
+    gap: 6px;
     padding: 6px;
+    margin-bottom: 12px;
   }
 
   .toggleBtn {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  .loading {
+    font-size: 1rem;
+    margin-top: 60px;
+  }
+}
+
+/* Móviles pequeños (menos de 400px) */
+@media (max-width: 400px) {
+  .pageContainer {
+    padding: 8px 3px;
+  }
+  
+  .toggleBtn {
+    padding: 7px 8px;
+    font-size: 0.8rem;
   }
 }

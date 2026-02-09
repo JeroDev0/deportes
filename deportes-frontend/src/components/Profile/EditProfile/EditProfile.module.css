@@ -1,91 +1,113 @@
+/* ============================================
+   EDIT PROFILE - RESPONSIVE & OPTIMIZED
+   ============================================ */
+
 .editProfileBg {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 0px;
+  align-items: flex-start;
+  padding: 40px 20px;
   font-family: 'Arial', sans-serif;
   color: #333;
+  background: linear-gradient(135deg, #0a1929 0%, #1a334a 100%);
 }
 
 .editProfileCard {
   background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  max-width: 1200px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 1400px;
   width: 100%;
-  padding: 30px 40px;
+  padding: 40px;
   box-sizing: border-box;
   position: relative;
-  backdrop-filter: blur(10px);
+  overflow-x: hidden;
 }
 
+/* ============================================
+   HEADER & BACK BUTTON
+   ============================================ */
+
 .backBtn {
-  background: none;
-  border: 2px solid #53fb52;
-  color: #53fb52;
-  font-weight: 600;
+  background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
+  border: none;
+  color: #0d2635;
+  font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  border-radius: 25px;
+  margin-bottom: 24px;
+  padding: 12px 24px;
+  border-radius: 30px;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  box-shadow: 0 4px 15px rgba(83, 251, 82, 0.3);
 }
 
 .backBtn:hover {
-  background: #53fb52;
-  color: #0d2635;
+  background: linear-gradient(135deg, #38b838 0%, #53fb52 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
+  box-shadow: 0 8px 25px rgba(83, 251, 82, 0.4);
+}
+
+.backBtn:active {
+  transform: translateY(0);
 }
 
 .header {
   font-weight: 800;
-  font-size: 1.8rem;
-  letter-spacing: 2px;
-  margin-bottom: 25px;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
   color: #1a334a;
   text-align: center;
   background: linear-gradient(135deg, #1a334a 0%, #53fb52 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0;
-  padding-bottom: 20px;
 }
+
+/* ============================================
+   FORM LAYOUT
+   ============================================ */
 
 .form {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
+/* ============================================
+   LEFT COLUMN - PHOTO & SKILLS
+   ============================================ */
+
 .leftCol {
-  flex: 1;
-  max-width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
+  gap: 24px;
 }
 
 .photoSection {
   position: relative;
-  width: 300px;
-  height: 380px;
+  width: 100%;
+  height: 420px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  border: 3px solid #53fb52;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  border: 4px solid #53fb52;
   transition: all 0.3s ease;
+  background: #f8f9fa;
 }
 
 .photoSection:hover {
   transform: translateY(-5px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 50px rgba(83, 251, 82, 0.3);
 }
 
 .photoSection img.photo {
@@ -102,75 +124,94 @@
   align-items: center;
   justify-content: center;
   color: #6c757d;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
 .photoEditBtn {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: none;
-  color: #53fb52;
-  border: 2px solid #53fb52;
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
+  color: #0d2635;
+  border: none;
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(83, 251, 82, 0.4);
 }
 
 .photoEditBtn:hover {
-  background: #53fb52;
-  color: #0d2635;
-  transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(83, 251, 82, 0.5);
 }
+
+/* ============================================
+   SKILLS SECTION
+   ============================================ */
 
 .skillsSection {
   width: 100%;
-  background: linear-gradient(135deg, #1a334a 0%, #223c54 100%);
-  padding: 16px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(26, 51, 74, 0.3);
+  background: linear-gradient(135deg, #1a334a 0%, #0d2635 100%);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(26, 51, 74, 0.4);
 }
 
 .skillsSection h3 {
   font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 16px;
-  color: #eaf6ff;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: #53fb52;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+}
+
+.skillCategory {
+  margin-bottom: 20px;
+}
+
+.categoryLabel {
+  display: block;
+  color: #eaf6ff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding-left: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .chipList {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
-  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .chip {
   display: flex;
   align-items: center;
-  background: rgba(26, 51, 74, 0.8);
+  background: rgba(13, 38, 53, 0.8);
   border: 2px solid #53fb52;
   border-radius: 25px;
-  padding: 6px 12px 6px 16px;
-  gap: 6px;
-  min-width: 0;
+  padding: 8px 16px;
+  gap: 8px;
   transition: all 0.3s ease;
+  max-width: 100%;
 }
 
 .chip:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
+  box-shadow: 0 6px 15px rgba(83, 251, 82, 0.3);
+  background: rgba(13, 38, 53, 0.95);
 }
 
 .chipInput {
@@ -178,46 +219,49 @@
   border: none;
   color: #eaf6ff;
   font-size: 1rem;
-  min-width: 90px;
-  max-width: 200px;
+  min-width: 80px;
+  max-width: 180px;
   outline: none;
-  padding: 6px 0;
+  padding: 4px 0;
   font-weight: 500;
+  box-sizing: border-box;
 }
 
 .chipInput:focus {
-  background: rgba(34, 60, 84, 0.7);
-  border-radius: 15px;
-  padding: 6px 10px;
+  background: rgba(26, 51, 74, 0.7);
+  border-radius: 8px;
+  padding: 4px 8px;
 }
 
 .chipInput::placeholder {
-  color: rgba(234, 246, 255, 0.6);
+  color: rgba(234, 246, 255, 0.5);
 }
 
 .chipRemove {
-  background: none;
+  background: rgba(231, 76, 60, 0.2);
   border: none;
   cursor: pointer;
-  margin-left: 6px;
-  padding: 4px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
-  color: #eaf6ff;
+  color: #ff6b6b;
   font-size: 18px;
   font-weight: bold;
   border-radius: 50%;
+  width: 24px;
+  height: 24px;
 }
 
 .chipRemove:hover {
-  background: rgba(231, 76, 60, 0.8);
+  background: rgba(231, 76, 60, 0.9);
   color: #fff;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .chipAdd {
-  background: rgba(26, 51, 74, 0.8);
+  background: rgba(13, 38, 53, 0.8);
   border: 2px dashed #53fb52;
   border-radius: 50%;
   width: 36px;
@@ -226,7 +270,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 8px;
   transition: all 0.3s ease;
   color: #53fb52;
   font-size: 20px;
@@ -234,38 +277,48 @@
 }
 
 .chipAdd:hover {
-  background: #53fb52;
+  background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
   border: 2px solid #53fb52;
   color: #0d2635;
   transform: scale(1.1);
 }
 
+/* ============================================
+   RIGHT COLUMN - FORM FIELDS
+   ============================================ */
+
 .rightCol {
-  flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  min-width: 400px;
+  gap: 24px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 label {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 8px;
   color: #1a334a;
   display: block;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  min-width: 0px;
 }
+
+/* ============================================
+   TEXT AREAS
+   ============================================ */
 
 .shortDescTextarea,
 .introTextarea {
   width: 100%;
+  max-width: 100%;
   min-height: 120px;
-  border-radius: 15px;
-  border: 2px solid #e9ecef;
-  padding: 18px;
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+  padding: 16px;
   font-size: 1rem;
   resize: vertical;
   font-family: inherit;
@@ -273,6 +326,7 @@ label {
   color: #ffffff;
   transition: all 0.3s ease;
   background: #1a334a;
+  overflow: auto;
 }
 
 .introTextarea {
@@ -283,167 +337,163 @@ label {
 .introTextarea:focus {
   border-color: #53fb52;
   outline: none;
-  box-shadow: 0 0 20px rgba(83, 251, 82, 0.2);
-  background: #1a334a;
+  box-shadow: 0 0 20px rgba(83, 251, 82, 0.3);
+  background: #0d2635;
 }
 
 .charCount {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #6c757d;
   text-align: right;
-  margin-top: 6px;
+  margin-top: 4px;
   font-weight: 600;
 }
+
+/* ============================================
+   PERSONAL INFO SECTION
+   ============================================ */
 
 .personalInfo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-/* TODOS los inputs - estilo unificado */
 .personalInfo input,
 .currentLocation input,
 input[name="postalCode"],
-input[name="address"] {
-  padding: 12px 16px;
+input[name="address"],
+.listInput {
+  padding: 14px 16px;
   font-size: 1rem;
   border-radius: 10px;
   border: 2px solid #dee2e6;
   box-sizing: border-box;
   transition: all 0.3s ease;
-  background: #1a334a !important;
+  background: #1a334a;
   color: #ffffff;
+  width: 100%;
 }
 
 .personalInfo input:focus,
 .currentLocation input:focus,
 input[name="postalCode"]:focus,
-input[name="address"]:focus {
+input[name="address"]:focus,
+.listInput:focus {
   border-color: #53fb52;
   outline: none;
-  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
+  box-shadow: 0 0 15px rgba(83, 251, 82, 0.3);
   transform: translateY(-1px);
+  background: #0d2635;
 }
 
-/* Secciones con encabezados - padding reducido */
+/* ============================================
+   SECTION CONTAINERS
+   ============================================ */
+
 .birthInfo,
 .currentLocation,
 .sportCareer,
-.relationsSection {
+.relationsSection,
+.certificationsSection {
   background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-  padding: 18px;
-  border-radius: 15px;
+  padding: 24px;
+  border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(83, 251, 82, 0.2);
+  border: 2px solid rgba(83, 251, 82, 0.3);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .birthInfo h3,
 .currentLocation h3,
 .sportCareer h3,
-.relationsSection label {
+.relationsSection label,
+.certificationsSection label {
   font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 12px;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
   color: #1a334a;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid #53fb52;
-  padding-bottom: 6px;
+  border-bottom: 3px solid #53fb52;
+  padding-bottom: 8px;
 }
 
+.certificationsSection label {
+  color: #0d47a1;
+  border-bottom: 3px solid #2196f3;
+}
+
+.currentLocationGrid,
 .sportCareerFields,
 .relationsFields {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
 
-.sportCareer input[name="postalCode"],
-.sportCareer input[name="address"] {
-  padding: 14px 18px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: 2px solid #dee2e6;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-  background: #fff;
-  color: #333;
-  margin-top: 12px;
-}
+/* ============================================
+   ACHIEVEMENTS SECTION
+   ============================================ */
 
-.sportCareer input[name="postalCode"]:focus,
-.sportCareer input[name="address"]:focus {
-  border-color: #53fb52;
-  outline: none;
-  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Current Location - grid para inputs uniformes */
-.currentLocation {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.currentLocation h3 {
-  margin-bottom: 12px;
-}
-
-.currentLocationGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-/* Sección de logros - más compacta */
 .achievementsSection {
   background: linear-gradient(135deg, #fff7e6 0%, #fff3cd 100%);
-  padding: 16px;
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(181, 129, 52, 0.15);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(181, 129, 52, 0.2);
   border: 2px solid #ffc107;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.achievementsSection h3,
-.careerSection h3 {
+.achievementsSection h3 {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: #a56a2f;
 }
 
 .achievementsSection h3::before {
   content: "🏆";
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .achievementItem {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   border-bottom: 1px solid rgba(165, 106, 47, 0.2);
-  padding: 10px 0;
-  color: #a56a2f;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 14px 8px;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .achievementItem:hover {
-  background: rgba(255, 193, 7, 0.1);
-  margin: 0 -16px;
-  padding: 16px;
-  border-radius: 12px;
+  background: rgba(255, 193, 7, 0.15);
+  border-radius: 10px;
+  padding: 14px 16px;
 }
 
 .achievementItem:last-child {
@@ -452,199 +502,274 @@ input[name="address"]:focus {
 
 .star {
   color: #ffc107;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 900;
   flex-shrink: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.achievementInput, .yearInput {
+.achievementInput,
+.yearInput {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #a56a2f;
   font-weight: 600;
   outline: none;
-  padding: 8px 0;
+  padding: 8px 4px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.achievementInput::placeholder {
-  color: rgba(165, 106, 47, 0.6);
+.yearInput {
+  flex: 0 0 80px;
+  text-align: center;
+  width: 80px;
+  max-width: 80px;
+}
+
+.achievementInput::placeholder,
+.yearInput::placeholder {
+  color: rgba(165, 106, 47, 0.5);
   font-weight: 400;
 }
 
-.achievementInput:focus {
-  background: rgba(255, 255, 255, 0.5);
+.achievementInput:focus,
+.yearInput:focus {
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 8px;
   padding: 8px 12px;
 }
 
 .achievementsSection button[type="button"]:last-of-type {
-  margin-top: 0px;
+  margin-top: 16px;
   border: 3px dashed #ffc107;
   background: transparent;
   color: #a56a2f;
   font-weight: 700;
   font-size: 1.1rem;
   padding: 16px 20px;
-  border-radius: 15px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .achievementsSection button[type="button"]:last-of-type:hover {
-  background: #ffc107;
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
   color: #fff;
+  border-color: #ffc107;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
 }
 
-/* Botones de eliminar pequeños */
-.achievementItem button,
-.careerItem button {
-  background: none;
-  border: none;
-  color: #dc3545;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 2px 4px;
-  line-height: 1;
-  transition: all 0.2s ease;
-  border-radius: 3px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* ============================================
+   CAREER SECTION
+   ============================================ */
 
-/* Sección de carrera */
-/* Sección de carrera - más compacta */
 .careerSection {
   background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
-  padding: 16px;
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.15);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.2);
   border: 2px solid #28a745;
-}
-
-.achievementsSection h3 {
-  color: #a56a2f;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .careerSection h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: #155724;
 }
 
 .careerSection h3::before {
   content: "📈";
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .careerItem {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   border-bottom: 1px solid rgba(21, 87, 36, 0.2);
-  padding: 10px 0;
-  color: #155724;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 14px 8px;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .careerItem:hover {
-  background: rgba(40, 167, 69, 0.1);
-  margin: 0 -16px;
-  padding: 16px;
-  border-radius: 12px;
+  background: rgba(40, 167, 69, 0.15);
+  border-radius: 10px;
+  padding: 14px 16px;
 }
 
 .careerItem:last-child {
   border-bottom: none;
 }
 
-.careerInput, .yearInput2 {
+.careerInput,
+.yearInput2 {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #155724;
   font-weight: 600;
   outline: none;
-  padding: 8px 0;
+  padding: 8px 4px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.careerInput::placeholder, .yearInput2::placeholder {
-  color: rgba(21, 87, 36, 0.6);
+.yearInput2 {
+  flex: 0 0 80px;
+  text-align: center;
+  width: 80px;
+  max-width: 80px;
+}
+
+.careerInput::placeholder,
+.yearInput2::placeholder {
+  color: rgba(21, 87, 36, 0.5);
   font-weight: 400;
 }
 
-.careerInput:focus {
-  background: rgba(255, 255, 255, 0.5);
+.careerInput:focus,
+.yearInput2:focus {
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 8px;
   padding: 8px 12px;
 }
 
 .careerSection button[type="button"]:last-of-type {
-  margin-top: 0px;
+
+  margin-top: 16px;
   border: 3px dashed #28a745;
   background: transparent;
   color: #155724;
   font-weight: 700;
   font-size: 1.1rem;
   padding: 16px 20px;
-  border-radius: 15px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .careerSection button[type="button"]:last-of-type:hover {
-  background: #28a745;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
   color: #fff;
+  border-color: #28a745;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* ============================================
+   REMOVE BUTTONS
+   ============================================ */
+
+.achievementItem button,
+.careerItem button,
+.listRemoveBtn {
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  color: #dc3545;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  min-width: 22px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .achievementItem button:hover,
-.careerItem button:hover {
-  background: rgba(220, 53, 69, 0.1);
-  color: #c82333;
+.careerItem button:hover,
+.listRemoveBtn:hover {
+  background: #dc3545;
+  color: #fff;
   transform: scale(1.1);
+  border-color: #dc3545;
 }
 
-/* Sección de certificaciones */
-.certificationsSection {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
-  border: 2px solid #2196f3;
+/* ============================================
+   LIST INPUT SECTIONS
+   ============================================ */
+
+.listInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.certificationsSection label {
-  color: #0d47a1;
-  border-bottom: 2px solid #2196f3;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+.listInputItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Botón principal de guardar */
+.listAddBtn {
+  background: linear-gradient(135deg, rgba(83, 251, 82, 0.1) 0%, rgba(56, 184, 56, 0.1) 100%);
+  border: 2px dashed #53fb52;
+  color: #38b838;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.listAddBtn:hover {
+  background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(83, 251, 82, 0.3);
+  border-color: #53fb52;
+}
+
+/* ============================================
+   SAVE BUTTON
+   ============================================ */
+
 .saveBtn {
-  margin-top: 20px;
+  margin-top: 32px;
   background: linear-gradient(135deg, #53fb52 0%, #38b838 100%);
   border: none;
-  border-radius: 15px;
-  padding: 16px 0;
+  border-radius: 16px;
+  padding: 18px 0;
   font-weight: 900;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #0d2635;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(83, 251, 82, 0.4);
+  box-shadow: 0 10px 30px rgba(83, 251, 82, 0.4);
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   position: relative;
   overflow: hidden;
 }
@@ -673,223 +798,130 @@ input[name="address"]:focus {
 
 .saveBtn:active {
   transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(83, 251, 82, 0.3);
+  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.4);
 }
 
-/* Mensajes */
+/* ============================================
+   MESSAGES
+   ============================================ */
+
 .success {
-  color: #28a745;
+  color: #155724;
   font-weight: 700;
   margin-top: 16px;
   text-align: center;
-  background: #d4edda;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #c3e6cb;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #28a745;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
 }
 
 .error {
-  color: #dc3545;
+  color: #721c24;
   font-weight: 700;
   margin-top: 16px;
   text-align: center;
-  background: #f8d7da;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #f5c6cb;
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #dc3545;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
 }
 
-/* Lista genérica para inputs */
-.listInputContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* ============================================
+   RESPONSIVE - TABLET (1366px and below)
+   ============================================ */
 
-.listInputItem {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 0;
-}
-
-.listInput {
-  flex: 1;
-  padding: 12px 16px;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 2px solid #dee2e6;
-  transition: all 0.3s ease;
-  background: #fff;
-}
-
-.listInput:focus {
-  border-color: #53fb52;
-  outline: none;
-  box-shadow: 0 0 15px rgba(83, 251, 82, 0.2);
-}
-
-.listRemoveBtn {
-  background: #dc3545;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.listRemoveBtn:hover {
-  background: #c82333;
-  transform: scale(1.1);
-}
-
-.listAddBtn {
-  background: none;
-  border: 2px dashed #53fb52;
-  color: #53fb52;
-  border-radius: 25px;
-  padding: 12px 20px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 12px;
-  transition: all 0.3s ease;
-  align-self: flex-start;
-}
-
-.listAddBtn:hover {
-  background: #53fb52;
-  color: #0d2635;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(83, 251, 82, 0.3);
-}
-
-/* Estilos para la nueva sección de skills por categorías */
-.skillsSection {
-  margin-bottom: 2rem;
-}
-
-.skillsSection h3 {
-  color: #53fb52;
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.skillCategory {
-  margin-bottom: 1.5rem;
-}
-
-.categoryLabel {
-  display: block;
-  color: #eaf6ff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  padding-left: 0.5rem;
-}
-
-.skillSelect {
-  width: 100%;
-}
-
-/* Responsive para skills */
-@media (max-width: 768px) {
-  .skillsSection {
-    margin-bottom: 1.5rem;
+@media (max-width: 1366px) {
+  .form {
+    grid-template-columns: 320px 1fr;
+    gap: 32px;
   }
   
-  .skillsSection h3 {
-    font-size: 1.2rem;
+  .photoSection {
+    height: 380px;
   }
   
-  .categoryLabel {
-    font-size: 0.8rem;
+  .editProfileCard {
+    padding: 36px;
   }
 }
 
-/* Responsive Design */
+/* ============================================
+   RESPONSIVE - TABLET (1024px and below)
+   ============================================ */
+
 @media (max-width: 1024px) {
   .form {
-    flex-direction: column;
-    gap: 40px;
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
   
   .leftCol {
     max-width: 100%;
     flex-direction: row;
     justify-content: center;
-    gap: 32px;
+    flex-wrap: wrap;
   }
   
   .photoSection {
-    width: 250px;
-    height: 320px;
+    width: 300px;
+    height: 380px;
+  }
+  
+  .skillsSection {
+    width: 90%;
+    max-width: 600px;
   }
   
   .rightCol {
     width: 100%;
-    min-width: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .editProfileCard {
-    padding: 32px 24px;
   }
   
   .header {
     font-size: 2.2rem;
   }
-  
-  .leftCol {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .photoSection {
-    width: 200px;
-    height: 260px;
-  }
-  
-  .personalInfo {
-    grid-template-columns: 1fr;
-  }
-  
-  .sportCareerFields,
-  .relationsFields {
-    grid-template-columns: 1fr;
-  }
-  
-  .achievementsSection,
-  .careerSection {
-    padding: 24px;
-  }
 }
 
-@media (max-width: 480px) {
+/* ============================================
+   RESPONSIVE - TABLET PORTRAIT (768px and below)
+   ============================================ */
+
+@media (max-width: 768px) {
   .editProfileBg {
-    padding: 20px 10px;
+    padding: 20px 16px;
   }
   
   .editProfileCard {
-    padding: 24px 16px;
+    padding: 28px 20px;
+    border-radius: 20px;
   }
   
   .header {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
+    margin-bottom: 28px;
   }
   
-  .form {
-    gap: 24px;
+  .leftCol {
+    flex-direction: column;
+  }
+  
+  .photoSection {
+    width: 100%;
+    max-width: 320px;
+    height: 400px;
+  }
+  
+  .skillsSection {
+    max-width: 100%;
+  }
+  
+  .personalInfo,
+  .currentLocationGrid,
+  .sportCareerFields,
+  .relationsFields {
+    grid-template-columns: 1fr;
   }
   
   .birthInfo,
@@ -897,7 +929,203 @@ input[name="address"]:focus {
   .sportCareer,
   .relationsSection,
   .achievementsSection,
-  .careerSection {
+  .careerSection,
+  .certificationsSection {
     padding: 20px;
+  }
+  
+  label {
+    font-size: 0.95rem;
+  }
+  
+  .saveBtn {
+    font-size: 1.2rem;
+    padding: 16px 0;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (480px and below)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .editProfileBg {
+    padding: 16px 12px;
+  }
+  
+  .editProfileCard {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  
+  .header {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+  
+  .backBtn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+  
+  .form {
+    gap: 24px;
+  }
+  
+  .photoSection {
+    height: 360px;
+  }
+  
+  .skillsSection {
+    padding: 20px 16px;
+  }
+  
+  .skillsSection h3 {
+    font-size: 1.2rem;
+  }
+  
+  .categoryLabel {
+    font-size: 0.85rem;
+  }
+  
+  .chip {
+    padding: 6px 12px;
+  }
+  
+  .chipInput {
+    font-size: 0.9rem;
+    min-width: 60px;
+  }
+  
+  .personalInfo,
+  .birthInfo,
+  .currentLocation,
+  .sportCareer,
+  .relationsSection,
+  .achievementsSection,
+  .careerSection,
+  .certificationsSection {
+    padding: 16px 12px;
+  }
+  
+  label,
+  .birthInfo h3,
+  .currentLocation h3,
+  .sportCareer h3,
+  .relationsSection label,
+  .certificationsSection label {
+    font-size: 0.9rem;
+  }
+  
+  .achievementsSection h3,
+  .careerSection h3 {
+    font-size: 1.1rem;
+  }
+  
+  .achievementInput,
+  .careerInput,
+  .yearInput,
+  .yearInput2 {
+    font-size: 0.9rem;
+  }
+  
+  .achievementItem button,
+  .careerItem button {
+    font-size: 12px;
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .star {
+    font-size: 1.2rem;
+  }
+  
+  .yearInput,
+  .yearInput2 {
+    flex: 0 0 60px;
+    width: 60px;
+    max-width: 60px;
+  }
+  
+  .shortDescTextarea,
+  .introTextarea {
+    font-size: 0.95rem;
+    padding: 14px;
+  }
+  
+  .personalInfo input,
+  .currentLocation input,
+  input[name="postalCode"],
+  input[name="address"],
+  .listInput {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  
+  .saveBtn {
+    font-size: 1.1rem;
+    padding: 14px 0;
+    letter-spacing: 1px;
+  }
+  
+  .achievementsSection button[type="button"]:last-of-type,
+  .careerSection button[type="button"]:last-of-type,
+  .listAddBtn {
+    font-size: 0.95rem;
+    padding: 12px 16px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL MOBILE (360px and below)
+   ============================================ */
+
+@media (max-width: 360px) {
+  .editProfileCard {
+    padding: 16px 12px;
+  }
+  
+  .header {
+    font-size: 1.4rem;
+  }
+  
+  .photoSection {
+    height: 320px;
+  }
+  
+  .achievementItem button,
+  .careerItem button {
+    font-size: 11px;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .star {
+    font-size: 1.1rem;
+  }
+  
+  .achievementItem,
+  .careerItem {
+    padding: 12px 4px;
+    gap: 6px;
+  }
+  
+  .achievementItem:hover,
+  .careerItem:hover {
+    padding: 12px 8px;
+  }
+  
+  .yearInput,
+  .yearInput2 {
+    flex: 0 0 55px;
+    width: 55px;
+    max-width: 55px;
+  }
+  
+  .chipList {
+    gap: 8px;
   }
 }
