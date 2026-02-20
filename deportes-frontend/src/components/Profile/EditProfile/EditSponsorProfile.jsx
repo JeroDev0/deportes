@@ -19,13 +19,37 @@ const INDUSTRIES = [
 
 const SPORTS = [
   { value: "Soccer", label: "Soccer" },
-  { value: "Cycling", label: "Cycling" },
-  { value: "Athletics", label: "Athletics" },
   { value: "Basketball", label: "Basketball" },
-  { value: "Swimming", label: "Swimming" },
   { value: "Tennis", label: "Tennis" },
+  { value: "Volleyball", label: "Volleyball" },
+  { value: "Swimming", label: "Swimming" },
+  { value: "Athletics", label: "Athletics" },
+  { value: "Cycling", label: "Cycling" },
   { value: "Boxing", label: "Boxing" },
+  { value: "Chess", label: "Chess" },
+  { value: "Golf", label: "Golf" },
+  { value: "Baseball", label: "Baseball" },
+  { value: "Rugby", label: "Rugby" },
+  { value: "Hockey", label: "Hockey" },
+  { value: "Gymnastics", label: "Gymnastics" },
+  { value: "Karate", label: "Karate" },
+  { value: "Judo", label: "Judo" },
+  { value: "Taekwondo", label: "Taekwondo" },
+  { value: "Fencing", label: "Fencing" },
   { value: "Weightlifting", label: "Weightlifting" },
+  { value: "Triathlon", label: "Triathlon" },
+
+  // 🔥 Nuevos agregados de la imagen
+  { value: "Boccia", label: "Boccia" },
+  { value: "Olympic Wrestling", label: "Olympic Wrestling" },
+  { value: "Skating", label: "Skating" },
+  { value: "Archery", label: "Archery" },
+
+  // 🔥 Deportes Paralímpicos
+  { value: "Para Cycling", label: "Para Cycling" },
+  { value: "Para Athletics", label: "Para Athletics" },
+  { value: "Para Swimming", label: "Para Swimming" },
+  { value: "Para Powerlifting", label: "Para Powerlifting" }
 ];
 
 const CATEGORIES = [

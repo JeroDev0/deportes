@@ -33,6 +33,18 @@ const SPORTS = [
   { value: "Fencing", label: "Fencing" },
   { value: "Weightlifting", label: "Weightlifting" },
   { value: "Triathlon", label: "Triathlon" },
+
+  // 🔥 Nuevos agregados de la imagen
+  { value: "Boccia", label: "Boccia" },
+  { value: "Olympic Wrestling", label: "Olympic Wrestling" },
+  { value: "Skating", label: "Skating" },
+  { value: "Archery", label: "Archery" },
+
+  // 🔥 Deportes Paralímpicos
+  { value: "Para Cycling", label: "Para Cycling" },
+  { value: "Para Athletics", label: "Para Athletics" },
+  { value: "Para Swimming", label: "Para Swimming" },
+  { value: "Para Powerlifting", label: "Para Powerlifting" }
 ];
 
 const SPECIALIZATIONS = [
