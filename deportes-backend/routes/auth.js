@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const { sendPasswordResetEmail } = require("../config/emailService");
 const Deportista = require("../models/Deportista");
 const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
@@ -210,6 +212,98 @@ router.post("/login", async (req, res) => {
       error: "Error en el servidor",
       details: err.message,
     });
+  }
+});
+
+// ==================== FORGOT PASSWORD ====================
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "El email es requerido" });
+    }
+
+    // Buscar usuario en todas las colecciones
+    let user = await Deportista.findOne({ email });
+    let modelType = "deportista";
+
+    if (!user) { user = await Scout.findOne({ email }); if (user) modelType = "scout"; }
+    if (!user) { user = await Sponsor.findOne({ email }); if (user) modelType = "sponsor"; }
+    if (!user) { user = await Club.findOne({ email }); if (user) modelType = "club"; }
+
+    if (!user) {
+      // Por seguridad respondemos igual aunque no exista
+      return res.json({ message: "Si el email existe, recibirás un correo con las instrucciones" });
+    }
+
+    // Generar token seguro
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetExpires = new Date(Date.now() + 3600000); // 1 hora
+
+    // Guardar token en el usuario
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = resetExpires;
+    await user.save();
+
+    // Enviar email
+    const userName = user.name || "";
+    await sendPasswordResetEmail(email, resetToken, userName);
+
+    console.log(`✅ Email de recuperación enviado a: ${email} (${modelType})`);
+
+    res.json({ message: "Si el email existe, recibirás un correo con las instrucciones" });
+
+  } catch (err) {
+    console.error("❌ Error en forgot-password:", err);
+    res.status(500).json({ error: "Error en el servidor", details: err.message });
+  }
+});
+
+// ==================== RESET PASSWORD ====================
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({ error: "Token y nueva contraseña son requeridos" });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: "La contraseña debe tener al menos 6 caracteres" });
+    }
+
+    // Buscar usuario con ese token válido y no expirado
+    let user = await Deportista.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) user = await Scout.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: new Date() } });
+    if (!user) user = await Sponsor.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: new Date() } });
+    if (!user) user = await Club.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: new Date() } });
+
+    if (!user) {
+      return res.status(400).json({ error: "El token no es válido o ya expiró" });
+    }
+
+    // Encriptar nueva contraseña
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword.toString(), salt);
+
+    // Limpiar token
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+
+    await user.save();
+
+    console.log(`✅ Contraseña restablecida para: ${user.email}`);
+
+    res.json({ message: "Contraseña restablecida correctamente" });
+
+  } catch (err) {
+    console.error("❌ Error en reset-password:", err);
+    res.status(500).json({ error: "Error en el servidor", details: err.message });
   }
 });
 

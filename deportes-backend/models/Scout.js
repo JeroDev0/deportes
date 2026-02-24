@@ -31,7 +31,10 @@ const ScoutSchema = new mongoose.Schema({
   athletes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Deportista" }],
   clubs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Club" }],
   sponsors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sponsor" }],
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  // 🔐 Recuperación de contraseña
+  resetPasswordToken: { type: String, default: null },
+  resetPasswordExpires: { type: Date, default: null },
 });
 
 module.exports = mongoose.model("Scout", ScoutSchema);
