@@ -31,7 +31,10 @@ const SponsorSchema = new mongoose.Schema({
 
   profileType: { type: String, default: "sponsor" },
 
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  // 🔐 Recuperación de contraseña
+  resetPasswordToken: { type: String, default: null },
+  resetPasswordExpires: { type: Date, default: null },
 });
 
 module.exports = mongoose.model("Sponsor", SponsorSchema);

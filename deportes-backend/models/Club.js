@@ -8,7 +8,10 @@ const ClubSchema = new mongoose.Schema({
   city: String,
   founded: Date,
   profileType: { type: String, default: "club" },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  // 🔐 Recuperación de contraseña
+  resetPasswordToken: { type: String, default: null },
+  resetPasswordExpires: { type: Date, default: null },
 });
 
 module.exports = mongoose.model("Club", ClubSchema);
