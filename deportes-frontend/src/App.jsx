@@ -10,6 +10,7 @@ import EditSponsorProfile from './components/Profile/EditProfile/EditSponsorProf
 import Header from './components/Header/Header';
 import Dashboard from './pages/Dashboard';
 import AuthPage from './components/Auth/AuthPage';
+import ResetPassword from './components/Auth/ResetPassword';
 
 import ProfilePage from './pages/ProfilePage';
 import ScoutProfilePage from './pages/ScoutProfilePage';
@@ -84,6 +85,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
+          <Route path="/forgot-password" element={<AuthPage />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/admin-panel" element={<AdminDashboard />} />
         </Routes>
