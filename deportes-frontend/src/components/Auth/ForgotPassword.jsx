@@ -55,15 +55,12 @@ function ForgotPassword() {
         />
 
         <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? 'Sending...' : 'Send Reset Link'}
+          {loading ? 'Sending...' : 'Send Instructions'}
         </button>
       </form>
 
       {msg && <p className={styles.msg}>{msg}</p>}
 
-      <div style={{ marginTop: '10px' }}>
-        <button onClick={() => navigate('/login')}>Back to Login</button>
-      </div>
     </div>
   );
 }

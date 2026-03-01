@@ -18,6 +18,7 @@ import SponsorProfilePage from './pages/SponsorProfilePage';
 
 import FloatingButton from './components/common/FloatingButton';
 import AdminDashboard from './pages/AdminDashboard';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
 function App() {
   return (
@@ -86,7 +87,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
           <Route path="/forgot-password" element={<AuthPage />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/admin-panel" element={<AdminDashboard />} />
         </Routes>
