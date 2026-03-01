@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import styles from "./AuthForm.module.css";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./ResetPassword.module.css";
 import API_URL from "../../config/api";
 
 function ResetPassword() {
-  const { token } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const token = new URLSearchParams(location.search).get("token");
 
   const [form, setForm] = useState({
     newPassword: "",
@@ -14,6 +16,13 @@ function ResetPassword() {
 
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+
+   // Redirigir si no hay token en la URL
+  useEffect(() => {
+    if (!token) {
+      //navigate("/forgot-password");
+    }
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -60,7 +69,8 @@ function ResetPassword() {
   };
 
   return (
-    <div>
+    <div className={styles.authPanel}>
+      <div className={styles.formBox}>
       <h2 className={styles.title}>Create New Password</h2>
 
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -84,19 +94,12 @@ function ResetPassword() {
           className={styles.input}
         />
 
-        <button
-          type="submit"
-          className={styles.button}
-          disabled={loading}
-        >
-          {loading ? "Updating..." : "Update Password"}
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? "Updating..." : "Reset Password"}
         </button>
       </form>
 
       {msg && <p className={styles.msg}>{msg}</p>}
-
-      <div style={{ marginTop: "10px" }}>
-        <button onClick={() => navigate("/login")}>Back to Login</button>
       </div>
     </div>
   );
