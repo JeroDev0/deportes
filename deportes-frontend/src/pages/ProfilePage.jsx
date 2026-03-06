@@ -33,6 +33,7 @@ function ProfilePage() {
   if (!profile) return <div className={styles.loading}>Perfil no encontrado.</div>;
 
   const isMyProfile = user && user.id === profile._id;
+  const isAdmin = user && user.modelType === "admin";
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
@@ -40,7 +41,6 @@ function ProfilePage() {
 
   return (
     <>
-      {/* Banner superior */}
       <div className={styles.bannerWrapper}>
         <img
           src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1767898680/Talento_y_Reserva_Indervalle_banner_uasxge.webp"
@@ -49,35 +49,28 @@ function ProfilePage() {
         />
       </div>
 
-      {/* Contenido del perfil */}
       <div className={styles.pageContainer}>
-        {/* Columna izquierda */}
         <div className={styles.leftColumn}>
           <LeftProfileColumn
             profile={profile}
             isMyProfile={isMyProfile}
             isFollowing={isFollowing}
             onFollow={handleFollow}
+            isAdmin={isAdmin}
           />
         </div>
 
-        {/* Columna central */}
         <div className={styles.centerColumn}>
-          {/* Toggle entre vistas */}
           <div className={styles.viewToggle}>
             <button
-              className={`${styles.toggleBtn} ${
-                viewMode === "professional" ? styles.active : ""
-              }`}
+              className={`${styles.toggleBtn} ${viewMode === "professional" ? styles.active : ""}`}
               onClick={() => setViewMode("professional")}
               type="button"
             >
               Perfil Profesional
             </button>
             <button
-              className={`${styles.toggleBtn} ${
-                viewMode === "social" ? styles.active : ""
-              }`}
+              className={`${styles.toggleBtn} ${viewMode === "social" ? styles.active : ""}`}
               onClick={() => setViewMode("social")}
               type="button"
             >
@@ -85,7 +78,6 @@ function ProfilePage() {
             </button>
           </div>
 
-          {/* Renderizado condicional */}
           {viewMode === "professional" ? (
             <CenterProfileColumn
               profile={profile}
@@ -96,7 +88,6 @@ function ProfilePage() {
           )}
         </div>
 
-        {/* Columna derecha */}
         <div className={styles.rightColumn}>
           <RightProfileColumn profile={profile} isMyProfile={isMyProfile} />
         </div>

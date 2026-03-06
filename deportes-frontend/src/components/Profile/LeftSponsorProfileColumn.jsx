@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
-function LeftSponsorProfileColumn({ profile }) {
+function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
   if (!profile) return null;
 
   return (
@@ -42,6 +42,24 @@ function LeftSponsorProfileColumn({ profile }) {
           </div>
         )}
 
+        {/* Solo visible para admin */}
+        {isAdmin && (profile.postalCode || profile.address) && (
+          <div className={styles.addressInfo}>
+            {profile.address && (
+              <div className={styles.addressItem}>
+                <span className={styles.addressLabel}>Address:</span>
+                <span className={styles.addressValue}>{profile.address}</span>
+              </div>
+            )}
+            {profile.postalCode && (
+              <div className={styles.addressItem}>
+                <span className={styles.addressLabel}>Postal Code:</span>
+                <span className={styles.addressValue}>{profile.postalCode}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {profile.sports?.length > 0 && (
           <div className={styles.skillsContainer}>
             <h4>Supported Sports</h4>
@@ -65,6 +83,52 @@ function LeftSponsorProfileColumn({ profile }) {
                 </span>
               ))}
             </div>
+          </div>
+        )}
+
+        {profile.athletes?.length > 0 && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/athlete-logo.png"
+                alt="athlete icon"
+                className={styles.relationIcon}
+              />
+              <h4>Sponsored Athletes</h4>
+            </div>
+            {profile.athletes.map((athlete, idx) => (
+              <div key={idx} className={styles.relationInfo}>
+                <span className={styles.relationName}>
+                  {athlete.name} {athlete.lastName}
+                </span>
+                {athlete.sport && (
+                  <span className={styles.relationSpecialty}>{athlete.sport}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {profile.clubs?.length > 0 && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/club-logo.png"
+                alt="club icon"
+                className={styles.relationIcon}
+              />
+              <h4>Sponsored Clubs</h4>
+            </div>
+            {profile.clubs.map((club, idx) => (
+              <div key={idx} className={styles.relationInfo}>
+                <span className={styles.relationName}>{club.name}</span>
+                {club.city && (
+                  <span className={styles.relationSpecialty}>
+                    {club.city}{club.country && `, ${club.country}`}
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

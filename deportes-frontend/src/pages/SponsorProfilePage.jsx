@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
-
 import LeftSponsorProfileColumn from "../components/Profile/LeftSponsorProfileColumn.jsx";
 import CenterSponsorProfileColumn from "../components/Profile/CenterSponsorProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
-
 import styles from "./ProfilePage.module.css";
 
 function SponsorProfilePage() {
   const { id } = useParams();
   const { user } = useAuth();
-
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,10 +29,10 @@ function SponsorProfilePage() {
   if (!profile) return <div className={styles.loading}>Perfil no encontrado.</div>;
 
   const isMyProfile = user && user.id === profile._id;
+  const isAdmin = user && user.modelType === "admin";
 
   return (
     <>
-      {/* Banner */}
       <div className={styles.bannerWrapper}>
         <img
           src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1767898680/Talento_y_Reserva_Indervalle_banner_uasxge.webp"
@@ -46,7 +43,11 @@ function SponsorProfilePage() {
 
       <div className={styles.pageContainer}>
         <div className={styles.leftColumn}>
-          <LeftSponsorProfileColumn profile={profile} />
+          <LeftSponsorProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
+            isAdmin={isAdmin}
+          />
         </div>
 
         <div className={styles.centerColumn}>
@@ -57,7 +58,10 @@ function SponsorProfilePage() {
         </div>
 
         <div className={styles.rightColumn}>
-          <RightProfileColumn profile={profile} isMyProfile={isMyProfile} />
+          <RightProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
+          />
         </div>
       </div>
     </>

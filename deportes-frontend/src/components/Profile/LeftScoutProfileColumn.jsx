@@ -1,12 +1,17 @@
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
-function LeftScoutProfileColumn({ profile }) {
+function LeftScoutProfileColumn({
+  profile,
+  isMyProfile,
+  isFollowing,
+  onFollow,
+  isAdmin = false
+}) {
   if (!profile) return null;
 
-  const certificationUrl = profile.certifications && profile.certifications.length > 0 
-    ? profile.certifications[0] 
-    : null;
+  const certificationUrl =
+    profile.certifications?.length > 0 ? profile.certifications[0] : null;
 
   return (
     <div className={styles.profileCard}>
@@ -18,6 +23,7 @@ function LeftScoutProfileColumn({ profile }) {
           alt={`${profile.name} ${profile.lastName}`}
           className={styles.avatar}
         />
+
         <div className={styles.sportBadge}>
           {profile.specialization || "Sports Professional"}
         </div>
@@ -37,7 +43,8 @@ function LeftScoutProfileColumn({ profile }) {
         {profile.gender && (
           <div className={styles.gender}>
             <span>
-              <strong>Gender:</strong> {profile.gender === "male" ? "Male" : "Female"}
+              <strong>Gender:</strong>{" "}
+              {profile.gender === "male" ? "Male" : "Female"}
             </span>
           </div>
         )}
@@ -49,11 +56,12 @@ function LeftScoutProfileColumn({ profile }) {
             className={styles.locationIcon}
           />
           <span>
-            <strong>{profile.city || "Ciudad"}</strong> | {profile.country || "País"}
+            <strong>{profile.city || "Ciudad"}</strong> |{" "}
+            {profile.country || "País"}
           </span>
         </div>
 
-        {(profile.postalCode || profile.address) && (
+        {isAdmin && (profile.postalCode || profile.address) && (
           <div className={styles.addressInfo}>
             {profile.address && (
               <div className={styles.addressItem}>
@@ -61,18 +69,22 @@ function LeftScoutProfileColumn({ profile }) {
                 <span className={styles.addressValue}>{profile.address}</span>
               </div>
             )}
+
             {profile.postalCode && (
               <div className={styles.addressItem}>
                 <span className={styles.addressLabel}>Postal Code:</span>
-                <span className={styles.addressValue}>{profile.postalCode}</span>
+                <span className={styles.addressValue}>
+                  {profile.postalCode}
+                </span>
               </div>
             )}
           </div>
         )}
 
-        {profile.sports && profile.sports.length > 0 && (
+        {profile.sports?.length > 0 && (
           <div className={styles.skillsContainer}>
             <h4>Sports Specialization</h4>
+
             <div className={styles.skillsList}>
               {profile.sports.map((sport, idx) => (
                 <span key={idx} className={styles.skillTag}>
@@ -82,12 +94,13 @@ function LeftScoutProfileColumn({ profile }) {
             </div>
           </div>
         )}
-        
+
         {(profile.birthCountry || profile.birthCity) && (
           <div className={styles.birthInfo}>
             <div className={styles.sectionHeader}>
               <h4>Birth Place</h4>
             </div>
+
             <div className={styles.birthLocation}>
               {profile.birthCity && <strong>{profile.birthCity}</strong>}
               {profile.birthCity && profile.birthCountry && " | "}
@@ -101,9 +114,10 @@ function LeftScoutProfileColumn({ profile }) {
             <div className={styles.sectionHeader}>
               <h4>Certification</h4>
             </div>
-            <a 
-              href={certificationUrl} 
-              target="_blank" 
+
+            <a
+              href={certificationUrl}
+              target="_blank"
               rel="noopener noreferrer"
               className={styles.certificationLink}
             >
@@ -112,25 +126,54 @@ function LeftScoutProfileColumn({ profile }) {
                 alt="certificate"
                 className={styles.certIcon}
               />
+
               <span>View Professional Certification</span>
-              <svg 
-                className={styles.externalIcon} 
-                width="16" 
-                height="16" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
+
+              <svg
+                className={styles.externalIcon}
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
                 strokeWidth="2"
               >
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
               </svg>
             </a>
           </div>
         )}
 
-        {profile.clubs && profile.clubs.length > 0 && (
+        {profile.athletes?.length > 0 && (
+          <div className={styles.relationItem}>
+            <div className={styles.relationHeader}>
+              <img
+                src="/assets/athlete-logo.png"
+                alt="athlete icon"
+                className={styles.relationIcon}
+              />
+              <h4>Athletes</h4>
+            </div>
+
+            {profile.athletes.map((athlete, idx) => (
+              <div key={idx} className={styles.relationInfo}>
+                <span className={styles.relationName}>
+                  {athlete.name} {athlete.lastName}
+                </span>
+
+                {athlete.sport && (
+                  <span className={styles.relationSpecialty}>
+                    {athlete.sport}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {profile.clubs?.length > 0 && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
@@ -140,9 +183,11 @@ function LeftScoutProfileColumn({ profile }) {
               />
               <h4>Associated Clubs</h4>
             </div>
+
             {profile.clubs.map((club, idx) => (
               <div key={idx} className={styles.relationInfo}>
                 <span className={styles.relationName}>{club.name}</span>
+
                 {club.city && (
                   <span className={styles.relationSpecialty}>
                     {club.city}
@@ -154,7 +199,7 @@ function LeftScoutProfileColumn({ profile }) {
           </div>
         )}
 
-        {profile.sponsors && profile.sponsors.length > 0 && (
+        {profile.sponsors?.length > 0 && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img
@@ -164,11 +209,13 @@ function LeftScoutProfileColumn({ profile }) {
               />
               <h4>Sponsors</h4>
             </div>
+
             {profile.sponsors.map((sponsor, idx) => (
               <div key={idx} className={styles.relationInfo}>
                 <span className={styles.relationName}>
                   {sponsor.name || sponsor.companyName}
                 </span>
+
                 {sponsor.industry && (
                   <span className={styles.relationSpecialty}>
                     {sponsor.industry}
