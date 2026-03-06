@@ -30,14 +30,12 @@ function ScoutProfilePage() {
   if (!profile) return <div className={styles.loading}>Perfil no encontrado.</div>;
 
   const isMyProfile = user && user.id === profile._id;
+  const isAdmin = user && user.modelType === "admin";
 
-  const handleFollow = () => {
-    setIsFollowing(!isFollowing);
-  };
+  const handleFollow = () => setIsFollowing(!isFollowing);
 
   return (
     <>
-      {/* Banner superior */}
       <div className={styles.bannerWrapper}>
         <img
           src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1767898680/Talento_y_Reserva_Indervalle_banner_uasxge.webp"
@@ -46,28 +44,28 @@ function ScoutProfilePage() {
         />
       </div>
 
-      {/* Contenido del perfil scout */}
       <div className={styles.pageContainer}>
         <div className={styles.leftColumn}>
-          <LeftScoutProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
+          <LeftScoutProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
             isFollowing={isFollowing}
             onFollow={handleFollow}
+            isAdmin={isAdmin}
           />
         </div>
 
         <div className={styles.centerColumn}>
-          <CenterScoutProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
+          <CenterScoutProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
           />
         </div>
 
         <div className={styles.rightColumn}>
-          <RightProfileColumn 
-            profile={profile} 
-            isMyProfile={isMyProfile} 
+          <RightProfileColumn
+            profile={profile}
+            isMyProfile={isMyProfile}
           />
         </div>
       </div>
