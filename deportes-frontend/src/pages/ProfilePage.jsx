@@ -89,6 +89,7 @@ function ProfilePage() {
           {viewMode === "professional" ? (
             <CenterProfileColumn
               profile={profile}
+              isMyProfile={isMyProfile}
               onNavigateToFeed={() => setViewMode("social")}
             />
           ) : (

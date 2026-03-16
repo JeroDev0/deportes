@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
 
-function CenterProfileColumn({ profile = {}, onNavigateToFeed }) {
+function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
   const navigate = useNavigate();
   const [followers, setFollowers] = useState(219);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -39,6 +39,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed }) {
     <div className={styles.centerCard}>
       {/* --- Nav menu --- */}
       <div className={styles.navMenu}>
+        {isMyProfile && (
         <button
           className={styles.editProfileBtn}
           onClick={() => navigate(`/profile/${profile._id}/edit`)}
@@ -46,6 +47,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed }) {
           <img src="/assets/icon_edit.svg" alt="edit" />
           Edit Profile
         </button>
+        )}
       </div>
 
       {/* Header */}
