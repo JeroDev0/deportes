@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import ProfileHeader from "../components/Profile/ProfileHeader.jsx";
 import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
@@ -42,11 +43,7 @@ function ProfilePage() {
   return (
     <>
       <div className={styles.bannerWrapper}>
-        <img
-          src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1767898680/Talento_y_Reserva_Indervalle_banner_uasxge.webp"
-          alt="Banner Talento y Reserva Indervalle"
-          className={styles.bannerImage}
-        />
+        <ProfileHeader profile={profile} isMyProfile={isMyProfile}/>
       </div>
 
       <div className={styles.pageContainer}>
