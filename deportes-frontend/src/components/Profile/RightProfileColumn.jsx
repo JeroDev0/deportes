@@ -1,54 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RightProfileColumn.module.css";
-
-const data = [
-  {
-    category: "Scouting / Sports Services",
-    entries: [
-      { institution: "Body Attack Sports Nutrition GmbH", location: "body-attack.com" },
-      { institution: "Kollektiv Sport", location: "europages listing" },
-      { institution: "Sauerland Elektroanlagen GmbH", location: "sea-flutlicht.de" },
-    ],
-  },
-  {
-    category: "Sports Clubs",
-    entries: [
-      { institution: "Hamburger Polo Club", location: "hamburger-polo-club.de" },
-      { institution: "USC Paloma Hamburg", location: "uscpaloma.de" },
-      { institution: "SC Victoria Hamburg", location: "sc-victoria.de" },
-    ],
-  },
-  {
-    category: "Sports Sponsors",
-    entries: [
-      { institution: "Komali Tortillas GmbH", location: "komalitortillas.com" },
-      { institution: "Body Attack Sports Nutrition GmbH", location: "body-attack.com" },
-      { institution: "Kollektiv Sport", location: "europages listing https://www.kollektiv.rocks/" },
-    ],
-  },
-];
+import AdBanner from "../Ads/AdBanner";
+import API_URL from "../../config/api";
+import { useAuth } from "../../context/useAuth";
 
 function RightProfileColumn() {
+  const [ads, setAds] = useState([]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    fetch(`${API_URL}/ads?role=${user.profileType}`)
+      .then(res => res.json())
+      .then(setAds);
+  }, [user]);
+
   return (
     <div className={styles.container}>
-      {data.map(({ category, entries }, idx) => (
-        <section key={idx} className={styles.section}>
-          <h3 className={styles.categoryTitle}>{category}</h3>
-          <ul className={styles.entryList}>
-            {entries.map(({ institution, location }, i) => (
-              <li key={i} className={styles.entryItem}>
-                <div className={styles.icon} />
-                <div className={styles.entryText}>
-                  <span className={styles.institution}>{institution}</span>
-                  <span className={styles.location}>{location}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+      {ads.map(ad => (
+        <AdBanner
+          key={ad._id}
+          image={ad.imageUrl}
+          link={ad.link}
+          alt={ad.title}
+        />
       ))}
     </div>
   );
 }
-
 export default RightProfileColumn;
