@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import AthleteCard from './AthleteCard';
 import Modal from '../Modal/Modal';
 import styles from './AthleteList.module.css';
@@ -35,16 +35,35 @@ function AthleteList({ limit = 12, showSeeMore = false }) {
     }
   };
 
-  // Solo mostrar los primeros "limit" atletas
-  const visibleAthletes = limit ? athletes.slice(0, limit) : athletes;
+  // 🔥 Shuffle (Fisher-Yates)
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+
+  // 🚀 Random SOLO cuando cambian los datos
+  const visibleAthletes = useMemo(() => {
+    return limit
+      ? shuffleArray(athletes).slice(0, limit)
+      : athletes;
+  }, [athletes, limit]);
 
   return (
     <>
       <div className={styles.gridDashboard}>
         {visibleAthletes.map(athlete => (
-          <AthleteCard key={athlete._id} athlete={athlete} onClick={() => handleCardClick(athlete._id)} />
+          <AthleteCard
+            key={athlete._id}
+            athlete={athlete}
+            onClick={() => handleCardClick(athlete._id)}
+          />
         ))}
       </div>
+
       {showSeeMore && athletes.length > limit && (
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
           <button
@@ -55,12 +74,25 @@ function AthleteList({ limit = 12, showSeeMore = false }) {
           </button>
         </div>
       )}
+
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <h2>Sign up or log in!</h2>
-        <p>You must register or log in to view this athlete's profile and contact them.</p>
+        <p>
+          You must register or log in to view this athlete's profile and contact them.
+        </p>
         <div style={{ marginTop: '1.2rem' }}>
-          <a href="/login" style={{ marginRight: '1rem', color: '#7209b7', fontWeight: 600 }}>Log in</a>
-          <a href="/register" style={{ color: '#3a0ca3', fontWeight: 600 }}>Register</a>
+          <a
+            href="/login"
+            style={{ marginRight: '1rem', color: '#7209b7', fontWeight: 600 }}
+          >
+            Log in
+          </a>
+          <a
+            href="/register"
+            style={{ color: '#3a0ca3', fontWeight: 600 }}
+          >
+            Register
+          </a>
         </div>
       </Modal>
     </>
