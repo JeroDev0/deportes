@@ -85,6 +85,25 @@ function LeftProfileColumn({ profile, isAdmin = false }) {
           </div>
         )}
 
+        {Array.isArray(profile.nationalities) && profile.nationalities.length > 0 && (
+          <div className={styles.nationalitiesInfo}>
+            <div className={styles.sectionHeader}>
+              <h4>Nationalities</h4>
+            </div>
+            <div className={styles.nationalitiesList}>
+              {profile.nationalities.map((code, idx) => {
+                let name = code;
+                try {
+                  name = new Intl.DisplayNames(["en"], { type: "region" }).of(code) || code;
+                } catch (_) {}
+                return (
+                  <span key={idx} className={styles.nationalityTag}>{name}</span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {(profile.scout || profile.scoutName) && (
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>

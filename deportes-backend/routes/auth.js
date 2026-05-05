@@ -13,16 +13,39 @@ const Admin = require("../models/Admin");
 // ==================== REGISTRO ====================
 router.post("/register", async (req, res) => {
   try {
-    const { email, password, profileType } = req.body;
+    const {
+      email, password, profileType,
+      name, lastName, gender, birthDate, country,
+      sport, sports, company, entityType,
+    } = req.body;
 
     console.log("📝 Registro de usuario:", { email, profileType });
 
-    // Validar campos requeridos
     if (!email || !password || !profileType) {
       return res.status(400).json({
         error: "Todos los campos son requeridos",
         details: "Email, password y profileType son obligatorios",
       });
+    }
+
+    // Calcular edad a partir de birthDate
+    const calculateAge = (dob) => {
+      if (!dob) return null;
+      const today = new Date();
+      const birth = new Date(dob);
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+      return age > 0 ? age : null;
+    };
+
+    // Parsear sports si viene como string JSON
+    let sportsArray = [];
+    if (sports) {
+      try {
+        sportsArray = typeof sports === "string" ? JSON.parse(sports) : sports;
+        if (!Array.isArray(sportsArray)) sportsArray = [];
+      } catch (_) { sportsArray = []; }
     }
 
     // Comprobar si el email ya existe en cualquier colección
@@ -51,6 +74,12 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "atleta",
+          name: name || "",
+          lastName: lastName || "",
+          gender: gender || "",
+          sport: sport || "",
+          country: country || "",
+          age: calculateAge(birthDate),
         });
         break;
 
@@ -60,6 +89,13 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "scout",
+          name: name || "",
+          lastName: lastName || "",
+          gender: gender || "",
+          company: company || "",
+          country: country || "",
+          age: calculateAge(birthDate),
+          sports: sportsArray,
         });
         break;
 
@@ -69,7 +105,8 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "sponsor",
-          company: "Company Name",
+          company: company || "Company Name",
+          country: country || "",
         });
         break;
 
@@ -79,6 +116,10 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "club",
+          name: name || "",
+          country: country || "",
+          sports: sportsArray,
+          entityType: entityType || "",
         });
         break;
 

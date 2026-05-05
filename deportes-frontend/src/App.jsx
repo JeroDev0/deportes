@@ -10,6 +10,7 @@ import EditSponsorProfile from './components/Profile/EditProfile/EditSponsorProf
 import Header from './components/Header/Header';
 import Dashboard from './pages/Dashboard';
 import AuthPage from './components/Auth/AuthPage';
+import Register from './components/Auth/Register';
 import ResetPassword from './components/Auth/ResetPassword';
 
 import ProfilePage from './pages/ProfilePage';
@@ -85,7 +86,7 @@ function App() {
           {/* ================= OTROS ================= */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<AuthPage />} />
-          <Route path="/register" element={<AuthPage />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<AuthPage />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />

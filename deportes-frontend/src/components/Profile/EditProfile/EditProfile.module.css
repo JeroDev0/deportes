@@ -1129,3 +1129,20 @@ input[name="address"]:focus,
     gap: 8px;
   }
 }
+
+.nationalitiesSection {
+  margin-top: 1.5rem;
+}
+
+.nationalitiesSection h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #eaf6ff;
+  margin-bottom: 0.5rem;
+}
+
+.helperText {
+  font-size: 0.78rem;
+  color: #6b8fa8;
+  margin-top: 0.3rem;
+}

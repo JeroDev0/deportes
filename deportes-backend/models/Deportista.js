@@ -40,10 +40,19 @@ const DeportistaSchema = new mongoose.Schema({
   shortDescription: { type: String, default: "" },
 
   // 🏅 Experiencias y logros
-  experience: { type: [String], default: [] },
-  recognitions: { type: [String], default: [] },
+  experience: [{
+    description: { type: String, default: "" },
+    startYear: { type: String, default: "" },
+    endYear: { type: String, default: "" },
+  }],
+  recognitions: [{
+    description: { type: String, default: "" },
+    startYear: { type: String, default: "" },
+    endYear: { type: String, default: "" },
+  }],
   skills: { type: [String], default: [] },
   certifications: { type: [String], default: [] },
+  nationalities: { type: [String], default: [] },
 
   registrationDate: { type: Date, default: Date.now },
 

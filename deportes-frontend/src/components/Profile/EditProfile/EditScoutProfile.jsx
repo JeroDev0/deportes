@@ -105,20 +105,18 @@ const selectStyles = {
   }),
 };
 
-const parseYearText = (str) => {
-  if (!str) return { year: "", text: "" };
-  const match = str.match(/^(\d{4})[\s\-:]+(.+)$/);
-  if (match) {
-    return { year: match[1], text: match[2] };
+const parseEntry = (item) => {
+  if (!item) return { startYear: "", endYear: "", text: "" };
+  if (typeof item === "object") {
+    return {
+      startYear: item.startYear || "",
+      endYear: item.endYear || "",
+      text: item.description || "",
+    };
   }
-  return { year: "", text: str };
-};
-
-const combineYearText = (year, text) => {
-  if (!year && !text) return "";
-  if (!year) return text;
-  if (!text) return year;
-  return `${year} - ${text}`;
+  const match = String(item).match(/^(\d{4})[\s\-:]+(.+)$/);
+  if (match) return { startYear: match[1], endYear: "", text: match[2] };
+  return { startYear: "", endYear: "", text: String(item) };
 };
 
 function EditScoutProfile() {
@@ -152,8 +150,8 @@ function EditScoutProfile() {
     sponsors: [],
   });
 
-  const [recognitionsFields, setRecognitionsFields] = useState([{ year: "", text: "" }]);
-  const [experienceFields, setExperienceFields] = useState([{ year: "", text: "" }]);
+  const [recognitionsFields, setRecognitionsFields] = useState([{ startYear: "", endYear: "", text: "" }]);
+  const [experienceFields, setExperienceFields] = useState([{ startYear: "", endYear: "", text: "" }]);
 
   const [msg, setMsg] = useState("");
   const [photoPreview, setPhotoPreview] = useState("");
@@ -203,27 +201,17 @@ function EditScoutProfile() {
           sponsors: data.sponsors?.map(s => s._id) || [],
         });
         
-        const parsedRecognitions = (data.recognitions || [""]).map(parseYearText);
-        setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ year: "", text: "" }]);
-        
-        const parsedExperience = (data.experience || [""]).map(parseYearText);
-        setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ year: "", text: "" }]);
+        const parsedRecognitions = (data.recognitions || []).map(parseEntry);
+        setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ startYear: "", endYear: "", text: "" }]);
+
+        const parsedExperience = (data.experience || []).map(parseEntry);
+        setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ startYear: "", endYear: "", text: "" }]);
         
         if (data.photo && typeof data.photo === "string") {
           setPhotoPreview(data.photo);
         }
       });
   }, [id]);
-
-  useEffect(() => {
-    const recognitionsStrings = recognitionsFields.map(field => combineYearText(field.year, field.text));
-    setForm(prev => ({ ...prev, recognitions: recognitionsStrings }));
-  }, [recognitionsFields]);
-
-  useEffect(() => {
-    const experienceStrings = experienceFields.map(field => combineYearText(field.year, field.text));
-    setForm(prev => ({ ...prev, experience: experienceStrings }));
-  }, [experienceFields]);
 
   useEffect(() => {
     setLoadingAthletes(true);
@@ -360,11 +348,11 @@ function EditScoutProfile() {
   const addArrayField = (field) => {
     if (field === "recognitions") {
       if (recognitionsFields.length < 10) {
-        setRecognitionsFields([...recognitionsFields, { year: "", text: "" }]);
+        setRecognitionsFields([...recognitionsFields, { startYear: "", endYear: "", text: "" }]);
       }
     } else if (field === "experience") {
       if (experienceFields.length < 10) {
-        setExperienceFields([...experienceFields, { year: "", text: "" }]);
+        setExperienceFields([...experienceFields, { startYear: "", endYear: "", text: "" }]);
       }
     } else if (form[field].length < 10) {
       setForm({ ...form, [field]: [...form[field], ""] });
@@ -419,17 +407,19 @@ function EditScoutProfile() {
       }
     });
 
-    ['experience', 'recognitions', 'certifications'].forEach(field => {
-      const items = form[field].filter(item => 
-        item && item.trim() !== '' && item !== 'null' && item !== 'undefined'
-      );
-      
-      if (items.length > 0) {
-        formData.append(field, JSON.stringify(items));
-      } else {
-        formData.append(field, JSON.stringify([]));
-      }
-    });
+    const expData = experienceFields
+      .filter(f => f.text || f.startYear || f.endYear)
+      .map(f => ({ description: f.text, startYear: f.startYear, endYear: f.endYear }));
+    const recData = recognitionsFields
+      .filter(f => f.text || f.startYear || f.endYear)
+      .map(f => ({ description: f.text, startYear: f.startYear, endYear: f.endYear }));
+    formData.append('experience', JSON.stringify(expData));
+    formData.append('recognitions', JSON.stringify(recData));
+
+    const certItems = form.certifications.filter(item =>
+      item && item.trim() !== '' && item !== 'null' && item !== 'undefined'
+    );
+    formData.append('certifications', JSON.stringify(certItems.length > 0 ? certItems : []));
 
     if (form.sports && form.sports.length > 0) {
       formData.append('sports', JSON.stringify(form.sports));
@@ -749,13 +739,24 @@ function EditScoutProfile() {
                   <span className={styles.star}>★</span>
                   <input
                     type="number"
-                    value={field.year}
-                    onChange={(e) => handleRecognitionFieldChange(idx, "year", e.target.value)}
-                    placeholder="Year"
+                    value={field.startYear}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "startYear", e.target.value)}
+                    placeholder="Start"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
-                    style={{ width: "80px", marginRight: "10px" }}
+                    style={{ width: "72px", marginRight: "6px" }}
+                  />
+                  <span style={{ color: "#aaa", marginRight: "6px" }}>–</span>
+                  <input
+                    type="number"
+                    value={field.endYear}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "endYear", e.target.value)}
+                    placeholder="End"
+                    className={styles.yearInput}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "72px", marginRight: "10px" }}
                   />
                   <input
                     type="text"
@@ -766,8 +767,8 @@ function EditScoutProfile() {
                     style={{ flex: 1 }}
                   />
                   {recognitionsFields.length > 1 && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeArrayField("recognitions", idx)}
                       style={{ marginLeft: "10px" }}
                     >
@@ -789,13 +790,24 @@ function EditScoutProfile() {
                 <div key={idx} className={styles.careerItem}>
                   <input
                     type="number"
-                    value={field.year}
-                    onChange={(e) => handleExperienceFieldChange(idx, "year", e.target.value)}
-                    placeholder="Year"
+                    value={field.startYear}
+                    onChange={(e) => handleExperienceFieldChange(idx, "startYear", e.target.value)}
+                    placeholder="Start"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
-                    style={{ width: "80px", marginRight: "10px" }}
+                    style={{ width: "72px", marginRight: "6px" }}
+                  />
+                  <span style={{ color: "#aaa", marginRight: "6px" }}>–</span>
+                  <input
+                    type="number"
+                    value={field.endYear}
+                    onChange={(e) => handleExperienceFieldChange(idx, "endYear", e.target.value)}
+                    placeholder="End"
+                    className={styles.yearInput2}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "72px", marginRight: "10px" }}
                   />
                   <input
                     type="text"
@@ -806,8 +818,8 @@ function EditScoutProfile() {
                     style={{ flex: 1 }}
                   />
                   {experienceFields.length > 1 && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeArrayField("experience", idx)}
                       style={{ marginLeft: "10px" }}
                     >

@@ -85,6 +85,110 @@
   display: none;
 }
 
+.filterInput {
+  width: 100%;
+  padding: 0.3rem 0;
+  border: none;
+  border-bottom: 1px solid #444;
+  background: transparent;
+  color: #eee;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.filterInput:focus {
+  border-bottom: 1px solid #53fb52;
+}
+
+.filterInput::placeholder {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.ageSliderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.ageValues {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #53fb52;
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sliderLabel {
+  font-size: 0.75rem;
+  color: #777;
+  width: 26px;
+  flex-shrink: 0;
+}
+
+.rangeSlider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: #444;
+  outline: none;
+  cursor: pointer;
+}
+
+.rangeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #53fb52;
+  cursor: pointer;
+}
+
+.rangeSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #53fb52;
+  cursor: pointer;
+  border: none;
+}
+
+.ageToggle {
+  font-weight: 400;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.resetBtn {
+  margin-top: 1.4rem;
+  width: 100%;
+  padding: 0.4rem 0;
+  background: transparent;
+  border: 1px solid #444;
+  color: #888;
+  font-size: 0.82rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.resetBtn:hover {
+  border-color: #53fb52;
+  color: #53fb52;
+}
+
 .filterSelect::-ms-expand {
   display: none;
 }

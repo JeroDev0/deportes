@@ -78,12 +78,47 @@ router.put("/:id", (req, res, next) => {
     // Normalizar age a número
     if (req.body.age) req.body.age = parseInt(req.body.age, 10);
 
-    // Normalizar arrays
-    ["experience", "recognitions", "skills", "certifications"].forEach((field) => {
+    // Normalizar experience y recognitions como arrays de objetos
+    ["experience", "recognitions"].forEach((field) => {
+      if (req.body[field] !== undefined) {
+        try {
+          if (typeof req.body[field] === "string") {
+            req.body[field] = JSON.parse(req.body[field]);
+          }
+          if (Array.isArray(req.body[field])) {
+            req.body[field] = req.body[field].filter(
+              (item) => item && typeof item === "object" && (item.description || item.startYear || item.endYear)
+            );
+          } else {
+            req.body[field] = [];
+          }
+        } catch (e) {
+          req.body[field] = [];
+        }
+      }
+    });
+
+    // Normalizar skills y certifications como arrays de strings
+    ["skills", "certifications"].forEach((field) => {
       if (req.body[field] && !Array.isArray(req.body[field])) {
         req.body[field] = [req.body[field]];
       }
     });
+
+    // Normalizar nationalities (máximo 3)
+    if (req.body.nationalities !== undefined) {
+      try {
+        if (typeof req.body.nationalities === "string") {
+          req.body.nationalities = JSON.parse(req.body.nationalities);
+        }
+        if (!Array.isArray(req.body.nationalities)) {
+          req.body.nationalities = req.body.nationalities ? [req.body.nationalities] : [];
+        }
+        req.body.nationalities = req.body.nationalities.filter(Boolean).slice(0, 3);
+      } catch (e) {
+        req.body.nationalities = [];
+      }
+    }
 
     // Manejo de foto en cloudinary
     if (req.file) {
