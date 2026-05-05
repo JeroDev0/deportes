@@ -5,14 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://deportes-production.up.railway.app";
 
-const ageRanges = [
-  { label: "16-20", min: 16, max: 20 },
-  { label: "21-25", min: 21, max: 25 },
-  { label: "26-30", min: 26, max: 30 },
-  { label: "31-40", min: 31, max: 40 },
-  { label: "41+", min: 41, max: 200 },
-];
-
 const genders = [
   { label: "Any", value: "" },
   { label: "Female", value: "femenino" },
@@ -26,7 +18,6 @@ const profileTypes = [
   { label: "Sponsors", value: "sponsor" },
 ];
 
-// Normaliza cada perfil al shape que espera AthleteCard
 function normalizeProfile(profile, type) {
   switch (type) {
     case "athlete":
@@ -34,17 +25,19 @@ function normalizeProfile(profile, type) {
         ...profile,
         _type: "athlete",
         _route: `/profile/${profile._id}`,
-        // AthleteCard usa estos campos directamente:
         photo: profile.photo || "",
         sport: profile.sport || "Athlete",
         name: profile.name || "",
         lastName: profile.lastName || "",
         level: profile.level || "",
         age: profile.age || "",
-        // Para filtros:
         _city: profile.city || "",
         _gender: profile.gender || "",
         _age: profile.age || null,
+        _country: profile.country || "",
+        _postalCode: profile.postalCode || "",
+        _skills: profile.skills || [],
+        _nationalities: profile.nationalities || [],
       };
     case "scout":
       return {
@@ -60,6 +53,10 @@ function normalizeProfile(profile, type) {
         _city: profile.city || "",
         _gender: profile.gender || "",
         _age: profile.age || null,
+        _country: profile.country || "",
+        _postalCode: profile.postalCode || "",
+        _skills: [],
+        _nationalities: [],
       };
     case "sponsor":
       return {
@@ -75,6 +72,10 @@ function normalizeProfile(profile, type) {
         _city: profile.city || "",
         _gender: "",
         _age: null,
+        _country: profile.country || "",
+        _postalCode: profile.postalCode || "",
+        _skills: [],
+        _nationalities: [],
       };
     default:
       return profile;
@@ -86,16 +87,31 @@ function Dashboard() {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Filtros existentes
   const [profileType, setProfileType] = useState("");
   const [city, setCity] = useState("");
   const [sport, setSport] = useState("");
-  const [ageRange, setAgeRange] = useState("");
   const [gender, setGender] = useState("");
   const [level, setLevel] = useState("");
 
+  // Filtro de edad (slider lineal)
+  const [ageMin, setAgeMin] = useState(16);
+  const [ageMax, setAgeMax] = useState(60);
+  const [ageFilterActive, setAgeFilterActive] = useState(false);
+
+  // Nuevos filtros
+  const [skill, setSkill] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [country, setCountry] = useState("");
+  const [nationality, setNationality] = useState("");
+
+  // Listas dinámicas
   const [cities, setCities] = useState([]);
   const [sports, setSports] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [allSkills, setAllSkills] = useState([]);
+  const [allNationalities, setAllNationalities] = useState([]);
 
   const navigate = useNavigate();
 
@@ -117,6 +133,9 @@ function Dashboard() {
       setCities([...new Set(athletes.map(a => a.city).filter(Boolean))]);
       setSports([...new Set(athletes.map(a => a.sport).filter(Boolean))]);
       setLevels([...new Set(athletes.map(a => a.level).filter(Boolean))]);
+      setCountries([...new Set(athletes.map(a => a.country).filter(Boolean))]);
+      setAllSkills([...new Set(athletes.flatMap(a => a.skills || []).filter(Boolean))]);
+      setAllNationalities([...new Set(athletes.flatMap(a => a.nationalities || []).filter(Boolean))]);
 
       setLoading(false);
     });
@@ -127,18 +146,38 @@ function Dashboard() {
 
     if (profileType) result = result.filter(p => p._type === profileType);
     if (city) result = result.filter(p => p._city === city);
+    if (country) result = result.filter(p => p._country === country);
     if (sport) result = result.filter(p => p._type === "athlete" && p.sport === sport);
     if (gender) result = result.filter(p => p._gender === gender);
     if (level) result = result.filter(p => p._type === "athlete" && p.level === level);
-    if (ageRange) {
-      const range = ageRanges.find(r => r.label === ageRange);
-      result = result.filter(p => p._age >= range.min && p._age <= range.max);
+    if (skill) result = result.filter(p => p._skills.includes(skill));
+    if (nationality) result = result.filter(p => p._nationalities.includes(nationality));
+    if (postalCode.trim()) {
+      result = result.filter(p => p._postalCode.toLowerCase().includes(postalCode.trim().toLowerCase()));
+    }
+    if (ageFilterActive) {
+      result = result.filter(p => p._age !== null && p._age >= ageMin && p._age <= ageMax);
     }
 
     setFiltered(result);
-  }, [profileType, city, sport, ageRange, gender, level, allProfiles]);
+  }, [profileType, city, country, sport, gender, level, skill, nationality, postalCode, ageMin, ageMax, ageFilterActive, allProfiles]);
 
   const showAthleteFilters = profileType === "" || profileType === "athlete";
+
+  const resetFilters = () => {
+    setProfileType("");
+    setSport("");
+    setLevel("");
+    setGender("");
+    setCity("");
+    setCountry("");
+    setSkill("");
+    setNationality("");
+    setPostalCode("");
+    setAgeMin(16);
+    setAgeMax(60);
+    setAgeFilterActive(false);
+  };
 
   return (
     <div className={styles.dashboardContainer}>
@@ -153,8 +192,10 @@ function Dashboard() {
             setSport("");
             setLevel("");
             setGender("");
-            setAgeRange("");
             setCity("");
+            setCountry("");
+            setSkill("");
+            setNationality("");
           }}
         >
           {profileTypes.map(t => (
@@ -162,19 +203,89 @@ function Dashboard() {
           ))}
         </select>
 
+        <label>Country</label>
+        <select
+          className={styles.filterSelect}
+          value={country}
+          onChange={e => setCountry(e.target.value)}
+        >
+          <option value="">All Countries</option>
+          {countries.map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+
+        <label>City</label>
+        <select
+          className={styles.filterSelect}
+          value={city}
+          onChange={e => setCity(e.target.value)}
+        >
+          <option value="">All Cities</option>
+          {cities.map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+
+        <label>Postal Code</label>
+        <input
+          type="text"
+          className={styles.filterInput}
+          value={postalCode}
+          onChange={e => setPostalCode(e.target.value)}
+          placeholder="Enter postal code..."
+        />
+
         {showAthleteFilters && (
           <>
-            <label>Age</label>
-            <select
-              className={styles.filterSelect}
-              value={ageRange}
-              onChange={e => setAgeRange(e.target.value)}
-            >
-              <option value="">All Ages</option>
-              {ageRanges.map(r => (
-                <option key={r.label} value={r.label}>{r.label}</option>
-              ))}
-            </select>
+            <label>
+              Age Range
+              <span className={styles.ageToggle}>
+                <input
+                  type="checkbox"
+                  checked={ageFilterActive}
+                  onChange={e => setAgeFilterActive(e.target.checked)}
+                  style={{ marginLeft: "6px" }}
+                />
+              </span>
+            </label>
+            <div className={styles.ageSliderWrapper}>
+              <div className={styles.ageValues}>
+                <span>{ageMin}</span>
+                <span>–</span>
+                <span>{ageMax}</span>
+              </div>
+              <div className={styles.sliderRow}>
+                <span className={styles.sliderLabel}>Min</span>
+                <input
+                  type="range"
+                  min={1}
+                  max={100}
+                  value={ageMin}
+                  onChange={e => {
+                    const val = Number(e.target.value);
+                    setAgeMin(val > ageMax ? ageMax : val);
+                    setAgeFilterActive(true);
+                  }}
+                  className={styles.rangeSlider}
+                />
+              </div>
+              <div className={styles.sliderRow}>
+                <span className={styles.sliderLabel}>Max</span>
+                <input
+                  type="range"
+                  min={1}
+                  max={100}
+                  value={ageMax}
+                  onChange={e => {
+                    const val = Number(e.target.value);
+                    setAgeMax(val < ageMin ? ageMin : val);
+                    setAgeFilterActive(true);
+                  }}
+                  className={styles.rangeSlider}
+                />
+              </div>
+            </div>
 
             <label>Gender</label>
             <select
@@ -211,19 +322,37 @@ function Dashboard() {
               ))}
             </select>
 
-            <label>City of Birth</label>
+            <label>Skill</label>
             <select
               className={styles.filterSelect}
-              value={city}
-              onChange={e => setCity(e.target.value)}
+              value={skill}
+              onChange={e => setSkill(e.target.value)}
             >
-              <option value="">All Cities</option>
-              {cities.map(c => (
-                <option key={c} value={c}>{c}</option>
+              <option value="">Any Skill</option>
+              {allSkills.map(s => (
+                <option key={s} value={s}>{s}</option>
               ))}
+            </select>
+
+            <label>Nationality</label>
+            <select
+              className={styles.filterSelect}
+              value={nationality}
+              onChange={e => setNationality(e.target.value)}
+            >
+              <option value="">Any Nationality</option>
+              {allNationalities.map(n => {
+                let name = n;
+                try { name = new Intl.DisplayNames(["en"], { type: "region" }).of(n) || n; } catch (_) {}
+                return <option key={n} value={n}>{name}</option>;
+              })}
             </select>
           </>
         )}
+
+        <button className={styles.resetBtn} onClick={resetFilters}>
+          Reset Filters
+        </button>
       </aside>
 
       <main className={styles.cardsContainer}>

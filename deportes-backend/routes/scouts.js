@@ -94,17 +94,35 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
       scoutData.age = parseInt(req.body.age, 10);
     }
 
-    // Procesar arrays: sports, experience, certifications, recognitions
-    ['sports', 'experience', 'certifications', 'recognitions'].forEach(field => {
-      if (req.body[field]) {
+    // Procesar experience y recognitions como arrays de objetos
+    ['experience', 'recognitions'].forEach(field => {
+      if (req.body[field] !== undefined) {
         let arrayValue;
-        
-        // Si es un array, usarlo directamente
         if (Array.isArray(req.body[field])) {
           arrayValue = req.body[field];
-        } 
-        // Si es un string, intentar parsearlo o convertirlo a array
-        else if (typeof req.body[field] === 'string') {
+        } else if (typeof req.body[field] === 'string') {
+          try {
+            arrayValue = JSON.parse(req.body[field]);
+          } catch {
+            arrayValue = [];
+          }
+        } else {
+          arrayValue = [];
+        }
+        scoutData[field] = arrayValue.filter(item =>
+          item && typeof item === 'object' && (item.description || item.startYear || item.endYear)
+        );
+        console.log(`Array ${field}:`, scoutData[field]);
+      }
+    });
+
+    // Procesar arrays de strings: sports, certifications
+    ['sports', 'certifications'].forEach(field => {
+      if (req.body[field]) {
+        let arrayValue;
+        if (Array.isArray(req.body[field])) {
+          arrayValue = req.body[field];
+        } else if (typeof req.body[field] === 'string') {
           try {
             arrayValue = JSON.parse(req.body[field]);
           } catch {
@@ -113,16 +131,9 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
         } else {
           arrayValue = [req.body[field]];
         }
-        
-        // Filtrar valores vacíos
-        scoutData[field] = arrayValue.filter(item => 
-          item !== null && 
-          item !== undefined && 
-          item !== '' && 
-          item !== 'null' && 
-          item !== 'undefined'
+        scoutData[field] = arrayValue.filter(item =>
+          item !== null && item !== undefined && item !== '' && item !== 'null' && item !== 'undefined'
         );
-
         console.log(`Array ${field}:`, scoutData[field]);
       }
     });

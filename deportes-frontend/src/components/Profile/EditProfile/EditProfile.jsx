@@ -156,26 +156,39 @@ const selectStyles = {
     ...provided,
     color: "#eaf6ff",
   }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: "#53fb52",
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: "#0d2635",
+    fontWeight: "600",
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: "#0d2635",
+    ':hover': { backgroundColor: "#3dd93c", color: "#0d2635" },
+  }),
   input: (provided) => ({
     ...provided,
     color: "#eaf6ff",
   }),
 };
 
-const parseYearText = (str) => {
-  if (!str) return { year: "", text: "" };
-  const match = str.match(/^(\d{4})[\s\-:]+(.+)$/);
-  if (match) {
-    return { year: match[1], text: match[2] };
+const parseEntry = (item) => {
+  if (!item) return { startYear: "", endYear: "", text: "" };
+  if (typeof item === "object") {
+    return {
+      startYear: item.startYear || "",
+      endYear: item.endYear || "",
+      text: item.description || "",
+    };
   }
-  return { year: "", text: str };
-};
-
-const combineYearText = (year, text) => {
-  if (!year && !text) return "";
-  if (!year) return text;
-  if (!text) return year;
-  return `${year} - ${text}`;
+  // compatibilidad con formato antiguo "YEAR - texto"
+  const match = String(item).match(/^(\d{4})[\s\-:]+(.+)$/);
+  if (match) return { startYear: match[1], endYear: "", text: match[2] };
+  return { startYear: "", endYear: "", text: String(item) };
 };
 
 const convertSkillsToArray = (skillsObject) => {
@@ -239,13 +252,14 @@ function EditProfile() {
       trainability: ""
     },
     certifications: [""],
+    nationalities: [],
     scout: "",
     sponsor: "",
     club: "",
   });
 
-  const [recognitionsFields, setRecognitionsFields] = useState([{ year: "", text: "" }]);
-  const [experienceFields, setExperienceFields] = useState([{ year: "", text: "" }]);
+  const [recognitionsFields, setRecognitionsFields] = useState([{ startYear: "", endYear: "", text: "" }]);
+  const [experienceFields, setExperienceFields] = useState([{ startYear: "", endYear: "", text: "" }]);
 
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
@@ -293,20 +307,21 @@ function EditProfile() {
           photo: data.photo || "",
           about: data.about || "",
           shortDescription: data.shortDescription || "",
-          experience: data.experience || [""],
-          recognitions: data.recognitions || [""],
+          experience: data.experience || [],
+          recognitions: data.recognitions || [],
           skills: convertSkillsToObject(data.skills || []),
           certifications: data.certifications || [""],
+          nationalities: data.nationalities || [],
           scout: data.scout?._id || "",
           sponsor: data.sponsor?._id || "",
           club: data.club?._id || "",
         });
-        
-        const parsedRecognitions = (data.recognitions || [""]).map(parseYearText);
-        setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ year: "", text: "" }]);
-        
-        const parsedExperience = (data.experience || [""]).map(parseYearText);
-        setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ year: "", text: "" }]);
+
+        const parsedRecognitions = (data.recognitions || []).map(parseEntry);
+        setRecognitionsFields(parsedRecognitions.length > 0 ? parsedRecognitions : [{ startYear: "", endYear: "", text: "" }]);
+
+        const parsedExperience = (data.experience || []).map(parseEntry);
+        setExperienceFields(parsedExperience.length > 0 ? parsedExperience : [{ startYear: "", endYear: "", text: "" }]);
         
         setProfileType(data.profileType);
         if (data.photo && typeof data.photo === "string") {
@@ -361,16 +376,6 @@ function EditProfile() {
         }
       });
   }, [id]);
-
-  useEffect(() => {
-    const recognitionsStrings = recognitionsFields.map(field => combineYearText(field.year, field.text));
-    setForm(prev => ({ ...prev, recognitions: recognitionsStrings }));
-  }, [recognitionsFields]);
-
-  useEffect(() => {
-    const experienceStrings = experienceFields.map(field => combineYearText(field.year, field.text));
-    setForm(prev => ({ ...prev, experience: experienceStrings }));
-  }, [experienceFields]);
 
   // Cargar scouts
   useEffect(() => {
@@ -542,11 +547,11 @@ function EditProfile() {
   const addArrayField = (field) => {
     if (field === "recognitions") {
       if (recognitionsFields.length < 10) {
-        setRecognitionsFields([...recognitionsFields, { year: "", text: "" }]);
+        setRecognitionsFields([...recognitionsFields, { startYear: "", endYear: "", text: "" }]);
       }
     } else if (field === "experience") {
       if (experienceFields.length < 10) {
-        setExperienceFields([...experienceFields, { year: "", text: "" }]);
+        setExperienceFields([...experienceFields, { startYear: "", endYear: "", text: "" }]);
       }
     } else if (form[field].length < 10) {
       setForm({ ...form, [field]: [...form[field], ""] });
@@ -595,6 +600,18 @@ function EditProfile() {
       cleanForm[field] = String(cleanForm[field] || '');
     });
 
+    // Construir experience y recognitions como arrays de objetos y excluirlos del loop
+    const expData = experienceFields
+      .filter(f => f.text || f.startYear || f.endYear)
+      .map(f => ({ description: f.text, startYear: f.startYear, endYear: f.endYear }));
+    const recData = recognitionsFields
+      .filter(f => f.text || f.startYear || f.endYear)
+      .map(f => ({ description: f.text, startYear: f.startYear, endYear: f.endYear }));
+    delete cleanForm.experience;
+    delete cleanForm.recognitions;
+    const nationalitiesData = Array.isArray(cleanForm.nationalities) ? cleanForm.nationalities : [];
+    delete cleanForm.nationalities;
+
     const formData = new FormData();
     Object.entries(cleanForm).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -607,6 +624,9 @@ function EditProfile() {
         formData.append(key, cleanValue);
       }
     });
+    formData.append('experience', JSON.stringify(expData));
+    formData.append('recognitions', JSON.stringify(recData));
+    formData.append('nationalities', JSON.stringify(nationalitiesData));
 
     // IMPORTANTE: Agregar los nombres de texto libre
     if (scoutDisplay && !scoutDisplay.isFromDB) {
@@ -898,13 +918,24 @@ function EditProfile() {
                   <span className={styles.star}>★</span>
                   <input
                     type="number"
-                    value={field.year}
-                    onChange={(e) => handleRecognitionFieldChange(idx, "year", e.target.value)}
-                    placeholder="Year"
+                    value={field.startYear}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "startYear", e.target.value)}
+                    placeholder="Start"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
-                    style={{ width: "80px", marginRight: "10px" }}
+                    style={{ width: "72px", marginRight: "6px" }}
+                  />
+                  <span style={{ color: "#aaa", marginRight: "6px" }}>–</span>
+                  <input
+                    type="number"
+                    value={field.endYear}
+                    onChange={(e) => handleRecognitionFieldChange(idx, "endYear", e.target.value)}
+                    placeholder="End"
+                    className={styles.yearInput}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "72px", marginRight: "10px" }}
                   />
                   <input
                     type="text"
@@ -915,8 +946,8 @@ function EditProfile() {
                     style={{ flex: 1 }}
                   />
                   {recognitionsFields.length > 1 && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeArrayField("recognitions", idx)}
                       style={{ marginLeft: "10px" }}
                     >
@@ -938,25 +969,36 @@ function EditProfile() {
                 <div key={idx} className={styles.careerItem}>
                   <input
                     type="number"
-                    value={field.year}
-                    onChange={(e) => handleExperienceFieldChange(idx, "year", e.target.value)}
-                    placeholder="Year"
+                    value={field.startYear}
+                    onChange={(e) => handleExperienceFieldChange(idx, "startYear", e.target.value)}
+                    placeholder="Start"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
-                    style={{ width: "80px", marginRight: "10px" }}
+                    style={{ width: "72px", marginRight: "6px" }}
+                  />
+                  <span style={{ color: "#aaa", marginRight: "6px" }}>–</span>
+                  <input
+                    type="number"
+                    value={field.endYear}
+                    onChange={(e) => handleExperienceFieldChange(idx, "endYear", e.target.value)}
+                    placeholder="End"
+                    className={styles.yearInput2}
+                    min="1900"
+                    max="2050"
+                    style={{ width: "72px", marginRight: "10px" }}
                   />
                   <input
                     type="text"
                     value={field.text}
                     onChange={(e) => handleExperienceFieldChange(idx, "text", e.target.value)}
-                    placeholder="team / club"
+                    placeholder="Team / club / description"
                     className={styles.careerInput}
                     style={{ flex: 1 }}
                   />
                   {experienceFields.length > 1 && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeArrayField("experience", idx)}
                       style={{ marginLeft: "10px" }}
                     >
@@ -970,6 +1012,24 @@ function EditProfile() {
                   Add Career +
                 </button>
               )}
+            </div>
+
+            <div className={styles.nationalitiesSection}>
+              <h3>Nationalities (up to 3)</h3>
+              <Select
+                isMulti
+                options={countryOptions}
+                value={countryOptions.filter(opt => form.nationalities.includes(opt.value))}
+                onChange={(selected) => {
+                  if (selected && selected.length <= 3) {
+                    setForm(prev => ({ ...prev, nationalities: selected.map(s => s.value) }));
+                  }
+                }}
+                placeholder="Select up to 3 nationalities"
+                styles={selectStyles}
+                isOptionDisabled={() => form.nationalities.length >= 3}
+              />
+              <div className={styles.helperText}>{form.nationalities.length}/3 nationalities selected</div>
             </div>
 
             {(profileType === "scout" || profileType === "sponsor") && (

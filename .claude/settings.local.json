@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Force)",
+      "Bash(Select-Object Name, Mode)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\JeroDev\\\\OneDrive\\\\Imágenes\\\\deportes\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\JeroDev\\\\OneDrive\\\\Imágenes\\\\deportes\\\\deportes-frontend\\\\src\\\\components\\\\Auth\\\\\" -Recurse)"
+    ]
+  }
+}

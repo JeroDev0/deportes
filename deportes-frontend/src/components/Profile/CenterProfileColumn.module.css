@@ -337,6 +337,13 @@
   min-width: 0;
 }
 
+.dateRange {
+  font-weight: 600;
+  color: #53fb52;
+  font-size: 0.9rem;
+  margin-right: 2px;
+}
+
 /* estilos SCOUT (se mantienen) */
 .athletesGrid {
   display: grid;

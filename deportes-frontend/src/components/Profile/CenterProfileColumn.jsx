@@ -134,16 +134,26 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
 
         <ul className={styles.achievementsList}>
           {Array.isArray(profile?.recognitions) && profile.recognitions.length > 0 ? (
-            profile.recognitions.map((rec, idx) => (
-              <li key={idx}>
-                <img
-                  src="/assets/icon_star.svg"
-                  className={styles.starIcon}
-                  alt="star"
-                />
-                <span className={styles.itemText}>{rec}</span>
-              </li>
-            ))
+            profile.recognitions.map((rec, idx) => {
+              const isObj = rec && typeof rec === "object";
+              const desc = isObj ? rec.description : rec;
+              const start = isObj ? rec.startYear : null;
+              const end = isObj ? rec.endYear : null;
+              return (
+                <li key={idx}>
+                  <img src="/assets/icon_star.svg" className={styles.starIcon} alt="star" />
+                  <span className={styles.itemText}>
+                    {(start || end) && (
+                      <span className={styles.dateRange}>
+                        {start || "?"}{end ? ` – ${end}` : ""}
+                        {" · "}
+                      </span>
+                    )}
+                    {desc}
+                  </span>
+                </li>
+              );
+            })
           ) : (
             <li>
               <span className={styles.itemText}>No achievements listed.</span>
@@ -161,11 +171,25 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
 
         <ul className={styles.careerList}>
           {Array.isArray(profile?.experience) && profile.experience.length > 0 ? (
-            profile.experience.map((exp, idx) => (
-              <li key={idx}>
-                <span className={styles.itemText}>{exp}</span>
-              </li>
-            ))
+            profile.experience.map((exp, idx) => {
+              const isObj = exp && typeof exp === "object";
+              const desc = isObj ? exp.description : exp;
+              const start = isObj ? exp.startYear : null;
+              const end = isObj ? exp.endYear : null;
+              return (
+                <li key={idx}>
+                  <span className={styles.itemText}>
+                    {(start || end) && (
+                      <span className={styles.dateRange}>
+                        {start || "?"}{end ? ` – ${end}` : ""}
+                        {" · "}
+                      </span>
+                    )}
+                    {desc}
+                  </span>
+                </li>
+              );
+            })
           ) : (
             <li>
               <span className={styles.itemText}>No career information available.</span>
