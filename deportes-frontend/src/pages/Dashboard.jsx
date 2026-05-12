@@ -6,16 +6,23 @@ import { useNavigate } from "react-router-dom";
 const API_URL = "https://deportes-production.up.railway.app";
 
 const genders = [
-  { label: "Any", value: "" },
-  { label: "Female", value: "femenino" },
-  { label: "Male", value: "masculino" },
+  { label: "ALL", value: "" },
+  { label: "♀ FEMALE", value: "femenino" },
+  { label: "♂ MALE", value: "masculino" },
 ];
 
-const profileTypes = [
-  { label: "All", value: "" },
-  { label: "Athletes", value: "athlete" },
-  { label: "Scouts", value: "scout" },
-  { label: "Sponsors", value: "sponsor" },
+const levelPills = [
+  { label: "ALL", value: "" },
+  { label: "AMATEUR", value: "amateur" },
+  { label: "SEMI PRO", value: "semi profesional" },
+  { label: "PRO", value: "profesional" },
+];
+
+const profileTabs = [
+  { label: "ALL", value: "", icon: "◈" },
+  { label: "ATHLETES", value: "athlete", icon: "🏃" },
+  { label: "SCOUTS", value: "scout", icon: "📋" },
+  { label: "SPONSORS", value: "sponsor", icon: "🏆" },
 ];
 
 function normalizeProfile(profile, type) {
@@ -87,28 +94,21 @@ function Dashboard() {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Filtros existentes
   const [profileType, setProfileType] = useState("");
   const [city, setCity] = useState("");
   const [sport, setSport] = useState("");
   const [gender, setGender] = useState("");
   const [level, setLevel] = useState("");
-
-  // Filtro de edad (slider lineal)
   const [ageMin, setAgeMin] = useState(16);
   const [ageMax, setAgeMax] = useState(60);
   const [ageFilterActive, setAgeFilterActive] = useState(false);
-
-  // Nuevos filtros
   const [skill, setSkill] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [nationality, setNationality] = useState("");
 
-  // Listas dinámicas
   const [cities, setCities] = useState([]);
   const [sports, setSports] = useState([]);
-  const [levels, setLevels] = useState([]);
   const [countries, setCountries] = useState([]);
   const [allSkills, setAllSkills] = useState([]);
   const [allNationalities, setAllNationalities] = useState([]);
@@ -129,21 +129,17 @@ function Dashboard() {
       ];
       setAllProfiles(normalized);
       setFiltered(normalized);
-
       setCities([...new Set(athletes.map(a => a.city).filter(Boolean))]);
       setSports([...new Set(athletes.map(a => a.sport).filter(Boolean))]);
-      setLevels([...new Set(athletes.map(a => a.level).filter(Boolean))]);
       setCountries([...new Set(athletes.map(a => a.country).filter(Boolean))]);
       setAllSkills([...new Set(athletes.flatMap(a => a.skills || []).filter(Boolean))]);
       setAllNationalities([...new Set(athletes.flatMap(a => a.nationalities || []).filter(Boolean))]);
-
       setLoading(false);
     });
   }, []);
 
   useEffect(() => {
     let result = allProfiles;
-
     if (profileType) result = result.filter(p => p._type === profileType);
     if (city) result = result.filter(p => p._city === city);
     if (country) result = result.filter(p => p._country === country);
@@ -152,224 +148,240 @@ function Dashboard() {
     if (level) result = result.filter(p => p._type === "athlete" && p.level === level);
     if (skill) result = result.filter(p => p._skills.includes(skill));
     if (nationality) result = result.filter(p => p._nationalities.includes(nationality));
-    if (postalCode.trim()) {
-      result = result.filter(p => p._postalCode.toLowerCase().includes(postalCode.trim().toLowerCase()));
-    }
-    if (ageFilterActive) {
-      result = result.filter(p => p._age !== null && p._age >= ageMin && p._age <= ageMax);
-    }
-
+    if (postalCode.trim()) result = result.filter(p => p._postalCode.toLowerCase().includes(postalCode.trim().toLowerCase()));
+    if (ageFilterActive) result = result.filter(p => p._age !== null && p._age >= ageMin && p._age <= ageMax);
     setFiltered(result);
   }, [profileType, city, country, sport, gender, level, skill, nationality, postalCode, ageMin, ageMax, ageFilterActive, allProfiles]);
+
+  const activeFiltersCount = [city, country, sport, gender, level, skill, nationality, postalCode.trim(), ageFilterActive ? "age" : ""].filter(Boolean).length;
 
   const showAthleteFilters = profileType === "" || profileType === "athlete";
 
   const resetFilters = () => {
-    setProfileType("");
-    setSport("");
-    setLevel("");
-    setGender("");
-    setCity("");
-    setCountry("");
-    setSkill("");
-    setNationality("");
-    setPostalCode("");
-    setAgeMin(16);
-    setAgeMax(60);
-    setAgeFilterActive(false);
+    setSport(""); setLevel(""); setGender(""); setCity(""); setCountry("");
+    setSkill(""); setNationality(""); setPostalCode(""); setAgeMin(16); setAgeMax(60); setAgeFilterActive(false);
   };
 
+  const countByType = (type) => type ? allProfiles.filter(p => p._type === type).length : allProfiles.length;
+
   return (
-    <div className={styles.dashboardContainer}>
-      <aside className={styles.filtersSidebar}>
+    <div className={styles.dashboardPage}>
 
-        <label>Profile Type</label>
-        <select
-          className={styles.filterSelect}
-          value={profileType}
-          onChange={(e) => {
-            setProfileType(e.target.value);
-            setSport("");
-            setLevel("");
-            setGender("");
-            setCity("");
-            setCountry("");
-            setSkill("");
-            setNationality("");
-          }}
-        >
-          {profileTypes.map(t => (
-            <option key={t.value} value={t.value}>{t.label}</option>
-          ))}
-        </select>
+      {/* ── Profile Type Tabs ── */}
+      <div className={styles.profileTabsBar}>
+        {profileTabs.map(t => (
+          <button
+            key={t.value}
+            className={`${styles.profileTab} ${profileType === t.value ? styles.profileTabActive : ""}`}
+            onClick={() => { setProfileType(t.value); resetFilters(); }}
+          >
+            <span className={styles.tabIcon}>{t.icon}</span>
+            <span className={styles.tabLabel}>{t.label}</span>
+            <span className={styles.tabCount}>{countByType(t.value)}</span>
+          </button>
+        ))}
+      </div>
 
-        <label>Country</label>
-        <select
-          className={styles.filterSelect}
-          value={country}
-          onChange={e => setCountry(e.target.value)}
-        >
-          <option value="">All Countries</option>
-          {countries.map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
+      <div className={styles.dashboardContainer}>
 
-        <label>City</label>
-        <select
-          className={styles.filterSelect}
-          value={city}
-          onChange={e => setCity(e.target.value)}
-        >
-          <option value="">All Cities</option>
-          {cities.map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
+        {/* ── Filters Sidebar ── */}
+        <aside className={styles.filtersSidebar}>
+          <div className={styles.sidebarHeader}>
+            <span className={styles.sidebarTitle}>FILTERS</span>
+            {activeFiltersCount > 0 && (
+              <button className={styles.resetBtn} onClick={resetFilters}>
+                ✕ CLEAR ({activeFiltersCount})
+              </button>
+            )}
+          </div>
 
-        <label>Postal Code</label>
-        <input
-          type="text"
-          className={styles.filterInput}
-          value={postalCode}
-          onChange={e => setPostalCode(e.target.value)}
-          placeholder="Enter postal code..."
-        />
+          {/* ── Results count ── */}
+          <div className={styles.resultsCount}>
+            <span className={styles.resultsNum}>{filtered.length}</span>
+            <span className={styles.resultsLabel}>results found</span>
+          </div>
 
-        {showAthleteFilters && (
-          <>
-            <label>
-              Age Range
-              <span className={styles.ageToggle}>
-                <input
-                  type="checkbox"
-                  checked={ageFilterActive}
-                  onChange={e => setAgeFilterActive(e.target.checked)}
-                  style={{ marginLeft: "6px" }}
-                />
-              </span>
-            </label>
-            <div className={styles.ageSliderWrapper}>
-              <div className={styles.ageValues}>
-                <span>{ageMin}</span>
-                <span>–</span>
-                <span>{ageMax}</span>
+          {showAthleteFilters && (
+            <>
+              {/* Gender */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>GENDER</div>
+                <div className={styles.pillRow}>
+                  {genders.map(g => (
+                    <button
+                      key={g.value}
+                      className={`${styles.pill} ${gender === g.value ? styles.pillActive : ""}`}
+                      onClick={() => setGender(g.value)}
+                    >
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className={styles.sliderRow}>
-                <span className={styles.sliderLabel}>Min</span>
-                <input
-                  type="range"
-                  min={1}
-                  max={100}
-                  value={ageMin}
-                  onChange={e => {
-                    const val = Number(e.target.value);
-                    setAgeMin(val > ageMax ? ageMax : val);
-                    setAgeFilterActive(true);
-                  }}
-                  className={styles.rangeSlider}
-                />
+
+              {/* Level */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>LEVEL</div>
+                <div className={styles.pillRow}>
+                  {levelPills.map(l => (
+                    <button
+                      key={l.value}
+                      className={`${styles.pill} ${level === l.value ? styles.pillActive : ""}`}
+                      onClick={() => setLevel(l.value)}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className={styles.sliderRow}>
-                <span className={styles.sliderLabel}>Max</span>
-                <input
-                  type="range"
-                  min={1}
-                  max={100}
-                  value={ageMax}
-                  onChange={e => {
-                    const val = Number(e.target.value);
-                    setAgeMax(val < ageMin ? ageMin : val);
-                    setAgeFilterActive(true);
-                  }}
-                  className={styles.rangeSlider}
-                />
+
+              {/* Age */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>
+                  AGE RANGE
+                  <label className={styles.ageToggleLabel}>
+                    <input
+                      type="checkbox"
+                      checked={ageFilterActive}
+                      onChange={e => setAgeFilterActive(e.target.checked)}
+                      className={styles.ageCheckbox}
+                    />
+                    <span className={styles.ageToggleSwitch} />
+                  </label>
+                </div>
+                <div className={styles.ageDisplay}>
+                  <span className={styles.ageVal}>{ageMin}</span>
+                  <div className={styles.ageLine} />
+                  <span className={styles.ageVal}>{ageMax}</span>
+                </div>
+                <div className={styles.dualSlider}>
+                  <div
+                    className={styles.dualSliderFill}
+                    style={{
+                      left: `${(ageMin - 1) / 99 * 100}%`,
+                      right: `${100 - (ageMax - 1) / 99 * 100}%`,
+                    }}
+                  />
+                  <input
+                    type="range" min={1} max={100} value={ageMin}
+                    onChange={e => { const v = Number(e.target.value); setAgeMin(v > ageMax ? ageMax : v); setAgeFilterActive(true); }}
+                    className={styles.rangeSlider}
+                  />
+                  <input
+                    type="range" min={1} max={100} value={ageMax}
+                    onChange={e => { const v = Number(e.target.value); setAgeMax(v < ageMin ? ageMin : v); setAgeFilterActive(true); }}
+                    className={styles.rangeSlider}
+                  />
+                </div>
               </div>
+
+              {/* Sport */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>SPORT</div>
+                <div className={styles.selectWrapper}>
+                  <select className={styles.filterSelect} value={sport} onChange={e => setSport(e.target.value)}>
+                    <option value="">Any sport</option>
+                    {sports.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  <span className={styles.selectArrow}>▾</span>
+                </div>
+              </div>
+
+              {/* Skill */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>SKILL</div>
+                <div className={styles.selectWrapper}>
+                  <select className={styles.filterSelect} value={skill} onChange={e => setSkill(e.target.value)}>
+                    <option value="">Any skill</option>
+                    {allSkills.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  <span className={styles.selectArrow}>▾</span>
+                </div>
+              </div>
+
+              {/* Nationality */}
+              <div className={styles.filterGroup}>
+                <div className={styles.filterGroupTitle}>NATIONALITY</div>
+                <div className={styles.selectWrapper}>
+                  <select className={styles.filterSelect} value={nationality} onChange={e => setNationality(e.target.value)}>
+                    <option value="">Any nationality</option>
+                    {allNationalities.map(n => {
+                      let name = n;
+                      try { name = new Intl.DisplayNames(["en"], { type: "region" }).of(n) || n; } catch { name = n; }
+                      return <option key={n} value={n}>{name}</option>;
+                    })}
+                  </select>
+                  <span className={styles.selectArrow}>▾</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Country */}
+          <div className={styles.filterGroup}>
+            <div className={styles.filterGroupTitle}>COUNTRY</div>
+            <div className={styles.selectWrapper}>
+              <select className={styles.filterSelect} value={country} onChange={e => setCountry(e.target.value)}>
+                <option value="">All countries</option>
+                {countries.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <span className={styles.selectArrow}>▾</span>
             </div>
+          </div>
 
-            <label>Gender</label>
-            <select
-              className={styles.filterSelect}
-              value={gender}
-              onChange={e => setGender(e.target.value)}
-            >
-              {genders.map(g => (
-                <option key={g.value} value={g.value}>{g.label}</option>
-              ))}
-            </select>
+          {/* City */}
+          <div className={styles.filterGroup}>
+            <div className={styles.filterGroupTitle}>CITY</div>
+            <div className={styles.selectWrapper}>
+              <select className={styles.filterSelect} value={city} onChange={e => setCity(e.target.value)}>
+                <option value="">All cities</option>
+                {cities.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <span className={styles.selectArrow}>▾</span>
+            </div>
+          </div>
 
-            <label>Sport</label>
-            <select
-              className={styles.filterSelect}
-              value={sport}
-              onChange={e => setSport(e.target.value)}
-            >
-              <option value="">Any</option>
-              {sports.map(s => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
+          {/* Postal code */}
+          <div className={styles.filterGroup}>
+            <div className={styles.filterGroupTitle}>POSTAL CODE</div>
+            <div className={styles.searchInputWrapper}>
+              <span className={styles.searchIcon}>⌕</span>
+              <input
+                type="text"
+                className={styles.filterInput}
+                value={postalCode}
+                onChange={e => setPostalCode(e.target.value)}
+                placeholder="Enter postal code..."
+              />
+            </div>
+          </div>
+        </aside>
 
-            <label>Level</label>
-            <select
-              className={styles.filterSelect}
-              value={level}
-              onChange={e => setLevel(e.target.value)}
-            >
-              <option value="">All Levels</option>
-              {levels.map(lvl => (
-                <option key={lvl} value={lvl}>{lvl}</option>
-              ))}
-            </select>
-
-            <label>Skill</label>
-            <select
-              className={styles.filterSelect}
-              value={skill}
-              onChange={e => setSkill(e.target.value)}
-            >
-              <option value="">Any Skill</option>
-              {allSkills.map(s => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
-
-            <label>Nationality</label>
-            <select
-              className={styles.filterSelect}
-              value={nationality}
-              onChange={e => setNationality(e.target.value)}
-            >
-              <option value="">Any Nationality</option>
-              {allNationalities.map(n => {
-                let name = n;
-                try { name = new Intl.DisplayNames(["en"], { type: "region" }).of(n) || n; } catch (_) {}
-                return <option key={n} value={n}>{name}</option>;
-              })}
-            </select>
-          </>
-        )}
-
-        <button className={styles.resetBtn} onClick={resetFilters}>
-          Reset Filters
-        </button>
-      </aside>
-
-      <main className={styles.cardsContainer}>
-        {loading ? (
-          <p style={{ color: "#eaf6ff", fontWeight: 600 }}>Loading profiles...</p>
-        ) : filtered.length === 0 ? (
-          <p style={{ color: "#eaf6ff", fontWeight: 600 }}>No profiles found.</p>
-        ) : (
-          filtered.map(profile => (
-            <AthleteCard
-              key={`${profile._type}-${profile._id}`}
-              athlete={profile}
-              onClick={() => navigate(profile._route)}
-            />
-          ))
-        )}
-      </main>
+        {/* ── Cards ── */}
+        <main className={styles.cardsContainer}>
+          {loading ? (
+            <div className={styles.loadingState}>
+              <span className={styles.loadingDot} />
+              <span className={styles.loadingDot} />
+              <span className={styles.loadingDot} />
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p className={styles.emptyIcon}>⚽</p>
+              <p className={styles.emptyText}>No profiles found.</p>
+              <button className={styles.emptyReset} onClick={resetFilters}>Clear filters</button>
+            </div>
+          ) : (
+            filtered.map(profile => (
+              <AthleteCard
+                key={`${profile._type}-${profile._id}`}
+                athlete={profile}
+                onClick={() => navigate(profile._route)}
+              />
+            ))
+          )}
+        </main>
+      </div>
     </div>
   );
 }
