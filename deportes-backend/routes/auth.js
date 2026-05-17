@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { sendPasswordResetEmail } = require("../config/emailService");
+const { sendPasswordResetEmail, sendWelcomeEmail } = require("../config/emailService");
 const Deportista = require("../models/Deportista");
 const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
@@ -79,6 +79,7 @@ router.post("/register", async (req, res) => {
           gender: gender || "",
           sport: sport || "",
           country: country || "",
+          birthDate: birthDate ? new Date(birthDate) : null,
           age: calculateAge(birthDate),
         });
         break;
@@ -140,6 +141,10 @@ router.post("/register", async (req, res) => {
 
     await newUser.save();
     console.log(`✅ Usuario ${profileType} registrado correctamente`);
+
+    // Enviar email de bienvenida sin bloquear la respuesta
+    sendWelcomeEmail(email, newUser.name || newUser.company || "", profileType)
+      .catch(err => console.error("⚠️ Error enviando email de bienvenida:", err));
 
     res.status(201).json({
       message: "Usuario registrado correctamente",

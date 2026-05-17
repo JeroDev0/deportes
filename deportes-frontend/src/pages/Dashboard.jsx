@@ -5,6 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://deportes-production.up.railway.app";
 
+function calcAge(birthDate) {
+  if (!birthDate) return null;
+  const birth = new Date(birthDate);
+  if (isNaN(birth.getTime())) return null;
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age > 0 ? age : null;
+}
+
 const genders = [
   { label: "ALL", value: "" },
   { label: "♀ FEMALE", value: "femenino" },
@@ -37,10 +48,10 @@ function normalizeProfile(profile, type) {
         name: profile.name || "",
         lastName: profile.lastName || "",
         level: profile.level || "",
-        age: profile.age || "",
+        age: calcAge(profile.birthDate) ?? profile.age ?? "",
         _city: profile.city || "",
         _gender: profile.gender || "",
-        _age: profile.age || null,
+        _age: calcAge(profile.birthDate) ?? profile.age ?? null,
         _country: profile.country || "",
         _postalCode: profile.postalCode || "",
         _skills: profile.skills || [],
@@ -127,6 +138,10 @@ function Dashboard() {
         ...scouts.map(p => normalizeProfile(p, "scout")),
         ...sponsors.map(p => normalizeProfile(p, "sponsor")),
       ];
+      for (let i = normalized.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [normalized[i], normalized[j]] = [normalized[j], normalized[i]];
+      }
       setAllProfiles(normalized);
       setFiltered(normalized);
       setCities([...new Set(athletes.map(a => a.city).filter(Boolean))]);
