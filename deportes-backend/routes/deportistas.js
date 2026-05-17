@@ -75,8 +75,17 @@ router.put("/:id", (req, res, next) => {
       }
     });
 
-    // Normalizar age a número
-    if (req.body.age) req.body.age = parseInt(req.body.age, 10);
+    // Si viene birthDate, calcular age automáticamente
+    if (req.body.birthDate) {
+      const birth = new Date(req.body.birthDate);
+      if (!isNaN(birth.getTime())) {
+        const today = new Date();
+        let age = today.getFullYear() - birth.getFullYear();
+        const m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+        req.body.age = age > 0 ? age : null;
+      }
+    }
 
     // Normalizar experience y recognitions como arrays de objetos
     ["experience", "recognitions"].forEach((field) => {

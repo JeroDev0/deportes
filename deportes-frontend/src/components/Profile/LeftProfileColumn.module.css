@@ -1,8 +1,13 @@
+/* ══════════════════════════════════════════════
+   LEFT PROFILE COLUMN — Dark sporty theme
+   ══════════════════════════════════════════════ */
+
 .profileCard {
-  background: #fff; /* fondo blanco como en la referencia */
-  overflow: hidden; /* evita que algo se salga */
-  text-align: center;
-  color: #222;
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 16px;
+  overflow: hidden;
+  color: #c0d4e8;
   max-width: 320px;
   margin: 0 auto;
   font-family: 'Arial', sans-serif;
@@ -10,361 +15,318 @@
   flex-direction: column;
 }
 
-/* Badge Boosted */
 .boostedBadge {
   position: absolute;
   top: 10px;
   left: 10px;
   background: #f9d342;
-  color: #222;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  user-select: none;
+  color: #111;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   z-index: 10;
 }
 
-/* Foto */
+/* ── Avatar ── */
 .avatarContainer {
   position: relative;
   width: 100%;
 }
-
 .avatar {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 0;
   display: block;
 }
-
-/* Sport Badge centrado sobre el borde inferior de la imagen */
 .sportBadge {
   position: absolute;
-  bottom: -15px; /* sobresale un poco sobre la foto */
+  bottom: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: #d4edf5;
-  color: #1e3a8a;
-  font-weight: 700;
-  padding: 7px 15px;
-  border-radius: 0px;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: rgba(83, 251, 82, 0.12);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.35);
+  font-weight: 800;
+  padding: 5px 18px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
   z-index: 5;
 }
 
-/* Contenido */
+/* ── Content ── */
 .contentBelow {
-  padding: 25px 15px 15px 15px; /* arriba más espacio para no pisar el sport badge */
+  padding: 26px 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
 }
-
-/* Separadores de secciones */
 .contentBelow > div {
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
+  border-top: 1px solid #1a2e45;
+  padding: 12px 0;
+}
+.contentBelow > div:first-child {
+  border-top: none;
+  padding-top: 0;
 }
 
-/* Nivel y edad */
+/* Level + Age */
 .levelAge {
   display: flex;
   justify-content: center;
   gap: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c0d4e8;
+  letter-spacing: 0.03em;
+}
+.levelAge strong {
+  color: #4a6a8a;
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #222;
+  margin-right: 4px;
 }
 
-/* Género */
+/* Gender */
 .gender {
   display: flex;
   justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c0d4e8;
+}
+.gender strong {
+  color: #4a6a8a;
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #222;
+  margin-right: 4px;
 }
 
-/* Ciudad y país */
+/* Location */
 .location {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 0.82rem;
+  color: #8aaccc;
   gap: 6px;
 }
-
 .locationIcon {
-  width: 16px;
-  height: 16px;
-  filter: invert(35%) sepia(10%) saturate(500%) hue-rotate(160deg) brightness(80%) contrast(85%);
+  width: 14px;
+  height: 14px;
+  filter: invert(55%) sepia(20%) saturate(500%) hue-rotate(180deg) brightness(85%);
 }
 
-/* NUEVO: Información adicional de dirección - Estilo minimalista */
+/* Section header labels */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.sectionHeader h4 {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* Address (admin only) */
 .addressInfo {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 0.9rem;
-  text-align: center;
+  gap: 5px;
+  font-size: 0.8rem;
 }
-
 .addressItem {
   display: flex;
   justify-content: center;
   gap: 8px;
-  color: #555;
 }
-
 .addressLabel {
   font-weight: 600;
-  color: #222;
+  color: #4a6a8a;
 }
-
 .addressValue {
-  color: #555;
+  color: #8aaccc;
 }
 
-/* NUEVO: Información de nacimiento - Estilo minimalista */
+/* Birth place */
 .birthInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  font-size: 0.9rem;
 }
-
-.sectionHeader h4 {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #222;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
 .birthLocation {
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 0.82rem;
+  color: #8aaccc;
   text-align: center;
 }
 
+/* Nationalities */
 .nationalitiesInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  font-size: 0.9rem;
+  gap: 8px;
 }
-
 .nationalitiesList {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
   justify-content: center;
 }
-
 .nationalityTag {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-radius: 12px;
-  padding: 2px 10px;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-/* Estilos para relaciones (Scout, Sponsor, Club) - Estilo minimalista */
-.relationItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.9rem;
-}
-
-.relationHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-}
-
-.relationHeader h4 {
-  margin: 0;
-  font-size: 0.85rem;
+  background: rgba(83, 251, 82, 0.08);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.28);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #222;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.relationIcon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  filter: invert(13%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(95%) contrast(86%);
-}
-
-.relationInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: center;
-}
-
-.relationName {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #222;
-}
-
-.relationSpecialty {
-  font-size: 0.8rem;
-  color: #666;
-  font-style: italic;
+  letter-spacing: 0.04em;
 }
 
 /* Skills */
 .skillsContainer {
   text-align: center;
 }
-
 .skillsContainer h4 {
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #222;
-  text-transform: capitalize;
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0 0 8px;
 }
-
 .skillsList {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   justify-content: center;
 }
-
 .skillTag {
-  background: #1b433d;
-  color: #f1faee;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  background: rgba(83, 251, 82, 0.07);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.22);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: lowercase;
 }
 
-/* Estilos responsivos mejorados */
-@media (max-width: 768px) {
-  .profileCard {
-    max-width: 100%;
-  }
-  
-  .levelAge {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .relationItem {
-    padding: 10px;
-  }
-  
-  .skillsList {
-    gap: 6px;
-  }
-  
-  .skillTag {
-    padding: 4px 8px;
-    font-size: 0.8rem;
-  }
-
-  .addressItem {
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .addressLabel {
-    min-width: auto;
-  }
-
-  .addressValue {
-    text-align: left;
-  }
+/* Scout / Sponsor / Club relations */
+.relationItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.relationHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+.relationHeader h4 {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.relationIcon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  filter: invert(40%) sepia(10%) saturate(400%) hue-rotate(180deg) brightness(80%);
+}
+.relationInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+.relationName {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #c0d4e8;
+}
+.relationSpecialty {
+  font-size: 0.75rem;
+  color: #5a7a9a;
+  font-style: italic;
 }
 
-/* Estilos para SCOUT*/
-/* Estilos para certificación */
+/* Certifications (scout) */
 .certificationsSection {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid rgba(234, 246, 255, 0.1);
+  padding-top: 0;
+  border-top: none;
 }
-
 .certificationLink {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
-  background: linear-gradient(135deg, #53fb52 0%, #3dd93c 100%);
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(83, 251, 82, 0.08);
+  border: 1px solid rgba(83, 251, 82, 0.28);
   border-radius: 10px;
   text-decoration: none;
-  color: #0d2635;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(83, 251, 82, 0.3);
+  color: #53fb52;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  transition: background 0.15s;
 }
-
 .certificationLink:hover {
-  background: linear-gradient(135deg, #6fff6e 0%, #53fb52 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(83, 251, 82, 0.5);
+  background: rgba(83, 251, 82, 0.15);
 }
-
 .certIcon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
-  filter: brightness(0) saturate(100%);
 }
-
 .externalIcon {
   margin-left: auto;
   flex-shrink: 0;
 }
+.certificationLink span { flex: 1; }
 
-.certificationLink span {
-  flex: 1;
-}
-
-/* Helper text para formularios */
 .helperText {
-  font-size: 0.85rem;
-  color: rgba(234, 246, 255, 0.6);
-  margin-top: 5px;
+  font-size: 0.76rem;
+  color: #4a6a8a;
   font-style: italic;
 }
-
 .certificationInput {
   width: 100%;
-  padding: 12px;
+  padding: 10px 12px;
   background: #1a334a;
   border: 1px solid #253b4d;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #eaf6ff;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.certificationInput:focus {
+  font-size: 0.88rem;
+  box-sizing: border-box;
   outline: none;
+  transition: border-color 0.15s;
+}
+.certificationInput:focus {
   border-color: #53fb52;
-  box-shadow: 0 0 0 2px rgba(83, 251, 82, 0.1);
+}
+.certificationInput::placeholder {
+  color: rgba(234, 246, 255, 0.35);
 }
 
-.certificationInput::placeholder {
-  color: rgba(234, 246, 255, 0.4);
+/* Responsive */
+@media (max-width: 768px) {
+  .profileCard { max-width: 100%; }
+  .skillTag { padding: 3px 8px; font-size: 0.68rem; }
 }

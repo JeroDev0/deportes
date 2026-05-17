@@ -1,8 +1,21 @@
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
+function calcAge(birthDate) {
+  if (!birthDate) return null;
+  const birth = new Date(birthDate);
+  if (isNaN(birth.getTime())) return null;
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age > 0 ? age : null;
+}
+
 function LeftProfileColumn({ profile, isAdmin = false }) {
   if (!profile) return null;
+
+  const age = calcAge(profile.birthDate) ?? profile.age;
 
   return (
     <div className={styles.profileCard}>
@@ -21,7 +34,7 @@ function LeftProfileColumn({ profile, isAdmin = false }) {
         <div className={styles.levelAge}>
           <span><strong>Level:</strong> {profile.level || "Amateur"}</span>
           |
-          <span><strong>Age:</strong> {profile.age || "N/A"}</span>
+          <span><strong>Age:</strong> {age ?? "N/A"}</span>
         </div>
 
         {profile.gender && (

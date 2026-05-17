@@ -18,6 +18,7 @@ const DeportistaSchema = new mongoose.Schema({
   // 📋 Datos básicos
   name: { type: String, default: "" },
   lastName: { type: String, default: "" },
+  birthDate: { type: Date, default: null },
   age: { type: Number, default: null },
   sport: { type: String, default: "" },
   gender: { type: String, default: "" },

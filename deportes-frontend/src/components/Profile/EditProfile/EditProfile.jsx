@@ -227,7 +227,7 @@ function EditProfile() {
   const [form, setForm] = useState({
     name: "",
     lastName: "",
-    age: "",
+    birthDate: "",
     gender: "",
     sport: "",
     level: "",
@@ -293,7 +293,7 @@ function EditProfile() {
         setForm({
           name: data.name || "",
           lastName: data.lastName || "",
-          age: data.age || "",
+          birthDate: data.birthDate ? data.birthDate.split("T")[0] : "",
           gender: data.gender || "",
           sport: data.sport || "",
           level: data.level || "",
@@ -783,14 +783,11 @@ function EditProfile() {
                 isClearable
               />
               <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={form.age}
+                type="date"
+                name="birthDate"
+                value={form.birthDate}
                 onChange={handleChange}
-                required
-                min={1}
-                max={120}
+                max={new Date().toISOString().split("T")[0]}
               />
               <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
             </div>
