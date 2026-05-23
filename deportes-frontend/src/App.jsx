@@ -19,6 +19,7 @@ import SponsorProfilePage from './pages/SponsorProfilePage';
 
 import FloatingButton from './components/common/FloatingButton';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminMentalHealth from './pages/AdminMentalHealth';
 import ForgotPassword from './components/Auth/ForgotPassword';
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/admin-panel" element={<AdminDashboard />} />
+          <Route path="/admin-mental-health" element={<AdminMentalHealth />} />
         </Routes>
       </div>
 

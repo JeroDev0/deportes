@@ -5,6 +5,7 @@ import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
 import ProfileFeed from "../components/Profile/Feed/ProfileFeed.jsx";
+import SaludMentalTab from "../components/SaludMental/SaludMentalTab.jsx";
 import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
@@ -76,16 +77,29 @@ function ProfilePage() {
             >
               Perfil Social
             </button>
+            {isMyProfile && (
+              <button
+                className={`${styles.toggleBtn} ${viewMode === "salud" ? styles.active : ""}`}
+                onClick={() => setViewMode("salud")}
+                type="button"
+              >
+                Salud Mental
+              </button>
+            )}
           </div>
 
-          {viewMode === "professional" ? (
+          {viewMode === "professional" && (
             <CenterProfileColumn
               profile={profile}
               isMyProfile={isMyProfile}
               onNavigateToFeed={() => setViewMode("social")}
             />
-          ) : (
+          )}
+          {viewMode === "social" && (
             <ProfileFeed profileId={profile._id} isMyProfile={isMyProfile} />
+          )}
+          {viewMode === "salud" && isMyProfile && (
+            <SaludMentalTab profile={profile} />
           )}
         </div>
 
