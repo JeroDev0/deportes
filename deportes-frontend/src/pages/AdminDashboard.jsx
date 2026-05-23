@@ -88,9 +88,18 @@ function AdminDashboard() {
           <h1>Control Center</h1>
           <p>Super Admin Mode</p>
         </div>
-        <div className={styles.statsCard}>
-          <span className={styles.statNumber}>{users.length}</span>
-          <span className={styles.statLabel}>Usuarios Registrados</span>
+        <div className={styles.headerRight}>
+          <button
+            className={styles.mentalHealthBtn}
+            onClick={() => navigate("/admin-mental-health")}
+            type="button"
+          >
+            Salud Mental
+          </button>
+          <div className={styles.statsCard}>
+            <span className={styles.statNumber}>{users.length}</span>
+            <span className={styles.statLabel}>Usuarios Registrados</span>
+          </div>
         </div>
       </header>
 

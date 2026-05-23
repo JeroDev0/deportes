@@ -1,0 +1,86 @@
+.wrapper {
+  width: 100%;
+  color: #c0d4e8;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+/* ── Cabecera ── */
+.moduleHeader {
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #1a2e45;
+}
+
+.moduleTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.moduleIcon {
+  font-size: 1.1rem;
+  color: #53fb52;
+}
+
+.moduleTitle h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.moduleSubtitle {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #4a6a8a;
+  letter-spacing: 0.04em;
+}
+
+/* ── Navegación interna ── */
+.nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 10px;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.navBtn {
+  flex: 1;
+  min-width: 72px;
+  background: transparent;
+  border: none;
+  color: #5a7a9a;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.navBtn:hover { color: #c0d4e8; }
+.navBtnActive {
+  background: rgba(83, 251, 82, 0.12);
+  color: #53fb52;
+  border: 1px solid rgba(83, 251, 82, 0.3);
+}
+
+/* ── Contenido ── */
+.content {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .navBtn { font-size: 0.68rem; padding: 7px 8px; min-width: 60px; }
+}

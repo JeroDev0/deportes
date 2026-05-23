@@ -1,0 +1,232 @@
+.wrapper { display: flex; flex-direction: column; gap: 16px; }
+
+.loading, .empty {
+  color: #53fb52;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 40px 0;
+}
+.empty p { color: #8aaccc; }
+.emptyHint { color: #4a6a8a !important; font-size: 0.75rem !important; }
+
+/* ── Rango ── */
+.rangoRow {
+  display: flex;
+  gap: 6px;
+}
+
+.rangoBtn {
+  background: transparent;
+  border: 1px solid #1a2e45;
+  color: #5a7a9a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.rangoBtn:hover { border-color: #8aaccc; color: #c0d4e8; }
+.rangoBtnActive {
+  background: rgba(83, 251, 82, 0.1);
+  border-color: rgba(83, 251, 82, 0.4);
+  color: #53fb52;
+}
+
+/* ── Alertas ── */
+.alertBox {
+  background: rgba(240, 180, 41, 0.06);
+  border: 1px solid rgba(240, 180, 41, 0.3);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+.alertTitle {
+  margin: 0 0 6px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #f0b429;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.alertText {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: #c0d4e8;
+  line-height: 1.5;
+}
+
+/* ── Stats ── */
+.statsRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.statCard {
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 12px;
+  padding: 16px 18px;
+  flex: 1;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.statVal {
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.statKey {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* ── Charts ── */
+.chartCard, .distribCard, .resumenCard {
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.chartTitle {
+  margin: 0 0 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.chartLegend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: #8aaccc;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ── Líneas ── */
+.lineChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 90px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #1a2e45 transparent;
+  padding-bottom: 4px;
+}
+
+.lineItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+.lineTrack {
+  display: flex;
+  gap: 3px;
+  height: 72px;
+  align-items: flex-end;
+}
+
+.bienBar {
+  width: 8px;
+  background: #53fb52;
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+  transition: height 0.4s;
+}
+
+.cargaBar {
+  width: 8px;
+  background: #f0b429;
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+  transition: height 0.4s;
+}
+
+.lineLabel {
+  font-size: 0.58rem;
+  color: #4a6a8a;
+  font-weight: 600;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/* ── Distribución ── */
+.distribRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.distribItem {
+  display: grid;
+  grid-template-columns: 40px 80px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.distribNum {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.distribLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #8aaccc;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.distribBar {
+  height: 8px;
+  background: #1a2e45;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* ── Resumen ── */
+.resumenText {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #c0d4e8;
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  .statsRow { flex-direction: column; }
+  .statCard { flex-direction: row; justify-content: space-between; }
+  .distribItem { grid-template-columns: 36px 70px 1fr; }
+}

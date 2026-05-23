@@ -45,6 +45,15 @@ app.use("/clubs", clubsRoutes);
 const adminRoutes = require("./routes/admin");
 app.use("/admin", adminRoutes);
 
+const checkinsRoutes = require("./routes/checkins");
+app.use("/checkins", checkinsRoutes);
+
+const recursosRoutes = require("./routes/recursos");
+app.use("/recursos", recursosRoutes);
+
+const sesionesRoutes = require("./routes/sesiones");
+app.use("/sesiones", sesionesRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);

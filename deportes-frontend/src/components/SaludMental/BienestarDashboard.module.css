@@ -1,0 +1,265 @@
+.wrapper { display: flex; flex-direction: column; gap: 22px; }
+
+.loading {
+  color: #53fb52;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* ── Score row ── */
+.scoreRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.scoreCard {
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 14px;
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+  flex: 0 0 auto;
+}
+
+.scoreLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.scoreCircle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 3px solid #53fb52;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s;
+}
+
+.scoreNumber {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #53fb52;
+  transition: color 0.3s;
+}
+
+.scoreMax {
+  font-size: 0.65rem;
+  color: #4a6a8a;
+  font-weight: 600;
+}
+
+.scoreBadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Status card ── */
+.statusCard {
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 14px;
+  padding: 18px 20px;
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statusTitle {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #1a2e45;
+}
+.statusRow:last-child { border-bottom: none; }
+
+.statusKey {
+  font-size: 0.82rem;
+  color: #8aaccc;
+  font-weight: 600;
+}
+
+.statusVal {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── No check-in card ── */
+.noCheckinCard {
+  background: #0d1f33;
+  border: 1px dashed #1a2e45;
+  border-radius: 14px;
+  padding: 28px 20px;
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.noCheckinCard p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #8aaccc;
+}
+
+.checkinBtn {
+  background: rgba(83, 251, 82, 0.1);
+  border: 1px solid rgba(83, 251, 82, 0.4);
+  color: #53fb52;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+.checkinBtn:hover { background: rgba(83, 251, 82, 0.18); }
+
+/* ── Sections ── */
+.section {
+  background: #0d1f33;
+  border: 1px solid #1a2e45;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.sectionTitle {
+  margin: 0 0 14px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #4a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Bar chart ── */
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 80px;
+}
+
+.barItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.barTrack {
+  width: 100%;
+  height: 64px;
+  background: #1a2e45;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.barFill {
+  width: 100%;
+  border-radius: 4px;
+  transition: height 0.4s ease;
+  min-height: 3px;
+}
+
+.barLabel {
+  font-size: 0.6rem;
+  color: #4a6a8a;
+  font-weight: 600;
+}
+
+.emptyHint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #4a6a8a;
+  font-style: italic;
+}
+
+/* ── Sugerencias ── */
+.suggestList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suggestItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.suggestDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #53fb52;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.suggestText {
+  font-size: 0.85rem;
+  color: #c0d4e8;
+  line-height: 1.5;
+}
+
+/* ── Botón principal ── */
+.mainCheckinBtn {
+  width: 100%;
+  background: #53fb52;
+  color: #07111c;
+  border: none;
+  padding: 13px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.15s;
+}
+.mainCheckinBtn:hover { opacity: 0.88; }
+
+@media (max-width: 480px) {
+  .scoreRow { flex-direction: column; }
+  .scoreCard { flex-direction: row; padding: 16px; gap: 16px; align-items: center; }
+  .scoreCircle { width: 70px; height: 70px; }
+  .scoreNumber { font-size: 1.5rem; }
+}
