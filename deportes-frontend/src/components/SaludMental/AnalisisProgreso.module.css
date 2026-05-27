@@ -12,6 +12,7 @@
 /* ── Rango ── */
 .rangoRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -19,7 +20,7 @@
   background: transparent;
   border: 1px solid #1a2e45;
   color: #5a7a9a;
-  padding: 6px 16px;
+  padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.7rem;
@@ -27,6 +28,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: all 0.15s;
+  white-space: nowrap;
 }
 .rangoBtn:hover { border-color: #8aaccc; color: #c0d4e8; }
 .rangoBtnActive {
