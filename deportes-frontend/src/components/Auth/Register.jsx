@@ -25,12 +25,20 @@ const SPORTS_GRID = [
   { value: "Baseball", label: "BÉISBOL", emoji: "⚾" },
   { value: "Gymnastics", label: "GIMNASIA", emoji: "🤸" },
   { value: "Karate", label: "KARATE", emoji: "🥋" },
+  { value: "Judo", label: "JUDO", emoji: "🥋" },
+  { value: "Taekwondo", label: "TAEKWONDO", emoji: "🥋" },
   { value: "Weightlifting", label: "HALTEROFILIA", emoji: "🏋️" },
   { value: "Fencing", label: "ESGRIMA", emoji: "🤺" },
   { value: "Archery", label: "TIRO CON ARCO", emoji: "🏹" },
   { value: "Skating", label: "PATINAJE", emoji: "⛸️" },
   { value: "Triathlon", label: "TRIATLÓN", emoji: "🏊" },
   { value: "Chess", label: "AJEDREZ", emoji: "♟️" },
+  { value: "Boccia", label: "BOCCIA", emoji: "🎯" },
+  { value: "Olympic Wrestling", label: "LUCHA OLÍMPICA", emoji: "🤼" },
+  { value: "Para Cycling", label: "PARACICLISMO", emoji: "🚴" },
+  { value: "Para Athletics", label: "PARAATLETISMO", emoji: "🏃" },
+  { value: "Para Swimming", label: "PARANATACIÓN", emoji: "🏊" },
+  { value: "Para Powerlifting", label: "PARAPOWERLIFTING", emoji: "🏋️" },
 ];
 
 const PROFILE_TYPES = [

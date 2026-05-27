@@ -83,7 +83,7 @@ function AnalisisProgreso() {
     <div className={styles.wrapper}>
       {/* Selector de rango */}
       <div className={styles.rangoRow}>
-        {[7, 14, 30].map(d => (
+        {[7, 14, 30, 90, 180].map(d => (
           <button
             key={d}
             className={`${styles.rangoBtn} ${rango === d ? styles.rangoBtnActive : ""}`}
