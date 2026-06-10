@@ -1,717 +1,155 @@
-/* ===== FULL PAGE WRAPPER ===== */
-.page {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: #07111c;
-  display: flex;
-  overflow: hidden;
-}
-
-/* ===== STEP 0 — TYPE SELECTION ===== */
 .selectionPage {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: radial-gradient(ellipse at 60% 40%, #0d2a4a 0%, #07111c 70%);
-  background-image:
-    radial-gradient(ellipse at 60% 40%, #0d2a4a 0%, #07111c 70%),
-    radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: cover, 30px 30px;
+  min-height: 100vh;
+  width: 100%;
+  /* Eliminamos el color sólido y ponemos transparente */
+  background: transparent; 
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
-  overflow-y: auto;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  position: relative;
 }
 
-.selectionHeader {
-  text-align: center;
-  margin-bottom: 3rem;
+/* Si el fondo de la web es muy oscuro y necesitas que las letras se lean mejor,
+   podemos poner una capa de brillo muy suave que no tape los rombos */
+.selectionPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(13, 38, 53, 0.4) 0%, transparent 100%);
+  z-index: -1;
 }
 
 .selectionHeader h1 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.1;
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .selectionHeader h1 span {
-  color: #00aaff;
+  color: #53fb52;
 }
 
 .selectionHeader p {
-  color: #8ab4cc;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  color: #a0c4d1;
+  margin-bottom: 3rem;
 }
 
+/* 2. TARJETAS CON EL ESTILO DEL LOGIN */
 .cardsRow {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1100px;
+  gap: 25px;
   width: 100%;
+  max-width: 1100px;
 }
 
 .typeCard {
-  background: rgba(13, 42, 74, 0.7);
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
-  border-radius: 16px;
-  padding: 2rem 1.5rem 1.5rem;
-  width: 300px;
+  flex: 1;
+  /* El fondo lila suave del input del login */
+  background: #f7f7ff; 
+  /* El borde púrpura característico del login */
+  border: 2px solid #3a0ca3; 
+  padding: 40px 30px;
+  border-radius: 12px; /* Redondeado similar al login */
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-  position: relative;
-  overflow: visible;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .typeCard:hover {
-  border-color: #00aaff;
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(0, 170, 255, 0.2);
+  transform: translateY(-8px);
+  /* Cambia al verde neón al hacer focus/hover como los inputs */
+  border-color: #53fb52; 
+  box-shadow: 0 8px 25px rgba(83, 251, 82, 0.2);
 }
 
+/* Textos dentro de la tarjeta (Color oscuro del login) */
 .cardIcon {
   font-size: 3.5rem;
   margin-bottom: 1rem;
-  line-height: 1;
 }
 
 .cardTitle {
+  color: #0d2635; /* Color .title del login */
   font-size: 1.3rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.08em;
+  font-weight: bold;
+  text-align: center;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
   white-space: pre-line;
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
-}
-
-.cardRoles {
-  font-size: 0.8rem;
-  color: #6a9ab8;
-  margin-bottom: 0.8rem;
-  line-height: 1.5;
 }
 
 .cardSubtitle {
-  font-size: 0.88rem;
-  color: #a0c4dc;
-  margin-bottom: 1.5rem;
+  color: #0d2635;
+  font-size: 0.95rem;
   line-height: 1.5;
-  flex: 1;
+  text-align: center;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+  opacity: 0.8;
 }
 
+/* 3. BOTÓN CON GRADIENTE (Igual al .button del login) */
 .cardBtn {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background: transparent;
-  border: 2px solid #fff;
+  padding: 0.9rem 1.2rem;
   border-radius: 8px;
-  color: #fff;
-  font-size: 0.88rem;
+  /* El gradiente exacto del login */
+  background: linear-gradient(90deg, #53fb52 0%, #7ed6df 100%);
+  color: #0d2635;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  border: none;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 8px rgba(50,255,106,0.13);
+  text-transform: uppercase;
 }
 
 .cardBtn:hover {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
-}
-
-/* ===== LEFT PANEL ===== */
-.leftPanel {
-  width: 38%;
-  min-width: 280px;
-  background: #07111c;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 28px 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2.5rem 2rem;
-  border-right: 1px solid rgba(0, 170, 255, 0.1);
-}
-
-.leftBrand {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
-}
-
-.leftBrand span {
-  color: #00aaff;
-}
-
-.leftSubtitle {
-  font-size: 0.78rem;
-  color: #456a87;
-  margin-bottom: 2.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.leftProfileBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 170, 255, 0.1);
-  border: 1px solid rgba(0, 170, 255, 0.3);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 0.78rem;
-  color: #00aaff;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-}
-
-.stepsWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.stepItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  position: relative;
-}
-
-.stepConnector {
-  width: 2px;
-  height: 32px;
-  background: rgba(0, 170, 255, 0.2);
-  margin: 0 0 0 13px;
-}
-
-.stepDot {
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 800;
-  flex-shrink: 0;
-  border: 1.5px solid rgba(0, 170, 255, 0.3);
-  color: #456a87;
-  background: transparent;
-  transition: all 0.25s;
-}
-
-.stepDot.active {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
-}
-
-.stepDot.done {
-  background: rgba(0, 170, 255, 0.15);
-  border-color: #00aaff;
-  color: #00aaff;
-}
-
-.stepLabel {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #2d5470;
-  padding-top: 5px;
-  transition: color 0.25s;
-}
-
-.stepLabel.active {
-  color: #fff;
-}
-
-.stepLabel.done {
-  color: #00aaff;
-}
-
-/* ===== RIGHT PANEL ===== */
-.rightPanel {
-  flex: 1;
-  background: linear-gradient(135deg, #0d2443 0%, #0a1a2e 100%);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 2.5rem 2.5rem 0;
-}
-
-.rightInner {
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-}
-
-.stepTitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 0.4rem;
-}
-
-.stepDesc {
-  font-size: 0.82rem;
-  color: #6a9ab8;
-  margin-bottom: 1.8rem;
-  line-height: 1.5;
-}
-
-/* ===== CREDENTIALS STEP ===== */
-.credRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.fieldGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.fieldLabel {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #456a87;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.fieldInput {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 170, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.65rem 0.9rem;
-  color: #fff;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
-}
-
-.fieldInput:focus {
-  border-color: #00aaff;
-}
-
-.fieldInput::placeholder {
-  color: #2d5470;
-}
-
-.passwordWrapper {
-  position: relative;
-}
-
-.passwordWrapper .fieldInput {
-  padding-right: 2.5rem;
-}
-
-.eyeBtn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #456a87;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0;
-  line-height: 1;
-}
-
-/* ===== SPORT GRID ===== */
-.sportSectionTitle {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #456a87;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 1.5rem 0 0.8rem;
-}
-
-.sportHint {
-  font-size: 0.75rem;
-  color: #2d5470;
-  margin-bottom: 0.8rem;
-}
-
-.sportsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-}
-
-.sportCard {
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(0, 170, 255, 0.15);
-  border-radius: 8px;
-  padding: 0.6rem 0.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: all 0.18s;
-  text-align: center;
-}
-
-.sportCard:hover {
-  border-color: #00aaff;
-  background: rgba(0, 170, 255, 0.08);
-}
-
-.sportCard.selected {
-  background: rgba(0, 170, 255, 0.18);
-  border-color: #00aaff;
-}
-
-.sportEmoji {
-  font-size: 1.4rem;
-  line-height: 1;
-}
-
-.sportName {
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #8ab4cc;
-  line-height: 1.2;
-}
-
-.sportCard.selected .sportName {
-  color: #fff;
-}
-
-/* ===== PERSONAL INFO STEP ===== */
-.genderRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.genderBtn {
-  padding: 0.75rem;
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
-  border-radius: 8px;
-  background: transparent;
-  color: #8ab4cc;
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.18s;
-}
-
-.genderBtn:hover,
-.genderBtn.selected {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
-}
-
-.personalGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.fullWidth {
-  grid-column: 1 / -1;
-}
-
-.registerTypeRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-.registerTypeBtn {
-  padding: 0.75rem 0.5rem;
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
-  border-radius: 8px;
-  background: transparent;
-  color: #8ab4cc;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.18s;
-  text-align: center;
-  line-height: 1.3;
-}
-
-.registerTypeBtn:hover,
-.registerTypeBtn.selected {
-  background: rgba(0, 170, 255, 0.15);
-  border-color: #00aaff;
-  color: #00aaff;
-}
-
-.registerTypeNote {
-  font-size: 0.72rem;
-  color: #2d5470;
-  margin-top: 0.3rem;
-}
-
-/* ===== TERMS STEP ===== */
-.tcContainer {
-  background: rgba(0,0,0,0.25);
-  border: 1px solid rgba(0, 170, 255, 0.15);
-  border-radius: 10px;
-  height: 340px;
-  overflow-y: auto;
-  padding: 1.2rem 1.4rem;
-  margin-bottom: 1.2rem;
-  font-size: 0.76rem;
-  color: #6a9ab8;
-  line-height: 1.6;
-}
-
-.tcContainer::-webkit-scrollbar {
-  width: 5px;
-}
-
-.tcContainer::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.2);
-}
-
-.tcContainer::-webkit-scrollbar-thumb {
-  background: rgba(0, 170, 255, 0.3);
-  border-radius: 3px;
-}
-
-.tcLang {
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #00aaff;
-  text-transform: uppercase;
-  margin: 1rem 0 0.5rem;
-}
-
-.tcLang:first-child {
-  margin-top: 0;
-}
-
-.tcText {
-  white-space: pre-wrap;
-  color: #5a8aaa;
-}
-
-.tcCheckRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 1rem;
-}
-
-.tcCheckRow input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  accent-color: #00aaff;
-  cursor: pointer;
-  margin-top: 2px;
-}
-
-.tcCheckLabel {
-  font-size: 0.82rem;
-  color: #8ab4cc;
-  line-height: 1.4;
-  cursor: pointer;
-}
-
-/* ===== BOTTOM NAV ===== */
-.navRow {
-  display: flex;
-  align-items: stretch;
-  border-top: 1px solid rgba(0, 170, 255, 0.1);
-  margin-top: auto;
-  flex-shrink: 0;
-}
-
-.prevBtn {
-  flex: 1;
-  padding: 1.1rem 1rem;
-  background: transparent;
-  border: none;
-  border-right: 1px solid rgba(0, 170, 255, 0.1);
-  color: #456a87;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.2s, background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.prevBtn:hover {
-  color: #fff;
-  background: rgba(255,255,255,0.04);
-}
-
-.nextBtn {
-  flex: 2;
-  padding: 1.1rem 1rem;
-  background: #00aaff;
-  border: none;
-  color: #07111c;
-  font-size: 0.88rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.nextBtn:hover {
-  background: #33bbff;
-}
-
-.nextBtn:disabled {
-  background: #1a3a5a;
-  color: #2d5470;
-  cursor: not-allowed;
-}
-
-/* ===== ERROR / SUCCESS ===== */
-.msgError {
-  font-size: 0.82rem;
-  color: #ff6b6b;
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.25);
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  margin: 0.5rem 0;
-}
-
-.msgSuccess {
-  font-size: 0.82rem;
+  /* Efecto invertir del login */
+  background: #0d2635;
   color: #53fb52;
-  background: rgba(83, 251, 82, 0.1);
-  border: 1px solid rgba(83, 251, 82, 0.25);
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  margin: 0.5rem 0;
 }
 
-.loginLink {
-  font-size: 0.8rem;
-  color: #456a87;
-  text-align: center;
-  padding: 0.8rem 0;
+/* 4. LINK DE LOGIN INFERIOR */
+.loginLinkBottom {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
 }
 
-.loginLink button {
+.loginLinkBottom button {
   background: none;
   border: none;
-  color: #00aaff;
-  font-weight: 700;
+  color: #53fb52;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.8rem;
-  margin-left: 4px;
-}
-
-.loginLink button:hover {
   text-decoration: underline;
+  font-size: 1rem;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .page {
-    flex-direction: column;
-  }
-
-  .leftPanel {
-    width: 100%;
-    min-width: unset;
-    padding: 1.2rem 1.5rem;
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 170, 255, 0.1);
-  }
-
-  .stepsWrapper {
-    flex-direction: row;
-    gap: 0.5rem;
-    overflow-x: auto;
-  }
-
-  .stepConnector {
-    display: none;
-  }
-
-  .leftBrand,
-  .leftSubtitle,
-  .leftProfileBadge {
-    display: none;
-  }
-
-  .rightPanel {
-    padding: 1.5rem 1.2rem 0;
-  }
-
-  .credRow,
-  .personalGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .sportsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
+/* RESPONSIVE */
+@media (max-width: 900px) {
   .cardsRow {
     flex-direction: column;
     align-items: center;
   }
-
   .typeCard {
     width: 100%;
-    max-width: 360px;
+    max-width: 380px;
   }
 }
