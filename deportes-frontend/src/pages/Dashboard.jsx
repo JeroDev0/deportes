@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AthleteCard from "../components/Dashboard/AthleteCard";
 import styles from "./Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 
 const API_URL = "https://deportes-production.up.railway.app";
 
@@ -16,25 +17,6 @@ function calcAge(birthDate) {
   return age > 0 ? age : null;
 }
 
-const genders = [
-  { label: "ALL", value: "" },
-  { label: "♀ FEMALE", value: "femenino" },
-  { label: "♂ MALE", value: "masculino" },
-];
-
-const levelPills = [
-  { label: "ALL", value: "" },
-  { label: "AMATEUR", value: "amateur" },
-  { label: "SEMI PRO", value: "semi profesional" },
-  { label: "PRO", value: "profesional" },
-];
-
-const profileTabs = [
-  { label: "ALL", value: "", icon: "◈" },
-  { label: "ATHLETES", value: "athlete", icon: "🏃" },
-  { label: "SCOUTS", value: "scout", icon: "📋" },
-  { label: "SPONSORS", value: "sponsor", icon: "🏆" },
-];
 
 function normalizeProfile(profile, type) {
   switch (type) {
@@ -44,7 +26,7 @@ function normalizeProfile(profile, type) {
         _type: "athlete",
         _route: `/profile/${profile._id}`,
         photo: profile.photo || "",
-        sport: profile.sport || "Athlete",
+        sport: profile.sport || "Deportista",
         name: profile.name || "",
         lastName: profile.lastName || "",
         level: profile.level || "",
@@ -101,6 +83,26 @@ function normalizeProfile(profile, type) {
 }
 
 function Dashboard() {
+  const { t } = useLanguage();
+
+  const genders = [
+    { label: t("dash_all_genders"), value: "" },
+    { label: t("dash_female"), value: "femenino" },
+    { label: t("dash_male"), value: "masculino" },
+  ];
+  const levelPills = [
+    { label: t("dash_all_levels"), value: "" },
+    { label: "AMATEUR", value: "amateur" },
+    { label: "SEMI PRO", value: "semi profesional" },
+    { label: "PRO", value: "profesional" },
+  ];
+  const profileTabs = [
+    { label: t("dash_all"), value: "", icon: "◈" },
+    { label: t("dash_athletes"), value: "athlete", icon: "🏃" },
+    { label: t("dash_scouts"), value: "scout", icon: "📋" },
+    { label: t("dash_sponsors"), value: "sponsor", icon: "🏆" },
+  ];
+
   const [allProfiles, setAllProfiles] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -117,6 +119,7 @@ function Dashboard() {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [nationality, setNationality] = useState("");
+  const [nameSearch, setNameSearch] = useState("");
 
   const [cities, setCities] = useState([]);
   const [sports, setSports] = useState([]);
@@ -159,22 +162,31 @@ function Dashboard() {
     if (city) result = result.filter(p => p._city === city);
     if (country) result = result.filter(p => p._country === country);
     if (sport) result = result.filter(p => p._type === "athlete" && p.sport === sport);
-    if (gender) result = result.filter(p => p._gender === gender);
+    if (gender) result = result.filter(p => {
+      const g = p._gender;
+      if (gender === "femenino") return g === "femenino" || g === "female";
+      if (gender === "masculino") return g === "masculino" || g === "male";
+      return g === gender;
+    });
     if (level) result = result.filter(p => p._type === "athlete" && p.level === level);
     if (skill) result = result.filter(p => p._skills.includes(skill));
     if (nationality) result = result.filter(p => p._nationalities.includes(nationality));
     if (postalCode.trim()) result = result.filter(p => p._postalCode.toLowerCase().includes(postalCode.trim().toLowerCase()));
     if (ageFilterActive) result = result.filter(p => p._age !== null && p._age >= ageMin && p._age <= ageMax);
+    if (nameSearch.trim()) {
+      const q = nameSearch.trim().toLowerCase();
+      result = result.filter(p => `${p.name} ${p.lastName}`.toLowerCase().includes(q));
+    }
     setFiltered(result);
-  }, [profileType, city, country, sport, gender, level, skill, nationality, postalCode, ageMin, ageMax, ageFilterActive, allProfiles]);
+  }, [profileType, city, country, sport, gender, level, skill, nationality, postalCode, ageMin, ageMax, ageFilterActive, nameSearch, allProfiles]);
 
-  const activeFiltersCount = [city, country, sport, gender, level, skill, nationality, postalCode.trim(), ageFilterActive ? "age" : ""].filter(Boolean).length;
+  const activeFiltersCount = [city, country, sport, gender, level, skill, nationality, postalCode.trim(), nameSearch.trim(), ageFilterActive ? "age" : ""].filter(Boolean).length;
 
   const showAthleteFilters = profileType === "" || profileType === "athlete";
 
   const resetFilters = () => {
     setSport(""); setLevel(""); setGender(""); setCity(""); setCountry("");
-    setSkill(""); setNationality(""); setPostalCode(""); setAgeMin(16); setAgeMax(60); setAgeFilterActive(false);
+    setSkill(""); setNationality(""); setPostalCode(""); setAgeMin(16); setAgeMax(60); setAgeFilterActive(false); setNameSearch("");
   };
 
   const countByType = (type) => type ? allProfiles.filter(p => p._type === type).length : allProfiles.length;
@@ -202,25 +214,39 @@ function Dashboard() {
         {/* ── Filters Sidebar ── */}
         <aside className={styles.filtersSidebar}>
           <div className={styles.sidebarHeader}>
-            <span className={styles.sidebarTitle}>FILTERS</span>
+            <span className={styles.sidebarTitle}>{t("dash_filters")}</span>
             {activeFiltersCount > 0 && (
               <button className={styles.resetBtn} onClick={resetFilters}>
-                ✕ CLEAR ({activeFiltersCount})
+                ✕ {t("dash_clear")} ({activeFiltersCount})
               </button>
             )}
+          </div>
+
+          {/* ── Name search ── */}
+          <div className={styles.filterGroup}>
+            <div className={styles.searchInputWrapper}>
+              <span className={styles.searchIcon}>⌕</span>
+              <input
+                type="text"
+                className={styles.filterInput}
+                value={nameSearch}
+                onChange={e => setNameSearch(e.target.value)}
+                placeholder={t("dash_search_name")}
+              />
+            </div>
           </div>
 
           {/* ── Results count ── */}
           <div className={styles.resultsCount}>
             <span className={styles.resultsNum}>{filtered.length}</span>
-            <span className={styles.resultsLabel}>results found</span>
+            <span className={styles.resultsLabel}>{t("dash_results")}</span>
           </div>
 
           {showAthleteFilters && (
             <>
               {/* Gender */}
               <div className={styles.filterGroup}>
-                <div className={styles.filterGroupTitle}>GENDER</div>
+                <div className={styles.filterGroupTitle}>{t("dash_gender")}</div>
                 <div className={styles.pillRow}>
                   {genders.map(g => (
                     <button
@@ -236,7 +262,7 @@ function Dashboard() {
 
               {/* Level */}
               <div className={styles.filterGroup}>
-                <div className={styles.filterGroupTitle}>LEVEL</div>
+                <div className={styles.filterGroupTitle}>{t("dash_level")}</div>
                 <div className={styles.pillRow}>
                   {levelPills.map(l => (
                     <button
@@ -253,7 +279,7 @@ function Dashboard() {
               {/* Age */}
               <div className={styles.filterGroup}>
                 <div className={styles.filterGroupTitle}>
-                  AGE RANGE
+                  {t("dash_age_range")}
                   <label className={styles.ageToggleLabel}>
                     <input
                       type="checkbox"
@@ -292,10 +318,10 @@ function Dashboard() {
 
               {/* Sport */}
               <div className={styles.filterGroup}>
-                <div className={styles.filterGroupTitle}>SPORT</div>
+                <div className={styles.filterGroupTitle}>{t("dash_sport")}</div>
                 <div className={styles.selectWrapper}>
                   <select className={styles.filterSelect} value={sport} onChange={e => setSport(e.target.value)}>
-                    <option value="">Any sport</option>
+                    <option value="">{t("dash_any_sport")}</option>
                     {sports.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                   <span className={styles.selectArrow}>▾</span>
@@ -304,10 +330,10 @@ function Dashboard() {
 
               {/* Skill */}
               <div className={styles.filterGroup}>
-                <div className={styles.filterGroupTitle}>SKILL</div>
+                <div className={styles.filterGroupTitle}>{t("dash_skill")}</div>
                 <div className={styles.selectWrapper}>
                   <select className={styles.filterSelect} value={skill} onChange={e => setSkill(e.target.value)}>
-                    <option value="">Any skill</option>
+                    <option value="">{t("dash_any_skill")}</option>
                     {allSkills.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                   <span className={styles.selectArrow}>▾</span>
@@ -316,13 +342,13 @@ function Dashboard() {
 
               {/* Nationality */}
               <div className={styles.filterGroup}>
-                <div className={styles.filterGroupTitle}>NATIONALITY</div>
+                <div className={styles.filterGroupTitle}>{t("dash_nationality")}</div>
                 <div className={styles.selectWrapper}>
                   <select className={styles.filterSelect} value={nationality} onChange={e => setNationality(e.target.value)}>
-                    <option value="">Any nationality</option>
+                    <option value="">{t("dash_any_nationality")}</option>
                     {allNationalities.map(n => {
                       let name = n;
-                      try { name = new Intl.DisplayNames(["en"], { type: "region" }).of(n) || n; } catch { name = n; }
+                      try { name = new Intl.DisplayNames(["es"], { type: "region" }).of(n) || n; } catch { name = n; }
                       return <option key={n} value={n}>{name}</option>;
                     })}
                   </select>
@@ -334,10 +360,10 @@ function Dashboard() {
 
           {/* Country */}
           <div className={styles.filterGroup}>
-            <div className={styles.filterGroupTitle}>COUNTRY</div>
+            <div className={styles.filterGroupTitle}>{t("dash_country")}</div>
             <div className={styles.selectWrapper}>
               <select className={styles.filterSelect} value={country} onChange={e => setCountry(e.target.value)}>
-                <option value="">All countries</option>
+                <option value="">{t("dash_all_countries")}</option>
                 {countries.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <span className={styles.selectArrow}>▾</span>
@@ -346,10 +372,10 @@ function Dashboard() {
 
           {/* City */}
           <div className={styles.filterGroup}>
-            <div className={styles.filterGroupTitle}>CITY</div>
+            <div className={styles.filterGroupTitle}>{t("dash_city")}</div>
             <div className={styles.selectWrapper}>
               <select className={styles.filterSelect} value={city} onChange={e => setCity(e.target.value)}>
-                <option value="">All cities</option>
+                <option value="">{t("dash_all_cities")}</option>
                 {cities.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <span className={styles.selectArrow}>▾</span>
@@ -358,7 +384,7 @@ function Dashboard() {
 
           {/* Postal code */}
           <div className={styles.filterGroup}>
-            <div className={styles.filterGroupTitle}>POSTAL CODE</div>
+            <div className={styles.filterGroupTitle}>{t("dash_postal")}</div>
             <div className={styles.searchInputWrapper}>
               <span className={styles.searchIcon}>⌕</span>
               <input
@@ -366,7 +392,7 @@ function Dashboard() {
                 className={styles.filterInput}
                 value={postalCode}
                 onChange={e => setPostalCode(e.target.value)}
-                placeholder="Enter postal code..."
+                placeholder={t("dash_postal_ph")}
               />
             </div>
           </div>
@@ -383,8 +409,8 @@ function Dashboard() {
           ) : filtered.length === 0 ? (
             <div className={styles.emptyState}>
               <p className={styles.emptyIcon}>⚽</p>
-              <p className={styles.emptyText}>No profiles found.</p>
-              <button className={styles.emptyReset} onClick={resetFilters}>Clear filters</button>
+              <p className={styles.emptyText}>{t("dash_no_profiles")}</p>
+              <button className={styles.emptyReset} onClick={resetFilters}>{t("dash_clear_filters")}</button>
             </div>
           ) : (
             filtered.map(profile => (

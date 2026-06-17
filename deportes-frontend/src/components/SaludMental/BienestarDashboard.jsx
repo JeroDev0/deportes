@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./BienestarDashboard.module.css";
 
 const API = "https://deportes-production.up.railway.app";
@@ -32,6 +33,7 @@ function sugerencias(checkin) {
 
 function BienestarDashboard({ profile, onGoCheckIn }) {
   const { token } = useAuth();
+  const { t } = useLanguage();
   const [checkinHoy, setCheckinHoy] = useState(null);
   const [historial, setHistorial] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,12 +53,20 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
   const score = checkinHoy?.puntuacionPreparacion ?? null;
 
   const scoreColor = score === null ? "#4a6a8a" : score >= 70 ? "#53fb52" : score >= 40 ? "#f0b429" : "#e05555";
-  const scoreLabel = score === null ? "—" : score >= 70 ? "Óptimo" : score >= 40 ? "Moderado" : "Bajo";
+  const scoreLabel = score === null ? "—" : score >= 70 ? t("bien_optimal") : score >= 40 ? t("bien_moderate") : t("bien_low");
+
+  const nivelTexto = (valor, invertido = false) => {
+    if (!valor) return "—";
+    const v = invertido ? 11 - valor : valor;
+    if (v <= 3) return t("bien_low");
+    if (v <= 6) return t("bien_moderate");
+    return t("bien_high");
+  };
 
   const sugs = sugerencias(checkinHoy);
 
   if (loading) {
-    return <div className={styles.loading}>Cargando bienestar...</div>;
+    return <div className={styles.loading}>{t("bien_loading")}</div>;
   }
 
   return (
@@ -64,7 +74,7 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
       {/* Score principal */}
       <div className={styles.scoreRow}>
         <div className={styles.scoreCard}>
-          <span className={styles.scoreLabel}>Preparación diaria</span>
+          <span className={styles.scoreLabel}>{t("bien_daily_prep")}</span>
           <div className={styles.scoreCircle} style={{ borderColor: scoreColor }}>
             <span className={styles.scoreNumber} style={{ color: scoreColor }}>
               {score !== null ? score : "—"}
@@ -77,27 +87,27 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
         {/* Estado mental */}
         {checkinHoy ? (
           <div className={styles.statusCard}>
-            <p className={styles.statusTitle}>Estado mental</p>
+            <p className={styles.statusTitle}>{t("bien_mental_state")}</p>
             <div className={styles.statusRow}>
-              <span className={styles.statusKey}>Estrés</span>
+              <span className={styles.statusKey}>{t("bien_stress")}</span>
               <span className={styles.statusVal} style={{ color: nivelColor(checkinHoy.nivelEstres, true) }}>
                 {nivelTexto(checkinHoy.nivelEstres, true)}
               </span>
             </div>
             <div className={styles.statusRow}>
-              <span className={styles.statusKey}>Foco</span>
+              <span className={styles.statusKey}>{t("bien_focus")}</span>
               <span className={styles.statusVal} style={{ color: nivelColor(checkinHoy.motivacion) }}>
                 {nivelTexto(checkinHoy.motivacion)}
               </span>
             </div>
             <div className={styles.statusRow}>
-              <span className={styles.statusKey}>Sueño</span>
+              <span className={styles.statusKey}>{t("bien_sleep")}</span>
               <span className={styles.statusVal} style={{ color: nivelColor(checkinHoy.calidadSueno) }}>
                 {nivelTexto(checkinHoy.calidadSueno)}
               </span>
             </div>
             <div className={styles.statusRow}>
-              <span className={styles.statusKey}>Estado ánimo</span>
+              <span className={styles.statusKey}>{t("bien_mood")}</span>
               <span className={styles.statusVal} style={{ color: nivelColor(checkinHoy.estadoAnimo) }}>
                 {nivelTexto(checkinHoy.estadoAnimo)}
               </span>
@@ -105,9 +115,9 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
           </div>
         ) : (
           <div className={styles.noCheckinCard}>
-            <p>Aún no has completado el check-in de hoy</p>
+            <p>{t("bien_no_checkin")}</p>
             <button className={styles.checkinBtn} onClick={onGoCheckIn} type="button">
-              Completar check-in
+              {t("bien_complete_checkin")}
             </button>
           </div>
         )}
@@ -115,7 +125,7 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
 
       {/* Tendencia 7 días */}
       <div className={styles.section}>
-        <p className={styles.sectionTitle}>Tendencia — últimos 7 días</p>
+        <p className={styles.sectionTitle}>{t("bien_trend")}</p>
         <div className={styles.barChart}>
           {historial.length > 0 ? historial.map((c, i) => {
             const h = c.puntuacionPreparacion ?? 0;
@@ -130,7 +140,7 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
               </div>
             );
           }) : (
-            <p className={styles.emptyHint}>Registra tu primer check-in para ver la tendencia.</p>
+            <p className={styles.emptyHint}>{t("bien_first_checkin")}</p>
           )}
         </div>
       </div>
@@ -138,7 +148,7 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
       {/* Sugerencias automáticas */}
       {sugs.length > 0 && (
         <div className={styles.section}>
-          <p className={styles.sectionTitle}>Próximos pasos sugeridos</p>
+          <p className={styles.sectionTitle}>{t("bien_next_steps")}</p>
           <div className={styles.suggestList}>
             {sugs.map((s, i) => (
               <div key={i} className={styles.suggestItem}>
@@ -156,7 +166,7 @@ function BienestarDashboard({ profile, onGoCheckIn }) {
         onClick={onGoCheckIn}
         type="button"
       >
-        {checkinHoy ? "Ver check-in de hoy" : "Completar check-in de hoy"}
+        {checkinHoy ? t("bien_view_today") : t("bien_complete_today")}
       </button>
     </div>
   );

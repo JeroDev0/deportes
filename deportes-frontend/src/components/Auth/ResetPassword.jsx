@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./ResetPassword.module.css";
 import API_URL from "../../config/api";
 
@@ -8,12 +9,9 @@ function ResetPassword() {
   const location = useLocation();
 
   const token = new URLSearchParams(location.search).get("token");
+  const { t } = useLanguage();
 
-  const [form, setForm] = useState({
-    newPassword: "",
-    confirmPassword: ""
-  });
-
+  const [form, setForm] = useState({ newPassword: "", confirmPassword: "" });
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,11 +31,11 @@ function ResetPassword() {
     setMsg("");
 
     if (form.newPassword.length < 6) {
-      return setMsg("Password must be at least 6 characters.");
+      return setMsg(t("reset_min"));
     }
 
     if (form.newPassword !== form.confirmPassword) {
-      return setMsg("Passwords do not match.");
+      return setMsg(t("reset_no_match"));
     }
 
     setLoading(true);
@@ -55,13 +53,13 @@ function ResetPassword() {
       const data = await res.json();
 
       if (res.ok) {
-        setMsg("Password successfully reset! Redirecting to login...");
+        setMsg(t("reset_success"));
         setTimeout(() => navigate("/login"), 2500);
       } else {
-        setMsg(data.error || "Invalid or expired token.");
+        setMsg(data.error || t("reset_invalid"));
       }
     } catch (error) {
-      setMsg("Connection error. Please try again.");
+      setMsg(t("reset_connection"));
       console.error("Reset password error:", error);
     }
 
@@ -71,31 +69,13 @@ function ResetPassword() {
   return (
     <div className={styles.authPanel}>
       <div className={styles.formBox}>
-      <h2 className={styles.title}>Create New Password</h2>
+      <h2 className={styles.title}>{t("reset_title")}</h2>
 
       <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="password"
-          name="newPassword"
-          placeholder="New password"
-          value={form.newPassword}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm new password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-
+        <input type="password" name="newPassword" placeholder={t("reset_new")} value={form.newPassword} onChange={handleChange} required className={styles.input} />
+        <input type="password" name="confirmPassword" placeholder={t("reset_confirm")} value={form.confirmPassword} onChange={handleChange} required className={styles.input} />
         <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? "Updating..." : "Reset Password"}
+          {loading ? t("reset_updating") : t("reset_btn")}
         </button>
       </form>
 

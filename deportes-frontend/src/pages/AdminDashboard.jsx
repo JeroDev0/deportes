@@ -94,7 +94,7 @@ function AdminDashboard() {
             onClick={() => navigate("/admin-mental-health")}
             type="button"
           >
-            Salud Mental
+            Bienestar
           </button>
           <div className={styles.statsCard}>
             <span className={styles.statNumber}>{users.length}</span>

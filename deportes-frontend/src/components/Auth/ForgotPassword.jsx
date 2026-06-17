@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import styles from './AuthForm.module.css';
 import API_URL from '../../config/api';
 
@@ -8,6 +9,7 @@ function ForgotPassword() {
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,15 +26,15 @@ function ForgotPassword() {
       const data = await res.json();
 
       if (res.ok) {
-        setMsg('If this email exists, a reset link has been sent.');
-        
+        setMsg(t('forgot_success'));
+
         // Opcional: volver a login después de 3 segundos
         setTimeout(() => navigate('/login'), 3000);
       } else {
-        setMsg(data.error || 'Something went wrong.');
+        setMsg(data.error || t('forgot_error'));
       }
     } catch (error) {
-      setMsg('Connection error. Please try again.');
+      setMsg(t('forgot_connection'));
       console.error('Forgot password error:', error);
     }
 
@@ -41,21 +43,20 @@ function ForgotPassword() {
 
   return (
     <div>
-      <h2 className={styles.title}>Reset Password</h2>
+      <h2 className={styles.title}>{t('forgot_title')}</h2>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="email"
           name="email"
-          placeholder="Enter your email"
+          placeholder={t('forgot_placeholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           className={styles.input}
         />
-
         <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? 'Sending...' : 'Send Instructions'}
+          {loading ? t('forgot_sending') : t('forgot_btn')}
         </button>
       </form>
 

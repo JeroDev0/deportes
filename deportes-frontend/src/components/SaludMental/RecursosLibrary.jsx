@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./RecursosLibrary.module.css";
 
 const API = "https://deportes-production.up.railway.app";
-
-const CATEGORIAS = [
-  { id: "",                   label: "Todos" },
-  { id: "respiracion_foco",   label: "Respiración y Foco" },
-  { id: "optimizacion_sueno", label: "Sueño" },
-  { id: "fortaleza_mental",   label: "Fortaleza Mental" },
-  { id: "recuperacion",       label: "Recuperación" },
-];
-
-const TIPO_LABEL = { articulo: "Artículo", video: "Video", ejercicio: "Ejercicio" };
 const INTENSIDAD_COLOR = { bajo: "#53fb52", medio: "#f0b429", alto: "#e05555" };
 
 function RecursosLibrary() {
   const { token } = useAuth();
+  const { t } = useLanguage();
+
+  const CATEGORIAS = [
+    { id: "",                   label: t("rec_cat_all") },
+    { id: "respiracion_foco",   label: t("rec_cat_breath") },
+    { id: "optimizacion_sueno", label: t("rec_cat_sleep") },
+    { id: "fortaleza_mental",   label: t("rec_cat_mental") },
+    { id: "recuperacion",       label: t("rec_cat_recovery") },
+  ];
+
+  const TIPO_LABEL = {
+    articulo: t("rec_type_article"),
+    video: t("rec_type_video"),
+    ejercicio: t("rec_type_exercise"),
+  };
   const [recursos, setRecursos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoria, setCategoria] = useState("");
@@ -38,7 +44,7 @@ function RecursosLibrary() {
     r.descripcionBreve?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  if (loading) return <div className={styles.loading}>Cargando recursos...</div>;
+  if (loading) return <div className={styles.loading}>{t("rec_loading")}</div>;
 
   return (
     <div className={styles.wrapper}>
@@ -47,7 +53,7 @@ function RecursosLibrary() {
         <span className={styles.searchIcon}>🔍</span>
         <input
           className={styles.searchInput}
-          placeholder="Buscar artículos, ejercicios o videos..."
+          placeholder={t("rec_search_ph")}
           value={busqueda}
           onChange={e => setBusqueda(e.target.value)}
         />
@@ -70,8 +76,8 @@ function RecursosLibrary() {
       {/* Listado */}
       {filtrados.length === 0 ? (
         <div className={styles.empty}>
-          <p>No hay recursos disponibles en esta categoría todavía.</p>
-          <p className={styles.emptyHint}>El equipo de ibkme está preparando contenido para ti.</p>
+          <p>{t("rec_empty")}</p>
+          <p className={styles.emptyHint}>{t("rec_empty_hint")}</p>
         </div>
       ) : (
         <div className={styles.grid}>

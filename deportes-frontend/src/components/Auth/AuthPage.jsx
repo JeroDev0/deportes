@@ -3,37 +3,34 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import Register from "./Register";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./AuthPage.module.css";
 
 function AuthPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const isLogin = location.pathname === "/login";
   const isRegister = location.pathname === "/register";
   const isForgot = location.pathname === "/forgot-password";
 
-  // Imágenes para el panel de login y registro
   const loginImg = "/assets/login.png";
   const registerImg = "/assets/registrer.png";
 
-  // 
   let title = "";
   let description = "";
   let image = "";
   if (isLogin) {
-    title = "Welcome Back!";
-    description =
-      "Log in to your account and connect with the best athletes, scouts and sponsors.";
+    title = t("auth_welcome");
+    description = t("auth_welcome_desc");
     image = loginImg;
   } else if (isRegister) {
-    title = "Join Us!";
-    description =
-      "Create your account and start your journey in the sports community.";
+    title = t("auth_join");
+    description = t("auth_join_desc");
     image = registerImg;
   } else if (isForgot) {
-    title = "Reset Password";
-    description =
-      "Enter your email and we’ll send you a reset link.";
+    title = t("auth_reset_title");
+    description = t("auth_reset_desc");
     image = loginImg;
   }
 
@@ -44,7 +41,7 @@ function AuthPage() {
         <div className={styles.side + " " + styles.sideImage}>
            <img
               src={image}
-              alt="Auth illustration"
+              alt="Ilustración de autenticación"
               className={styles.illustration}
             />
             <div className={styles.sideText}>
@@ -61,15 +58,14 @@ function AuthPage() {
             <div className={styles.switchText}>
               {isLogin ? (
                 <>
-                  Don't have an account?{" "}
-                  <button onClick={() => navigate("/register")}>Register</button>                
-                  
-                  <button onClick={() => navigate("/forgot-password")}>Forgot your password?</button>               
+                  {t("auth_no_account")}{" "}
+                  <button onClick={() => navigate("/register")}>{t("auth_register_btn")}</button>
+                  <button onClick={() => navigate("/forgot-password")}>{t("auth_forgot")}</button>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
-                  <button onClick={() => navigate("/login")}>Login</button>
+                  {t("auth_have_account")}{" "}
+                  <button onClick={() => navigate("/login")}>{t("auth_login_btn")}</button>
                 </>
               )}
             </div>

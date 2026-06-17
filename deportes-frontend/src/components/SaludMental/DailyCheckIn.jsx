@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./DailyCheckIn.module.css";
 
 const API = "https://deportes-production.up.railway.app";
-
-const CAMPOS = [
-  { key: "estadoAnimo",  label: "Estado de ánimo",   izq: "Agotado",      der: "Excelente",   invertido: false },
-  { key: "nivelEstres",  label: "Nivel de estrés",   izq: "Sin estrés",   der: "Muy alto",    invertido: true  },
-  { key: "calidadSueno", label: "Calidad del sueño", izq: "Muy mala",     der: "Excelente",   invertido: false },
-  { key: "fatigaFisica", label: "Fatiga física",     izq: "Sin fatiga",   der: "Agotamiento", invertido: true  },
-  { key: "motivacion",   label: "Motivación",        izq: "Sin ganas",    der: "Máximas",     invertido: false },
-];
-
-function valorTexto(val, invertido) {
-  const v = invertido ? 11 - val : val;
-  if (v <= 3) return { texto: "Bajo", color: "#e05555" };
-  if (v <= 6) return { texto: "Moderado", color: "#f0b429" };
-  return { texto: "Alto", color: "#53fb52" };
-}
 
 function fechaHoy() {
   return new Date().toISOString().slice(0, 10);
@@ -27,6 +13,22 @@ const INIT = { estadoAnimo: 5, nivelEstres: 5, calidadSueno: 5, fatigaFisica: 5,
 
 function DailyCheckIn({ onSaved }) {
   const { token } = useAuth();
+  const { t } = useLanguage();
+
+  const CAMPOS = [
+    { key: "estadoAnimo",  label: t("checkin_mood"),         izq: t("checkin_exhausted"),    der: t("checkin_excellent"),   invertido: false },
+    { key: "nivelEstres",  label: t("checkin_stress_level"), izq: t("checkin_no_stress"),    der: t("checkin_very_high"),   invertido: true  },
+    { key: "calidadSueno", label: t("checkin_sleep_q"),      izq: t("checkin_very_bad"),     der: t("checkin_excellent"),   invertido: false },
+    { key: "fatigaFisica", label: t("checkin_fatigue"),      izq: t("checkin_no_fatigue"),   der: t("checkin_exhaustion"),  invertido: true  },
+    { key: "motivacion",   label: t("checkin_motivation"),   izq: t("checkin_no_motivation"),der: t("checkin_max"),         invertido: false },
+  ];
+
+  const valorTexto = (val, invertido) => {
+    const v = invertido ? 11 - val : val;
+    if (v <= 3) return { texto: t("checkin_low"), color: "#e05555" };
+    if (v <= 6) return { texto: t("checkin_moderate"), color: "#f0b429" };
+    return { texto: t("checkin_high"), color: "#53fb52" };
+  };
   const [form, setForm] = useState(INIT);
   const [checkinExistente, setCheckinExistente] = useState(null);
   const [guardando, setGuardando] = useState(false);
@@ -80,25 +82,25 @@ function DailyCheckIn({ onSaved }) {
     }
   };
 
-  if (loading) return <div className={styles.loading}>Cargando check-in...</div>;
+  if (loading) return <div className={styles.loading}>{t("checkin_loading")}</div>;
 
   return (
     <div className={styles.wrapper}>
       {/* Cabecera */}
       <div className={styles.header}>
         <div>
-          <h3 className={styles.title}>Check-in diario</h3>
+          <h3 className={styles.title}>{t("checkin_title")}</h3>
           <p className={styles.fecha}>{fechaHoy()}</p>
         </div>
         {checkinExistente && (
-          <span className={styles.yaRegistrado}>Ya registrado hoy · Puedes editarlo</span>
+          <span className={styles.yaRegistrado}>{t("checkin_already")}</span>
         )}
       </div>
 
       {guardado ? (
         <div className={styles.successMsg}>
           <span className={styles.successIcon}>✓</span>
-          <p>Check-in guardado correctamente</p>
+          <p>{t("checkin_saved")}</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -130,12 +132,12 @@ function DailyCheckIn({ onSaved }) {
           {/* Notas / Journaling */}
           <div className={styles.campo}>
             <div className={styles.campoHeader}>
-              <span className={styles.campoLabel}>Notas del día</span>
+              <span className={styles.campoLabel}>{t("checkin_notes_label")}</span>
               <span className={styles.charCount}>{form.notas.length}/500</span>
             </div>
             <textarea
               className={styles.textarea}
-              placeholder="¿Hubo algo especial en el entrenamiento de hoy? (opcional)"
+              placeholder={t("checkin_notes_ph")}
               maxLength={500}
               value={form.notas}
               onChange={e => setForm(f => ({ ...f, notas: e.target.value }))}
@@ -150,7 +152,7 @@ function DailyCheckIn({ onSaved }) {
           )}
 
           <button type="submit" className={styles.submitBtn} disabled={guardando}>
-            {guardando ? "Guardando..." : checkinExistente ? "Actualizar check-in" : "Guardar check-in"}
+            {guardando ? t("checkin_saving") : checkinExistente ? t("checkin_update") : t("checkin_save")}
           </button>
         </form>
       )}

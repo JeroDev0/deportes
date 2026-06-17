@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 
 function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [followers, setFollowers] = useState(112);
   const [isFollowing, setIsFollowing] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -64,7 +66,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
             onClick={() => navigate(`/scout-profile/${profile._id}/edit`)}
           >
             <img src="/assets/icon_edit.svg" alt="edit" />
-            Edit Profile
+            {t("profile_edit")}
           </button>
         </div>
       )}
@@ -75,35 +77,35 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
           <h1 className={styles.lastName}>{profile?.lastName || ""}</h1>
         </div>
         <div className={styles.followers}>
-          {followers} Followers
+          {followers} {t("profile_followers")}
           <button onClick={toggleFollow} className={styles.followBtn}>
-            {isFollowing ? "Following" : "Follow"}
+            {isFollowing ? t("profile_following") : t("profile_follow")}
           </button>
         </div>
       </div>
 
       <section id="shortDescSection" className={styles.shortDescSection}>
         <div className={styles.sectionHeader}>
-          <h2>Short Description</h2>
+          <h2>{t("profile_short_desc")}</h2>
         </div>
         <p className={styles.shortDescText}>
-          {profile?.shortDescription || "No short description available."}
+          {profile?.shortDescription || t("profile_no_short_desc")}
         </p>
       </section>
 
       <section id="aboutSection" className={styles.aboutSection}>
         <div className={styles.sectionHeader}>
-          <h2>Professional Bio</h2>
+          <h2>{t("scout_prof_bio")}</h2>
         </div>
-        <p>{profile?.about || "No professional bio available."}</p>
+        <p>{profile?.about || t("scout_no_bio")}</p>
       </section>
 
       <section id="gallerySection" className={styles.gallerySection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="gallery icon" />
-          <h2>Gallery</h2>
+          <h2>{t("profile_gallery")}</h2>
           <div className={styles.showAll}>
-            Show all <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
+            {t("profile_show_all")} <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
           </div>
         </div>
         <div className={styles.galleryGrid}>
@@ -125,13 +127,13 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
                 {post.type === "video" && (
                   <video muted>
                     <source src={post.mediaUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    Tu navegador no soporta el video.
                   </video>
                 )}
               </div>
             ))
           ) : (
-            <p>No recent posts.</p>
+            <p>{t("profile_no_posts")}</p>
           )}
         </div>
       </section>
@@ -139,7 +141,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
       <section id="achievementsSection" className={styles.achievementsSection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_achievements.svg" alt="trophy" />
-          <h2>Achievements</h2>
+          <h2>{t("profile_achievements")}</h2>
         </div>
 
         <ul className={styles.achievementsList}>
@@ -156,7 +158,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
             ))
           ) : (
             <li>
-              <span className={styles.itemText}>No achievements listed.</span>
+              <span className={styles.itemText}>{t("profile_no_achievements")}</span>
             </li>
           )}
         </ul>
@@ -165,7 +167,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
       <section className={styles.careerSection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="career icon" />
-          <h2>Professional Experience</h2>
+          <h2>{t("scout_prof_exp")}</h2>
         </div>
 
         <ul className={styles.careerList}>
@@ -177,7 +179,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
             ))
           ) : (
             <li>
-              <span className={styles.itemText}>No professional experience available.</span>
+              <span className={styles.itemText}>{t("scout_no_exp")}</span>
             </li>
           )}
         </ul>
@@ -187,15 +189,15 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
         <section className={styles.networkSection}>
           <div className={styles.sectionHeader}>
             <img src="/assets/icon_network.svg" alt="network icon" />
-            <h2>Athletes Under My Guidance</h2>
+            <h2>{t("scout_guidance")}</h2>
           </div>
-          <p>Loading athletes...</p>
+          <p>{t("scout_loading")}</p>
         </section>
       ) : athletes.length > 0 ? (
         <section className={styles.networkSection}>
           <div className={styles.sectionHeader}>
             <img src="/assets/icon_network.svg" alt="network icon" />
-            <h2>Athletes Under My Guidance</h2>
+            <h2>{t("scout_guidance")}</h2>
           </div>
 
           <div className={styles.athletesGrid}>
@@ -232,9 +234,9 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
         <section className={styles.networkSection}>
           <div className={styles.sectionHeader}>
             <img src="/assets/icon_network.svg" alt="network icon" />
-            <h2>Athletes Under My Guidance</h2>
+            <h2>{t("scout_guidance")}</h2>
           </div>
-          <p>No athletes have selected you as their scout yet.</p>
+          <p>{t("scout_no_athletes")}</p>
         </section>
       )}
     </div>

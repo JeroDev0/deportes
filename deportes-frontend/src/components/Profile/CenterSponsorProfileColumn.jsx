@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./CenterProfileColumn.module.css";
 
 function CenterSponsorProfileColumn({ profile, isMyProfile }) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className={styles.centerCard}>
@@ -16,7 +18,7 @@ function CenterSponsorProfileColumn({ profile, isMyProfile }) {
             }
           >
             <img src="/assets/icon_edit.svg" alt="edit" />
-            Edit Profile
+            {t("profile_edit")}
           </button>
         </div>
       )}
@@ -29,26 +31,25 @@ function CenterSponsorProfileColumn({ profile, isMyProfile }) {
 
       <section className={styles.shortDescSection}>
         <div className={styles.sectionHeader}>
-          <h2>About the Company</h2>
+          <h2>{t("sponsor_about")}</h2>
         </div>
         <p>
-          {profile.shortDescription ||
-            "No short description available."}
+          {profile.shortDescription || t("sponsor_no_short")}
         </p>
       </section>
 
       <section className={styles.aboutSection}>
         <div className={styles.sectionHeader}>
-          <h2>Company Profile</h2>
+          <h2>{t("sponsor_profile")}</h2>
         </div>
-        <p>{profile.about || "No company description provided."}</p>
+        <p>{profile.about || t("sponsor_no_profile")}</p>
       </section>
 
       {profile.athletes?.length > 0 && (
         <section className={styles.networkSection}>
           <div className={styles.sectionHeader}>
             <img src="/assets/icon_network.svg" alt="network" />
-            <h2>Sponsored Athletes</h2>
+            <h2>{t("sponsor_sponsored_athletes")}</h2>
           </div>
 
           <div className={styles.athletesGrid}>
@@ -81,7 +82,7 @@ function CenterSponsorProfileColumn({ profile, isMyProfile }) {
         <section className={styles.networkSection}>
           <div className={styles.sectionHeader}>
             <img src="/assets/club-logo.png" alt="club" />
-            <h2>Partner Clubs</h2>
+            <h2>{t("sponsor_partner_clubs")}</h2>
           </div>
 
           <ul className={styles.careerList}>

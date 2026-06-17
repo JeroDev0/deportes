@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 
 function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [followers, setFollowers] = useState(219);
   const [isFollowing, setIsFollowing] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -45,7 +47,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
           onClick={() => navigate(`/profile/${profile._id}/edit`)}
         >
           <img src="/assets/icon_edit.svg" alt="edit" />
-          Edit Profile
+          {t("profile_edit")}
         </button>
         )}
       </div>
@@ -57,9 +59,9 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
           <h1 className={styles.lastName}>{profile?.lastName || ""}</h1>
         </div>
         <div className={styles.followers}>
-          {followers} Followers
+          {followers} {t("profile_followers")}
           <button onClick={toggleFollow} className={styles.followBtn}>
-            {isFollowing ? "Following" : "Follow"}
+            {isFollowing ? t("profile_following") : t("profile_follow")}
           </button>
         </div>
       </div>
@@ -67,32 +69,28 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
       {/* Short Description */}
       <section id="shortDescSection" className={styles.shortDescSection}>
         <div className={styles.sectionHeader}>
-          <h2>Short Description</h2>
+          <h2>{t("profile_short_desc")}</h2>
         </div>
         <p className={styles.shortDescText}>
-          {profile?.shortDescription || "No short description available."}
+          {profile?.shortDescription || t("profile_no_short_desc")}
         </p>
       </section>
 
       {/* About - My Story */}
       <section id="aboutSection" className={styles.aboutSection}>
         <div className={styles.sectionHeader}>
-          <h2>My Story</h2>
+          <h2>{t("profile_my_story")}</h2>
         </div>
-        <p>{profile?.about || "No story available."}</p>
+        <p>{profile?.about || t("profile_no_story")}</p>
       </section>
 
       {/* Gallery */}
       <section id="gallerySection" className={styles.gallerySection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="gallery icon" />
-          <h2>Gallery</h2>
-          <button
-            className={styles.showAll}
-            onClick={goToFeed}
-            type="button"
-          >
-            Show all <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
+          <h2>{t("profile_gallery")}</h2>
+          <button className={styles.showAll} onClick={goToFeed} type="button">
+            {t("profile_show_all")} <img src="/assets/icon_arrow_medium.svg" alt="arrow" />
           </button>
         </div>
         <div className={styles.galleryGrid}>
@@ -114,13 +112,13 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
                 {post.type === "video" && (
                   <video muted>
                     <source src={post.mediaUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    Tu navegador no soporta el video.
                   </video>
                 )}
               </div>
             ))
           ) : (
-            <p>No recent posts.</p>
+            <p>{t("profile_no_posts")}</p>
           )}
         </div>
       </section>
@@ -129,7 +127,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
       <section id="achievementsSection" className={styles.achievementsSection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_achievements.svg" alt="trophy" />
-          <h2>Achievements</h2>
+          <h2>{t("profile_achievements")}</h2>
         </div>
 
         <ul className={styles.achievementsList}>
@@ -156,7 +154,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
             })
           ) : (
             <li>
-              <span className={styles.itemText}>No achievements listed.</span>
+              <span className={styles.itemText}>{t("profile_no_achievements")}</span>
             </li>
           )}
         </ul>
@@ -166,7 +164,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
       <section className={styles.careerSection}>
         <div className={styles.sectionHeader}>
           <img src="/assets/icon_list.svg" alt="career icon" />
-          <h2>Career</h2>
+          <h2>{t("profile_career")}</h2>
         </div>
 
         <ul className={styles.careerList}>
@@ -192,7 +190,7 @@ function CenterProfileColumn({ profile = {}, onNavigateToFeed, isMyProfile  }) {
             })
           ) : (
             <li>
-              <span className={styles.itemText}>No career information available.</span>
+              <span className={styles.itemText}>{t("profile_no_career")}</span>
             </li>
           )}
         </ul>
