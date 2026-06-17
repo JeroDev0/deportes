@@ -1,34 +1,27 @@
 import React from "react";
 import styles from "./RightProfileColumn.module.css";
+import { useLanguage } from "../../context/LanguageContext";
 
-const data = [
-  {
-    category: "Scouting / Sports Services",
-    entries: [
+
+function RightProfileColumn() {
+  const { t } = useLanguage();
+  const data = [
+    { category: t("right_scouting"), entries: [
       { institution: "Body Attack Sports Nutrition GmbH", location: "body-attack.com" },
       { institution: "Kollektiv Sport", location: "europages listing" },
       { institution: "Sauerland Elektroanlagen GmbH", location: "sea-flutlicht.de" },
-    ],
-  },
-  {
-    category: "Sports Clubs",
-    entries: [
+    ]},
+    { category: t("right_clubs"), entries: [
       { institution: "Hamburger Polo Club", location: "hamburger-polo-club.de" },
       { institution: "USC Paloma Hamburg", location: "uscpaloma.de" },
       { institution: "SC Victoria Hamburg", location: "sc-victoria.de" },
-    ],
-  },
-  {
-    category: "Sports Sponsors",
-    entries: [
+    ]},
+    { category: t("right_sponsors"), entries: [
       { institution: "Komali Tortillas GmbH", location: "komalitortillas.com" },
       { institution: "Body Attack Sports Nutrition GmbH", location: "body-attack.com" },
       { institution: "Kollektiv Sport", location: "europages listing https://www.kollektiv.rocks/" },
-    ],
-  },
-];
-
-function RightProfileColumn() {
+    ]},
+  ];
   return (
     <div className={styles.container}>
       {data.map(({ category, entries }, idx) => (

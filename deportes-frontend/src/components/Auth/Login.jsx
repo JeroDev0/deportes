@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth.js';
+import { useLanguage } from '../../context/LanguageContext';
 import styles from './AuthForm.module.css';
 import API_URL from '../../config/api';
 
@@ -10,6 +11,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const { t } = useLanguage();
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -27,7 +29,7 @@ function Login() {
       
       if (res.ok) {
         login(data.token, data.user);
-        setMsg('Login successful!');
+        setMsg(t('login_success'));
         
         let redirectPath;
         
@@ -58,7 +60,7 @@ function Login() {
         
         setTimeout(() => navigate(redirectPath), 1000);
       } else {
-        setMsg(data.error || 'Login error');
+        setMsg(data.error || t('login_error'));
       }
     } catch (error) {
       setMsg('Error de conexión. Inténtalo de nuevo.');
@@ -68,11 +70,11 @@ function Login() {
 
   return (
     <div>
-      <h2 className={styles.title}>Login</h2>
+      <h2 className={styles.title}>{t('login_title')}</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required className={styles.input} />
-        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required className={styles.input} />
-        <button type="submit" className={styles.button}>Enter</button>
+        <input name="email" type="email" placeholder={t('login_email')} value={form.email} onChange={handleChange} required className={styles.input} />
+        <input name="password" type="password" placeholder={t('login_password')} value={form.password} onChange={handleChange} required className={styles.input} />
+        <button type="submit" className={styles.button}>{t('login_btn')}</button>
       </form>
       {msg && <p className={styles.msg}>{msg}</p>}
     </div>

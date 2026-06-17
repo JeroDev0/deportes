@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './HomeCarousel.module.css';
-
-const newsItems = [
-  {
-    img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351364/news1_fvsrzk.webp',
-    title: 'CONNECT WITH CLUBS',
-    text: `You've put in the work — the sweat, the hours, the sacrifice. Now it's time to be seen. Connect with top-tier clubs who are actively searching for rising athletes ready to make their mark. This is your chance to step onto bigger stages, wear the crest with pride, and keep chasing greatness.`,
-},
-  {
-    img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351365/news2_u8a3pw.webp',
-    title: 'PROFESSIONAL SCOUTS',
-    text: `You've put in the work — the sweat, the hours, the sacrifice. Now it's time to be seen. Connect with top-tier clubs who are actively searching for rising athletes ready to make their mark. This is your chance to step onto bigger stages, wear the crest with pride, and keep chasing greatness.`,
-    },
-  {
-    img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351365/news3_ohcbes.webp',
-    title: 'SPONSORING BRANDS',
-    text: `You've put in the work — the sweat, the hours, the sacrifice. Now it's time to be seen. Connect with top-tier clubs who are actively searching for rising athletes ready to make their mark. This is your chance to step onto bigger stages, wear the crest with pride, and keep chasing greatness.`,
-    
-  },
-];
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function HomeCarousel() {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const newsItems = [
+    { img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351364/news1_fvsrzk.webp', title: t("carousel_clubs_title"), text: t("carousel_text") },
+    { img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351365/news2_u8a3pw.webp', title: t("carousel_scouts_title"), text: t("carousel_text") },
+    { img: 'https://res.cloudinary.com/dx9l2xf44/image/upload/v1756351365/news3_ohcbes.webp', title: t("carousel_sponsors_title"), text: t("carousel_text") },
+  ];
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
@@ -136,7 +125,7 @@ export default function HomeCarousel() {
                 <div className={styles.cardContent}>
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardText}>{item.text}</p>
-                  <button className={styles.cardButton}>Sponsor now</button>
+                  <button className={styles.cardButton}>{t("carousel_btn")}</button>
                 </div>
               </div>
             </div>

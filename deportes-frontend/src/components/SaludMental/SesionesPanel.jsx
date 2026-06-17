@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./SesionesPanel.module.css";
 
 const API = "https://deportes-production.up.railway.app";
-
-const ESPECIALIDADES = [
-  { id: "psicologo_deporte",       label: "Psicólogo del Deporte" },
-  { id: "coach_recuperacion",      label: "Coach de Recuperación" },
-  { id: "nutricionista_rendimiento", label: "Nutricionista del Rendimiento" },
-];
-
-const ESTADO_STYLE = {
-  pendiente:   { color: "#f0b429", bg: "rgba(240,180,41,0.08)", label: "Pendiente" },
-  confirmada:  { color: "#53fb52", bg: "rgba(83,251,82,0.08)",  label: "Confirmada" },
-  completada:  { color: "#8aaccc", bg: "rgba(138,172,204,0.08)", label: "Completada" },
-  cancelada:   { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: "Cancelada" },
-  rechazada:   { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: "Rechazada" },
-};
 
 const FORM_INIT = {
   profesionalNombre: "", profesionalEspecialidad: "psicologo_deporte",
@@ -25,6 +12,21 @@ const FORM_INIT = {
 
 function SesionesPanel() {
   const { token } = useAuth();
+  const { t } = useLanguage();
+
+  const ESPECIALIDADES = [
+    { id: "psicologo_deporte",         label: t("ses_spec_psy") },
+    { id: "coach_recuperacion",        label: t("ses_spec_coach") },
+    { id: "nutricionista_rendimiento", label: t("ses_spec_nut") },
+  ];
+
+  const ESTADO_STYLE = {
+    pendiente:  { color: "#f0b429", bg: "rgba(240,180,41,0.08)", label: t("ses_state_pending") },
+    confirmada: { color: "#53fb52", bg: "rgba(83,251,82,0.08)",  label: t("ses_state_confirmed") },
+    completada: { color: "#8aaccc", bg: "rgba(138,172,204,0.08)",label: t("ses_state_completed") },
+    cancelada:  { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: t("ses_state_cancelled") },
+    rechazada:  { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: t("ses_state_rejected") },
+  };
   const [sesiones, setSesiones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(FORM_INIT);
@@ -82,13 +84,13 @@ function SesionesPanel() {
   const pendientes = sesiones.filter(s => s.estado === "pendiente" || s.estado === "confirmada");
   const historial  = sesiones.filter(s => s.estado === "completada" || s.estado === "cancelada" || s.estado === "rechazada");
 
-  if (loading) return <div className={styles.loading}>Cargando sesiones...</div>;
+  if (loading) return <div className={styles.loading}>{t("ses_loading")}</div>;
 
   return (
     <div className={styles.wrapper}>
       {/* Botón nueva sesión */}
       <button className={styles.newBtn} onClick={() => setShowForm(!showForm)} type="button">
-        {showForm ? "Cancelar" : "+ Solicitar sesión"}
+        {showForm ? t("ses_cancel_form") : t("ses_new")}
       </button>
 
       {/* Formulario de solicitud */}
@@ -96,17 +98,17 @@ function SesionesPanel() {
         <form onSubmit={handleSolicitar} className={styles.form}>
           <div className={styles.formGrid}>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Nombre del profesional</label>
+              <label className={styles.fieldLabel}>{t("ses_prof_name")}</label>
               <input
                 className={styles.input}
-                placeholder="Ej: Dra. García"
+                placeholder={t("ses_prof_name_ph")}
                 value={form.profesionalNombre}
                 onChange={e => setForm(f => ({ ...f, profesionalNombre: e.target.value }))}
                 required
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Especialidad</label>
+              <label className={styles.fieldLabel}>{t("ses_specialty")}</label>
               <select
                 className={styles.input}
                 value={form.profesionalEspecialidad}
@@ -116,18 +118,18 @@ function SesionesPanel() {
               </select>
             </div>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Modalidad</label>
+              <label className={styles.fieldLabel}>{t("ses_modality")}</label>
               <select
                 className={styles.input}
                 value={form.modalidad}
                 onChange={e => setForm(f => ({ ...f, modalidad: e.target.value }))}
               >
                 <option value="video_call">Video-call</option>
-                <option value="presencial">Presencial</option>
+                <option value="presencial">{t("ses_presencial")}</option>
               </select>
             </div>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Fecha solicitada</label>
+              <label className={styles.fieldLabel}>{t("ses_date")}</label>
               <input
                 className={styles.input}
                 type="date"
@@ -137,7 +139,7 @@ function SesionesPanel() {
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Hora inicio</label>
+              <label className={styles.fieldLabel}>{t("ses_start_time")}</label>
               <input
                 className={styles.input}
                 type="time"
@@ -146,7 +148,7 @@ function SesionesPanel() {
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.fieldLabel}>Hora fin</label>
+              <label className={styles.fieldLabel}>{t("ses_end_time")}</label>
               <input
                 className={styles.input}
                 type="time"
@@ -156,7 +158,7 @@ function SesionesPanel() {
             </div>
           </div>
           <button type="submit" className={styles.submitBtn} disabled={guardando}>
-            {guardando ? "Enviando..." : "Enviar solicitud"}
+            {guardando ? t("ses_sending") : t("ses_send")}
           </button>
         </form>
       )}
@@ -164,7 +166,7 @@ function SesionesPanel() {
       {/* Próximas sesiones */}
       {pendientes.length > 0 && (
         <div className={styles.seccion}>
-          <p className={styles.seccionTitulo}>Próximas sesiones</p>
+          <p className={styles.seccionTitulo}>{t("ses_upcoming")}</p>
           {pendientes.map(s => <SesionCard key={s._id} sesion={s} onNotas={abrirNotas} />)}
         </div>
       )}
@@ -172,7 +174,7 @@ function SesionesPanel() {
       {/* Historial */}
       {historial.length > 0 && (
         <div className={styles.seccion}>
-          <p className={styles.seccionTitulo}>Historial</p>
+          <p className={styles.seccionTitulo}>{t("ses_history")}</p>
           {historial.map(s => (
             <SesionCard key={s._id} sesion={s} onNotas={abrirNotas} />
           ))}
@@ -181,8 +183,8 @@ function SesionesPanel() {
 
       {sesiones.length === 0 && !showForm && (
         <div className={styles.empty}>
-          <p>No tienes sesiones registradas aún.</p>
-          <p className={styles.emptyHint}>Solicita tu primera sesión con un profesional del bienestar.</p>
+          <p>{t("ses_empty")}</p>
+          <p className={styles.emptyHint}>{t("ses_empty_hint")}</p>
         </div>
       )}
 

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './components/PrivateRoute';
@@ -24,6 +25,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 
 function App() {
   return (
+    <LanguageProvider>
     <Router>
       <Header />
       <div className="app-content">
@@ -98,6 +100,7 @@ function App() {
 
       <FloatingButton />
     </Router>
+    </LanguageProvider>
   );
 }
 

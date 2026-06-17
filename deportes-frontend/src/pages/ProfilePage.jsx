@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import { useLanguage } from "../context/LanguageContext";
 import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
@@ -35,6 +36,7 @@ function ProfilePage() {
 
   const isMyProfile = user && user.id === profile._id;
   const isAdmin = user && user.modelType === "admin";
+  const { t } = useLanguage();
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
@@ -68,14 +70,14 @@ function ProfilePage() {
               onClick={() => setViewMode("professional")}
               type="button"
             >
-              Perfil Profesional
+              {t("tab_professional")}
             </button>
             <button
               className={`${styles.toggleBtn} ${viewMode === "social" ? styles.active : ""}`}
               onClick={() => setViewMode("social")}
               type="button"
             >
-              Perfil Social
+              {t("tab_social")}
             </button>
             {isMyProfile && (
               <button
@@ -83,7 +85,7 @@ function ProfilePage() {
                 onClick={() => setViewMode("salud")}
                 type="button"
               >
-                Salud Mental
+                {t("tab_wellbeing")}
               </button>
             )}
           </div>

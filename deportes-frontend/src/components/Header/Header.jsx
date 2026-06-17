@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import styles from "./Header.module.css";
 
 /* =====================================
@@ -81,6 +82,7 @@ const IconRegister = () => (
 
 function Header() {
   const { user, logout, getProfileRoute } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -113,76 +115,97 @@ function Header() {
 
         {/* Menú desktop solo texto */}
         <nav className={styles.navDesktop} aria-label="Navegación principal">
-          <Link to="/" className={styles.iconLink} title="Inicio">
-            <span className={styles.iconLabel}>Inicio</span>
+          <Link to="/" className={styles.iconLink} title={t("nav_home")}>
+            <span className={styles.iconLabel}>{t("nav_home")}</span>
           </Link>
-          <Link to="/dashboard" className={styles.iconLink} title="Buscar">
-            <span className={styles.iconLabel}>Buscar</span>
+          <Link to="/dashboard" className={styles.iconLink} title={t("nav_search")}>
+            <span className={styles.iconLabel}>{t("nav_search")}</span>
           </Link>
 
           {user ? (
             <>
-              <Link to={getProfileRoute()} className={styles.iconLink} title="Perfil">
-                <span className={styles.iconLabel}>Perfil</span>
+              <Link to={getProfileRoute()} className={styles.iconLink} title={t("nav_profile")}>
+                <span className={styles.iconLabel}>{t("nav_profile")}</span>
               </Link>
               <button
                 onClick={handleLogout}
                 className={styles.iconLink}
-                title="Cerrar sesión"
+                title={t("nav_logout")}
                 style={{ background: "none", border: "none", cursor: "pointer" }}
               >
-                <span className={styles.iconLabel}>Salir</span>
+                <span className={styles.iconLabel}>{t("nav_logout")}</span>
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className={styles.iconLink} title="Iniciar sesión">
-                <span className={styles.iconLabel}>Login</span>
+              <Link to="/login" className={styles.iconLink} title={t("nav_login")}>
+                <span className={styles.iconLabel}>{t("nav_login")}</span>
               </Link>
-              <Link to="/register" className={styles.iconLink} title="Registrarse">
-                <span className={styles.iconLabel}>Registro</span>
+              <Link to="/register" className={styles.iconLink} title={t("nav_register")}>
+                <span className={styles.iconLabel}>{t("nav_register")}</span>
               </Link>
             </>
           )}
+
+          {/* Selector de idioma */}
+          <div style={{ display: "flex", gap: "4px", marginLeft: "8px" }}>
+            {["es", "en", "de"].map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                style={{
+                  background: lang === l ? "#53fb52" : "transparent",
+                  color: lang === l ? "#0d2635" : "#eaf6ff",
+                  border: "1px solid",
+                  borderColor: lang === l ? "#53fb52" : "#4a7a9b",
+                  borderRadius: "4px",
+                  padding: "2px 7px",
+                  fontSize: "0.72rem",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
         </nav>
       </div>
 
       {/* Menú móvil fijo abajo (iconos + texto) */}
       <nav className={styles.navMobile} aria-label="Navegación móvil">
-        <Link to="/" className={getActiveClass("/")} title="Inicio">
+        <Link to="/" className={getActiveClass("/")} title={t("nav_home")}>
           {isActive("/") ? <IconHomeFilled /> : <IconHomeOutline />}
-          <span className={styles.iconLabel}>Inicio</span>
+          <span className={styles.iconLabel}>{t("nav_home")}</span>
         </Link>
 
-        <Link to="/dashboard" className={getActiveClass("/dashboard")} title="Buscar">
+        <Link to="/dashboard" className={getActiveClass("/dashboard")} title={t("nav_search")}>
           {isActive("/dashboard") ? <IconSearchFilled /> : <IconSearchOutline />}
-          <span className={styles.iconLabel}>Buscar</span>
+          <span className={styles.iconLabel}>{t("nav_search")}</span>
         </Link>
 
         {user ? (
           <>
-            <Link to={getProfileRoute()} className={getActiveClass(getProfileRoute())} title="Perfil">
+            <Link to={getProfileRoute()} className={getActiveClass(getProfileRoute())} title={t("nav_profile")}>
               {isActive(getProfileRoute()) ? <IconProfileFilled /> : <IconProfileOutline />}
-              <span className={styles.iconLabel}>Perfil</span>
+              <span className={styles.iconLabel}>{t("nav_profile")}</span>
             </Link>
-            <button
-              onClick={handleLogout}
-              className={styles.iconLinkMobile}
-              title="Cerrar sesión"
-            >
+            <button onClick={handleLogout} className={styles.iconLinkMobile} title={t("nav_logout")}>
               <IconLogout />
-              <span className={styles.iconLabel}>Salir</span>
+              <span className={styles.iconLabel}>{t("nav_logout")}</span>
             </button>
           </>
         ) : (
           <>
-            <Link to="/login" className={getActiveClass("/login")} title="Iniciar sesión">
+            <Link to="/login" className={getActiveClass("/login")} title={t("nav_login")}>
               <IconLogin />
-              <span className={styles.iconLabel}>Login</span>
+              <span className={styles.iconLabel}>{t("nav_login")}</span>
             </Link>
-            <Link to="/register" className={getActiveClass("/register")} title="Registrarse">
+            <Link to="/register" className={getActiveClass("/register")} title={t("nav_register")}>
               <IconRegister />
-              <span className={styles.iconLabel}>Registro</span>
+              <span className={styles.iconLabel}>{t("nav_register")}</span>
             </Link>
           </>
         )}

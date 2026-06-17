@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import styles from './TalentSearch.module.css';
 
 function TalentSearch() {
   const [location, setLocation] = useState('');
   const [discipline, setDiscipline] = useState('');
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -18,10 +20,10 @@ function TalentSearch() {
     <div className={styles.searchContainer}>
       <div className={styles.searchWrapper}>
         <div className={styles.headerSection}>
-          <h2 className={styles.title}>Find Your Local Talents</h2>
-          <p className={styles.subtitle}>Discover amazing athletes in your area</p>
+          <h2 className={styles.title}>{t("search_title")}</h2>
+          <p className={styles.subtitle}>{t("search_subtitle")}</p>
         </div>
-        
+
         <div className={styles.controls}>
           <div className={styles.inputGroup}>
             <label className={styles.label}>
@@ -29,14 +31,10 @@ function TalentSearch() {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span className={styles.labelText}>Location</span>
+              <span className={styles.labelText}>{t("search_location")}</span>
             </label>
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">Select City</option>
+            <select value={location} onChange={(e) => setLocation(e.target.value)} className={styles.select}>
+              <option value="">{t("search_select_city")}</option>
               <option value="Hamburg">Hamburg</option>
               <option value="Berlin">Berlin</option>
               <option value="Munich">Munich</option>
@@ -51,14 +49,10 @@ function TalentSearch() {
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 6v6l4 2"></path>
               </svg>
-              <span className={styles.labelText}>Discipline</span>
+              <span className={styles.labelText}>{t("search_discipline")}</span>
             </label>
-            <select
-              value={discipline}
-              onChange={(e) => setDiscipline(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">All Sports</option>
+            <select value={discipline} onChange={(e) => setDiscipline(e.target.value)} className={styles.select}>
+              <option value="">{t("search_all_sports")}</option>
               <option value="Soccer">Soccer</option>
               <option value="Basketball">Basketball</option>
               <option value="Tennis">Tennis</option>
@@ -67,7 +61,7 @@ function TalentSearch() {
           </div>
 
           <button onClick={handleSearch} className={styles.searchBtn}>
-            <span>Show Talents</span>
+            <span>{t("search_btn")}</span>
             <svg className={styles.btnIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>

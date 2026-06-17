@@ -1,7 +1,34 @@
 import React from "react";
 import styles from "./LeftProfileColumn.module.css";
 
+const SPORT_ES = {
+  "Soccer": "Fútbol", "Basketball": "Baloncesto", "Tennis": "Tenis",
+  "Volleyball": "Voleibol", "Swimming": "Natación", "Athletics": "Atletismo",
+  "Cycling": "Ciclismo", "Boxing": "Boxeo", "Chess": "Ajedrez", "Golf": "Golf",
+  "Baseball": "Béisbol", "Rugby": "Rugby", "Hockey": "Hockey",
+  "Handball": "Balonmano", "Futsal": "Fútbol Sala", "Padel": "Pádel",
+  "Pickleball": "Pickleball", "Gymnastics": "Gimnasia", "Karate": "Kárate",
+  "Judo": "Judo", "Taekwondo": "Taekwondo", "Fencing": "Esgrima",
+  "Weightlifting": "Halterofilia", "Triathlon": "Triatlón", "Boccia": "Boccia",
+  "Olympic Wrestling": "Lucha Olímpica", "Skating": "Patinaje",
+  "Archery": "Tiro con Arco", "Para Cycling": "Paraciclismo",
+  "Para Athletics": "Paraatletismo", "Para Swimming": "Paranatación",
+  "Para Powerlifting": "Parapowerlifting",
+};
+
+const INDUSTRY_ES = {
+  "Sports Equipment": "Equipamiento Deportivo",
+  "Nutrition & Health": "Nutrición y Salud",
+  "Apparel & Footwear": "Ropa y Calzado",
+  "Technology": "Tecnología",
+  "Beverages": "Bebidas",
+  "Banking & Finance": "Banca y Finanzas",
+  "Automotive": "Automotriz",
+  "Media & Entertainment": "Medios y Entretenimiento",
+};
+
 function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
+  const { t } = useLanguage();
   if (!profile) return null;
 
   return (
@@ -17,14 +44,14 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
           className={styles.avatar}
         />
         <div className={styles.sportBadge}>
-          {profile.industry || "Sponsor"}
+          {INDUSTRY_ES[profile.industry] || profile.industry || t("profile_sponsor")}
         </div>
       </div>
 
       <div className={styles.contentBelow}>
         <div className={styles.levelAge}>
           <span>
-            <strong>Company:</strong> {profile.company}
+            <strong>{t("sponsor_company")}:</strong> {profile.company}
           </span>
         </div>
 
@@ -36,7 +63,7 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
               className={styles.locationIcon}
             />
             <span>
-              <strong>{profile.city || "City"}</strong>
+              <strong>{profile.city || t("sponsor_city_fallback")}</strong>
               {profile.country && ` | ${profile.country}`}
             </span>
           </div>
@@ -47,13 +74,13 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
           <div className={styles.addressInfo}>
             {profile.address && (
               <div className={styles.addressItem}>
-                <span className={styles.addressLabel}>Address:</span>
+                <span className={styles.addressLabel}>{t("profile_address")}:</span>
                 <span className={styles.addressValue}>{profile.address}</span>
               </div>
             )}
             {profile.postalCode && (
               <div className={styles.addressItem}>
-                <span className={styles.addressLabel}>Postal Code:</span>
+                <span className={styles.addressLabel}>{t("profile_postal")}:</span>
                 <span className={styles.addressValue}>{profile.postalCode}</span>
               </div>
             )}
@@ -62,11 +89,11 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
 
         {profile.sports?.length > 0 && (
           <div className={styles.skillsContainer}>
-            <h4>Supported Sports</h4>
+            <h4>{t("sponsor_sports")}</h4>
             <div className={styles.skillsList}>
               {profile.sports.map((sport, idx) => (
                 <span key={idx} className={styles.skillTag}>
-                  {sport}
+                  {SPORT_ES[sport] || sport}
                 </span>
               ))}
             </div>
@@ -75,7 +102,7 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
 
         {profile.categories?.length > 0 && (
           <div className={styles.skillsContainer}>
-            <h4>Supported Categories</h4>
+            <h4>{t("sponsor_categories")}</h4>
             <div className={styles.skillsList}>
               {profile.categories.map((cat, idx) => (
                 <span key={idx} className={styles.skillTag}>
@@ -94,7 +121,7 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
                 alt="athlete icon"
                 className={styles.relationIcon}
               />
-              <h4>Sponsored Athletes</h4>
+              <h4>{t("sponsor_athletes")}</h4>
             </div>
             {profile.athletes.map((athlete, idx) => (
               <div key={idx} className={styles.relationInfo}>
@@ -117,7 +144,7 @@ function LeftSponsorProfileColumn({ profile, isMyProfile, isAdmin = false }) {
                 alt="club icon"
                 className={styles.relationIcon}
               />
-              <h4>Sponsored Clubs</h4>
+              <h4>{t("sponsor_clubs")}</h4>
             </div>
             {profile.clubs.map((club, idx) => (
               <div key={idx} className={styles.relationInfo}>

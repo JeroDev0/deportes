@@ -7,49 +7,45 @@ import styles from "./EditProfile.module.css";
 import API_URL from "../../../config/api";
 
 const INDUSTRIES = [
-  { value: "Sports Equipment", label: "Sports Equipment" },
-  { value: "Nutrition & Health", label: "Nutrition & Health" },
-  { value: "Apparel & Footwear", label: "Apparel & Footwear" },
-  { value: "Technology", label: "Technology" },
-  { value: "Beverages", label: "Beverages" },
-  { value: "Banking & Finance", label: "Banking & Finance" },
-  { value: "Automotive", label: "Automotive" },
-  { value: "Media & Entertainment", label: "Media & Entertainment" },
+  { value: "Sports Equipment", label: "Equipamiento Deportivo" },
+  { value: "Nutrition & Health", label: "Nutrición y Salud" },
+  { value: "Apparel & Footwear", label: "Ropa y Calzado" },
+  { value: "Technology", label: "Tecnología" },
+  { value: "Beverages", label: "Bebidas" },
+  { value: "Banking & Finance", label: "Banca y Finanzas" },
+  { value: "Automotive", label: "Automotriz" },
+  { value: "Media & Entertainment", label: "Medios y Entretenimiento" },
 ];
 
 const SPORTS = [
-  { value: "Soccer", label: "Soccer" },
-  { value: "Basketball", label: "Basketball" },
-  { value: "Tennis", label: "Tennis" },
-  { value: "Volleyball", label: "Volleyball" },
-  { value: "Swimming", label: "Swimming" },
-  { value: "Athletics", label: "Athletics" },
-  { value: "Cycling", label: "Cycling" },
-  { value: "Boxing", label: "Boxing" },
-  { value: "Chess", label: "Chess" },
+  { value: "Soccer", label: "Fútbol" },
+  { value: "Basketball", label: "Baloncesto" },
+  { value: "Tennis", label: "Tenis" },
+  { value: "Volleyball", label: "Voleibol" },
+  { value: "Swimming", label: "Natación" },
+  { value: "Athletics", label: "Atletismo" },
+  { value: "Cycling", label: "Ciclismo" },
+  { value: "Boxing", label: "Boxeo" },
+  { value: "Chess", label: "Ajedrez" },
   { value: "Golf", label: "Golf" },
-  { value: "Baseball", label: "Baseball" },
+  { value: "Baseball", label: "Béisbol" },
   { value: "Rugby", label: "Rugby" },
   { value: "Hockey", label: "Hockey" },
-  { value: "Gymnastics", label: "Gymnastics" },
-  { value: "Karate", label: "Karate" },
+  { value: "Gymnastics", label: "Gimnasia" },
+  { value: "Karate", label: "Kárate" },
   { value: "Judo", label: "Judo" },
   { value: "Taekwondo", label: "Taekwondo" },
-  { value: "Fencing", label: "Fencing" },
-  { value: "Weightlifting", label: "Weightlifting" },
-  { value: "Triathlon", label: "Triathlon" },
-
-  // 🔥 Nuevos agregados de la imagen
+  { value: "Fencing", label: "Esgrima" },
+  { value: "Weightlifting", label: "Halterofilia" },
+  { value: "Triathlon", label: "Triatlón" },
   { value: "Boccia", label: "Boccia" },
-  { value: "Olympic Wrestling", label: "Olympic Wrestling" },
-  { value: "Skating", label: "Skating" },
-  { value: "Archery", label: "Archery" },
-
-  // 🔥 Deportes Paralímpicos
-  { value: "Para Cycling", label: "Para Cycling" },
-  { value: "Para Athletics", label: "Para Athletics" },
-  { value: "Para Swimming", label: "Para Swimming" },
-  { value: "Para Powerlifting", label: "Para Powerlifting" }
+  { value: "Olympic Wrestling", label: "Lucha Olímpica" },
+  { value: "Skating", label: "Patinaje" },
+  { value: "Archery", label: "Tiro con Arco" },
+  { value: "Para Cycling", label: "Paraciclismo" },
+  { value: "Para Athletics", label: "Paraatletismo" },
+  { value: "Para Swimming", label: "Paranatación" },
+  { value: "Para Powerlifting", label: "Parapowerlifting" }
 ];
 
 const CATEGORIES = [
@@ -265,70 +261,70 @@ const handleLogoChange = (e) => {
   return (
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
-        <button className={styles.backBtn} onClick={() => navigate(-1)}>← Back</button>
-        <h1 className={styles.header}>EDIT SPONSOR PROFILE</h1>
+        <button className={styles.backBtn} onClick={() => navigate(-1)}>← Volver</button>
+        <h1 className={styles.header}>EDITAR PERFIL DE PATROCINADOR</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.leftCol}>
             <div className={styles.photoSection}>
-              {logoPreview ? <img src={logoPreview} alt="Logo" className={styles.photo} /> : <div className={styles.photoPlaceholder}>No Logo</div>}
+              {logoPreview ? <img src={logoPreview} alt="Logo" className={styles.photo} /> : <div className={styles.photoPlaceholder}>Sin Logo</div>}
               <label htmlFor="logoUpload" className={styles.photoEditBtn}>✎</label>
               <input type="file" id="logoUpload" accept="image/*" onChange={handleLogoChange} hidden />
             </div>
 
             <div className={styles.sportsSection}>
-              <h3>Target Sports</h3>
+              <h3>Deportes objetivo</h3>
               <Select isMulti options={SPORTS} value={SPORTS.filter(s => form.sports.includes(s.value))}
                 onChange={(opt) => handleMultiSelectChange(opt, 'sports')} styles={selectStyles} />
             </div>
 
             <div className={styles.sportsSection}>
-              <h3>Target Categories</h3>
+              <h3>Categorías objetivo</h3>
               <Select isMulti options={CATEGORIES} value={CATEGORIES.filter(c => form.categories.includes(c.value))}
                 onChange={(opt) => handleMultiSelectChange(opt, 'categories')} styles={selectStyles} />
             </div>
           </div>
 
           <div className={styles.rightCol}>
-            <label>Company Name</label>
+            <label>Nombre de la empresa</label>
             <input name="company" value={form.company} onChange={handleChange} required />
 
-            <label>Industry</label>
+            <label>Industria</label>
             <Select options={INDUSTRIES} value={INDUSTRIES.find(i => i.value === form.industry)}
               onChange={(opt) => handleSelectChange(opt, "industry")} styles={selectStyles} />
 
-            <label>Short Description</label>
+            <label>Descripción corta</label>
             <textarea name="shortDescription" maxLength={200} value={form.shortDescription} onChange={handleChange} rows="2" />
 
-            <label>About the Company</label>
+            <label>Sobre la empresa</label>
             <textarea name="about" maxLength={1000} value={form.about} onChange={handleChange} rows="5" />
 
             <div className={styles.personalInfo}>
-              <input name="name" placeholder="Contact Person" value={form.name} onChange={handleChange} />
-              <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
+              <input name="name" placeholder="Persona de contacto" value={form.name} onChange={handleChange} />
+              <input name="phone" placeholder="Teléfono" value={form.phone} onChange={handleChange} />
             </div>
 
             <div className={styles.currentLocation}>
-              <h3>Location</h3>
+              <h3>Ubicación</h3>
               <Select options={countryOptions} value={countryOptions.find(c => c.value === form.country)}
                 onChange={(opt) => handleSelectChange(opt, "country")} styles={selectStyles} />
               <Select options={cityOptions} value={cityOptions.find(c => c.value === form.city)}
                 onChange={(opt) => handleSelectChange(opt, "city")} isDisabled={!form.country || loadingCities}
-                placeholder={loadingCities ? "Loading..." : "Select City"} styles={selectStyles} />
+                placeholder={loadingCities ? "Cargando..." : "Seleccionar ciudad"} styles={selectStyles} />
             </div>
 
             <div className={styles.professionalConnections}>
-              <h3>Sponsored Network</h3>
-              <label>Athletes</label>
+              <h3>Red patrocinada</h3>
+              <label>Deportistas</label>
               <Select isMulti options={athleteOptions} value={athleteOptions.filter(o => form.athletes.includes(o.value))}
                 onChange={(opt) => handleMultiSelectChange(opt, 'athletes')} styles={selectStyles} />
-              
-              <label>Clubs</label>
+
+              <label>Clubes</label>
               <Select isMulti options={clubOptions} value={clubOptions.filter(o => form.clubs.includes(o.value))}
                 onChange={(opt) => handleMultiSelectChange(opt, 'clubs')} styles={selectStyles} />
             </div>
 
-            <button type="submit" className={styles.saveBtn}>Save Changes</button>
+            <button type="submit" className={styles.saveBtn}>Guardar cambios</button>
             {msg && <p className={msg.includes("error") ? styles.error : styles.success}>{msg}</p>}
           </div>
         </form>

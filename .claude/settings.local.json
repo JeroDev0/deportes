@@ -7,7 +7,9 @@
       "Bash(Select-Object Name)",
       "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\JeroDev\\\\OneDrive\\\\Imágenes\\\\deportes\\\\deportes-frontend\\\\src\\\\components\\\\Auth\\\\\" -Recurse)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(npx vite *)",
+      "Bash(grep -E '\"[^\"]{3,}\"|>[^<{]{3,}<')"
     ]
   }
 }

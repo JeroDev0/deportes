@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import styles from "./SaludMentalTab.module.css";
+import { useLanguage } from "../../context/LanguageContext";
 import BienestarDashboard from "./BienestarDashboard";
 import DailyCheckIn from "./DailyCheckIn";
 import RecursosLibrary from "./RecursosLibrary";
 import SesionesPanel from "./SesionesPanel";
 import AnalisisProgreso from "./AnalisisProgreso";
 
-const SECCIONES = [
-  { id: "dashboard", label: "Bienestar" },
-  { id: "checkin",   label: "Check-in" },
-  { id: "recursos",  label: "Recursos" },
-  { id: "sesiones",  label: "Sesiones" },
-  { id: "analisis",  label: "Análisis" },
-];
-
 function SaludMentalTab({ profile }) {
+  const { t } = useLanguage();
   const [seccion, setSeccion] = useState("dashboard");
+
+  const SECCIONES = [
+    { id: "dashboard", label: t("bien_tab_dashboard") },
+    { id: "checkin",   label: t("bien_tab_checkin") },
+    { id: "recursos",  label: t("bien_tab_recursos") },
+    { id: "sesiones",  label: t("bien_tab_sesiones") },
+    { id: "analisis",  label: t("bien_tab_analisis") },
+  ];
 
   return (
     <div className={styles.wrapper}>
@@ -23,11 +25,9 @@ function SaludMentalTab({ profile }) {
       <div className={styles.moduleHeader}>
         <div className={styles.moduleTitle}>
           <span className={styles.moduleIcon}>◎</span>
-          <h2>Salud Mental</h2>
+          <h2>{t("tab_wellbeing")}</h2>
         </div>
-        <p className={styles.moduleSubtitle}>
-          Herramientas de bienestar y rendimiento mental — solo visible para ti
-        </p>
+        <p className={styles.moduleSubtitle}>{t("bien_subtitle")}</p>
       </div>
 
       {/* Navegación interna */}

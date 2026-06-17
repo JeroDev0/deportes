@@ -8,125 +8,125 @@ import styles from "./EditProfile.module.css";
 
 // Opciones para género, deportes y niveles
 const GENDERS = [
-  { value: "male", label: "Male" },
-  { value: "female", label: "Female" },
+  { value: "masculino", label: "Masculino" },
+  { value: "femenino", label: "Femenino" },
 ];
 
 const SPORTS = [
-  { value: "Soccer", label: "Soccer" },
-  { value: "Basketball", label: "Basketball" },
-  { value: "Tennis", label: "Tennis" },
-  { value: "Volleyball", label: "Volleyball" },
-  { value: "Swimming", label: "Swimming" },
-  { value: "Athletics", label: "Athletics" },
-  { value: "Cycling", label: "Cycling" },
-  { value: "Boxing", label: "Boxing" },
-  { value: "Chess", label: "Chess" },
+  { value: "Soccer", label: "Fútbol" },
+  { value: "Basketball", label: "Baloncesto" },
+  { value: "Tennis", label: "Tenis" },
+  { value: "Volleyball", label: "Voleibol" },
+  { value: "Swimming", label: "Natación" },
+  { value: "Athletics", label: "Atletismo" },
+  { value: "Cycling", label: "Ciclismo" },
+  { value: "Boxing", label: "Boxeo" },
+  { value: "Chess", label: "Ajedrez" },
   { value: "Golf", label: "Golf" },
-  { value: "Baseball", label: "Baseball" },
+  { value: "Baseball", label: "Béisbol" },
   { value: "Rugby", label: "Rugby" },
   { value: "Hockey", label: "Hockey" },
-  { value: "Handball", label: "Handball" },
-  { value: "Futsal", label: "Futsal" },
-  { value: "Padel", label: "Padel" },
+  { value: "Handball", label: "Balonmano" },
+  { value: "Futsal", label: "Fútbol Sala" },
+  { value: "Padel", label: "Pádel" },
   { value: "Pickleball", label: "Pickleball" },
-  { value: "Gymnastics", label: "Gymnastics" },
-  { value: "Karate", label: "Karate" },
+  { value: "Gymnastics", label: "Gimnasia" },
+  { value: "Karate", label: "Kárate" },
   { value: "Judo", label: "Judo" },
   { value: "Taekwondo", label: "Taekwondo" },
-  { value: "Fencing", label: "Fencing" },
-  { value: "Weightlifting", label: "Weightlifting" },
-  { value: "Triathlon", label: "Triathlon" },
+  { value: "Fencing", label: "Esgrima" },
+  { value: "Weightlifting", label: "Halterofilia" },
+  { value: "Triathlon", label: "Triatlón" },
   { value: "Boccia", label: "Boccia" },
-  { value: "Olympic Wrestling", label: "Olympic Wrestling" },
-  { value: "Skating", label: "Skating" },
-  { value: "Archery", label: "Archery" },
-  { value: "Para Cycling", label: "Para Cycling" },
-  { value: "Para Athletics", label: "Para Athletics" },
-  { value: "Para Swimming", label: "Para Swimming" },
-  { value: "Para Powerlifting", label: "Para Powerlifting" },
+  { value: "Olympic Wrestling", label: "Lucha Olímpica" },
+  { value: "Skating", label: "Patinaje" },
+  { value: "Archery", label: "Tiro con Arco" },
+  { value: "Para Cycling", label: "Paraciclismo" },
+  { value: "Para Athletics", label: "Paraatletismo" },
+  { value: "Para Swimming", label: "Paranatación" },
+  { value: "Para Powerlifting", label: "Parapowerlifting" },
 ];
 
 const LEVELS = [
   { value: "amateur", label: "Amateur" },
-  { value: "semi profesional", label: "Semi Professional" },
-  { value: "profesional", label: "Professional" },
+  { value: "semi profesional", label: "Semi Profesional" },
+  { value: "profesional", label: "Profesional" },
 ];
 
 // Categorías de habilidades
 const SKILLS_CATEGORIES = {
   cognitive: {
-    label: "Cognitive & Tactical Skills",
+    label: "Habilidades Cognitivas y Tácticas",
     options: [
-      { value: "Game/situation reading", label: "Game/situation reading" },
-      { value: "Decision making under pressure", label: "Decision making under pressure" },
-      { value: "Movement or play anticipation", label: "Movement or play anticipation" },
-      { value: "Tactical adaptability", label: "Tactical adaptability" },
-      { value: "Emotional management in competition", label: "Emotional management in competition" },
-      { value: "Sustained concentration", label: "Sustained concentration" },
-      { value: "Motor memory / rapid technical learning", label: "Motor memory / rapid technical learning" }
+      { value: "Game/situation reading", label: "Lectura del juego/situación" },
+      { value: "Decision making under pressure", label: "Toma de decisiones bajo presión" },
+      { value: "Movement or play anticipation", label: "Anticipación de movimiento o jugada" },
+      { value: "Tactical adaptability", label: "Adaptabilidad táctica" },
+      { value: "Emotional management in competition", label: "Gestión emocional en competencia" },
+      { value: "Sustained concentration", label: "Concentración sostenida" },
+      { value: "Motor memory / rapid technical learning", label: "Memoria motriz / aprendizaje técnico rápido" }
     ]
   },
   physical: {
-    label: "General Physical Skills",
+    label: "Habilidades Físicas Generales",
     options: [
-      { value: "Reaction speed", label: "Reaction speed" },
-      { value: "Acceleration / maximum speed", label: "Acceleration / maximum speed" },
-      { value: "Aerobic endurance", label: "Aerobic endurance" },
-      { value: "Anaerobic endurance", label: "Anaerobic endurance" },
-      { value: "Muscular power", label: "Muscular power" },
-      { value: "Functional strength", label: "Functional strength" },
-      { value: "Motor coordination", label: "Motor coordination" },
-      { value: "Balance and body stability", label: "Balance and body stability" },
-      { value: "Agility and direction changes", label: "Agility and direction changes" },
-      { value: "Flexibility / joint mobility", label: "Flexibility / joint mobility" },
-      { value: "Vertical / horizontal jump", label: "Vertical / horizontal jump" },
-      { value: "Postural control in movement", label: "Postural control in movement" }
+      { value: "Reaction speed", label: "Velocidad de reacción" },
+      { value: "Acceleration / maximum speed", label: "Aceleración / velocidad máxima" },
+      { value: "Aerobic endurance", label: "Resistencia aeróbica" },
+      { value: "Anaerobic endurance", label: "Resistencia anaeróbica" },
+      { value: "Muscular power", label: "Potencia muscular" },
+      { value: "Functional strength", label: "Fuerza funcional" },
+      { value: "Motor coordination", label: "Coordinación motriz" },
+      { value: "Balance and body stability", label: "Equilibrio y estabilidad corporal" },
+      { value: "Agility and direction changes", label: "Agilidad y cambios de dirección" },
+      { value: "Flexibility / joint mobility", label: "Flexibilidad / movilidad articular" },
+      { value: "Vertical / horizontal jump", label: "Salto vertical / horizontal" },
+      { value: "Postural control in movement", label: "Control postural en movimiento" }
     ]
   },
   technical: {
-    label: "Transversal Technical Skills",
+    label: "Habilidades Técnicas Transversales",
     options: [
-      { value: "Technical execution precision", label: "Technical execution precision" },
-      { value: "Sport-specific gesture mastery", label: "Sport-specific gesture mastery" },
-      { value: "Object/implement control", label: "Object/implement control (ball, racket, weapon, etc.)" },
-      { value: "Movement synchronization", label: "Movement synchronization" },
-      { value: "Energy efficiency in technique", label: "Energy efficiency in technique" },
-      { value: "Technical automation capacity", label: "Technical automation capacity" },
-      { value: "Smooth transition between movement phases", label: "Smooth transition between movement phases" }
+      { value: "Technical execution precision", label: "Precisión en la ejecución técnica" },
+      { value: "Sport-specific gesture mastery", label: "Dominio del gesto específico del deporte" },
+      { value: "Object/implement control", label: "Control del objeto/implemento (balón, raqueta, arma, etc.)" },
+      { value: "Movement synchronization", label: "Sincronización del movimiento" },
+      { value: "Energy efficiency in technique", label: "Eficiencia energética en la técnica" },
+      { value: "Technical automation capacity", label: "Capacidad de automatización técnica" },
+      { value: "Smooth transition between movement phases", label: "Transición fluida entre fases de movimiento" }
     ]
   },
   social: {
-    label: "Social & Team Skills",
+    label: "Habilidades Sociales y de Equipo",
     options: [
-      { value: "Effective communication", label: "Effective communication (verbal and non-verbal)" },
-      { value: "Teamwork / cooperation", label: "Teamwork / cooperation" },
-      { value: "Sports leadership", label: "Sports leadership" },
-      { value: "Respect for roles and strategies", label: "Respect for roles and strategies" },
-      { value: "Positive and motivating attitude", label: "Positive and motivating attitude" },
-      { value: "Discipline and group commitment", label: "Discipline and group commitment" }
+      { value: "Effective communication", label: "Comunicación efectiva (verbal y no verbal)" },
+      { value: "Teamwork / cooperation", label: "Trabajo en equipo / cooperación" },
+      { value: "Sports leadership", label: "Liderazgo deportivo" },
+      { value: "Respect for roles and strategies", label: "Respeto por roles y estrategias" },
+      { value: "Positive and motivating attitude", label: "Actitud positiva y motivadora" },
+      { value: "Discipline and group commitment", label: "Disciplina y compromiso grupal" }
     ]
   },
   psychological: {
-    label: "High Performance Psychological Skills",
+    label: "Habilidades Psicológicas de Alto Rendimiento",
     options: [
-      { value: "Resilience in adversity", label: "Resilience in adversity" },
-      { value: "Self-confidence in competition", label: "Self-confidence in competition" },
-      { value: "Competitive stress management", label: "Competitive stress management" },
-      { value: "Visualization / mental preparation", label: "Visualization / mental preparation" },
-      { value: "Focus and activation routines", label: "Focus and activation routines" },
-      { value: "Continuous improvement mindset", label: "Continuous improvement mindset" }
+      { value: "Resilience in adversity", label: "Resiliencia ante la adversidad" },
+      { value: "Self-confidence in competition", label: "Confianza en sí mismo en competencia" },
+      { value: "Competitive stress management", label: "Gestión del estrés competitivo" },
+      { value: "Visualization / mental preparation", label: "Visualización / preparación mental" },
+      { value: "Focus and activation routines", label: "Rutinas de enfoque y activación" },
+      { value: "Continuous improvement mindset", label: "Mentalidad de mejora continua" }
     ]
   },
   trainability: {
-    label: "Trainability & Progress Skills",
+    label: "Habilidades de Entrenabilidad y Progreso",
     options: [
-      { value: "Ability to receive and apply feedback", label: "Ability to receive and apply feedback" },
-      { value: "Training consistency", label: "Training consistency" },
-      { value: "Autonomy in improvement process", label: "Autonomy in improvement process" },
-      { value: "Technical / tactical curiosity", label: "Technical / tactical curiosity" },
-      { value: "Adaptability to new environments", label: "Adaptability to new environments" },
-      { value: "Commitment to sports objectives", label: "Commitment to sports objectives" }
+      { value: "Ability to receive and apply feedback", label: "Capacidad para recibir y aplicar retroalimentación" },
+      { value: "Training consistency", label: "Consistencia en el entrenamiento" },
+      { value: "Autonomy in improvement process", label: "Autonomía en el proceso de mejora" },
+      { value: "Technical / tactical curiosity", label: "Curiosidad técnica / táctica" },
+      { value: "Adaptability to new environments", label: "Adaptabilidad a nuevos entornos" },
+      { value: "Commitment to sports objectives", label: "Compromiso con los objetivos deportivos" }
     ]
   }
 };
@@ -704,7 +704,7 @@ function EditProfile() {
 
   const renderSkillsSection = () => (
     <div className={styles.skillsSection}>
-      <h3>Skills (Select one from each category)</h3>
+      <h3>Habilidades (Selecciona una de cada categoría)</h3>
       {Object.entries(SKILLS_CATEGORIES).map(([categoryKey, category]) => (
         <div key={categoryKey} className={styles.skillCategory}>
           <label className={styles.categoryLabel}>{category.label}</label>
@@ -712,7 +712,7 @@ function EditProfile() {
             options={category.options}
             value={category.options.find(option => option.value === form.skills[categoryKey]) || null}
             onChange={(selectedOption) => handleSkillChange(selectedOption, categoryKey)}
-            placeholder={`Select ${category.label.toLowerCase()}`}
+            placeholder={`Seleccionar ${category.label.toLowerCase()}`}
             styles={selectStyles}
             isClearable
             className={styles.skillSelect}
@@ -726,9 +726,9 @@ function EditProfile() {
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>
-          ← Back to Profile
+          ← Volver al perfil
         </button>
-        <h1 className={styles.header}>EDIT PROFILE</h1>
+        <h1 className={styles.header}>EDITAR PERFIL</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.leftCol}>
@@ -736,7 +736,7 @@ function EditProfile() {
               {photoPreview ? (
                 <img src={photoPreview} alt="Profile" className={styles.photo} />
               ) : (
-                <div className={styles.photoPlaceholder}>No Photo</div>
+                <div className={styles.photoPlaceholder}>Sin Foto</div>
               )}
               <label htmlFor="photoUpload" className={styles.photoEditBtn}>
                 ✎
@@ -748,37 +748,37 @@ function EditProfile() {
           </div>
 
           <div className={styles.rightCol}>
-            <label>Short Description</label>
+            <label>Descripción corta</label>
             <textarea
               name="shortDescription"
               maxLength={200}
               value={form.shortDescription}
               onChange={handleChange}
-              placeholder="Brief description for profile preview (max 200 characters)"
+              placeholder="Descripción breve para la vista previa del perfil (máx. 200 caracteres)"
               className={styles.shortDescTextarea}
               rows="3"
             />
-            <div className={styles.charCount}>{form.shortDescription.length} of 200 characters</div>
+            <div className={styles.charCount}>{form.shortDescription.length} de 200 caracteres</div>
 
-            <label>My Story</label>
+            <label>Mi historia</label>
             <textarea
               name="about"
               maxLength={1000}
               value={form.about}
               onChange={handleChange}
-              placeholder="Create a detailed bio that introduces your athlete career and character"
+              placeholder="Crea una bio detallada que presente tu carrera deportiva y personalidad"
               className={styles.introTextarea}
             />
-            <div className={styles.charCount}>{form.about.length} of 1000 characters</div>
+            <div className={styles.charCount}>{form.about.length} de 1000 caracteres</div>
 
             <div className={styles.personalInfo}>
-              <input name="name" placeholder="First Name" value={form.name} onChange={handleChange} required />
-              <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
+              <input name="name" placeholder="Nombre" value={form.name} onChange={handleChange} required />
+              <input name="lastName" placeholder="Apellido" value={form.lastName} onChange={handleChange} required />
               <Select
                 options={GENDERS}
                 value={GENDERS.find((g) => g.value === form.gender) || null}
                 onChange={(opt) => handleSelectChange(opt, "gender")}
-                placeholder="Gender"
+                placeholder="Género"
                 styles={selectStyles}
                 isClearable
               />
@@ -789,16 +789,16 @@ function EditProfile() {
                 onChange={handleChange}
                 max={new Date().toISOString().split("T")[0]}
               />
-              <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
+              <input name="phone" placeholder="Teléfono (+código de país)" value={form.phone} onChange={handleChange} />
             </div>
 
             <div className={styles.birthInfo}>
-              <h3>Birth Information</h3>
+              <h3>Información de nacimiento</h3>
               <Select
                 options={countryOptions}
                 value={countryOptions.find((c) => c.value === form.birthCountry) || null}
                 onChange={(opt) => handleSelectChange(opt, "birthCountry")}
-                placeholder="Birth Country"
+                placeholder="País de nacimiento"
                 styles={selectStyles}
                 isClearable
               />
@@ -807,7 +807,7 @@ function EditProfile() {
                 value={birthCityOptions.find((c) => c.value === form.birthCity) || null}
                 onChange={(opt) => handleSelectChange(opt, "birthCity")}
                 placeholder={
-                  loadingBirthCities ? "Loading cities..." : form.birthCountry ? "Select birth city" : "Select birth country first"
+                  loadingBirthCities ? "Cargando ciudades..." : form.birthCountry ? "Seleccionar ciudad de nacimiento" : "Selecciona primero el país de nacimiento"
                 }
                 isClearable
                 isDisabled={!form.birthCountry || loadingBirthCities || birthCityOptions.length === 0}
@@ -816,12 +816,12 @@ function EditProfile() {
             </div>
 
             <div className={styles.currentLocation}>
-              <h3>Current Location</h3>
+              <h3>Ubicación actual</h3>
               <Select
                 options={countryOptions}
                 value={countryOptions.find((c) => c.value === form.country) || null}
                 onChange={(opt) => handleSelectChange(opt, "country")}
-                placeholder="Current Country"
+                placeholder="País actual"
                 styles={selectStyles}
                 isClearable
               />
@@ -830,34 +830,34 @@ function EditProfile() {
                 value={cityOptions.find((c) => c.value === form.city) || null}
                 onChange={(opt) => handleSelectChange(opt, "city")}
                 placeholder={
-                  loadingCities ? "Loading cities..." : form.country ? "Select current city" : "Select country first"
+                  loadingCities ? "Cargando ciudades..." : form.country ? "Seleccionar ciudad actual" : "Selecciona primero el país"
                 }
                 isClearable
                 isDisabled={!form.country || loadingCities || cityOptions.length === 0}
                 styles={selectStyles}
               />
-              <input 
-                name="postalCode" 
-                placeholder="Postal Code" 
-                value={form.postalCode} 
-                onChange={handleChange} 
+              <input
+                name="postalCode"
+                placeholder="Código Postal"
+                value={form.postalCode}
+                onChange={handleChange}
               />
-              <input 
-                name="address" 
-                placeholder="Full Address" 
-                value={form.address} 
-                onChange={handleChange} 
+              <input
+                name="address"
+                placeholder="Dirección completa"
+                value={form.address}
+                onChange={handleChange}
               />
             </div>
 
             <div className={styles.sportCareer}>
-              <label>Sport Career</label>
+              <label>Carrera deportiva</label>
               <div className={styles.sportCareerFields}>
                 <Select
                   options={SPORTS}
                   value={SPORTS.find((s) => s.value === form.sport) || null}
                   onChange={(opt) => handleSelectChange(opt, "sport")}
-                  placeholder="Discipline"
+                  placeholder="Disciplina"
                   styles={selectStyles}
                   isClearable
                 />
@@ -865,7 +865,7 @@ function EditProfile() {
                   options={LEVELS}
                   value={LEVELS.find((l) => l.value === form.level) || null}
                   onChange={(opt) => handleSelectChange(opt, "level")}
-                  placeholder="Level"
+                  placeholder="Nivel"
                   styles={selectStyles}
                   isClearable
                 />
@@ -873,43 +873,43 @@ function EditProfile() {
             </div>
 
             <div className={styles.relationsSection}>
-              <label>Professional Relations (Select from list or type manually)</label>
+              <label>Relaciones profesionales (Selecciona de la lista o escribe manualmente)</label>
               <div className={styles.relationsFields}>
                 <CreatableSelect
                   options={scoutOptions}
                   value={scoutDisplay}
                   onChange={(opt) => handleRelationChange(opt, 'scout')}
-                  placeholder={loadingScouts ? "Loading scouts..." : "Select or type Scout name"}
+                  placeholder={loadingScouts ? "Cargando scouts..." : "Seleccionar o escribir nombre de Scout"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingScouts}
-                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
+                  formatCreateLabel={(inputValue) => `Usar: "${inputValue}"`}
                 />
                 <CreatableSelect
                   options={sponsorOptions}
                   value={sponsorDisplay}
                   onChange={(opt) => handleRelationChange(opt, 'sponsor')}
-                  placeholder={loadingSponsors ? "Loading sponsors..." : "Select or type Sponsor name"}
+                  placeholder={loadingSponsors ? "Cargando patrocinadores..." : "Seleccionar o escribir nombre de Patrocinador"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingSponsors}
-                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
+                  formatCreateLabel={(inputValue) => `Usar: "${inputValue}"`}
                 />
                 <CreatableSelect
                   options={clubOptions}
                   value={clubDisplay}
                   onChange={(opt) => handleRelationChange(opt, 'club')}
-                  placeholder={loadingClubs ? "Loading clubs..." : "Select or type Club name"}
+                  placeholder={loadingClubs ? "Cargando clubes..." : "Seleccionar o escribir nombre de Club"}
                   styles={selectStyles}
                   isClearable
                   isDisabled={loadingClubs}
-                  formatCreateLabel={(inputValue) => `Use: "${inputValue}"`}
+                  formatCreateLabel={(inputValue) => `Usar: "${inputValue}"`}
                 />
               </div>
             </div>
 
             <div className={styles.achievementsSection}>
-              <h3>Achievements</h3>
+              <h3>Logros</h3>
               {recognitionsFields.map((field, idx) => (
                 <div key={idx} className={styles.achievementItem}>
                   <span className={styles.star}>★</span>
@@ -917,7 +917,7 @@ function EditProfile() {
                     type="number"
                     value={field.startYear}
                     onChange={(e) => handleRecognitionFieldChange(idx, "startYear", e.target.value)}
-                    placeholder="Start"
+                    placeholder="Inicio"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
@@ -928,7 +928,7 @@ function EditProfile() {
                     type="number"
                     value={field.endYear}
                     onChange={(e) => handleRecognitionFieldChange(idx, "endYear", e.target.value)}
-                    placeholder="End"
+                    placeholder="Fin"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
@@ -938,7 +938,7 @@ function EditProfile() {
                     type="text"
                     value={field.text}
                     onChange={(e) => handleRecognitionFieldChange(idx, "text", e.target.value)}
-                    placeholder="Achievement description"
+                    placeholder="Descripción del logro"
                     className={styles.achievementInput}
                     style={{ flex: 1 }}
                   />
@@ -955,20 +955,20 @@ function EditProfile() {
               ))}
               {recognitionsFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("recognitions")}>
-                  Add Achievement +
+                  Agregar logro +
                 </button>
               )}
             </div>
 
             <div className={styles.careerSection}>
-              <h3>Career</h3>
+              <h3>Carrera</h3>
               {experienceFields.map((field, idx) => (
                 <div key={idx} className={styles.careerItem}>
                   <input
                     type="number"
                     value={field.startYear}
                     onChange={(e) => handleExperienceFieldChange(idx, "startYear", e.target.value)}
-                    placeholder="Start"
+                    placeholder="Inicio"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
@@ -979,7 +979,7 @@ function EditProfile() {
                     type="number"
                     value={field.endYear}
                     onChange={(e) => handleExperienceFieldChange(idx, "endYear", e.target.value)}
-                    placeholder="End"
+                    placeholder="Fin"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
@@ -989,7 +989,7 @@ function EditProfile() {
                     type="text"
                     value={field.text}
                     onChange={(e) => handleExperienceFieldChange(idx, "text", e.target.value)}
-                    placeholder="Team / club / description"
+                    placeholder="Equipo / club / descripción"
                     className={styles.careerInput}
                     style={{ flex: 1 }}
                   />
@@ -1006,13 +1006,13 @@ function EditProfile() {
               ))}
               {experienceFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("experience")}>
-                  Add Career +
+                  Agregar a carrera +
                 </button>
               )}
             </div>
 
             <div className={styles.nationalitiesSection}>
-              <h3>Nationalities (up to 3)</h3>
+              <h3>Nacionalidades (máximo 3)</h3>
               <Select
                 isMulti
                 options={countryOptions}
@@ -1022,22 +1022,22 @@ function EditProfile() {
                     setForm(prev => ({ ...prev, nationalities: selected.map(s => s.value) }));
                   }
                 }}
-                placeholder="Select up to 3 nationalities"
+                placeholder="Seleccionar hasta 3 nacionalidades"
                 styles={selectStyles}
                 isOptionDisabled={() => form.nationalities.length >= 3}
               />
-              <div className={styles.helperText}>{form.nationalities.length}/3 nationalities selected</div>
+              <div className={styles.helperText}>{form.nationalities.length}/3 nacionalidades seleccionadas</div>
             </div>
 
             {(profileType === "scout" || profileType === "sponsor") && (
               <div className={styles.certificationsSection}>
-                <label>Certifications</label>
-                {renderChipList("certifications", "Certification")}
+                <label>Certificaciones</label>
+                {renderChipList("certifications", "Certificación")}
               </div>
             )}
 
             <button type="submit" className={styles.saveBtn}>
-              Save Changes
+              Guardar cambios
             </button>
             {msg && <p className={msg.includes("error") ? styles.error : styles.success}>{msg}</p>}
           </div>

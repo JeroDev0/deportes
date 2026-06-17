@@ -8,54 +8,54 @@ import styles from "./EditProfile.module.css";
 import API_URL from "../../../config/api";
 
 const GENDERS = [
-  { value: "male", label: "Male" },
-  { value: "female", label: "Female" },
+  { value: "masculino", label: "Masculino" },
+  { value: "femenino", label: "Femenino" },
 ];
 
 const SPORTS = [
-  { value: "Soccer", label: "Soccer" },
-  { value: "Basketball", label: "Basketball" },
-  { value: "Tennis", label: "Tennis" },
-  { value: "Volleyball", label: "Volleyball" },
-  { value: "Swimming", label: "Swimming" },
-  { value: "Athletics", label: "Athletics" },
-  { value: "Cycling", label: "Cycling" },
-  { value: "Boxing", label: "Boxing" },
-  { value: "Chess", label: "Chess" },
+  { value: "Soccer", label: "Fútbol" },
+  { value: "Basketball", label: "Baloncesto" },
+  { value: "Tennis", label: "Tenis" },
+  { value: "Volleyball", label: "Voleibol" },
+  { value: "Swimming", label: "Natación" },
+  { value: "Athletics", label: "Atletismo" },
+  { value: "Cycling", label: "Ciclismo" },
+  { value: "Boxing", label: "Boxeo" },
+  { value: "Chess", label: "Ajedrez" },
   { value: "Golf", label: "Golf" },
-  { value: "Baseball", label: "Baseball" },
+  { value: "Baseball", label: "Béisbol" },
   { value: "Rugby", label: "Rugby" },
   { value: "Hockey", label: "Hockey" },
-  { value: "Handball", label: "Handball" },
-  { value: "Futsal", label: "Futsal" },
-  { value: "Padel", label: "Padel" },
+  { value: "Handball", label: "Balonmano" },
+  { value: "Futsal", label: "Fútbol Sala" },
+  { value: "Padel", label: "Pádel" },
   { value: "Pickleball", label: "Pickleball" },
-  { value: "Gymnastics", label: "Gymnastics" },
-  { value: "Karate", label: "Karate" },
+  { value: "Gymnastics", label: "Gimnasia" },
+  { value: "Karate", label: "Kárate" },
   { value: "Judo", label: "Judo" },
   { value: "Taekwondo", label: "Taekwondo" },
-  { value: "Fencing", label: "Fencing" },
-  { value: "Weightlifting", label: "Weightlifting" },
-  { value: "Triathlon", label: "Triathlon" },
+  { value: "Fencing", label: "Esgrima" },
+  { value: "Weightlifting", label: "Halterofilia" },
+  { value: "Triathlon", label: "Triatlón" },
   { value: "Boccia", label: "Boccia" },
-  { value: "Olympic Wrestling", label: "Olympic Wrestling" },
-  { value: "Skating", label: "Skating" },
-  { value: "Archery", label: "Archery" },
-  { value: "Para Cycling", label: "Para Cycling" },
-  { value: "Para Athletics", label: "Para Athletics" },
-  { value: "Para Swimming", label: "Para Swimming" },
-  { value: "Para Powerlifting", label: "Para Powerlifting" },
+  { value: "Olympic Wrestling", label: "Lucha Olímpica" },
+  { value: "Skating", label: "Patinaje" },
+  { value: "Archery", label: "Tiro con Arco" },
+  { value: "Para Cycling", label: "Paraciclismo" },
+  { value: "Para Athletics", label: "Paraatletismo" },
+  { value: "Para Swimming", label: "Paranatación" },
+  { value: "Para Powerlifting", label: "Parapowerlifting" },
 ];
 
 const SPECIALIZATIONS = [
-  { value: "Technical Analysis", label: "Technical Analysis" },
-  { value: "Athletic Performance", label: "Athletic Performance" },
-  { value: "Youth Development", label: "Youth Development" },
-  { value: "Tactical Scouting", label: "Tactical Scouting" },
-  { value: "International Recruiting", label: "International Recruiting" },
-  { value: "Team Building", label: "Team Building" },
-  { value: "Performance Analysis", label: "Performance Analysis" },
-  { value: "Talent Identification", label: "Talent Identification" },
+  { value: "Technical Analysis", label: "Análisis Técnico" },
+  { value: "Athletic Performance", label: "Rendimiento Atlético" },
+  { value: "Youth Development", label: "Desarrollo Juvenil" },
+  { value: "Tactical Scouting", label: "Scouting Táctico" },
+  { value: "International Recruiting", label: "Reclutamiento Internacional" },
+  { value: "Team Building", label: "Formación de Equipos" },
+  { value: "Performance Analysis", label: "Análisis de Rendimiento" },
+  { value: "Talent Identification", label: "Identificación de Talento" },
 ];
 
 const selectStyles = {
@@ -515,9 +515,9 @@ function EditScoutProfile() {
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>
-          ← Back to Profile
+          ← Volver al perfil
         </button>
-        <h1 className={styles.header}>EDIT SPORTS PROFESSIONALS PROFILE</h1>
+        <h1 className={styles.header}>EDITAR PERFIL PROFESIONAL DEPORTIVO</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.leftCol}>
@@ -525,7 +525,7 @@ function EditScoutProfile() {
               {photoPreview ? (
                 <img src={photoPreview} alt="Profile" className={styles.photo} />
               ) : (
-                <div className={styles.photoPlaceholder}>No Photo</div>
+                <div className={styles.photoPlaceholder}>Sin Foto</div>
               )}
               <label htmlFor="photoUpload" className={styles.photoEditBtn}>
                 ✎
@@ -534,7 +534,7 @@ function EditScoutProfile() {
             </div>
 
             <div className={styles.sportsSection}>
-              <h3>Sports Specialization</h3>
+              <h3>Especialización deportiva</h3>
               <Select
                 isMulti
                 options={SPORTS}
@@ -544,18 +544,18 @@ function EditScoutProfile() {
                     handleMultiSelectChange(selectedOptions, 'sports');
                   }
                 }}
-                placeholder="Select up to 3 sports"
+                placeholder="Seleccionar hasta 3 deportes"
                 styles={selectStyles}
                 className={styles.sportsSelect}
                 isOptionDisabled={() => form.sports.length >= 3}
               />
               <div className={styles.helperText}>
-                {form.sports.length}/3 sports selected
+                {form.sports.length}/3 deportes seleccionados
               </div>
             </div>
 
             <div className={styles.certificationsSection}>
-              <h3>Certification</h3>
+              <h3>Certificación</h3>
               <input
                 type="url"
                 name="certificationUrl"
@@ -564,67 +564,67 @@ function EditScoutProfile() {
                   const newCerts = [e.target.value];
                   setForm({ ...form, certifications: newCerts });
                 }}
-                placeholder="https://your-certification-url.com"
+                placeholder="https://tu-url-de-certificacion.com"
                 className={styles.certificationInput}
               />
               <div className={styles.helperText}>
-                Enter the URL of your professional certification
+                Ingresa la URL de tu certificación profesional
               </div>
             </div>
           </div>
 
           <div className={styles.rightCol}>
-            <label>Short Description</label>
+            <label>Descripción corta</label>
             <textarea
               name="shortDescription"
               maxLength={200}
               value={form.shortDescription}
               onChange={handleChange}
-              placeholder="Brief description for profile preview (max 200 characters)"
+              placeholder="Descripción breve para la vista previa del perfil (máx. 200 caracteres)"
               className={styles.shortDescTextarea}
               rows="3"
             />
-            <div className={styles.charCount}>{form.shortDescription.length} of 200 characters</div>
+            <div className={styles.charCount}>{form.shortDescription.length} de 200 caracteres</div>
 
-            <label>Professional Bio</label>
+            <label>Bio profesional</label>
             <textarea
               name="about"
               maxLength={1000}
               value={form.about}
               onChange={handleChange}
-              placeholder="Share your professional experience, approach, and scouting philosophy"
+              placeholder="Comparte tu experiencia profesional, enfoque y filosofía de scouting"
               className={styles.introTextarea}
             />
-            <div className={styles.charCount}>{form.about.length} of 1000 characters</div>
+            <div className={styles.charCount}>{form.about.length} de 1000 caracteres</div>
 
             <div className={styles.personalInfo}>
-              <input name="name" placeholder="First Name" value={form.name} onChange={handleChange} required />
-              <input name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} required />
+              <input name="name" placeholder="Nombre" value={form.name} onChange={handleChange} required />
+              <input name="lastName" placeholder="Apellido" value={form.lastName} onChange={handleChange} required />
               <Select
                 options={GENDERS}
                 value={GENDERS.find((g) => g.value === form.gender) || null}
                 onChange={(opt) => handleSelectChange(opt, "gender")}
-                placeholder="Gender"
+                placeholder="Género"
                 styles={selectStyles}
                 isClearable
               />
               <input
                 type="number"
                 name="age"
-                placeholder="Age"
+                placeholder="Edad"
                 value={form.age}
                 onChange={handleChange}
                 min={1}
                 max={120}
               />
-              <input name="phone" placeholder="Phone (+country code)" value={form.phone} onChange={handleChange} />
+              <input name="phone" placeholder="Teléfono (+código de país)" value={form.phone} onChange={handleChange} />
             </div>
 
             <div className={styles.companyInfo}>
-              <h3>Professional Information</h3>
+              <h3>Información profesional</h3>
               <input
                 name="company"
-                placeholder="Company or Organization"
+                placeholder="Empresa u organización"
                 value={form.company}
                 onChange={handleChange}
               />
@@ -632,19 +632,19 @@ function EditScoutProfile() {
                 options={SPECIALIZATIONS}
                 value={SPECIALIZATIONS.find((s) => s.value === form.specialization) || null}
                 onChange={(opt) => handleSelectChange(opt, "specialization")}
-                placeholder="Specialization"
+                placeholder="Especialización"
                 styles={selectStyles}
                 isClearable
               />
             </div>
 
             <div className={styles.birthInfo}>
-              <h3>Birth Information</h3>
+              <h3>Información de nacimiento</h3>
               <Select
                 options={countryOptions}
                 value={countryOptions.find((c) => c.value === form.birthCountry) || null}
                 onChange={(opt) => handleSelectChange(opt, "birthCountry")}
-                placeholder="Birth Country"
+                placeholder="País de nacimiento"
                 styles={selectStyles}
                 isClearable
               />
@@ -653,7 +653,7 @@ function EditScoutProfile() {
                 value={birthCityOptions.find((c) => c.value === form.birthCity) || null}
                 onChange={(opt) => handleSelectChange(opt, "birthCity")}
                 placeholder={
-                  loadingBirthCities ? "Loading cities..." : form.birthCountry ? "Select birth city" : "Select birth country first"
+                  loadingBirthCities ? "Cargando ciudades..." : form.birthCountry ? "Seleccionar ciudad de nacimiento" : "Selecciona primero el país de nacimiento"
                 }
                 isClearable
                 isDisabled={!form.birthCountry || loadingBirthCities || birthCityOptions.length === 0}
@@ -662,12 +662,12 @@ function EditScoutProfile() {
             </div>
 
             <div className={styles.currentLocation}>
-              <h3>Current Location</h3>
+              <h3>Ubicación actual</h3>
               <Select
                 options={countryOptions}
                 value={countryOptions.find((c) => c.value === form.country) || null}
                 onChange={(opt) => handleSelectChange(opt, "country")}
-                placeholder="Current Country"
+                placeholder="País actual"
                 styles={selectStyles}
                 isClearable
               />
@@ -676,64 +676,64 @@ function EditScoutProfile() {
                 value={cityOptions.find((c) => c.value === form.city) || null}
                 onChange={(opt) => handleSelectChange(opt, "city")}
                 placeholder={
-                  loadingCities ? "Loading cities..." : form.country ? "Select current city" : "Select country first"
+                  loadingCities ? "Cargando ciudades..." : form.country ? "Seleccionar ciudad actual" : "Selecciona primero el país"
                 }
                 isClearable
                 isDisabled={!form.country || loadingCities || cityOptions.length === 0}
                 styles={selectStyles}
               />
-              <input 
-                name="postalCode" 
-                placeholder="Postal Code" 
-                value={form.postalCode} 
-                onChange={handleChange} 
+              <input
+                name="postalCode"
+                placeholder="Código Postal"
+                value={form.postalCode}
+                onChange={handleChange}
               />
-              <input 
-                name="address" 
-                placeholder="Full Address" 
-                value={form.address} 
-                onChange={handleChange} 
+              <input
+                name="address"
+                placeholder="Dirección completa"
+                value={form.address}
+                onChange={handleChange}
               />
             </div>
 
             <div className={styles.professionalConnections}>
-              <h3>Professional Network</h3>
-              <label>Athletes</label>
+              <h3>Red profesional</h3>
+              <label>Deportistas</label>
               <Select
                 isMulti
                 options={athleteOptions}
                 value={athleteOptions.filter(option => form.athletes.includes(option.value))}
                 onChange={(selectedOptions) => handleMultiSelectChange(selectedOptions, 'athletes')}
-                placeholder={loadingAthletes ? "Loading athletes..." : "Select athletes"}
+                placeholder={loadingAthletes ? "Cargando deportistas..." : "Seleccionar deportistas"}
                 styles={selectStyles}
                 isDisabled={loadingAthletes}
               />
 
-              <label>Clubs</label>
+              <label>Clubes</label>
               <Select
                 isMulti
                 options={clubOptions}
                 value={clubOptions.filter(option => form.clubs.includes(option.value))}
                 onChange={(selectedOptions) => handleMultiSelectChange(selectedOptions, 'clubs')}
-                placeholder={loadingClubs ? "Loading clubs..." : "Select clubs"}
+                placeholder={loadingClubs ? "Cargando clubes..." : "Seleccionar clubes"}
                 styles={selectStyles}
                 isDisabled={loadingClubs}
               />
 
-              <label>Sponsors</label>
+              <label>Patrocinadores</label>
               <Select
                 isMulti
                 options={sponsorOptions}
                 value={sponsorOptions.filter(option => form.sponsors.includes(option.value))}
                 onChange={(selectedOptions) => handleMultiSelectChange(selectedOptions, 'sponsors')}
-                placeholder={loadingSponsors ? "Loading sponsors..." : "Select sponsors"}
+                placeholder={loadingSponsors ? "Cargando patrocinadores..." : "Seleccionar patrocinadores"}
                 styles={selectStyles}
                 isDisabled={loadingSponsors}
               />
             </div>
 
             <div className={styles.achievementsSection}>
-              <h3>Achievements</h3>
+              <h3>Logros</h3>
               {recognitionsFields.map((field, idx) => (
                 <div key={idx} className={styles.achievementItem}>
                   <span className={styles.star}>★</span>
@@ -741,7 +741,7 @@ function EditScoutProfile() {
                     type="number"
                     value={field.startYear}
                     onChange={(e) => handleRecognitionFieldChange(idx, "startYear", e.target.value)}
-                    placeholder="Start"
+                    placeholder="Inicio"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
@@ -752,7 +752,7 @@ function EditScoutProfile() {
                     type="number"
                     value={field.endYear}
                     onChange={(e) => handleRecognitionFieldChange(idx, "endYear", e.target.value)}
-                    placeholder="End"
+                    placeholder="Fin"
                     className={styles.yearInput}
                     min="1900"
                     max="2050"
@@ -762,7 +762,7 @@ function EditScoutProfile() {
                     type="text"
                     value={field.text}
                     onChange={(e) => handleRecognitionFieldChange(idx, "text", e.target.value)}
-                    placeholder="Achievement description"
+                    placeholder="Descripción del logro"
                     className={styles.achievementInput}
                     style={{ flex: 1 }}
                   />
@@ -779,20 +779,20 @@ function EditScoutProfile() {
               ))}
               {recognitionsFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("recognitions")}>
-                  Add Achievement +
+                  Agregar logro +
                 </button>
               )}
             </div>
 
             <div className={styles.careerSection}>
-              <h3>Professional Experience</h3>
+              <h3>Experiencia profesional</h3>
               {experienceFields.map((field, idx) => (
                 <div key={idx} className={styles.careerItem}>
                   <input
                     type="number"
                     value={field.startYear}
                     onChange={(e) => handleExperienceFieldChange(idx, "startYear", e.target.value)}
-                    placeholder="Start"
+                    placeholder="Inicio"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
@@ -803,7 +803,7 @@ function EditScoutProfile() {
                     type="number"
                     value={field.endYear}
                     onChange={(e) => handleExperienceFieldChange(idx, "endYear", e.target.value)}
-                    placeholder="End"
+                    placeholder="Fin"
                     className={styles.yearInput2}
                     min="1900"
                     max="2050"
@@ -813,7 +813,7 @@ function EditScoutProfile() {
                     type="text"
                     value={field.text}
                     onChange={(e) => handleExperienceFieldChange(idx, "text", e.target.value)}
-                    placeholder="Professional position or role"
+                    placeholder="Cargo o rol profesional"
                     className={styles.careerInput}
                     style={{ flex: 1 }}
                   />
@@ -830,13 +830,13 @@ function EditScoutProfile() {
               ))}
               {experienceFields.length < 10 && (
                 <button type="button" onClick={() => addArrayField("experience")}>
-                  Add Experience +
+                  Agregar experiencia +
                 </button>
               )}
             </div>
 
             <button type="submit" className={styles.saveBtn}>
-              Save Changes
+              Guardar cambios
             </button>
             {msg && <p className={msg.includes("error") ? styles.error : styles.success}>{msg}</p>}
           </div>
