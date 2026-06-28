@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
 import { apiFetch } from "../../../config/fetchWithAuth";
+import PhotoCropModal from "../../common/PhotoCropModal";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
@@ -265,6 +266,8 @@ function EditProfile() {
   const [msg, setMsg] = useState("");
   const [profileType, setProfileType] = useState("atleta");
   const [photoPreview, setPhotoPreview] = useState("");
+  const [rawImageSrc, setRawImageSrc] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
   
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
@@ -577,13 +580,28 @@ function EditProfile() {
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
-    setForm({ ...form, photo: file });
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPhotoPreview(reader.result);
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setRawImageSrc(reader.result);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
   };
+
+  const handleCropConfirm = useCallback((blob) => {
+    const croppedFile = new File([blob], "photo.jpg", { type: "image/jpeg" });
+    setForm(prev => ({ ...prev, photo: croppedFile }));
+    setPhotoPreview(URL.createObjectURL(blob));
+    setShowCropper(false);
+    setRawImageSrc(null);
+  }, []);
+
+  const handleCropCancel = useCallback(() => {
+    setShowCropper(false);
+    setRawImageSrc(null);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -724,6 +742,14 @@ function EditProfile() {
   );
 
   return (
+    <>
+      {showCropper && rawImageSrc && (
+        <PhotoCropModal
+          imageSrc={rawImageSrc}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>
@@ -1045,6 +1071,7 @@ function EditProfile() {
         </form>
       </div>
     </div>
+    </>
   );
 }
 

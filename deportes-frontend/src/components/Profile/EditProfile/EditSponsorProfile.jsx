@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
 import { apiFetch } from "../../../config/fetchWithAuth";
+import PhotoCropModal from "../../common/PhotoCropModal";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
@@ -123,6 +124,8 @@ function EditSponsorProfile() {
 
   const [msg, setMsg] = useState("");
   const [logoPreview, setLogoPreview] = useState("");
+  const [rawImageSrc, setRawImageSrc] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
   const [cityOptions, setCityOptions] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
   const [athleteOptions, setAthleteOptions] = useState([]);
@@ -193,13 +196,30 @@ function EditSponsorProfile() {
     setForm(prev => ({ ...prev, [fieldName]: values }));
   };
 
-const handleLogoChange = (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+  const handleLogoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setRawImageSrc(reader.result);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
 
-  setForm((prev) => ({ ...prev, logo: file }));
-  setLogoPreview(URL.createObjectURL(file)); // preview inmediato
-};
+  const handleCropConfirm = useCallback((blob) => {
+    const croppedFile = new File([blob], "logo.jpg", { type: "image/jpeg" });
+    setForm(prev => ({ ...prev, logo: croppedFile }));
+    setLogoPreview(URL.createObjectURL(blob));
+    setShowCropper(false);
+    setRawImageSrc(null);
+  }, []);
+
+  const handleCropCancel = useCallback(() => {
+    setShowCropper(false);
+    setRawImageSrc(null);
+  }, []);
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -260,6 +280,14 @@ const handleLogoChange = (e) => {
 };
 
   return (
+    <>
+      {showCropper && rawImageSrc && (
+        <PhotoCropModal
+          imageSrc={rawImageSrc}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
     <div className={styles.editProfileBg}>
       <div className={styles.editProfileCard}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>← Volver</button>
@@ -331,6 +359,7 @@ const handleLogoChange = (e) => {
         </form>
       </div>
     </div>
+    </>
   );
 }
 
