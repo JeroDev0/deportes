@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Sponsor = require("../models/Sponsor");
 
-const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
+const PUBLIC_LIST_FIELDS = "company industry logo city country sports categories";
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -__v";
 
 // ==================== GET ALL SPONSORS ====================
 router.get("/", async (req, res) => {
   try {
-    const sponsors = await Sponsor.find().select(PRIVATE_FIELDS);
+    const sponsors = await Sponsor.find().select(PUBLIC_LIST_FIELDS);
     res.json(sponsors);
   } catch (err) {
     console.error("❌ Error obteniendo sponsors:", err);

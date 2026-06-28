@@ -3,7 +3,8 @@ const router = express.Router();
 const Scout = require("../models/Scout");
 const Deportista = require("../models/Deportista");
 
-const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
+const PUBLIC_LIST_FIELDS = "name lastName photo specialization sports company city country age gender";
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -isApproved -registrationDate -__v";
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
@@ -19,10 +20,7 @@ const upload = multer();
 router.get("/", async (req, res) => {
   try {
     const scouts = await Scout.find()
-      .select(PRIVATE_FIELDS)
-      .populate("athletes", "name lastName photo")
-      .populate("clubs", "name city")
-      .populate("sponsors", "name companyName");
+      .select(PUBLIC_LIST_FIELDS);
     res.json(scouts);
   } catch (err) {
     res.status(500).json({ error: "Error al obtener los scouts" });

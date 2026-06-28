@@ -5,8 +5,11 @@ const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
 const Club = require("../models/Club");
 
-// Campos que NUNCA deben salir en respuestas públicas
-const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
+// Campos permitidos en el listado público (dashboard/búsqueda)
+const PUBLIC_LIST_FIELDS = "name lastName photo sport level city country age gender skills nationalities postalCode scoutName sponsorName clubName scout sponsor club";
+
+// Campos que NUNCA deben salir en respuestas individuales
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -isApproved -registrationDate -__v";
 
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
@@ -26,12 +29,12 @@ const upload = multer();
 // RUTAS DE DEPORTISTAS
 // ============================
 
-// Obtener todos (endpoint público — sin campos sensibles)
+// Obtener todos (endpoint público — SOLO campos necesarios para el dashboard)
 router.get("/", async (req, res) => {
   try {
-    const deportistas = await Deportista.find()
-      .select(PRIVATE_FIELDS)
-      .populate("scout", "name lastName specialization company")
+    const deportistas = await Deportista.find({ isApproved: true })
+      .select(PUBLIC_LIST_FIELDS)
+      .populate("scout", "name lastName specialization")
       .populate("sponsor", "company industry")
       .populate("club", "name city");
     res.json(deportistas);
