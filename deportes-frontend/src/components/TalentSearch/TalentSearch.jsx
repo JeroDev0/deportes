@@ -1,13 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import { apiFetch } from '../../config/fetchWithAuth';
 import styles from './TalentSearch.module.css';
 
 function TalentSearch() {
   const [location, setLocation] = useState('');
   const [discipline, setDiscipline] = useState('');
+  const [cities, setCities] = useState([]);
+  const [sports, setSports] = useState([]);
   const navigate = useNavigate();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    apiFetch('/deportistas')
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        if (!Array.isArray(data)) return;
+        setCities([...new Set(data.map(a => a.city).filter(Boolean))].sort());
+        setSports([...new Set(data.map(a => a.sport).filter(Boolean))].sort());
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -25,6 +39,7 @@ function TalentSearch() {
         </div>
 
         <div className={styles.controls}>
+          {/* Ciudad */}
           <div className={styles.inputGroup}>
             <label className={styles.label}>
               <svg className={styles.icon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -35,14 +50,13 @@ function TalentSearch() {
             </label>
             <select value={location} onChange={(e) => setLocation(e.target.value)} className={styles.select}>
               <option value="">{t("search_select_city")}</option>
-              <option value="Hamburg">Hamburg</option>
-              <option value="Berlin">Berlin</option>
-              <option value="Munich">Munich</option>
-              <option value="Cologne">Cologne</option>
-              <option value="Frankfurt">Frankfurt</option>
+              {cities.length > 0
+                ? cities.map(c => <option key={c} value={c}>{c}</option>)
+                : null}
             </select>
           </div>
 
+          {/* Deporte */}
           <div className={styles.inputGroup}>
             <label className={styles.label}>
               <svg className={styles.icon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -53,10 +67,9 @@ function TalentSearch() {
             </label>
             <select value={discipline} onChange={(e) => setDiscipline(e.target.value)} className={styles.select}>
               <option value="">{t("search_all_sports")}</option>
-              <option value="Soccer">Soccer</option>
-              <option value="Basketball">Basketball</option>
-              <option value="Tennis">Tennis</option>
-              <option value="Gymnastics">Gymnastics</option>
+              {sports.length > 0
+                ? sports.map(s => <option key={s} value={s}>{s}</option>)
+                : null}
             </select>
           </div>
 

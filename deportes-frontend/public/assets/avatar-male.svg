@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#0d1f33"/>
+  <!-- body -->
+  <path d="M40 200 C40 155 70 140 100 140 C130 140 160 155 160 200Z" fill="#1a3a52"/>
+  <!-- head -->
+  <circle cx="100" cy="88" r="34" fill="#1a3a52"/>
+  <!-- accent ring -->
+  <circle cx="100" cy="88" r="38" stroke="#53fb52" stroke-width="2.5" fill="none" opacity="0.4"/>
+  <!-- sport icon: small football -->
+  <circle cx="155" cy="42" r="16" fill="#53fb52" opacity="0.15"/>
+  <circle cx="155" cy="42" r="8" stroke="#53fb52" stroke-width="1.5" fill="none" opacity="0.6"/>
+</svg>

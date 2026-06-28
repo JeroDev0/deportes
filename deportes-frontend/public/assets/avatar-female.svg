@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#0d1f33"/>
+  <!-- body (wider silhouette) -->
+  <path d="M35 200 C35 152 68 138 100 138 C132 138 165 152 165 200Z" fill="#1a3a52"/>
+  <!-- dress shape hint -->
+  <path d="M72 140 C72 155 65 175 55 200 L145 200 C135 175 128 155 128 140Z" fill="#162940" opacity="0.5"/>
+  <!-- head -->
+  <circle cx="100" cy="86" r="33" fill="#1a3a52"/>
+  <!-- hair suggestion -->
+  <path d="M67 82 Q68 58 100 55 Q132 58 133 82 Q130 65 100 63 Q70 65 67 82Z" fill="#0f2840"/>
+  <!-- accent ring -->
+  <circle cx="100" cy="86" r="37" stroke="#53fb52" stroke-width="2.5" fill="none" opacity="0.4"/>
+  <!-- star accent -->
+  <circle cx="155" cy="42" r="16" fill="#53fb52" opacity="0.1"/>
+  <path d="M155 33 L156.8 39.4 L163.5 39.4 L158.1 43.3 L159.9 49.7 L155 45.8 L150.1 49.7 L151.9 43.3 L146.5 39.4 L153.2 39.4Z" fill="#53fb52" opacity="0.5"/>
+</svg>
