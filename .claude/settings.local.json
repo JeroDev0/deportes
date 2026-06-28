@@ -11,7 +11,8 @@
       "Bash(npx vite *)",
       "Bash(grep -E '\"[^\"]{3,}\"|>[^<{]{3,}<')",
       "Bash(node -e \"require\\('./routes/deportistas'\\); require\\('./routes/scouts'\\); require\\('./routes/sponsors'\\); console.log\\('✅ Rutas cargan sin errores'\\);\")",
-      "Bash(node -e \"require\\('./routes/deportistas'\\); require\\('./routes/scouts'\\); require\\('./routes/sponsors'\\); console.log\\('✅ Rutas OK'\\);\")"
+      "Bash(node -e \"require\\('./routes/deportistas'\\); require\\('./routes/scouts'\\); require\\('./routes/sponsors'\\); console.log\\('✅ Rutas OK'\\);\")",
+      "Bash(git push *)"
     ]
   }
 }
