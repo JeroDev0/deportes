@@ -63,7 +63,7 @@
 .bannerImage {
   width: 100%;
   height: auto;
-  aspect-ratio: 1920 / 400;
+  aspect-ratio: 1920 / 200;
   object-fit: cover;
   display: block;
 }

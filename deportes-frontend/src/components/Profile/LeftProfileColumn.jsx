@@ -149,7 +149,7 @@ function LeftProfileColumn({ profile, isAdmin = false }) {
             <h4>{t("profile_style")}</h4>
             <div className={styles.skillsList}>
               {profile.skills.map((skill, idx) => (
-                <span key={idx} className={styles.skillTag}>{SKILL_ES[skill] || skill}</span>
+                <span key={idx} className={styles.skillTag}>{(SKILL_ES[skill] || skill).replace(/^./, c => c.toUpperCase())}</span>
               ))}
             </div>
           </div>

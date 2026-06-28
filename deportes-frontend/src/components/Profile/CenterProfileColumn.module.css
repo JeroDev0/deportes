@@ -148,6 +148,15 @@
   hyphens: auto;
 }
 
+.aboutSection p {
+  margin: 0;
+  line-height: 1.7;
+  color: #8aaccc;
+  font-size: 0.95rem;
+  word-break: break-word;
+  hyphens: auto;
+}
+
 .sectionHeader {
   display: flex;
   align-items: center;

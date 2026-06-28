@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AthleteCard from "../components/Dashboard/AthleteCard";
 import styles from "./Dashboard.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/useAuth";
 
@@ -87,6 +87,7 @@ function Dashboard() {
   const { t } = useLanguage();
   const { token, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const genders = [
     { label: t("dash_all_genders"), value: "" },
@@ -110,9 +111,11 @@ function Dashboard() {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Leer parámetros de la URL (vienen del buscador del Home)
+  const urlParams = new URLSearchParams(location.search);
   const [profileType, setProfileType] = useState("");
-  const [city, setCity] = useState("");
-  const [sport, setSport] = useState("");
+  const [city, setCity] = useState(urlParams.get("location") || "");
+  const [sport, setSport] = useState(urlParams.get("discipline") || "");
   const [gender, setGender] = useState("");
   const [level, setLevel] = useState("");
   const [ageMin, setAgeMin] = useState(16);
