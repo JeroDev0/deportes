@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./CenterProfileColumn.module.css";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
+import { apiFetch } from "../../config/fetchWithAuth";
 
 function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function CenterScoutProfileColumn({ profile = {}, isMyProfile = false }) {
 
     setLoadingAthletes(true);
     
-    fetch(`https://deportes-production.up.railway.app/deportistas`)
+    apiFetch(`/deportistas`)
       .then((res) => res.json())
       .then((data) => {
         const athletesWithThisScout = data.filter(athlete => {

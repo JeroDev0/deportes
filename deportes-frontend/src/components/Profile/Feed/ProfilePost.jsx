@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLanguage } from "../../../context/LanguageContext";
+import { apiFetch } from "../../../config/fetchWithAuth";
 import styles from "./ProfileFeed.module.css";
 
 function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
@@ -12,7 +13,7 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
 
   useEffect(() => {
     if (post.user) {
-      fetch(`https://deportes-production.up.railway.app/deportistas/${post.user}`)
+      apiFetch(`/deportistas/${post.user}`)
         .then(res => res.json())
         .then(data => setUserInfo(data))
         .catch(err => console.error("Error obteniendo info del usuario:", err));
