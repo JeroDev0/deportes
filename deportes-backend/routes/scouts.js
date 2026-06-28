@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Scout = require("../models/Scout");
 const Deportista = require("../models/Deportista");
+
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
@@ -17,6 +19,7 @@ const upload = multer();
 router.get("/", async (req, res) => {
   try {
     const scouts = await Scout.find()
+      .select(PRIVATE_FIELDS)
       .populate("athletes", "name lastName photo")
       .populate("clubs", "name city")
       .populate("sponsors", "name companyName");
@@ -220,11 +223,12 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const scout = await Scout.findById(req.params.id, "-password")
+    const scout = await Scout.findById(req.params.id)
+      .select(PRIVATE_FIELDS)
       .populate("athletes", "name lastName photo")
       .populate("clubs", "name city")
       .populate("sponsors", "name companyName");
-    
+
     if (!scout) return res.status(404).json({ error: "Scout no encontrado" });
     res.json(scout);
   } catch (err) {

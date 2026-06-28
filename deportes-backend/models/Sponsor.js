@@ -32,9 +32,9 @@ const SponsorSchema = new mongoose.Schema({
   profileType: { type: String, default: "sponsor" },
 
   createdAt: { type: Date, default: Date.now },
-  // 🔐 Recuperación de contraseña
-  resetPasswordToken: { type: String, default: null },
-  resetPasswordExpires: { type: Date, default: null },
+  // 🔐 Recuperación de contraseña (nunca exponer en API)
+  resetPasswordToken: { type: String, default: null, select: false },
+  resetPasswordExpires: { type: Date, default: null, select: false },
 });
 
 module.exports = mongoose.model("Sponsor", SponsorSchema);

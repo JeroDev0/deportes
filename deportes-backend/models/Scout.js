@@ -40,9 +40,9 @@ const ScoutSchema = new mongoose.Schema({
   clubs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Club" }],
   sponsors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sponsor" }],
   createdAt: { type: Date, default: Date.now },
-  // 🔐 Recuperación de contraseña
-  resetPasswordToken: { type: String, default: null },
-  resetPasswordExpires: { type: Date, default: null },
+  // 🔐 Recuperación de contraseña (nunca exponer en API)
+  resetPasswordToken: { type: String, default: null, select: false },
+  resetPasswordExpires: { type: Date, default: null, select: false },
 });
 
 module.exports = mongoose.model("Scout", ScoutSchema);

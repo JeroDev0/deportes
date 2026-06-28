@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Sponsor = require("../models/Sponsor");
 
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
+
 // ==================== GET ALL SPONSORS ====================
 router.get("/", async (req, res) => {
   try {
-    const sponsors = await Sponsor.find();
+    const sponsors = await Sponsor.find().select(PRIVATE_FIELDS);
     res.json(sponsors);
   } catch (err) {
     console.error("❌ Error obteniendo sponsors:", err);
@@ -29,14 +31,15 @@ router.post("/", async (req, res) => {
 // ==================== GET SPONSOR BY ID ====================
 router.get("/:id", async (req, res) => {
   try {
-    const sponsor = await Sponsor.findById(req.params.id, "-password")
+    const sponsor = await Sponsor.findById(req.params.id)
+      .select(PRIVATE_FIELDS)
       .populate("athletes", "name lastName photo sport")
       .populate("clubs", "name city");
-    
+
     if (!sponsor) {
       return res.status(404).json({ error: "Sponsor no encontrado" });
     }
-    
+
     res.json(sponsor);
   } catch (err) {
     console.error("❌ Error obteniendo sponsor:", err);

@@ -73,9 +73,9 @@ const DeportistaSchema = new mongoose.Schema({
     enum: ["amateur", "semi profesional", "profesional"],
     default: "amateur",
   },
-  // 🔐 Recuperación de contraseña
-  resetPasswordToken: { type: String, default: null },
-  resetPasswordExpires: { type: Date, default: null },
+  // 🔐 Recuperación de contraseña (nunca exponer en API)
+  resetPasswordToken: { type: String, default: null, select: false },
+  resetPasswordExpires: { type: Date, default: null, select: false },
 });
 
 module.exports = mongoose.model("Deportista", DeportistaSchema);

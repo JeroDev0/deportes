@@ -5,6 +5,9 @@ const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
 const Club = require("../models/Club");
 
+// Campos que NUNCA deben salir en respuestas públicas
+const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires";
+
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
@@ -23,13 +26,14 @@ const upload = multer();
 // RUTAS DE DEPORTISTAS
 // ============================
 
-// Obtener todos
+// Obtener todos (endpoint público — sin campos sensibles)
 router.get("/", async (req, res) => {
   try {
     const deportistas = await Deportista.find()
-      .populate("scout")
-      .populate("sponsor")
-      .populate("club");
+      .select(PRIVATE_FIELDS)
+      .populate("scout", "name lastName specialization company")
+      .populate("sponsor", "company industry")
+      .populate("club", "name city");
     res.json(deportistas);
   } catch (err) {
     res.status(500).json({ error: "Error al obtener los deportistas" });
@@ -172,13 +176,14 @@ router.put("/:id", (req, res, next) => {
   }
 });
 
-// Obtener uno por ID
+// Obtener uno por ID (sin campos sensibles)
 router.get("/:id", async (req, res) => {
   try {
-    const deportista = await Deportista.findById(req.params.id, "-password")
-      .populate("scout")
-      .populate("sponsor")
-      .populate("club");
+    const deportista = await Deportista.findById(req.params.id)
+      .select(PRIVATE_FIELDS)
+      .populate("scout", "name lastName specialization company")
+      .populate("sponsor", "company industry")
+      .populate("club", "name city");
     if (!deportista)
       return res.status(404).json({ error: "Deportista no encontrado" });
     res.json(deportista);

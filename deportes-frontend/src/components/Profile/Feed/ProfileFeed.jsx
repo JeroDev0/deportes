@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/useAuth.js";
+import { useLanguage } from "../../../context/LanguageContext";
 import ProfileTabs from "./ProfileTabs";
 import NewPostForm from "./NewPostForm";
 import ProfilePost from "./ProfilePost";
@@ -10,6 +11,7 @@ import styles from "./ProfileFeed.module.css";
 
 function ProfileFeed({ profileId, isMyProfile }) {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [tab, setTab] = useState("posts");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -76,13 +78,13 @@ function ProfileFeed({ profileId, isMyProfile }) {
 
       {isMyProfile && tab === "posts" && (
         <div className={styles.newPostCard}>
-          <h4>Crear nueva publicación</h4>
+          <h4>{t("feed_new_post")}</h4>
           <NewPostForm userId={profileId} onNewPost={handleNewPost} />
         </div>
       )}
 
       {loading ? (
-        <div className={styles.loading}>Cargando publicaciones...</div>
+        <div className={styles.loading}>{t("feed_loading")}</div>
       ) : (
         <>
           {tab === "posts" && (
@@ -99,7 +101,7 @@ function ProfileFeed({ profileId, isMyProfile }) {
                 />
               ))
             ) : (
-              <div className={styles.empty}>Sin publicaciones</div>
+              <div className={styles.empty}>{t("feed_empty")}</div>
             )
           )}
           {tab === "grid" && (
