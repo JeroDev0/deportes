@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const Sponsor = require("../models/Sponsor");
 
 const PUBLIC_LIST_FIELDS = "company industry logo city country sports categories";
 const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -__v";
 
 // ==================== GET ALL SPONSORS ====================
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const sponsors = await Sponsor.find().select(PUBLIC_LIST_FIELDS);
     res.json(sponsors);
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
 });
 
 // ==================== GET SPONSOR BY ID ====================
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const sponsor = await Sponsor.findById(req.params.id)
       .select(PRIVATE_FIELDS)
