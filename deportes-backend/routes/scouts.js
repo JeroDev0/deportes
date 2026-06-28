@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const Scout = require("../models/Scout");
 const Deportista = require("../models/Deportista");
 
@@ -17,7 +18,7 @@ cloudinary.config({
 
 const upload = multer();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const scouts = await Scout.find()
       .select(PUBLIC_LIST_FIELDS);
@@ -219,7 +220,7 @@ router.put("/:id", upload.single("photo"), async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const scout = await Scout.findById(req.params.id)
       .select(PRIVATE_FIELDS)

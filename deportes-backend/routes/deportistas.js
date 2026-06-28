@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const Deportista = require("../models/Deportista");
 const Scout = require("../models/Scout");
 const Sponsor = require("../models/Sponsor");
 const Club = require("../models/Club");
 
-// Campos permitidos en el listado público (dashboard/búsqueda)
 const PUBLIC_LIST_FIELDS = "name lastName photo sport level city country age gender skills nationalities postalCode scoutName sponsorName clubName scout sponsor club";
-
-// Campos que NUNCA deben salir en respuestas individuales
 const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -isApproved -registrationDate -__v";
 
 const multer = require("multer");
@@ -29,8 +27,8 @@ const upload = multer();
 // RUTAS DE DEPORTISTAS
 // ============================
 
-// Obtener todos (endpoint público — SOLO campos necesarios para el dashboard)
-router.get("/", async (req, res) => {
+// Obtener todos — requiere autenticación
+router.get("/", auth, async (req, res) => {
   try {
     const deportistas = await Deportista.find({ isApproved: true })
       .select(PUBLIC_LIST_FIELDS)
@@ -179,8 +177,8 @@ router.put("/:id", (req, res, next) => {
   }
 });
 
-// Obtener uno por ID (sin campos sensibles)
-router.get("/:id", async (req, res) => {
+// Obtener uno por ID — requiere autenticación
+router.get("/:id", auth, async (req, res) => {
   try {
     const deportista = await Deportista.findById(req.params.id)
       .select(PRIVATE_FIELDS)

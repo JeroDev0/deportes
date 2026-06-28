@@ -3,6 +3,7 @@ import AthleteCard from "../components/Dashboard/AthleteCard";
 import styles from "./Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/useAuth";
 
 const API_URL = "https://deportes-production.up.railway.app";
 
@@ -84,6 +85,8 @@ function normalizeProfile(profile, type) {
 
 function Dashboard() {
   const { t } = useLanguage();
+  const { token, user } = useAuth();
+  const navigate = useNavigate();
 
   const genders = [
     { label: t("dash_all_genders"), value: "" },
@@ -127,14 +130,17 @@ function Dashboard() {
   const [allSkills, setAllSkills] = useState([]);
   const [allNationalities, setAllNationalities] = useState([]);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    const headers = { "x-auth-token": token };
     setLoading(true);
     Promise.all([
-      fetch(`${API_URL}/deportistas`).then(r => r.json()).catch(() => []),
-      fetch(`${API_URL}/scouts`).then(r => r.json()).catch(() => []),
-      fetch(`${API_URL}/sponsors`).then(r => r.json()).catch(() => []),
+      fetch(`${API_URL}/deportistas`, { headers }).then(r => r.json()).catch(() => []),
+      fetch(`${API_URL}/scouts`, { headers }).then(r => r.json()).catch(() => []),
+      fetch(`${API_URL}/sponsors`, { headers }).then(r => r.json()).catch(() => []),
     ]).then(([athletes, scouts, sponsors]) => {
       const normalized = [
         ...athletes.map(p => normalizeProfile(p, "athlete")),
@@ -154,7 +160,7 @@ function Dashboard() {
       setAllNationalities([...new Set(athletes.flatMap(a => a.nationalities || []).filter(Boolean))]);
       setLoading(false);
     });
-  }, []);
+  }, [token, navigate]);
 
   useEffect(() => {
     let result = allProfiles;
