@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import { apiFetch } from "../config/fetchWithAuth";
 import { useLanguage } from "../context/LanguageContext";
 import LeftProfileColumn from "../components/Profile/LeftProfileColumn.jsx";
 import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
@@ -19,7 +20,7 @@ function ProfilePage() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
+    apiFetch(`/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import { apiFetch } from "../config/fetchWithAuth";
 import LeftSponsorProfileColumn from "../components/Profile/LeftSponsorProfileColumn.jsx";
 import CenterSponsorProfileColumn from "../components/Profile/CenterSponsorProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
@@ -13,7 +14,7 @@ function SponsorProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://deportes-production.up.railway.app/sponsors/${id}`)
+    apiFetch(`/sponsors/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);

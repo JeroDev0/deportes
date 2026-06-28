@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
+import { apiFetch } from "../../../config/fetchWithAuth";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
@@ -130,7 +131,7 @@ function EditSponsorProfile() {
   const countryOptions = countryList().getData();
 
   useEffect(() => {
-    fetch(`${API_URL}/sponsors/${id}`)
+    apiFetch(`/sponsors/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -172,10 +173,10 @@ function EditSponsorProfile() {
 
   // Carga de Atletas y Clubes para el selector
   useEffect(() => {
-    fetch(`${API_URL}/deportistas`).then(res => res.json()).then(data => {
+    apiFetch(`/deportistas`).then(res => res.json()).then(data => {
       setAthleteOptions(data.map(a => ({ value: a._id, label: `${a.name} ${a.lastName}` })));
     });
-    fetch(`${API_URL}/clubs`).then(res => res.json()).then(data => {
+    apiFetch(`/clubs`).then(res => res.json()).then(data => {
       setClubOptions(data.map(c => ({ value: c._id, label: c.name })));
     });
   }, []);

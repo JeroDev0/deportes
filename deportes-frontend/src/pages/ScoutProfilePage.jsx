@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import { apiFetch } from "../config/fetchWithAuth";
 import LeftScoutProfileColumn from "../components/Profile/LeftScoutProfileColumn.jsx";
 import CenterScoutProfileColumn from "../components/Profile/CenterScoutProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
@@ -14,7 +15,7 @@ function ScoutProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    fetch(`https://deportes-production.up.railway.app/scouts/${id}`)
+    apiFetch(`/scouts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);

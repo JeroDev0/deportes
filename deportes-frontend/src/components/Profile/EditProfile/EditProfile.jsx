@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
+import { apiFetch } from "../../../config/fetchWithAuth";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
@@ -287,7 +288,7 @@ function EditProfile() {
 
   // Cargar datos iniciales del perfil
   useEffect(() => {
-    fetch(`https://deportes-production.up.railway.app/deportistas/${id}`)
+    apiFetch(`/deportistas/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -380,7 +381,7 @@ function EditProfile() {
   // Cargar scouts
   useEffect(() => {
     setLoadingScouts(true);
-    fetch("https://deportes-production.up.railway.app/scouts")
+    apiFetch("/scouts")
       .then((res) => res.json())
       .then((data) => {
         setScoutOptions(
@@ -398,7 +399,7 @@ function EditProfile() {
   // Cargar sponsors
   useEffect(() => {
     setLoadingSponsors(true);
-    fetch("https://deportes-production.up.railway.app/sponsors")
+    apiFetch("/sponsors")
       .then((res) => res.json())
       .then((data) => {
         setSponsorOptions(
@@ -416,7 +417,7 @@ function EditProfile() {
   // Cargar clubs
   useEffect(() => {
     setLoadingClubs(true);
-    fetch("https://deportes-production.up.railway.app/clubs")
+    apiFetch("/clubs")
       .then((res) => res.json())
       .then((data) => {
         setClubOptions(

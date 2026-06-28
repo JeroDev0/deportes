@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
+import { apiFetch } from "../../../config/fetchWithAuth";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
@@ -172,7 +173,7 @@ function EditScoutProfile() {
   const countryOptions = countryList().getData();
 
   useEffect(() => {
-    fetch(`${API_URL}/scouts/${id}`)
+    apiFetch(`/scouts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -215,7 +216,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingAthletes(true);
-    fetch("${API_URL}/deportistas")
+    apiFetch("/deportistas")
       .then((res) => res.json())
       .then((data) => {
         setAthleteOptions(
@@ -231,7 +232,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingClubs(true);
-    fetch("${API_URL}/clubs")
+    apiFetch("/clubs")
       .then((res) => res.json())
       .then((data) => {
         setClubOptions(
@@ -247,7 +248,7 @@ function EditScoutProfile() {
 
   useEffect(() => {
     setLoadingSponsors(true);
-    fetch("${API_URL}/sponsors")
+    apiFetch("/sponsors")
       .then((res) => res.json())
       .then((data) => {
         setSponsorOptions(

@@ -4,6 +4,7 @@ import Modal from '../Modal/Modal';
 import styles from './AthleteList.module.css';
 import { useAuth } from '../../context/useAuth.js';
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../../config/fetchWithAuth';
 
 function AthleteList({ limit = 12, showSeeMore = false }) {
   const [athletes, setAthletes] = useState([]);
@@ -12,11 +13,10 @@ function AthleteList({ limit = 12, showSeeMore = false }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://deportes-production.up.railway.app/deportistas')
+    apiFetch('/deportistas')
       .then(res => res.json())
-      .then(data => {
-        setAthletes(data);
-      });
+      .then(data => { if (Array.isArray(data)) setAthletes(data); })
+      .catch(() => {});
   }, []);
 
   const handleCardClick = (athleteId) => {
