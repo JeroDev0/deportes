@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useLanguage } from "../../../context/LanguageContext";
 import styles from "./ProfileFeed.module.css";
 
 function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
+  const { t } = useLanguage();
   const [liked, setLiked] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(post.text);
@@ -67,7 +69,7 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
             className={styles.postUserAvatar}
           />
           <div className={styles.postUserDetails}>
-            <h4>{userInfo ? `${userInfo.name} ${userInfo.lastName}` : "Cargando..."}</h4>
+            <h4>{userInfo ? `${userInfo.name} ${userInfo.lastName}` : t("feed_loading_user")}</h4>
             <div className={styles.postDate}>
               {new Date(post.createdAt).toLocaleDateString('es-ES', {
                 day: 'numeric',
@@ -127,14 +129,14 @@ function ProfilePost({ post, onLike, onDelete, onEdit, isMyProfile, userId }) {
               value={editText} 
               onChange={e => setEditText(e.target.value)}
               className={styles.editTextarea}
-              placeholder="Escribe tu publicación..."
+              placeholder={t("feed_edit_ph")}
             />
             <div className={styles.editActions}>
               <button className={styles.saveBtn} onClick={handleEdit}>
-                Guardar
+                {t("feed_save")}
               </button>
               <button className={styles.cancelBtn} onClick={cancelEdit}>
-                Cancelar
+                {t("feed_cancel")}
               </button>
             </div>
           </div>

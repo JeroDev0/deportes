@@ -192,19 +192,19 @@ function SesionesPanel() {
       {notasAbiertas && (
         <div className={styles.notasOverlay} onClick={() => setNotasAbiertas(null)}>
           <div className={styles.notasModal} onClick={e => e.stopPropagation()}>
-            <p className={styles.notasTitle}>Notas de sesión</p>
+            <p className={styles.notasTitle}>{t("ses_notes_title")}</p>
             <textarea
               className={styles.notasTextarea}
-              placeholder="Escribe tus observaciones sobre esta sesión..."
+              placeholder={t("ses_notes_ph")}
               maxLength={1000}
               rows={6}
               value={notas}
               onChange={e => setNotas(e.target.value)}
             />
             <div className={styles.notasActions}>
-              <button className={styles.cancelNotasBtn} onClick={() => setNotasAbiertas(null)} type="button">Cancelar</button>
+              <button className={styles.cancelNotasBtn} onClick={() => setNotasAbiertas(null)} type="button">{t("ses_cancel_form")}</button>
               <button className={styles.saveNotasBtn} onClick={() => guardarNotas(notasAbiertas)} disabled={guardandoNotas} type="button">
-                {guardandoNotas ? "Guardando..." : "Guardar notas"}
+                {guardandoNotas ? t("checkin_saving") : t("ses_save_notes")}
               </button>
             </div>
           </div>
@@ -215,8 +215,20 @@ function SesionesPanel() {
 }
 
 function SesionCard({ sesion, onNotas }) {
-  const est = ESTADO_STYLE[sesion.estado] || ESTADO_STYLE.pendiente;
-  const esp = { psicologo_deporte: "Psicólogo", coach_recuperacion: "Coach", nutricionista_rendimiento: "Nutricionista" };
+  const { t } = useLanguage();
+  const ESTADO_STYLE_LOCAL = {
+    pendiente:  { color: "#f0b429", bg: "rgba(240,180,41,0.08)", label: t("ses_state_pending") },
+    confirmada: { color: "#53fb52", bg: "rgba(83,251,82,0.08)",  label: t("ses_state_confirmed") },
+    completada: { color: "#8aaccc", bg: "rgba(138,172,204,0.08)",label: t("ses_state_completed") },
+    cancelada:  { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: t("ses_state_cancelled") },
+    rechazada:  { color: "#e05555", bg: "rgba(224,85,85,0.08)",  label: t("ses_state_rejected") },
+  };
+  const est = ESTADO_STYLE_LOCAL[sesion.estado] || ESTADO_STYLE_LOCAL.pendiente;
+  const esp = {
+    psicologo_deporte: t("ses_spec_psy"),
+    coach_recuperacion: t("ses_spec_coach"),
+    nutricionista_rendimiento: t("ses_spec_nut"),
+  };
   return (
     <div className={styles.sesionCard}>
       <div className={styles.sesionHeader}>
@@ -231,10 +243,10 @@ function SesionCard({ sesion, onNotas }) {
       <div className={styles.sesionMeta}>
         <span>📅 {sesion.fechaSolicitada}</span>
         {sesion.horaInicio && <span>🕐 {sesion.horaInicio}{sesion.horaFin ? ` — ${sesion.horaFin}` : ""}</span>}
-        <span>{sesion.modalidad === "video_call" ? "📹 Video-call" : "📍 Presencial"}</span>
+        <span>{sesion.modalidad === "video_call" ? "📹 Video-call" : `📍 ${t("ses_presencial")}`}</span>
       </div>
       <button className={styles.notasBtn} onClick={() => onNotas(sesion)} type="button">
-        {sesion.notasDeportista ? "Ver / editar notas" : "Añadir notas"}
+        {sesion.notasDeportista ? t("ses_save_notes") : t("ses_notes_title")}
       </button>
     </div>
   );

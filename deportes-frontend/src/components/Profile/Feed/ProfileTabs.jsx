@@ -1,9 +1,11 @@
 import styles from "./ProfileFeed.module.css";
+import { useLanguage } from "../../../context/LanguageContext";
 
 function ProfileTabs({ tab, setTab }) {
+  const { t } = useLanguage();
   const tabs = [
-    { key: "posts", label: "Publicaciones" },
-    { key: "grid", label: "Grid" }
+    { key: "posts", label: t("feed_tab_posts") },
+    { key: "grid",  label: t("feed_tab_grid") },
   ];
 
   return (

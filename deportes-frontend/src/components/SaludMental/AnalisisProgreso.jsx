@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/useAuth.js";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./AnalisisProgreso.module.css";
 
 const API = "https://deportes-production.up.railway.app";
@@ -36,6 +37,7 @@ function alertas(checkins30) {
 
 function AnalisisProgreso() {
   const { token } = useAuth();
+  const { t } = useLanguage();
   const [checkins, setCheckins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rango, setRango] = useState(30);
@@ -68,13 +70,13 @@ function AnalisisProgreso() {
   const resumen  = resumenSemana(ultimos7);
   const alertList = alertas([...checkins].sort((a, b) => b.fecha.localeCompare(a.fecha)));
 
-  if (loading) return <div className={styles.loading}>Cargando análisis...</div>;
+  if (loading) return <div className={styles.loading}>{t("anal_loading")}</div>;
 
   if (!checkins.length) {
     return (
       <div className={styles.empty}>
-        <p>Aún no tienes datos suficientes.</p>
-        <p className={styles.emptyHint}>Completa al menos un check-in diario para ver tu análisis de progreso.</p>
+        <p>{t("anal_empty")}</p>
+        <p className={styles.emptyHint}>{t("anal_empty_hint")}</p>
       </div>
     );
   }

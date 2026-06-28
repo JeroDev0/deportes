@@ -1,11 +1,13 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import { useLanguage } from "../../../context/LanguageContext";
 import styles from "./ProfileFeed.module.css";
 
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dx9l2xf44/auto/upload";
 const CLOUDINARY_UPLOAD_PRESET = "unsigned";
 
 function NewPostForm({ userId, onNewPost }) {
+  const { t } = useLanguage();
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const [type, setType] = useState("image");
@@ -71,7 +73,7 @@ function NewPostForm({ userId, onNewPost }) {
     <form className={styles.newPostForm} onSubmit={handleSubmit}>
       <textarea
         className={styles.postTextarea}
-        placeholder="¿Qué quieres compartir?"
+        placeholder={t("feed_share_ph")}
         value={text}
         onChange={e => setText(e.target.value)}
         required
@@ -82,12 +84,12 @@ function NewPostForm({ userId, onNewPost }) {
           value={type} 
           onChange={handleTypeChange}
         >
-          <option value="image">Imagen</option>
-          <option value="video">Video</option>
+          <option value="image">{t("feed_image")}</option>
+          <option value="video">{t("feed_video")}</option>
         </select>
         {/* Label personalizado */}
         <label className={styles.fileLabel}>
-          <span>{file ? "Cambiar archivo" : "Seleccionar archivo"}</span>
+          <span>{file ? t("feed_change_file") : t("feed_select_file")}</span>
           <input
             className={styles.fileInput}
             type="file"
@@ -102,12 +104,12 @@ function NewPostForm({ userId, onNewPost }) {
           disabled={loading}
           className={styles.submitBtn}
         >
-          {loading ? "Publicando..." : "Publicar"}
+          {loading ? t("feed_publishing") : t("feed_publish")}
         </button>
       </div>
       {file && (
         <div className={styles.selectedFile}>
-          Archivo seleccionado: <strong>{file.name}</strong>
+          {t("feed_selected")} <strong>{file.name}</strong>
         </div>
       )}
     </form>
