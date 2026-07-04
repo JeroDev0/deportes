@@ -14,7 +14,8 @@
       "Bash(node -e \"require\\('./routes/deportistas'\\); require\\('./routes/scouts'\\); require\\('./routes/sponsors'\\); console.log\\('✅ Rutas OK'\\);\")",
       "Bash(git push *)",
       "Bash(npm install *)",
-      "Bash(node -e \"require\\('react-simple-maps'\\)\")"
+      "Bash(node -e \"require\\('react-simple-maps'\\)\")",
+      "Bash(npm uninstall *)"
     ]
   }
 }
