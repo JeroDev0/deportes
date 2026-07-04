@@ -20,7 +20,6 @@
     "react-router-dom": "^7.6.2",
     "react-select": "^5.10.2",
     "react-select-country-list": "^2.2.3",
-    "react-simple-maps": "^3.0.0",
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1"
   },
