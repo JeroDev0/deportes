@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
 import { apiFetch } from "../../../config/fetchWithAuth";
 import PhotoCropModal from "../../common/PhotoCropModal";
+import CitySearch from "../../common/CitySearch";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import countryList from "react-select-country-list";
@@ -675,16 +676,12 @@ function EditScoutProfile() {
                 styles={selectStyles}
                 isClearable
               />
-              <Select
-                options={birthCityOptions}
-                value={birthCityOptions.find((c) => c.value === form.birthCity) || null}
-                onChange={(opt) => handleSelectChange(opt, "birthCity")}
-                placeholder={
-                  loadingBirthCities ? "Cargando ciudades..." : form.birthCountry ? "Seleccionar ciudad de nacimiento" : "Selecciona primero el país de nacimiento"
-                }
-                isClearable
-                isDisabled={!form.birthCountry || loadingBirthCities || birthCityOptions.length === 0}
-                styles={selectStyles}
+              <CitySearch
+                countryCode={form.birthCountry}
+                value={form.birthCity}
+                onChange={(val) => setForm(prev => ({ ...prev, birthCity: val }))}
+                placeholder="Escribe la ciudad de nacimiento..."
+                disabled={!form.birthCountry}
               />
             </div>
 
@@ -698,16 +695,12 @@ function EditScoutProfile() {
                 styles={selectStyles}
                 isClearable
               />
-              <Select
-                options={cityOptions}
-                value={cityOptions.find((c) => c.value === form.city) || null}
-                onChange={(opt) => handleSelectChange(opt, "city")}
-                placeholder={
-                  loadingCities ? "Cargando ciudades..." : form.country ? "Seleccionar ciudad actual" : "Selecciona primero el país"
-                }
-                isClearable
-                isDisabled={!form.country || loadingCities || cityOptions.length === 0}
-                styles={selectStyles}
+              <CitySearch
+                countryCode={form.country}
+                value={form.city}
+                onChange={(val) => setForm(prev => ({ ...prev, city: val }))}
+                placeholder="Escribe la ciudad actual..."
+                disabled={!form.country}
               />
               <input
                 name="postalCode"
