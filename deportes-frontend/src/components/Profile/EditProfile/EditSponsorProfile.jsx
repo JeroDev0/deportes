@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth.js";
 import { apiFetch } from "../../../config/fetchWithAuth";
 import PhotoCropModal from "../../common/PhotoCropModal";
+import CitySearch from "../../common/CitySearch";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import styles from "./EditProfile.module.css";
@@ -337,9 +338,13 @@ function EditSponsorProfile() {
               <h3>Ubicación</h3>
               <Select options={countryOptions} value={countryOptions.find(c => c.value === form.country)}
                 onChange={(opt) => handleSelectChange(opt, "country")} styles={selectStyles} />
-              <Select options={cityOptions} value={cityOptions.find(c => c.value === form.city)}
-                onChange={(opt) => handleSelectChange(opt, "city")} isDisabled={!form.country || loadingCities}
-                placeholder={loadingCities ? "Cargando..." : "Seleccionar ciudad"} styles={selectStyles} />
+              <CitySearch
+                countryCode={form.country}
+                value={form.city}
+                onChange={(val) => setForm(prev => ({ ...prev, city: val }))}
+                placeholder="Escribe la ciudad..."
+                disabled={!form.country}
+              />
             </div>
 
             <div className={styles.professionalConnections}>

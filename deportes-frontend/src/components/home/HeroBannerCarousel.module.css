@@ -1,0 +1,145 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── Slides ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+  /* height definido por el slide activo */
+}
+
+.slideActive {
+  position: relative;
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Banner de texto ── */
+.bannerBg {
+  width: 100%;
+  min-height: 600px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.bannerOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 38, 53, 0.50);
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.bannerTitle {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.bannerText {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(255,255,255,0.85);
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.registerBtn {
+  display: inline-flex;
+  align-items: center;
+  background: #53fb52;
+  color: #07111c;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  padding: 13px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.registerBtn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+/* ── Botón de cambio de slide ── */
+.controls {
+  position: absolute;
+  bottom: 56px;
+  right: 28px;
+  z-index: 900;
+}
+
+.arrow {
+  background: rgba(7, 17, 28, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(83, 251, 82, 0.3);
+  color: #53fb52;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 8px 18px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.arrow:hover { background: rgba(83, 251, 82, 0.15); }
+
+/* ── Dots ── */
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 900;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+.dotActive {
+  background: #53fb52;
+  border-color: #53fb52;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .bannerBg { min-height: 420px; background-position: 70% center; }
+  .bannerContent { padding: 2.5rem 1rem; }
+  .controls { bottom: 48px; right: 14px; }
+}
+
+@media (max-width: 600px) {
+  .bannerBg { min-height: 380px; }
+  .bannerTitle { font-size: 1.8rem; }
+}
