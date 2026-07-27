@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     const {
       email, password, profileType,
       name, lastName, gender, birthDate, country,
-      sport, sports, company, entityType,
+      sport, sports, company, entityType, registrationType,
     } = req.body;
 
     console.log("📝 Registro de usuario:", { email, profileType });
@@ -81,6 +81,7 @@ router.post("/register", async (req, res) => {
           country: country || "",
           birthDate: birthDate ? new Date(birthDate) : null,
           age: calculateAge(birthDate),
+          registrationType: registrationType || "self",
         });
         break;
 
@@ -95,6 +96,7 @@ router.post("/register", async (req, res) => {
           gender: gender || "",
           company: company || "",
           country: country || "",
+          birthDate: birthDate ? new Date(birthDate) : null,
           age: calculateAge(birthDate),
           sports: sportsArray,
         });
@@ -117,10 +119,11 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "club",
-          name: name || "",
+          name: company || name || "",
           country: country || "",
           sports: sportsArray,
           entityType: entityType || "",
+          founded: birthDate ? new Date(birthDate) : null,
         });
         break;
 

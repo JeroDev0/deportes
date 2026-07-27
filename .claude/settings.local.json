@@ -15,7 +15,26 @@
       "Bash(git push *)",
       "Bash(npm install *)",
       "Bash(node -e \"require\\('react-simple-maps'\\)\")",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "PowerShell(Resolve-DnsName -Type SRV -Name \"_mongodb._tcp.clustersport.tvaz69w.mongodb.net\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Resolve-DnsName -Type SRV -Name \"_mongodb._tcp.clustersport.tvaz69w.mongodb.net\" -Server 8.8.8.8 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetAdapter -IncludeHidden)",
+      "PowerShell(Get-DnsClientServerAddress -AddressFamily IPv4)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 53 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetUDPEndpoint -LocalPort 53 -ErrorAction SilentlyContinue)",
+      "Bash(timeout 15 node app.js)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue | Select-Object OwningProcess | ForEach-Object { Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path })",
+      "Bash(powershell -Command \"Stop-Process -Id 24028 -Force\")",
+      "Bash(sleep 2 && cat /tmp/backend.log)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -X POST http://localhost:5000/auth/register -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(npm init *)",
+      "Bash(npx playwright *)",
+      "Bash(node shot.js)",
+      "Bash(node shot2.js)"
     ]
   }
 }

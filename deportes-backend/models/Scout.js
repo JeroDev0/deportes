@@ -10,6 +10,7 @@ const ScoutSchema = new mongoose.Schema({
   },
   name: { type: String, default: "" },
   lastName: { type: String, default: "" },
+  birthDate: { type: Date, default: null },
   age: { type: Number, default: 0 },
   gender: { type: String, default: "" },
   phone: { type: String, default: "" },

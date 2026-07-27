@@ -20,6 +20,11 @@ const DeportistaSchema = new mongoose.Schema({
   lastName: { type: String, default: "" },
   birthDate: { type: Date, default: null },
   age: { type: Number, default: null },
+  registrationType: {
+    type: String,
+    enum: ["self", "child"],
+    default: "self",
+  },
   sport: { type: String, default: "" },
   gender: { type: String, default: "" },
   phone: { type: String, default: "" },

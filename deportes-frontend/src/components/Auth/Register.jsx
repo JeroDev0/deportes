@@ -188,6 +188,7 @@ function Register() {
     sport: "",
     sports: [],
     company: "",
+    entityType: "",
     registrationType: "self",
     termsAccepted: false,
   });
@@ -268,6 +269,8 @@ function Register() {
           sport: form.sport,
           sports: form.sports,
           company: form.company,
+          entityType: form.entityType,
+          registrationType: form.registrationType,
         }),
       });
       const data = await res.json();
@@ -436,46 +439,65 @@ function Register() {
               <div className={styles.stepTitle}>INFORMACIÓN PERSONAL</div>
               <div className={styles.stepDesc}>Completa tu información para crear tu perfil.</div>
 
-              <div className={styles.genderRow}>
-                <button
-                  type="button"
-                  className={`${styles.genderBtn} ${form.gender === "femenino" ? styles.selected : ""}`}
-                  onClick={() => setForm(p => ({ ...p, gender: "femenino" }))}
-                >
-                  FEMENINO
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.genderBtn} ${form.gender === "masculino" ? styles.selected : ""}`}
-                  onClick={() => setForm(p => ({ ...p, gender: "masculino" }))}
-                >
-                  MASCULINO
-                </button>
-              </div>
+              {form.profileType !== "club" && (
+                <div className={styles.genderRow}>
+                  <button
+                    type="button"
+                    className={`${styles.genderBtn} ${form.gender === "femenino" ? styles.selected : ""}`}
+                    onClick={() => setForm(p => ({ ...p, gender: "femenino" }))}
+                  >
+                    FEMENINO
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.genderBtn} ${form.gender === "masculino" ? styles.selected : ""}`}
+                    onClick={() => setForm(p => ({ ...p, gender: "masculino" }))}
+                  >
+                    MASCULINO
+                  </button>
+                </div>
+              )}
 
               <div className={styles.personalGrid}>
+                {form.profileType === "club" ? (
+                  <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
+                    <label className={styles.fieldLabel}>Nombre de la Entidad *</label>
+                    <input
+                      className={styles.fieldInput}
+                      type="text"
+                      placeholder="Nombre del club, federación, etc."
+                      value={form.company}
+                      onChange={e => setForm(p => ({ ...p, company: e.target.value }))}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div className={styles.fieldGroup}>
+                      <label className={styles.fieldLabel}>Nombre *</label>
+                      <input
+                        className={styles.fieldInput}
+                        type="text"
+                        placeholder="Tu nombre"
+                        value={form.name}
+                        onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+                      />
+                    </div>
+                    <div className={styles.fieldGroup}>
+                      <label className={styles.fieldLabel}>Apellido *</label>
+                      <input
+                        className={styles.fieldInput}
+                        type="text"
+                        placeholder="Tu apellido"
+                        value={form.lastName}
+                        onChange={e => setForm(p => ({ ...p, lastName: e.target.value }))}
+                      />
+                    </div>
+                  </>
+                )}
                 <div className={styles.fieldGroup}>
-                  <label className={styles.fieldLabel}>Nombre *</label>
-                  <input
-                    className={styles.fieldInput}
-                    type="text"
-                    placeholder="Tu nombre"
-                    value={form.name}
-                    onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-                  />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.fieldLabel}>Apellido *</label>
-                  <input
-                    className={styles.fieldInput}
-                    type="text"
-                    placeholder="Tu apellido"
-                    value={form.lastName}
-                    onChange={e => setForm(p => ({ ...p, lastName: e.target.value }))}
-                  />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.fieldLabel}>Fecha de Nacimiento *</label>
+                  <label className={styles.fieldLabel}>
+                    {form.profileType === "club" ? "Fecha de Fundación" : "Fecha de Nacimiento *"}
+                  </label>
                   <input
                     className={styles.fieldInput}
                     type="date"
@@ -497,15 +519,33 @@ function Register() {
                   </select>
                 </div>
 
-                {(form.profileType === "scout" || form.profileType === "club") && (
+                {form.profileType === "club" && (
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.fieldLabel}>Tipo de Entidad</label>
+                    <select
+                      className={styles.fieldInput}
+                      value={form.entityType}
+                      onChange={e => setForm(p => ({ ...p, entityType: e.target.value }))}
+                    >
+                      <option value="">Selecciona un tipo</option>
+                      <option value="Club">Club</option>
+                      <option value="Federación">Federación</option>
+                      <option value="Asociación">Asociación</option>
+                      <option value="Universidad">Universidad</option>
+                      <option value="Academia">Academia</option>
+                      <option value="Estudio Deportivo">Estudio Deportivo</option>
+                      <option value="Equipo">Equipo</option>
+                    </select>
+                  </div>
+                )}
+
+                {form.profileType === "scout" && (
                   <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
-                    <label className={styles.fieldLabel}>
-                      {form.profileType === "club" ? "Nombre de la Entidad" : "Empresa / Organización"}
-                    </label>
+                    <label className={styles.fieldLabel}>Empresa / Organización</label>
                     <input
                       className={styles.fieldInput}
                       type="text"
-                      placeholder={form.profileType === "club" ? "Nombre del club, federación, etc." : "Tu empresa u organización"}
+                      placeholder="Tu empresa u organización"
                       value={form.company}
                       onChange={e => setForm(p => ({ ...p, company: e.target.value }))}
                     />
