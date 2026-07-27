@@ -1,4 +1,14 @@
 /* ===== FULL PAGE WRAPPER ===== */
+.page,
+.selectionPage {
+  box-sizing: border-box;
+}
+
+.page *,
+.selectionPage * {
+  box-sizing: border-box;
+}
+
 .page {
   position: fixed;
   inset: 0;
@@ -13,11 +23,11 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: radial-gradient(ellipse at 60% 40%, #0d2a4a 0%, #07111c 70%);
-  background-image:
-    radial-gradient(ellipse at 60% 40%, #0d2a4a 0%, #07111c 70%),
-    radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: cover, 30px 30px;
+  background-color: #14191c;
+  background-image: url("data:image/svg+xml;utf8,<svg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'><rect width='40' height='40' fill='%2314191c'/><path d='M10 0 L20 10 L10 20 L0 10 Z' fill='none' stroke='%23222a30' stroke-width='1'/></svg>");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 40px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +51,7 @@
 }
 
 .selectionHeader h1 span {
-  color: #00aaff;
+  color: #53fb52;
 }
 
 .selectionHeader p {
@@ -61,7 +71,7 @@
 
 .typeCard {
   background: rgba(13, 42, 74, 0.7);
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
+  border: 1.5px solid rgba(83, 251, 82, 0.25);
   border-radius: 16px;
   padding: 2rem 1.5rem 1.5rem;
   width: 300px;
@@ -76,9 +86,9 @@
 }
 
 .typeCard:hover {
-  border-color: #00aaff;
+  border-color: #53fb52;
   transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(0, 170, 255, 0.2);
+  box-shadow: 0 16px 48px rgba(83, 251, 82, 0.2);
 }
 
 .cardIcon {
@@ -118,7 +128,7 @@
   padding: 0.75rem 1rem;
   background: transparent;
   border: 2px solid #fff;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #fff;
   font-size: 0.88rem;
   font-weight: 700;
@@ -133,9 +143,9 @@
 }
 
 .cardBtn:hover {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
+  background: #53fb52;
+  border-color: #53fb52;
+  color: #0d2635;
 }
 
 /* ===== LEFT PANEL ===== */
@@ -149,7 +159,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 2.5rem 2rem;
-  border-right: 1px solid rgba(0, 170, 255, 0.1);
+  border-right: 1px solid rgba(83, 251, 82, 0.1);
 }
 
 .leftBrand {
@@ -162,7 +172,7 @@
 }
 
 .leftBrand span {
-  color: #00aaff;
+  color: #53fb52;
 }
 
 .leftSubtitle {
@@ -177,12 +187,12 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(0, 170, 255, 0.1);
-  border: 1px solid rgba(0, 170, 255, 0.3);
+  background: rgba(83, 251, 82, 0.1);
+  border: 1px solid rgba(83, 251, 82, 0.3);
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 0.78rem;
-  color: #00aaff;
+  color: #53fb52;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -205,7 +215,7 @@
 .stepConnector {
   width: 2px;
   height: 32px;
-  background: rgba(0, 170, 255, 0.2);
+  background: rgba(83, 251, 82, 0.2);
   margin: 0 0 0 13px;
 }
 
@@ -219,22 +229,22 @@
   font-size: 0.78rem;
   font-weight: 800;
   flex-shrink: 0;
-  border: 1.5px solid rgba(0, 170, 255, 0.3);
+  border: 1.5px solid rgba(83, 251, 82, 0.3);
   color: #456a87;
   background: transparent;
   transition: all 0.25s;
 }
 
 .stepDot.active {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
+  background: #53fb52;
+  border-color: #53fb52;
+  color: #0d2635;
 }
 
 .stepDot.done {
-  background: rgba(0, 170, 255, 0.15);
-  border-color: #00aaff;
-  color: #00aaff;
+  background: rgba(83, 251, 82, 0.15);
+  border-color: #53fb52;
+  color: #53fb52;
 }
 
 .stepLabel {
@@ -252,22 +262,25 @@
 }
 
 .stepLabel.done {
-  color: #00aaff;
+  color: #53fb52;
 }
 
 /* ===== RIGHT PANEL ===== */
 .rightPanel {
   flex: 1;
-  background: linear-gradient(135deg, #0d2443 0%, #0a1a2e 100%);
+  min-width: 0;
+  background: linear-gradient(135deg, #14191c 0%, #0d1114 100%);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 2.5rem 2.5rem 0;
 }
 
 .rightInner {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-bottom: 1rem;
 }
 
@@ -290,7 +303,7 @@
 /* ===== CREDENTIALS STEP ===== */
 .credRow {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -311,7 +324,7 @@
 
 .fieldInput {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 170, 255, 0.2);
+  border: 1px solid rgba(83, 251, 82, 0.2);
   border-radius: 8px;
   padding: 0.65rem 0.9rem;
   color: #fff;
@@ -322,7 +335,7 @@
 }
 
 .fieldInput:focus {
-  border-color: #00aaff;
+  border-color: #53fb52;
 }
 
 .fieldInput::placeholder {
@@ -369,13 +382,13 @@
 
 .sportsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 0.6rem;
 }
 
 .sportCard {
   background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(0, 170, 255, 0.15);
+  border: 1.5px solid rgba(83, 251, 82, 0.15);
   border-radius: 8px;
   padding: 0.6rem 0.4rem;
   display: flex;
@@ -388,13 +401,13 @@
 }
 
 .sportCard:hover {
-  border-color: #00aaff;
-  background: rgba(0, 170, 255, 0.08);
+  border-color: #53fb52;
+  background: rgba(83, 251, 82, 0.08);
 }
 
 .sportCard.selected {
-  background: rgba(0, 170, 255, 0.18);
-  border-color: #00aaff;
+  background: rgba(83, 251, 82, 0.18);
+  border-color: #53fb52;
 }
 
 .sportEmoji {
@@ -425,7 +438,7 @@
 
 .genderBtn {
   padding: 0.75rem;
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
+  border: 1.5px solid rgba(83, 251, 82, 0.25);
   border-radius: 8px;
   background: transparent;
   color: #8ab4cc;
@@ -439,14 +452,14 @@
 
 .genderBtn:hover,
 .genderBtn.selected {
-  background: #00aaff;
-  border-color: #00aaff;
-  color: #07111c;
+  background: #53fb52;
+  border-color: #53fb52;
+  color: #0d2635;
 }
 
 .personalGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -464,7 +477,7 @@
 
 .registerTypeBtn {
   padding: 0.75rem 0.5rem;
-  border: 1.5px solid rgba(0, 170, 255, 0.25);
+  border: 1.5px solid rgba(83, 251, 82, 0.25);
   border-radius: 8px;
   background: transparent;
   color: #8ab4cc;
@@ -480,9 +493,9 @@
 
 .registerTypeBtn:hover,
 .registerTypeBtn.selected {
-  background: rgba(0, 170, 255, 0.15);
-  border-color: #00aaff;
-  color: #00aaff;
+  background: rgba(83, 251, 82, 0.15);
+  border-color: #53fb52;
+  color: #53fb52;
 }
 
 .registerTypeNote {
@@ -494,7 +507,7 @@
 /* ===== TERMS STEP ===== */
 .tcContainer {
   background: rgba(0,0,0,0.25);
-  border: 1px solid rgba(0, 170, 255, 0.15);
+  border: 1px solid rgba(83, 251, 82, 0.15);
   border-radius: 10px;
   height: 340px;
   overflow-y: auto;
@@ -514,7 +527,7 @@
 }
 
 .tcContainer::-webkit-scrollbar-thumb {
-  background: rgba(0, 170, 255, 0.3);
+  background: rgba(83, 251, 82, 0.3);
   border-radius: 3px;
 }
 
@@ -522,7 +535,7 @@
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #00aaff;
+  color: #53fb52;
   text-transform: uppercase;
   margin: 1rem 0 0.5rem;
 }
@@ -547,7 +560,7 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  accent-color: #00aaff;
+  accent-color: #53fb52;
   cursor: pointer;
   margin-top: 2px;
 }
@@ -563,7 +576,7 @@
 .navRow {
   display: flex;
   align-items: stretch;
-  border-top: 1px solid rgba(0, 170, 255, 0.1);
+  border-top: 1px solid rgba(83, 251, 82, 0.1);
   margin-top: auto;
   flex-shrink: 0;
 }
@@ -573,7 +586,7 @@
   padding: 1.1rem 1rem;
   background: transparent;
   border: none;
-  border-right: 1px solid rgba(0, 170, 255, 0.1);
+  border-right: 1px solid rgba(83, 251, 82, 0.1);
   color: #456a87;
   font-size: 0.82rem;
   font-weight: 700;
@@ -595,9 +608,9 @@
 .nextBtn {
   flex: 2;
   padding: 1.1rem 1rem;
-  background: #00aaff;
+  background: #53fb52;
   border: none;
-  color: #07111c;
+  color: #0d2635;
   font-size: 0.88rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -611,12 +624,12 @@
 }
 
 .nextBtn:hover {
-  background: #33bbff;
+  background: #3ae03a;
 }
 
 .nextBtn:disabled {
-  background: #1a3a5a;
-  color: #2d5470;
+  background: #1e2a1e;
+  color: #3a5a3a;
   cursor: not-allowed;
 }
 
@@ -651,7 +664,7 @@
 .loginLink button {
   background: none;
   border: none;
-  color: #00aaff;
+  color: #53fb52;
   font-weight: 700;
   cursor: pointer;
   font-size: 0.8rem;
@@ -673,7 +686,7 @@
     min-width: unset;
     padding: 1.2rem 1.5rem;
     border-right: none;
-    border-bottom: 1px solid rgba(0, 170, 255, 0.1);
+    border-bottom: 1px solid rgba(83, 251, 82, 0.1);
   }
 
   .stepsWrapper {
@@ -696,13 +709,8 @@
     padding: 1.5rem 1.2rem 0;
   }
 
-  .credRow,
-  .personalGrid {
-    grid-template-columns: 1fr;
-  }
-
   .sportsGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
 
   .cardsRow {
