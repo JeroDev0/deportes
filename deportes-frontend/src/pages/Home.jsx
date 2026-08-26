@@ -1,8 +1,6 @@
-import AthleteList from '../components/Dashboard/AthleteList';
-import styles from './Home.module.css';
 import TalentSearch from '../components/TalentSearch/TalentSearch';
-import HomeCarousel from '../components/home/HomeCarousel';
 import HeroBannerCarousel from '../components/home/HeroBannerCarousel';
+import LandingSections from '../components/home/LandingSections';
 
 function Home() {
   return (
@@ -11,11 +9,7 @@ function Home() {
 
       <TalentSearch />
 
-      <div className={styles.athleteListWrapper}>
-        <AthleteList limit={4} showSeeMore={true} />
-      </div>
-
-      <HomeCarousel />
+      <LandingSections />
     </>
   );
 }
