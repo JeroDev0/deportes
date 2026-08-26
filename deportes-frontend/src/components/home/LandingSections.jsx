@@ -44,9 +44,9 @@ function LandingSections() {
           </div>
           <div className={styles.proofStats}>
             {[
-              ['500+', t('landing_proof_athletes')],
-              ['25+', t('landing_proof_clubs')],
-              ['8', t('landing_proof_countries')],
+              ['80+', t('landing_proof_athletes')],
+              ['3', t('landing_proof_clubs')],
+              ['3', t('landing_proof_countries')],
             ].map(([number, label]) => (
               <div key={label} className={styles.proofStat}>
                 <p className={styles.proofNumber}>{number}</p>
@@ -79,7 +79,11 @@ function LandingSections() {
               </div>
               <div className={styles.mockBanner}>
                 <div className={styles.mockAvatar}>
-                  <span>[FOTO]</span>
+                  <img
+                    src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1757854323/deportistas/yog60jhgoyzclcooo3ne.jpg"
+                    alt={t('landing_profile_name')}
+                    className={styles.mockAvatarImg}
+                  />
                 </div>
                 <div>
                   <h3 className={styles.mockName}>{t('landing_profile_name')}</h3>
@@ -95,19 +99,19 @@ function LandingSections() {
                   </div>
                   <div className={styles.mockHistoryCol}>
                     <p className={styles.mockLabel}>{t('landing_profile_history')}</p>
-                    <p className={styles.mockYear}>2021 — 2024</p>
-                    <p className={styles.mockSmall}>Hamburg Youth League</p>
-                    <p className={styles.mockYear}>2018 — 2021</p>
-                    <p className={styles.mockSmall}>Academia LATAM</p>
+                    <p className={styles.mockYear}>{t('landing_profile_history1_period')}</p>
+                    <p className={styles.mockSmall}>{t('landing_profile_history1_place')}</p>
+                    <p className={styles.mockYear}>{t('landing_profile_history2_period')}</p>
+                    <p className={styles.mockSmall}>{t('landing_profile_history2_place')}</p>
                   </div>
                 </div>
                 <div className={styles.mockStatsBlock}>
                   <p className={styles.mockLabel}>{t('landing_profile_stats')}</p>
                   <div className={styles.mockStatsGrid}>
                     {[
-                      ['87', t('landing_profile_matches')],
-                      ['24 / 19', t('landing_profile_goals')],
-                      ['8.6', t('landing_profile_rating')],
+                      ['10 / 22', t('landing_profile_goals')],
+                      ['177cm', t('landing_profile_height')],
+                      ['32km/h', t('landing_profile_speed')],
                     ].map(([value, label]) => (
                       <div key={label} className={styles.mockStat}>
                         <p className={styles.mockStatValue}>{value}</p>
@@ -118,10 +122,12 @@ function LandingSections() {
                 </div>
                 <div className={styles.mockFooter}>
                   <div className={styles.mockTags}>
-                    <span className={styles.mockTag}>Velocidad</span>
-                    <span className={styles.mockTag}>Visión</span>
+                    <span className={styles.mockTag}>{t('landing_profile_tag1')}</span>
+                    <span className={styles.mockTag}>{t('landing_profile_tag2')}</span>
                   </div>
-                  <span className={styles.mockView}>{t('landing_profile_view')}<ArrowIcon /></span>
+                  <button type="button" onClick={() => navigate('/profile/68bd68edae6cc449f75f25b9')} className={styles.mockView}>
+                    {t('landing_profile_view')}<ArrowIcon />
+                  </button>
                 </div>
               </div>
             </div>
@@ -129,8 +135,131 @@ function LandingSections() {
         </div>
       </section>
 
-      {/* ===== SALUD MENTAL ===== */}
-      <section id="wellbeing" className={styles.mental} aria-labelledby="wellbeing-title">
+      {/* ===== BENEFICIOS / RESUMEN DE LOS 3 PILARES ===== */}
+      <section className={styles.benefits} aria-labelledby="benefits-title">
+        <div className={styles.benefitsIntro}>
+          <SectionLabel>{t('landing_benefits_eyebrow')}</SectionLabel>
+          <h2 id="benefits-title" className={styles.sectionTitle}>{t('landing_benefits_title')}</h2>
+          <p className={styles.sectionBody}>{t('landing_benefits_body')}</p>
+        </div>
+        <div className={styles.benefitsGrid}>
+          {[
+            [t('landing_benefits_one_title'), t('landing_benefits_one_body'), '01'],
+            [t('landing_benefits_two_title'), t('landing_benefits_two_body'), '02'],
+            [t('landing_benefits_three_title'), t('landing_benefits_three_body'), '03'],
+          ].map(([title, body, number]) => (
+            <div key={number} className={styles.benefitCard}>
+              <p className={styles.benefitNumber}>{number}</p>
+              <h3 className={styles.benefitTitle}>{title}</h3>
+              <p className={styles.benefitBody}>{body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== MÓDULO 1 · DIPLOMACIA DEPORTIVA ===== */}
+      <section id="diplomacy" className={styles.city} aria-labelledby="diplomacy-title">
+        <div className={styles.cityGrid}>
+          <div>
+            <SectionLabel>{t('landing_module1_eyebrow')}</SectionLabel>
+            <h2 id="diplomacy-title" className={styles.sectionTitle}>{t('landing_module1_title')}</h2>
+            <p className={styles.sectionBody}>{t('landing_module1_body')}</p>
+            <div className={styles.stepsList}>
+              {[
+                [t('landing_module1_one_title'), t('landing_module1_one_body'), '01'],
+                [t('landing_module1_two_title'), t('landing_module1_two_body'), '02'],
+                [t('landing_module1_three_title'), t('landing_module1_three_body'), '03'],
+              ].map(([title, body, number]) => (
+                <div key={number} className={styles.stepItem}>
+                  <span className={styles.stepNumber}>{number}</span>
+                  <div>
+                    <h3 className={styles.stepTitle}>{title}</h3>
+                    <p className={styles.stepBody}>{body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.mapMock}>
+            <div className={styles.mapGrid} />
+            <svg className={styles.mapBridge} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line x1="20" y1="32" x2="72" y2="55" />
+            </svg>
+            <span className={`${styles.mapPin} ${styles.pin1}`} />
+            <span className={`${styles.mapPin} ${styles.pin3}`} />
+            <span className={`${styles.mapDot} ${styles.dot1}`} />
+            <span className={`${styles.mapDot} ${styles.dot2}`} />
+            <div className={styles.mapHubLabel1}>Hamburgo</div>
+            <div className={styles.mapHubLabel2}>LATAM</div>
+            <div className={styles.mapCornerLabel}>Red BKME activa</div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== MÓDULO 2 · FORMACIÓN 360 ===== */}
+      <section id="formation" className={styles.mental} aria-labelledby="formation-title">
+        <div className={styles.mentalGrid}>
+          <div>
+            <SectionLabel>{t('landing_module2_eyebrow')}</SectionLabel>
+            <h2 id="formation-title" className={styles.sectionTitle}>{t('landing_module2_title')}</h2>
+            <p className={styles.sectionBody}>{t('landing_module2_body')}</p>
+            <div className={styles.stepsList}>
+              {[
+                [t('landing_module2_one_title'), t('landing_module2_one_body'), '01'],
+                [t('landing_module2_two_title'), t('landing_module2_two_body'), '02'],
+                [t('landing_module2_three_title'), t('landing_module2_three_body'), '03'],
+              ].map(([title, body, number]) => (
+                <div key={number} className={styles.stepItem}>
+                  <span className={styles.stepNumber}>{number}</span>
+                  <div>
+                    <h3 className={styles.stepTitle}>{title}</h3>
+                    <p className={styles.stepBody}>{body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.mentalMock}>
+            <div className={styles.mentalMockHeader}>
+              <span className={styles.mockKicker}>BKME / FORMACIÓN 360</span>
+              <span className={styles.mentalToday}>TEMPORADA</span>
+            </div>
+            <div className={styles.radarWrap}>
+              <svg className={styles.radarChart} viewBox="-20 -8 240 196" aria-hidden="true">
+                <polygon className={styles.radarGridOuter} points="100,30 166.6,78.4 141.2,156.6 58.8,156.6 33.4,78.4" />
+                <polygon className={styles.radarGridMid} points="100,53.3 144.4,85.6 127.4,137.8 72.6,137.8 55.6,85.6" />
+                <polygon className={styles.radarGridInner} points="100,76.7 122.2,92.8 113.7,118.9 86.3,118.9 77.8,92.8" />
+                <line className={styles.radarAxis} x1="100" y1="100" x2="100" y2="30" />
+                <line className={styles.radarAxis} x1="100" y1="100" x2="166.6" y2="78.4" />
+                <line className={styles.radarAxis} x1="100" y1="100" x2="141.2" y2="156.6" />
+                <line className={styles.radarAxis} x1="100" y1="100" x2="58.8" y2="156.6" />
+                <line className={styles.radarAxis} x1="100" y1="100" x2="33.4" y2="78.4" />
+                <polygon className={styles.radarData} points="100,40.5 146.6,84.9 124.7,134 63,151 66.7,89.2" />
+                <text className={styles.radarLabel} x="100" y="12" textAnchor="middle">Técnica</text>
+                <text className={styles.radarLabel} x="181" y="76" textAnchor="middle">Físico</text>
+                <text className={styles.radarLabel} x="148" y="180" textAnchor="middle">Táctico</text>
+                <text className={styles.radarLabel} x="52" y="180" textAnchor="middle">Mental</text>
+                <text className={styles.radarLabel} x="19" y="76" textAnchor="middle">Educación</text>
+              </svg>
+              <p className={styles.mockLabel}>{t('landing_module2_graphic_label')}</p>
+              <p className={styles.mentalMockBody}>{t('landing_module2_graphic_body')}</p>
+            </div>
+            <div className={styles.mentalStatsGrid}>
+              {[['+', 'Historial'], ['+', 'Métricas'], ['+', 'Objetivos']].map(([value, label]) => (
+                <div key={label}>
+                  <p className={styles.mockStatValue}>{value}</p>
+                  <p className={styles.mockStatLabel}>{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== MÓDULO 3 · BIENESTAR DEL ATLETA ===== */}
+      <section id="wellbeing" className={styles.city} aria-labelledby="wellbeing-title">
         <div className={styles.mentalGrid}>
           <div>
             <SectionLabel>{t('landing_mental_eyebrow')}</SectionLabel>
@@ -183,65 +312,6 @@ function LandingSections() {
         </div>
       </section>
 
-      {/* ===== ACTIVACIÓN URBANA ===== */}
-      <section id="city" className={styles.city} aria-labelledby="city-title">
-        <div className={styles.cityGrid}>
-          <div>
-            <SectionLabel>{t('landing_city_eyebrow')}</SectionLabel>
-            <h2 id="city-title" className={styles.sectionTitle}>{t('landing_city_title')}</h2>
-            <p className={styles.sectionBody}>{t('landing_city_body')}</p>
-            <div className={styles.memberRow}>
-              <span className={styles.memberNumber}>500+</span>
-              <p className={styles.memberText}>{t('landing_city_member')}</p>
-            </div>
-            <div className={styles.cityList}>
-              {[t('landing_city_one'), t('landing_city_two'), t('landing_city_three')].map((item, index) => (
-                <div key={item} className={styles.cityItem}>
-                  <span className={styles.cityIndex}>0{index + 1}</span>{item}
-                </div>
-              ))}
-            </div>
-            <button type="button" onClick={goRegister} className={styles.btnOutline}>
-              {t('landing_city_cta')}<ArrowIcon />
-            </button>
-          </div>
-
-          <div className={styles.mapMock}>
-            <div className={styles.mapGrid} />
-            <span className={`${styles.mapPin} ${styles.pin1}`} />
-            <span className={`${styles.mapPin} ${styles.pin2}`} />
-            <span className={`${styles.mapPin} ${styles.pin3}`} />
-            <span className={`${styles.mapDot} ${styles.dot1}`} />
-            <span className={`${styles.mapDot} ${styles.dot2}`} />
-            <div className={styles.mapCenterLabel}>Hamburg</div>
-            <div className={styles.mapCornerLabel}>Activo en tu zona</div>
-          </div>
-        </div>
-        <p className={styles.mapCaption}>{t('landing_city_graphic_body')}</p>
-      </section>
-
-      {/* ===== BENEFICIOS ===== */}
-      <section className={styles.benefits} aria-labelledby="benefits-title">
-        <div className={styles.benefitsIntro}>
-          <SectionLabel>{t('landing_benefits_eyebrow')}</SectionLabel>
-          <h2 id="benefits-title" className={styles.sectionTitle}>{t('landing_benefits_title')}</h2>
-          <p className={styles.sectionBody}>{t('landing_benefits_body')}</p>
-        </div>
-        <div className={styles.benefitsGrid}>
-          {[
-            [t('landing_benefits_one_title'), t('landing_benefits_one_body'), '01'],
-            [t('landing_benefits_two_title'), t('landing_benefits_two_body'), '02'],
-            [t('landing_benefits_three_title'), t('landing_benefits_three_body'), '03'],
-          ].map(([title, body, number]) => (
-            <div key={number} className={styles.benefitCard}>
-              <p className={styles.benefitNumber}>{number}</p>
-              <h3 className={styles.benefitTitle}>{title}</h3>
-              <p className={styles.benefitBody}>{body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ===== TESTIMONIOS ===== */}
       <section className={styles.testimonial} aria-labelledby="testimonial-title">
         <SectionLabel>{t('landing_testimonial_eyebrow')}</SectionLabel>
@@ -261,46 +331,6 @@ function LandingSections() {
             <footer>{t('landing_testimonial_secondary_name')} · {t('landing_testimonial_secondary_role')}</footer>
           </blockquote>
         </div>
-      </section>
-
-      {/* ===== PRECIOS ===== */}
-      <section className={styles.pricing} aria-labelledby="pricing-title">
-        <div className={styles.pricingIntro}>
-          <SectionLabel>{t('landing_pricing_eyebrow')}</SectionLabel>
-          <h2 id="pricing-title" className={styles.sectionTitle}>{t('landing_pricing_title')}</h2>
-          <p className={styles.sectionBody}>{t('landing_pricing_body')}</p>
-        </div>
-        <div className={styles.pricingGrid}>
-          <article className={styles.priceCard}>
-            <p className={styles.priceLabel}>{t('landing_pricing_free_label')}</p>
-            <h3 className={styles.priceTitle}>{t('landing_pricing_free_title')}</h3>
-            <p className={styles.priceBody}>{t('landing_pricing_free_body')}</p>
-            <ul className={styles.priceFeatures}>
-              {[t('landing_pricing_free_feat1'), t('landing_pricing_free_feat2'), t('landing_pricing_free_feat3')].map((item) => (
-                <li key={item}><span className={styles.plus}>+</span>{item}</li>
-              ))}
-            </ul>
-            <button type="button" onClick={goRegister} className={styles.btnOutline}>
-              {t('landing_pricing_free_cta')}<ArrowIcon />
-            </button>
-          </article>
-
-          <article className={`${styles.priceCard} ${styles.priceCardPremium}`}>
-            <span className={styles.premiumBadge}>{t('landing_pricing_premium_label')}</span>
-            <p className={styles.priceLabel}>BKME SPORTS</p>
-            <h3 className={styles.priceTitle}>{t('landing_pricing_premium_title')}</h3>
-            <p className={styles.priceBody}>{t('landing_pricing_premium_body')}</p>
-            <ul className={styles.priceFeatures}>
-              {[t('landing_pricing_premium_feat1'), t('landing_pricing_premium_feat2'), t('landing_pricing_premium_feat3')].map((item) => (
-                <li key={item}><span className={styles.plus}>+</span>{item}</li>
-              ))}
-            </ul>
-            <button type="button" onClick={goRegister} className={styles.btnPrimary}>
-              {t('landing_pricing_premium_cta')}<ArrowIcon />
-            </button>
-          </article>
-        </div>
-        <p className={styles.pricingFootnote}>{t('landing_pricing_footnote')}</p>
       </section>
 
       {/* ===== FAQ ===== */}
@@ -359,7 +389,7 @@ function LandingSections() {
               <p className={styles.footerColTitle}>{t('landing_footer_explore')}</p>
               <div className={styles.footerLinks}>
                 <a href="#profile">{t('landing_footer_profile')}</a>
-                <a href="#city">{t('landing_footer_community')}</a>
+                <a href="#diplomacy">{t('landing_footer_community')}</a>
                 <a href="#faq">FAQ</a>
               </div>
             </div>
