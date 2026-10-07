@@ -42,12 +42,14 @@ function RightProfileColumn({ profile }) {
       apiFetch("/deportistas").then(r => r.ok ? r.json() : []).catch(() => []),
       apiFetch("/scouts").then(r => r.ok ? r.json() : []).catch(() => []),
       apiFetch("/sponsors").then(r => r.ok ? r.json() : []).catch(() => []),
-    ]).then(([athletes, scouts, sponsors]) => {
+      apiFetch("/clubs").then(r => r.ok ? r.json() : []).catch(() => []),
+    ]).then(([athletes, scouts, sponsors, clubs]) => {
       const currentId = profile?._id;
       const merged = [
         ...athletes.map(p => ({ ...p, _type: "athlete", _route: `/profile/${p._id}` })),
         ...scouts.map(p => ({ ...p, _type: "scout", _route: `/scout-profile/${p._id}` })),
         ...sponsors.map(p => ({ ...p, _type: "sponsor", _route: `/sponsor-profile/${p._id}` })),
+        ...clubs.map(p => ({ ...p, _type: "club", _route: `/club-profile/${p._id}` })),
       ].filter(p => p._id !== currentId && (p.name || p.company));
       setAllProfiles(merged);
       setSuggestions(shuffle(merged).slice(0, 6));
@@ -62,6 +64,7 @@ function RightProfileColumn({ profile }) {
   const getLabel = (p) => {
     if (p._type === "scout") return p.specialization || "Scout";
     if (p._type === "sponsor") return p.industry || "Sponsor";
+    if (p._type === "club") return p.entityType || "Club";
     return SPORT_ES[p.sport] || p.sport || "";
   };
 
@@ -71,9 +74,9 @@ function RightProfileColumn({ profile }) {
       : `${p.name || ""} ${p.lastName || ""}`.trim();
 
   const labels = {
-    es: { title: "Descubre más perfiles", refresh: "Ver otros", athletes: "Deportistas", scouts: "Scouts", sponsors: "Patrocinadores" },
-    en: { title: "Discover more profiles", refresh: "See others", athletes: "Athletes", scouts: "Scouts", sponsors: "Sponsors" },
-    de: { title: "Mehr Profile entdecken", refresh: "Andere sehen", athletes: "Athleten", scouts: "Scouts", sponsors: "Sponsoren" },
+    es: { title: "Descubre más perfiles", refresh: "Ver otros", athletes: "Deportistas", scouts: "Scouts", sponsors: "Patrocinadores", clubs: "Clubes" },
+    en: { title: "Discover more profiles", refresh: "See others", athletes: "Athletes", scouts: "Scouts", sponsors: "Sponsors", clubs: "Clubs" },
+    de: { title: "Mehr Profile entdecken", refresh: "Andere sehen", athletes: "Athleten", scouts: "Scouts", sponsors: "Sponsoren", clubs: "Vereine" },
   };
   const l = labels[lang] || labels.es;
 

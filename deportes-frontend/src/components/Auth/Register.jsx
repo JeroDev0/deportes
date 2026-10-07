@@ -69,6 +69,15 @@ const PROFILE_TYPES = [
     icon: "🏆",
     sportMode: "multi",
   },
+  {
+    value: "sponsor",
+    title: "PATROCINADOR /\nMARCA",
+    roles: "Marca · Empresa · Fundación · Patrocinador Deportivo",
+    subtitle: "Encuentra y apoya al talento deportivo que mejor conecta con tu marca.",
+    buttonLabel: "SOY UN PATROCINADOR",
+    icon: "💼",
+    sportMode: "multi",
+  },
 ];
 
 const STEPS = [
@@ -189,6 +198,7 @@ function Register() {
     sports: [],
     company: "",
     entityType: "",
+    industry: "",
     registrationType: "self",
     termsAccepted: false,
   });
@@ -270,6 +280,7 @@ function Register() {
           sports: form.sports,
           company: form.company,
           entityType: form.entityType,
+          industry: form.industry,
           registrationType: form.registrationType,
         }),
       });
@@ -439,7 +450,7 @@ function Register() {
               <div className={styles.stepTitle}>INFORMACIÓN PERSONAL</div>
               <div className={styles.stepDesc}>Completa tu información para crear tu perfil.</div>
 
-              {form.profileType !== "club" && (
+              {form.profileType !== "club" && form.profileType !== "sponsor" && (
                 <div className={styles.genderRow}>
                   <button
                     type="button"
@@ -459,13 +470,15 @@ function Register() {
               )}
 
               <div className={styles.personalGrid}>
-                {form.profileType === "club" ? (
+                {form.profileType === "club" || form.profileType === "sponsor" ? (
                   <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
-                    <label className={styles.fieldLabel}>Nombre de la Entidad *</label>
+                    <label className={styles.fieldLabel}>
+                      {form.profileType === "club" ? "Nombre de la Entidad *" : "Nombre de la Empresa *"}
+                    </label>
                     <input
                       className={styles.fieldInput}
                       type="text"
-                      placeholder="Nombre del club, federación, etc."
+                      placeholder={form.profileType === "club" ? "Nombre del club, federación, etc." : "Nombre de tu empresa o marca"}
                       value={form.company}
                       onChange={e => setForm(p => ({ ...p, company: e.target.value }))}
                     />
@@ -494,17 +507,19 @@ function Register() {
                     </div>
                   </>
                 )}
-                <div className={styles.fieldGroup}>
-                  <label className={styles.fieldLabel}>
-                    {form.profileType === "club" ? "Fecha de Fundación" : "Fecha de Nacimiento *"}
-                  </label>
-                  <input
-                    className={styles.fieldInput}
-                    type="date"
-                    value={form.birthDate}
-                    onChange={e => setForm(p => ({ ...p, birthDate: e.target.value }))}
-                  />
-                </div>
+                {form.profileType !== "sponsor" && (
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.fieldLabel}>
+                      {form.profileType === "club" ? "Fecha de Fundación" : "Fecha de Nacimiento *"}
+                    </label>
+                    <input
+                      className={styles.fieldInput}
+                      type="date"
+                      value={form.birthDate}
+                      onChange={e => setForm(p => ({ ...p, birthDate: e.target.value }))}
+                    />
+                  </div>
+                )}
                 <div className={styles.fieldGroup}>
                   <label className={styles.fieldLabel}>País</label>
                   <select
@@ -535,6 +550,27 @@ function Register() {
                       <option value="Academia">Academia</option>
                       <option value="Estudio Deportivo">Estudio Deportivo</option>
                       <option value="Equipo">Equipo</option>
+                    </select>
+                  </div>
+                )}
+
+                {form.profileType === "sponsor" && (
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.fieldLabel}>Industria</label>
+                    <select
+                      className={styles.fieldInput}
+                      value={form.industry}
+                      onChange={e => setForm(p => ({ ...p, industry: e.target.value }))}
+                    >
+                      <option value="">Selecciona una industria</option>
+                      <option value="Sports Equipment">Equipamiento Deportivo</option>
+                      <option value="Nutrition & Health">Nutrición y Salud</option>
+                      <option value="Apparel & Footwear">Ropa y Calzado</option>
+                      <option value="Technology">Tecnología</option>
+                      <option value="Beverages">Bebidas</option>
+                      <option value="Banking & Finance">Banca y Finanzas</option>
+                      <option value="Automotive">Automotriz</option>
+                      <option value="Media & Entertainment">Medios y Entretenimiento</option>
                     </select>
                   </div>
                 )}

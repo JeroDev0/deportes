@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import styles from "./LeftProfileColumn.module.css";
 
 const SPORT_ES = {

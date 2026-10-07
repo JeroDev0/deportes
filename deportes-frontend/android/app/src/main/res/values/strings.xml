@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BKME Sports</string>
+    <string name="title_activity_main">BKME Sports</string>
+    <string name="package_name">com.ibkme.bkmesports</string>
+    <string name="custom_url_scheme">com.ibkme.bkmesports</string>
+</resources>

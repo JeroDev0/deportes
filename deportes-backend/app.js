@@ -43,6 +43,9 @@ app.use("/sponsors", sponsorsRoutes);
 const clubsRoutes = require("./routes/clubs");
 app.use("/clubs", clubsRoutes);
 
+const publicRoutes = require("./routes/public");
+app.use("/public", publicRoutes);
+
 const adminRoutes = require("./routes/admin");
 app.use("/admin", adminRoutes);
 

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import API_URL from '../../config/api';
 import styles from './LandingSections.module.css';
 
 function ArrowIcon({ direction = 'right' }) {
@@ -23,6 +24,19 @@ function LandingSections() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(0);
+  const [featured, setFeatured] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_URL}/public/featured-athlete`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => setFeatured(data))
+      .catch(() => setFeatured(null));
+  }, []);
+
+  const featuredAge = featured?.birthDate
+    ? Math.floor((Date.now() - new Date(featured.birthDate).getTime()) / (365.25 * 24 * 3600 * 1000))
+    : null;
+  const featuredAbout = featured?.shortDescription || featured?.about || '';
 
   const goRegister = () => navigate('/register');
 
@@ -80,38 +94,40 @@ function LandingSections() {
               <div className={styles.mockBanner}>
                 <div className={styles.mockAvatar}>
                   <img
-                    src="https://res.cloudinary.com/dx9l2xf44/image/upload/v1757854323/deportistas/yog60jhgoyzclcooo3ne.jpg"
-                    alt={t('landing_profile_name')}
+                    src={featured?.photo || '/assets/avatar-male.svg'}
+                    alt={featured ? `${featured.name} ${featured.lastName || ''}`.trim() : ''}
                     className={styles.mockAvatarImg}
                   />
                 </div>
                 <div>
-                  <h3 className={styles.mockName}>{t('landing_profile_name')}</h3>
-                  <p className={styles.mockRole}>{t('landing_profile_role')}</p>
-                  <p className={styles.mockLocation}>{t('landing_profile_location')}</p>
+                  <h3 className={styles.mockName}>{featured ? `${featured.name} ${featured.lastName || ''}`.trim() : '…'}</h3>
+                  <p className={styles.mockRole}>{[featured?.sport, featured?.level].filter(Boolean).join(' · ')}</p>
+                  <p className={styles.mockLocation}>{[featured?.city, featured?.country].filter(Boolean).join(', ')}</p>
                 </div>
               </div>
               <div className={styles.mockBody}>
                 <div className={styles.mockAboutHistory}>
                   <div>
                     <p className={styles.mockLabel}>{t('landing_profile_about_title')}</p>
-                    <p className={styles.mockText}>{t('landing_profile_about')}</p>
+                    <p className={styles.mockText}>{featuredAbout}</p>
                   </div>
                   <div className={styles.mockHistoryCol}>
                     <p className={styles.mockLabel}>{t('landing_profile_history')}</p>
-                    <p className={styles.mockYear}>{t('landing_profile_history1_period')}</p>
-                    <p className={styles.mockSmall}>{t('landing_profile_history1_place')}</p>
-                    <p className={styles.mockYear}>{t('landing_profile_history2_period')}</p>
-                    <p className={styles.mockSmall}>{t('landing_profile_history2_place')}</p>
+                    {(featured?.experience || []).map((exp, i) => (
+                      <div key={i}>
+                        <p className={styles.mockYear}>{[exp.startYear, exp.endYear].filter(Boolean).join(' — ')}</p>
+                        <p className={styles.mockSmall}>{exp.description}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className={styles.mockStatsBlock}>
                   <p className={styles.mockLabel}>{t('landing_profile_stats')}</p>
                   <div className={styles.mockStatsGrid}>
                     {[
-                      ['10 / 22', t('landing_profile_goals')],
-                      ['177cm', t('landing_profile_height')],
-                      ['32km/h', t('landing_profile_speed')],
+                      [featuredAge ?? '—', t('landing_profile_age')],
+                      [featured?.level || '—', t('landing_profile_level')],
+                      [featured?.city || '—', t('landing_profile_city')],
                     ].map(([value, label]) => (
                       <div key={label} className={styles.mockStat}>
                         <p className={styles.mockStatValue}>{value}</p>
@@ -122,10 +138,16 @@ function LandingSections() {
                 </div>
                 <div className={styles.mockFooter}>
                   <div className={styles.mockTags}>
-                    <span className={styles.mockTag}>{t('landing_profile_tag1')}</span>
-                    <span className={styles.mockTag}>{t('landing_profile_tag2')}</span>
+                    {(featured?.skills || []).map((skill) => (
+                      <span key={skill} className={styles.mockTag}>{skill}</span>
+                    ))}
                   </div>
-                  <button type="button" onClick={() => navigate('/profile/68bd68edae6cc449f75f25b9')} className={styles.mockView}>
+                  <button
+                    type="button"
+                    onClick={() => featured && navigate(`/profile/${featured._id}`)}
+                    className={styles.mockView}
+                    disabled={!featured}
+                  >
                     {t('landing_profile_view')}<ArrowIcon />
                   </button>
                 </div>

@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Sponsor = require("../models/Sponsor");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const streamifier = require("streamifier");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const upload = multer();
 
 const PUBLIC_LIST_FIELDS = "company industry logo city country sports categories";
 const PRIVATE_FIELDS = "-password -email -phone -address -resetPasswordToken -resetPasswordExpires -__v";
@@ -50,7 +61,7 @@ router.get("/:id", auth, async (req, res) => {
 });
 
 // ==================== UPDATE SPONSOR ====================
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("logo"), async (req, res) => {
   try {
     const updateData = { ...req.body };
 
@@ -78,6 +89,24 @@ router.put("/:id", async (req, res) => {
     }
     if (updateData.clubs) {
       updateData.clubs = parseIfString(updateData.clubs);
+    }
+
+    // Subir logo si se adjuntó uno nuevo
+    if (req.file) {
+      const streamUpload = (fileBuffer) => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "sponsors" },
+            (error, result) => {
+              if (result) resolve(result);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(fileBuffer).pipe(stream);
+        });
+      };
+      const result = await streamUpload(req.file.buffer);
+      updateData.logo = result.secure_url;
     }
 
     const sponsor = await Sponsor.findByIdAndUpdate(
