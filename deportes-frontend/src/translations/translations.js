@@ -70,7 +70,7 @@ export const translations = {
 
     // Dashboard – tabs
     dash_all: "TODOS", dash_athletes: "DEPORTISTAS",
-    dash_scouts: "SCOUTS", dash_sponsors: "PATROCINADORES",
+    dash_scouts: "SCOUTS", dash_sponsors: "PATROCINADORES", dash_clubs: "CLUBES",
     // Dashboard – sidebar
     dash_filters: "FILTROS", dash_clear: "LIMPIAR",
     dash_results: "resultados encontrados",
@@ -140,6 +140,12 @@ export const translations = {
     sponsor_profile: "Perfil de la empresa", sponsor_no_profile: "Sin descripción de la empresa.",
     sponsor_sponsored_athletes: "Deportistas patrocinados",
     sponsor_partner_clubs: "Clubes asociados",
+
+    // Club – columna izquierda y central
+    club_founded: "Fundado en", club_city_fallback: "Ciudad",
+    club_sports: "Deportes", profile_club: "Club",
+    club_about: "Descripción corta", club_no_short: "Sin descripción corta disponible.",
+    club_profile: "Sobre el club", club_no_profile: "Sin descripción del club.",
 
     // Pestañas de perfil
     tab_professional: "Perfil Profesional",
@@ -339,6 +345,7 @@ export const translations = {
     landing_profile_history2_period: "SC Gross Borstel",
     landing_profile_history2_place: "2021 · Top 10 de Hamburgo",
     landing_profile_stats: "Estadísticas",
+    landing_profile_age: "Edad", landing_profile_level: "Nivel", landing_profile_city: "Ciudad",
     landing_profile_goals: "Goles / asistencias",
     landing_profile_height: "Altura",
     landing_profile_speed: "Velocidad máxima",
@@ -478,7 +485,7 @@ export const translations = {
     reset_connection: "Connection error. Please try again.",
 
     dash_all: "ALL", dash_athletes: "ATHLETES",
-    dash_scouts: "SCOUTS", dash_sponsors: "SPONSORS",
+    dash_scouts: "SCOUTS", dash_sponsors: "SPONSORS", dash_clubs: "CLUBS",
     dash_filters: "FILTERS", dash_clear: "CLEAR",
     dash_results: "results found",
     dash_gender: "GENDER",
@@ -537,6 +544,12 @@ export const translations = {
     sponsor_profile: "Company Profile", sponsor_no_profile: "No company description provided.",
     sponsor_sponsored_athletes: "Sponsored Athletes",
     sponsor_partner_clubs: "Partner Clubs",
+
+    // Club – left and center column
+    club_founded: "Founded in", club_city_fallback: "City",
+    club_sports: "Sports", profile_club: "Club",
+    club_about: "Short description", club_no_short: "No short description available.",
+    club_profile: "About the club", club_no_profile: "No club description provided.",
 
     // Profile tabs
     tab_professional: "Professional Profile",
@@ -733,6 +746,7 @@ export const translations = {
     landing_profile_history2_period: "SC Gross Borstel",
     landing_profile_history2_place: "2021 · Hamburg Top 10",
     landing_profile_stats: "Statistics",
+    landing_profile_age: "Age", landing_profile_level: "Level", landing_profile_city: "City",
     landing_profile_goals: "Goals / assists",
     landing_profile_height: "Height",
     landing_profile_speed: "Top speed",
@@ -872,7 +886,7 @@ export const translations = {
     reset_connection: "Verbindungsfehler. Bitte versuche es erneut.",
 
     dash_all: "ALLE", dash_athletes: "ATHLETEN",
-    dash_scouts: "SCOUTS", dash_sponsors: "SPONSOREN",
+    dash_scouts: "SCOUTS", dash_sponsors: "SPONSOREN", dash_clubs: "VEREINE",
     dash_filters: "FILTER", dash_clear: "LÖSCHEN",
     dash_results: "Ergebnisse gefunden",
     dash_gender: "GESCHLECHT",
@@ -931,6 +945,12 @@ export const translations = {
     sponsor_profile: "Unternehmensprofil", sponsor_no_profile: "Keine Unternehmensbeschreibung vorhanden.",
     sponsor_sponsored_athletes: "Gesponserte Athleten",
     sponsor_partner_clubs: "Partnervereine",
+
+    // Club – linke und mittlere Spalte
+    club_founded: "Gegründet", club_city_fallback: "Stadt",
+    club_sports: "Sportarten", profile_club: "Verein",
+    club_about: "Kurzbeschreibung", club_no_short: "Keine Kurzbeschreibung verfügbar.",
+    club_profile: "Über den Verein", club_no_profile: "Keine Vereinsbeschreibung vorhanden.",
 
     // Profil-Tabs
     tab_professional: "Professionelles Profil",
@@ -1127,6 +1147,7 @@ export const translations = {
     landing_profile_history2_period: "SC Gross Borstel",
     landing_profile_history2_place: "2021 · Top 10 Hamburg",
     landing_profile_stats: "Statistiken",
+    landing_profile_age: "Alter", landing_profile_level: "Niveau", landing_profile_city: "Stadt",
     landing_profile_goals: "Tore / Assists",
     landing_profile_height: "Größe",
     landing_profile_speed: "Höchstgeschwindigkeit",

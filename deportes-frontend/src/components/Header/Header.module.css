@@ -7,7 +7,8 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: 64px;
+  height: calc(64px + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
   background: #0d2635;
   color: #fff;
   z-index: 1000;
@@ -15,6 +16,7 @@
   flex-direction: column;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: visible;
+  box-sizing: border-box;
 }
 
 /* =====================================
@@ -225,7 +227,7 @@
 ===================================== */
 @media (max-width: 1280px) {
   .header {
-    height: 56px;
+    height: calc(56px + env(safe-area-inset-top));
   }
 
   .container {
@@ -292,7 +294,7 @@
 ===================================== */
 @media (max-width: 600px) {
   .header {
-    height: 56px;
+    height: calc(56px + env(safe-area-inset-top));
   }
 
   .container {

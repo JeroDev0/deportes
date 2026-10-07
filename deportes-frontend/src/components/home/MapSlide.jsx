@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { apiFetch } from "../../config/fetchWithAuth";
+import API_URL from "../../config/api";
 import { useNavigate } from "react-router-dom";
 import styles from "./MapSlide.module.css";
 
@@ -97,15 +97,14 @@ export default function MapSlide({ active }) {
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([
-      apiFetch("/deportistas").then(r => r.ok ? r.json() : []).catch(() => []),
-      apiFetch("/scouts").then(r => r.ok ? r.json() : []).catch(() => []),
-      apiFetch("/sponsors").then(r => r.ok ? r.json() : []).catch(() => []),
-    ]).then(async ([athletes, scouts, sponsors]) => {
+    fetch(`${API_URL}/public/map-points`)
+      .then(r => r.ok ? r.json() : { athletes: [], scouts: [], sponsors: [] })
+      .catch(() => ({ athletes: [], scouts: [], sponsors: [] }))
+      .then(async ({ athletes, scouts, sponsors }) => {
       const all = [
-        ...athletes.map(p => ({ ...p, _type: "athlete", _route: `/profile/${p._id}` })),
-        ...scouts.map(p => ({ ...p, _type: "scout", _route: `/scout-profile/${p._id}` })),
-        ...sponsors.map(p => ({ ...p, _type: "sponsor", _route: `/sponsor-profile/${p._id}` })),
+        ...athletes.map(p => ({ ...p, _route: `/profile/${p._id}` })),
+        ...scouts.map(p => ({ ...p, _route: `/scout-profile/${p._id}` })),
+        ...sponsors.map(p => ({ ...p, _route: `/sponsor-profile/${p._id}` })),
       ].filter(p => p.country && (p.city || p.country));
 
       // Geocodificar solo ciudades únicas (máx 60 para respetar límite de GeoNames)

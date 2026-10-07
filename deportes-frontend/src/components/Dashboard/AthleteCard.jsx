@@ -24,6 +24,7 @@ function AthleteCard({ athlete, onClick }) {
   const sportLabel = SPORT_ES[athlete.sport] || athlete.sport || '';
   const typeLabel = athlete._type === 'scout' ? 'Scout'
     : athlete._type === 'sponsor' ? 'Sponsor'
+    : athlete._type === 'club' ? 'Club'
     : '';
 
   return (
@@ -52,7 +53,7 @@ function AthleteCard({ athlete, onClick }) {
         <p className={styles.meta}>
           <span className={styles.level}>{athlete.level || typeLabel}</span>
           {athlete.age && <span className={styles.dot}>·</span>}
-          {athlete.age && <span>{athlete.age} años</span>}
+          {athlete.age && <span>{athlete._type === 'athlete' ? `${athlete.age} años` : athlete.age}</span>}
         </p>
         {(athlete._city || athlete._country) && (
           <p className={styles.location}>

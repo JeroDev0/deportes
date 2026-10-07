@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     const {
       email, password, profileType,
       name, lastName, gender, birthDate, country,
-      sport, sports, company, entityType, registrationType,
+      sport, sports, company, entityType, industry, registrationType,
     } = req.body;
 
     console.log("📝 Registro de usuario:", { email, profileType });
@@ -108,8 +108,10 @@ router.post("/register", async (req, res) => {
           email,
           password: hashedPassword,
           profileType: "sponsor",
-          company: company || "Company Name",
+          company: company || "",
           country: country || "",
+          industry: industry || "",
+          sports: sportsArray,
         });
         break;
 

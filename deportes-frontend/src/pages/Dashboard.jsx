@@ -78,6 +78,25 @@ function normalizeProfile(profile, type) {
         _skills: [],
         _nationalities: [],
       };
+    case "club":
+      return {
+        ...profile,
+        _type: "club",
+        _route: `/club-profile/${profile._id}`,
+        photo: profile.photo || "",
+        sport: profile.entityType || "Club",
+        name: profile.name || "",
+        lastName: "",
+        level: "Club",
+        age: profile.founded ? `Fundado ${new Date(profile.founded).getFullYear()}` : "",
+        _city: profile.city || "",
+        _gender: "",
+        _age: null,
+        _country: profile.country || "",
+        _postalCode: "",
+        _skills: [],
+        _nationalities: [],
+      };
     default:
       return profile;
   }
@@ -85,7 +104,7 @@ function normalizeProfile(profile, type) {
 
 function Dashboard() {
   const { t } = useLanguage();
-  const { token, user } = useAuth();
+  const { token, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -105,6 +124,7 @@ function Dashboard() {
     { label: t("dash_athletes"), value: "athlete", icon: "🏃" },
     { label: t("dash_scouts"), value: "scout", icon: "📋" },
     { label: t("dash_sponsors"), value: "sponsor", icon: "🏆" },
+    { label: t("dash_clubs"), value: "club", icon: "🏟️" },
   ];
 
   const [allProfiles, setAllProfiles] = useState([]);
@@ -134,6 +154,7 @@ function Dashboard() {
   const [allNationalities, setAllNationalities] = useState([]);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!token) {
       navigate("/login");
       return;
@@ -144,11 +165,13 @@ function Dashboard() {
       fetch(`${API_URL}/deportistas`, { headers }).then(r => r.json()).catch(() => []),
       fetch(`${API_URL}/scouts`, { headers }).then(r => r.json()).catch(() => []),
       fetch(`${API_URL}/sponsors`, { headers }).then(r => r.json()).catch(() => []),
-    ]).then(([athletes, scouts, sponsors]) => {
+      fetch(`${API_URL}/clubs`, { headers }).then(r => r.json()).catch(() => []),
+    ]).then(([athletes, scouts, sponsors, clubs]) => {
       const normalized = [
         ...athletes.map(p => normalizeProfile(p, "athlete")),
         ...scouts.map(p => normalizeProfile(p, "scout")),
         ...sponsors.map(p => normalizeProfile(p, "sponsor")),
+        ...clubs.map(p => normalizeProfile(p, "club")),
       ];
       for (let i = normalized.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -156,14 +179,14 @@ function Dashboard() {
       }
       setAllProfiles(normalized);
       setFiltered(normalized);
-      setCities([...new Set(athletes.map(a => a.city).filter(Boolean))]);
+      setCities([...new Set(normalized.map(p => p._city).filter(Boolean))]);
       setSports([...new Set(athletes.map(a => a.sport).filter(Boolean))]);
-      setCountries([...new Set(athletes.map(a => a.country).filter(Boolean))]);
+      setCountries([...new Set(normalized.map(p => p._country).filter(Boolean))]);
       setAllSkills([...new Set(athletes.flatMap(a => a.skills || []).filter(Boolean))]);
       setAllNationalities([...new Set(athletes.flatMap(a => a.nationalities || []).filter(Boolean))]);
       setLoading(false);
     });
-  }, [token, navigate]);
+  }, [token, authLoading, navigate]);
 
   useEffect(() => {
     let result = allProfiles;

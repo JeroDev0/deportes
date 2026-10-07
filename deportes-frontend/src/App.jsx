@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import EditProfile from './components/Profile/EditProfile/EditProfile';
 import EditScoutProfile from './components/Profile/EditProfile/EditScoutProfile';
 import EditSponsorProfile from './components/Profile/EditProfile/EditSponsorProfile';
+import EditClubProfile from './components/Profile/EditProfile/EditClubProfile';
 
 import Header from './components/Header/Header';
 import Dashboard from './pages/Dashboard';
@@ -17,6 +18,7 @@ import ResetPassword from './components/Auth/ResetPassword';
 import ProfilePage from './pages/ProfilePage';
 import ScoutProfilePage from './pages/ScoutProfilePage';
 import SponsorProfilePage from './pages/SponsorProfilePage';
+import ClubProfilePage from './pages/ClubProfilePage';
 
 import FloatingButton from './components/common/FloatingButton';
 import AdminDashboard from './pages/AdminDashboard';
@@ -82,6 +84,24 @@ function App() {
             element={
               <PrivateRoute>
                 <EditSponsorProfile />
+              </PrivateRoute>
+            }
+          />
+
+          {/* ================= CLUBES ================= */}
+          <Route
+            path="/club-profile/:id"
+            element={
+              <PrivateRoute>
+                <ClubProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/club-profile/:id/edit"
+            element={
+              <PrivateRoute>
+                <EditClubProfile />
               </PrivateRoute>
             }
           />
