@@ -117,7 +117,7 @@ function AdminDashboard() {
           <select onChange={(e) => setFilter(e.target.value)} className={styles.select}>
             <option value="all">Todos los Perfiles</option>
             <option value="deportista">Deportistas</option>
-            <option value="scout">Scouts</option>
+            <option value="scout">Profesionales</option>
             <option value="sponsor">Sponsors</option>
             <option value="club">Clubs</option>
           </select>

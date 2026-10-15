@@ -40,7 +40,7 @@ const sendPasswordResetEmail = async (email, resetToken, userName) => {
 const sendWelcomeEmail = async (email, userName, profileType) => {
   const profileLabels = {
     atleta: "Athlete",
-    scout: "Scout",
+    scout: "Professional",
     sponsor: "Sponsor",
     club: "Club",
   };
@@ -69,7 +69,7 @@ const sendWelcomeEmail = async (email, userName, profileType) => {
             Your <strong style="color: #53fb52;">${label}</strong> account has been successfully created on IBKME.
           </p>
           <p style="margin: 0 0 28px; color: #8aaccc; font-size: 14px; line-height: 1.7;">
-            You can now explore the platform, complete your profile, and connect with athletes, scouts, and sponsors from around the world.
+            You can now explore the platform, complete your profile, and connect with athletes, professionals, and sponsors from around the world.
           </p>
 
           <!-- CTA -->

@@ -62,7 +62,7 @@ function RightProfileColumn({ profile }) {
   }, [allProfiles]);
 
   const getLabel = (p) => {
-    if (p._type === "scout") return p.specialization || "Scout";
+    if (p._type === "scout") return p.specialization || "Profesional";
     if (p._type === "sponsor") return p.industry || "Sponsor";
     if (p._type === "club") return p.entityType || "Club";
     return SPORT_ES[p.sport] || p.sport || "";
@@ -74,9 +74,9 @@ function RightProfileColumn({ profile }) {
       : `${p.name || ""} ${p.lastName || ""}`.trim();
 
   const labels = {
-    es: { title: "Descubre más perfiles", refresh: "Ver otros", athletes: "Deportistas", scouts: "Scouts", sponsors: "Patrocinadores", clubs: "Clubes" },
-    en: { title: "Discover more profiles", refresh: "See others", athletes: "Athletes", scouts: "Scouts", sponsors: "Sponsors", clubs: "Clubs" },
-    de: { title: "Mehr Profile entdecken", refresh: "Andere sehen", athletes: "Athleten", scouts: "Scouts", sponsors: "Sponsoren", clubs: "Vereine" },
+    es: { title: "Descubre más perfiles", refresh: "Ver otros", athletes: "Deportistas", scouts: "Profesionales", sponsors: "Patrocinadores", clubs: "Clubes" },
+    en: { title: "Discover more profiles", refresh: "See others", athletes: "Athletes", scouts: "Professionals", sponsors: "Sponsors", clubs: "Clubs" },
+    de: { title: "Mehr Profile entdecken", refresh: "Andere sehen", athletes: "Athleten", scouts: "Profis", sponsors: "Sponsoren", clubs: "Vereine" },
   };
   const l = labels[lang] || labels.es;
 

@@ -22,7 +22,7 @@ function getAvatar(gender) {
 function AthleteCard({ athlete, onClick }) {
   const photoSrc = athlete.photo || getAvatar(athlete.gender || athlete._gender);
   const sportLabel = SPORT_ES[athlete.sport] || athlete.sport || '';
-  const typeLabel = athlete._type === 'scout' ? 'Scout'
+  const typeLabel = athlete._type === 'scout' ? 'Profesional'
     : athlete._type === 'sponsor' ? 'Sponsor'
     : athlete._type === 'club' ? 'Club'
     : '';

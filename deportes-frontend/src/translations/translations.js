@@ -70,7 +70,7 @@ export const translations = {
 
     // Dashboard – tabs
     dash_all: "TODOS", dash_athletes: "DEPORTISTAS",
-    dash_scouts: "SCOUTS", dash_sponsors: "PATROCINADORES", dash_clubs: "CLUBES",
+    dash_scouts: "PROFESIONALES", dash_sponsors: "PATROCINADORES", dash_clubs: "CLUBES",
     // Dashboard – sidebar
     dash_filters: "FILTROS", dash_clear: "LIMPIAR",
     dash_results: "resultados encontrados",
@@ -111,7 +111,7 @@ export const translations = {
     profile_sponsor: "Patrocinador",
 
     // Perfil – columna derecha
-    right_scouting: "Scouting / Servicios Deportivos",
+    right_scouting: "Profesionales Deportivos",
     right_clubs: "Clubes Deportivos",
     right_sponsors: "Patrocinadores Deportivos",
 
@@ -330,7 +330,7 @@ export const translations = {
 
     landing_profile_eyebrow: "LINKEDIN DEPORTIVO",
     landing_profile_title: "Que tu talento se entienda antes de conocerte.",
-    landing_profile_body: "Tu trayectoria merece algo más que un PDF perdido en un correo. Organiza historial, estadísticas y una presentación corta en un perfil pensado para ojeadores internacionales.",
+    landing_profile_body: "Tu trayectoria merece algo más que un PDF perdido en un correo. Organiza historial, estadísticas y una presentación corta en un perfil pensado para expertos del deporte internacional.",
     landing_profile_primary: "Crear mi perfil ahora",
     landing_profile_secondary: "Ver una vista de ojeador",
     landing_profile_label: "PERFIL ATLÉTICO / VISTA PÚBLICA",
@@ -355,7 +355,7 @@ export const translations = {
 
     landing_module1_eyebrow: "MÓDULO 1 · DIPLOMACIA DEPORTIVA",
     landing_module1_title: "Un puente real entre el talento y quienes deciden.",
-    landing_module1_body: "BKME Sports conecta atletas, clubes, federaciones y academias entre Hamburgo y Latinoamérica. Actuamos como intermediario tecnológico para que tu talento llegue a las personas correctas.",
+    landing_module1_body: "BKME Sports conecta atletas, clubes, federaciones y academias entre Europa y Latinoamérica. Actuamos como intermediario tecnológico para que tu talento llegue a las personas correctas.",
     landing_module1_one_title: "Perfiles verificados",
     landing_module1_one_body: "Clubes, scouts y federaciones acceden a perfiles reales y verificados.",
     landing_module1_two_title: "Alcance internacional",
@@ -412,11 +412,11 @@ export const translations = {
     landing_faq_q1: "¿Para quién es BKME Sports?",
     landing_faq_a1: "Para atletas de fútbol base, familias, entrenadores, clubes y profesionales que quieren conectar talento con oportunidades de forma más humana y ordenada.",
     landing_faq_q2: "¿Tengo que pagar para registrarme?",
-    landing_faq_a2: "No. Crear tu perfil no tiene costo por ahora. El perfil destacado amplía la presentación y las herramientas cuando estés listo.",
+    landing_faq_a2: "No. Crear tu perfil no tiene costo. El perfil destacado amplía la presentación y las herramientas cuando estés listo.",
     landing_faq_q3: "¿Quién puede ver mis datos de bienestar emocional?",
-    landing_faq_a3: "Tus datos de bienestar emocional están protegidos por una regla de privacidad absoluta. Tú decides qué compartes y con quién; no se publican en tu perfil deportivo.",
+    landing_faq_a3: "Nadie, a menos que tú lo decidas. Tus datos de bienestar emocional son privados por defecto y nunca se publican en tu perfil deportivo; eres tú quien decide qué compartir y con quién.",
     landing_faq_q4: "¿BKME Sports sustituye a un psicólogo?",
-    landing_faq_a4: "No. El módulo ayuda a registrar señales y abrir conversaciones. No realiza diagnósticos y no sustituye la atención profesional.",
+    landing_faq_a4: "No. El módulo ayuda a registrar señales y abrir conversaciones; no realiza diagnósticos ni sustituye la atención profesional. De hecho, promovemos que siempre esté acompañada por un experto.",
 
     landing_final_eyebrow: "EL PRÓXIMO PASO ES PEQUEÑO",
     landing_final_title: "Empieza a construir el perfil que tu talento merece.",
@@ -485,7 +485,7 @@ export const translations = {
     reset_connection: "Connection error. Please try again.",
 
     dash_all: "ALL", dash_athletes: "ATHLETES",
-    dash_scouts: "SCOUTS", dash_sponsors: "SPONSORS", dash_clubs: "CLUBS",
+    dash_scouts: "PROFESSIONALS", dash_sponsors: "SPONSORS", dash_clubs: "CLUBS",
     dash_filters: "FILTERS", dash_clear: "CLEAR",
     dash_results: "results found",
     dash_gender: "GENDER",
@@ -520,7 +520,7 @@ export const translations = {
     profile_address: "Address", profile_postal: "Postal Code",
     profile_sponsor: "Sponsor",
 
-    right_scouting: "Scouting / Sports Services",
+    right_scouting: "Sports Professionals",
     right_clubs: "Sports Clubs", right_sponsors: "Sports Sponsors",
 
     scout_company: "Company", scout_independent: "Independent",
@@ -731,7 +731,7 @@ export const translations = {
 
     landing_profile_eyebrow: "SPORTS LINKEDIN",
     landing_profile_title: "Let your talent make sense before they meet you.",
-    landing_profile_body: "Your journey deserves more than a PDF lost in an email. Organize history, stats and a short introduction in a profile made for international scouts.",
+    landing_profile_body: "Your journey deserves more than a PDF lost in an email. Organize history, stats and a short introduction in a profile made for international sports experts.",
     landing_profile_primary: "Create my profile now",
     landing_profile_secondary: "See a scout view",
     landing_profile_label: "ATHLETE PROFILE / PUBLIC VIEW",
@@ -756,7 +756,7 @@ export const translations = {
 
     landing_module1_eyebrow: "MODULE 1 · SPORTS DIPLOMACY",
     landing_module1_title: "A real bridge between talent and decision-makers.",
-    landing_module1_body: "BKME Sports connects athletes, clubs, federations and academies between Hamburg and Latin America. We act as a technological intermediary so your talent reaches the right people.",
+    landing_module1_body: "BKME Sports connects athletes, clubs, federations and academies between Europe and Latin America. We act as a technological intermediary so your talent reaches the right people.",
     landing_module1_one_title: "Verified profiles",
     landing_module1_one_body: "Clubs, scouts and federations access real, verified profiles.",
     landing_module1_two_title: "International reach",
@@ -813,11 +813,11 @@ export const translations = {
     landing_faq_q1: "Who is BKME Sports for?",
     landing_faq_a1: "For grassroots football athletes, families, coaches, clubs and professionals who want to connect talent and opportunities in a more human, organised way.",
     landing_faq_q2: "Do I have to pay to register?",
-    landing_faq_a2: "No. Creating your profile has no cost for now. The featured profile expands your presentation and tools when you are ready.",
+    landing_faq_a2: "No. Creating your profile is free. The featured profile expands your presentation and tools when you are ready.",
     landing_faq_q3: "Who can see my emotional wellbeing data?",
-    landing_faq_a3: "Your emotional wellbeing data is protected by absolute privacy. You decide what to share and with whom; it is never published on your sports profile.",
+    landing_faq_a3: "No one, unless you decide to share it. Your emotional wellbeing data is private by default and is never published on your sports profile; you choose what to share and with whom.",
     landing_faq_q4: "Does BKME Sports replace a psychologist?",
-    landing_faq_a4: "No. The module helps record signals and open conversations. It does not diagnose and does not replace professional care.",
+    landing_faq_a4: "No. The module helps record signals and open conversations; it does not diagnose and does not replace professional care. In fact, we encourage that care to always be guided by a professional.",
 
     landing_final_eyebrow: "THE NEXT STEP IS SMALL",
     landing_final_title: "Start building the profile your talent deserves.",
@@ -886,7 +886,7 @@ export const translations = {
     reset_connection: "Verbindungsfehler. Bitte versuche es erneut.",
 
     dash_all: "ALLE", dash_athletes: "ATHLETEN",
-    dash_scouts: "SCOUTS", dash_sponsors: "SPONSOREN", dash_clubs: "VEREINE",
+    dash_scouts: "PROFIS", dash_sponsors: "SPONSOREN", dash_clubs: "VEREINE",
     dash_filters: "FILTER", dash_clear: "LÖSCHEN",
     dash_results: "Ergebnisse gefunden",
     dash_gender: "GESCHLECHT",
@@ -921,7 +921,7 @@ export const translations = {
     profile_address: "Adresse", profile_postal: "Postleitzahl",
     profile_sponsor: "Sponsor",
 
-    right_scouting: "Scouting / Sportdienstleistungen",
+    right_scouting: "Sportprofis",
     right_clubs: "Sportclubs", right_sponsors: "Sportsponsoren",
 
     scout_company: "Unternehmen", scout_independent: "Unabhängig",
@@ -1132,7 +1132,7 @@ export const translations = {
 
     landing_profile_eyebrow: "SPORT-LINKEDIN",
     landing_profile_title: "Lass dein Talent verständlich werden, bevor man dich trifft.",
-    landing_profile_body: "Deine Laufbahn verdient mehr als ein PDF in einem verlorenen E-Mail-Verlauf. Geschichte, Statistiken und Kurzvorstellung in einem Profil für internationale Scouts.",
+    landing_profile_body: "Deine Laufbahn verdient mehr als ein PDF in einem verlorenen E-Mail-Verlauf. Geschichte, Statistiken und Kurzvorstellung in einem Profil für internationale Sportexperten.",
     landing_profile_primary: "Mein Profil erstellen",
     landing_profile_secondary: "Scout-Ansicht ansehen",
     landing_profile_label: "ATHLETENPROFIL / ÖFFENTLICHE ANSICHT",
@@ -1157,7 +1157,7 @@ export const translations = {
 
     landing_module1_eyebrow: "MODUL 1 · SPORTDIPLOMATIE",
     landing_module1_title: "Eine echte Brücke zwischen Talent und Entscheidern.",
-    landing_module1_body: "BKME Sports verbindet Athleten, Vereine, Verbände und Akademien zwischen Hamburg und Lateinamerika. Wir agieren als technischer Vermittler, damit dein Talent die richtigen Menschen erreicht.",
+    landing_module1_body: "BKME Sports verbindet Athleten, Vereine, Verbände und Akademien zwischen Europa und Lateinamerika. Wir agieren als technischer Vermittler, damit dein Talent die richtigen Menschen erreicht.",
     landing_module1_one_title: "Verifizierte Profile",
     landing_module1_one_body: "Vereine, Scouts und Verbände greifen auf echte, verifizierte Profile zu.",
     landing_module1_two_title: "Internationale Reichweite",
@@ -1214,11 +1214,11 @@ export const translations = {
     landing_faq_q1: "Für wen ist BKME Sports?",
     landing_faq_a1: "Für Nachwuchsfußballer, Familien, Trainer, Vereine und Sportprofis, die Talent und Chancen menschlicher und strukturierter verbinden möchten.",
     landing_faq_q2: "Muss ich für die Registrierung bezahlen?",
-    landing_faq_a2: "Nein. Die Erstellung deines Profils ist derzeit kostenlos. Das hervorgehobene Profil erweitert deine Präsentation und Werkzeuge, sobald du bereit bist.",
+    landing_faq_a2: "Nein. Die Erstellung deines Profils ist kostenlos. Das hervorgehobene Profil erweitert deine Präsentation und Werkzeuge, sobald du bereit bist.",
     landing_faq_q3: "Wer kann meine Daten zum emotionalen Wohlbefinden sehen?",
-    landing_faq_a3: "Deine Daten zum emotionalen Wohlbefinden sind durch absolute Privatsphäre geschützt. Du entscheidest, was du mit wem teilst; sie werden nicht in deinem Sportprofil veröffentlicht.",
+    landing_faq_a3: "Niemand, es sei denn, du entscheidest dich dafür. Deine Daten zum emotionalen Wohlbefinden sind standardmäßig privat und werden nie in deinem Sportprofil veröffentlicht; du entscheidest, was du mit wem teilst.",
     landing_faq_q4: "Ersetzt BKME Sports einen Psychologen?",
-    landing_faq_a4: "Nein. Das Modul hilft, Signale zu erfassen und Gespräche zu eröffnen. Es stellt keine Diagnose und ersetzt keine professionelle Betreuung.",
+    landing_faq_a4: "Nein. Das Modul hilft, Signale zu erfassen und Gespräche zu eröffnen; es stellt keine Diagnose und ersetzt keine professionelle Betreuung. Tatsächlich empfehlen wir, diese Betreuung stets von einer Fachperson begleiten zu lassen.",
 
     landing_final_eyebrow: "DER NÄCHSTE SCHRITT IST KLEIN",
     landing_final_title: "Baue jetzt das Profil, das dein Talent verdient.",

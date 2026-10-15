@@ -70,4 +70,35 @@ router.get("/featured-athlete", async (req, res) => {
   }
 });
 
+// 5 deportistas aleatorios con descripción corta, para el carrusel de "Voces de la Red"
+router.get("/testimonials", async (req, res) => {
+  try {
+    const athletes = await Deportista.aggregate([
+      {
+        $match: {
+          isApproved: true,
+          shortDescription: { $exists: true, $ne: "" },
+        },
+      },
+      { $sample: { size: 5 } },
+      {
+        $project: {
+          name: 1,
+          lastName: 1,
+          photo: 1,
+          sport: 1,
+          city: 1,
+          country: 1,
+          shortDescription: 1,
+        },
+      },
+    ]);
+
+    res.json(athletes);
+  } catch (err) {
+    console.error("❌ Error en testimonials:", err);
+    res.status(500).json({ error: "Error al obtener los testimonios" });
+  }
+});
+
 module.exports = router;

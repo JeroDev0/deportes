@@ -149,7 +149,7 @@ export default function MapSlide({ active }) {
         </h2>
         <div className={styles.legend}>
           <span><span className={styles.dot} style={{background:"#53fb52"}} /> Deportistas</span>
-          <span><span className={styles.dot} style={{background:"#4a9fff"}} /> Scouts</span>
+          <span><span className={styles.dot} style={{background:"#4a9fff"}} /> Profesionales</span>
           <span><span className={styles.dot} style={{background:"#f0b429"}} /> Patrocinadores</span>
         </div>
       </div>

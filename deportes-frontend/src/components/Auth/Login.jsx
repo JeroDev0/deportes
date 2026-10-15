@@ -7,6 +7,7 @@ import API_URL from '../../config/api';
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,7 +74,25 @@ function Login() {
       <h2 className={styles.title}>{t('login_title')}</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input name="email" type="email" placeholder={t('login_email')} value={form.email} onChange={handleChange} required className={styles.input} />
-        <input name="password" type="password" placeholder={t('login_password')} value={form.password} onChange={handleChange} required className={styles.input} />
+        <div className={styles.passwordWrapper}>
+          <input
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            placeholder={t('login_password')}
+            value={form.password}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          <button
+            type="button"
+            className={styles.eyeBtn}
+            onClick={() => setShowPassword(v => !v)}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          >
+            {showPassword ? '🙈' : '👁️'}
+          </button>
+        </div>
         <button type="submit" className={styles.button}>{t('login_btn')}</button>
       </form>
       {msg && <p className={styles.msg}>{msg}</p>}

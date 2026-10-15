@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import API_URL from '../../config/api';
+import DiplomacyMap from './DiplomacyMap';
 import styles from './LandingSections.module.css';
 
 function ArrowIcon({ direction = 'right' }) {
@@ -25,6 +26,8 @@ function LandingSections() {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(0);
   const [featured, setFeatured] = useState(null);
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   useEffect(() => {
     fetch(`${API_URL}/public/featured-athlete`)
@@ -32,6 +35,21 @@ function LandingSections() {
       .then(data => setFeatured(data))
       .catch(() => setFeatured(null));
   }, []);
+
+  useEffect(() => {
+    fetch(`${API_URL}/public/testimonials`)
+      .then(r => (r.ok ? r.json() : []))
+      .then(data => setTestimonials(Array.isArray(data) ? data : []))
+      .catch(() => setTestimonials([]));
+  }, []);
+
+  useEffect(() => {
+    if (testimonials.length < 2) return undefined;
+    const id = setInterval(() => {
+      setTestimonialIndex(i => (i + 1) % testimonials.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, [testimonials.length]);
 
   const featuredAge = featured?.birthDate
     ? Math.floor((Date.now() - new Date(featured.birthDate).getTime()) / (365.25 * 24 * 3600 * 1000))
@@ -158,7 +176,7 @@ function LandingSections() {
       </section>
 
       {/* ===== BENEFICIOS / RESUMEN DE LOS 3 PILARES ===== */}
-      <section className={styles.benefits} aria-labelledby="benefits-title">
+      <section className={`${styles.benefits} ${styles.texture}`} aria-labelledby="benefits-title">
         <div className={styles.benefitsIntro}>
           <SectionLabel>{t('landing_benefits_eyebrow')}</SectionLabel>
           <h2 id="benefits-title" className={styles.sectionTitle}>{t('landing_benefits_title')}</h2>
@@ -203,24 +221,12 @@ function LandingSections() {
             </div>
           </div>
 
-          <div className={styles.mapMock}>
-            <div className={styles.mapGrid} />
-            <svg className={styles.mapBridge} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <line x1="20" y1="32" x2="72" y2="55" />
-            </svg>
-            <span className={`${styles.mapPin} ${styles.pin1}`} />
-            <span className={`${styles.mapPin} ${styles.pin3}`} />
-            <span className={`${styles.mapDot} ${styles.dot1}`} />
-            <span className={`${styles.mapDot} ${styles.dot2}`} />
-            <div className={styles.mapHubLabel1}>Hamburgo</div>
-            <div className={styles.mapHubLabel2}>LATAM</div>
-            <div className={styles.mapCornerLabel}>Red BKME activa</div>
-          </div>
+          <DiplomacyMap />
         </div>
       </section>
 
       {/* ===== MÓDULO 2 · FORMACIÓN 360 ===== */}
-      <section id="formation" className={styles.mental} aria-labelledby="formation-title">
+      <section id="formation" className={`${styles.mental} ${styles.texture}`} aria-labelledby="formation-title">
         <div className={styles.mentalGrid}>
           <div>
             <SectionLabel>{t('landing_module2_eyebrow')}</SectionLabel>
@@ -281,7 +287,7 @@ function LandingSections() {
       </section>
 
       {/* ===== MÓDULO 3 · BIENESTAR DEL ATLETA ===== */}
-      <section id="wellbeing" className={styles.city} aria-labelledby="wellbeing-title">
+      <section id="wellbeing" className={styles.wellbeing} aria-labelledby="wellbeing-title">
         <div className={styles.mentalGrid}>
           <div>
             <SectionLabel>{t('landing_mental_eyebrow')}</SectionLabel>
@@ -334,25 +340,42 @@ function LandingSections() {
         </div>
       </section>
 
-      {/* ===== TESTIMONIOS ===== */}
-      <section className={styles.testimonial} aria-labelledby="testimonial-title">
+      {/* ===== TESTIMONIOS (CARRUSEL) ===== */}
+      <section className={`${styles.testimonial} ${styles.texture}`} aria-labelledby="testimonial-title">
         <SectionLabel>{t('landing_testimonial_eyebrow')}</SectionLabel>
-        <div className={styles.testimonialGrid}>
-          <div>
-            <h2 id="testimonial-title" className={styles.testimonialQuote}>&ldquo;{t('landing_testimonial_quote')}&rdquo;</h2>
+        {testimonials.length > 0 && (
+          <div className={styles.testimonialCarousel}>
+            <h2 id="testimonial-title" className={styles.testimonialQuote}>
+              &ldquo;{testimonials[testimonialIndex].shortDescription}&rdquo;
+            </h2>
             <div className={styles.testimonialAuthor}>
-              <div className={styles.testimonialAvatar} />
+              {testimonials[testimonialIndex].photo ? (
+                <img src={testimonials[testimonialIndex].photo} alt="" className={styles.testimonialAvatarImg} />
+              ) : (
+                <div className={styles.testimonialAvatar} />
+              )}
               <div>
-                <p className={styles.testimonialName}>{t('landing_testimonial_name')}</p>
-                <p className={styles.testimonialRole}>{t('landing_testimonial_role')}</p>
+                <p className={styles.testimonialName}>
+                  {testimonials[testimonialIndex].name} {testimonials[testimonialIndex].lastName || ''}
+                </p>
+                <p className={styles.testimonialRole}>
+                  {[testimonials[testimonialIndex].sport, testimonials[testimonialIndex].city].filter(Boolean).join(' · ')}
+                </p>
               </div>
             </div>
+            <div className={styles.testimonialDots}>
+              {testimonials.map((item, i) => (
+                <button
+                  key={item._id || i}
+                  type="button"
+                  className={`${styles.testimonialDot} ${i === testimonialIndex ? styles.testimonialDotActive : ''}`}
+                  onClick={() => setTestimonialIndex(i)}
+                  aria-label={`Testimonio ${i + 1}`}
+                />
+              ))}
+            </div>
           </div>
-          <blockquote className={styles.testimonialSecondary}>
-            <p>&ldquo;{t('landing_testimonial_secondary_quote')}&rdquo;</p>
-            <footer>{t('landing_testimonial_secondary_name')} · {t('landing_testimonial_secondary_role')}</footer>
-          </blockquote>
-        </div>
+        )}
       </section>
 
       {/* ===== FAQ ===== */}
@@ -382,7 +405,7 @@ function LandingSections() {
       </section>
 
       {/* ===== CTA FINAL ===== */}
-      <section className={styles.finalCta} aria-labelledby="final-title">
+      <section className={`${styles.finalCta} ${styles.texture}`} aria-labelledby="final-title">
         <div className={styles.finalInner}>
           <SectionLabel>{t('landing_final_eyebrow')}</SectionLabel>
           <h2 id="final-title" className={styles.finalTitle}>{t('landing_final_title')}</h2>
