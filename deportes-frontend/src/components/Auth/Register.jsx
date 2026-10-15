@@ -302,6 +302,13 @@ function Register() {
   if (step === 0) {
     return (
       <div className={styles.selectionPage}>
+        <button
+          type="button"
+          className={styles.selectionBackBtn}
+          onClick={() => navigate('/')}
+        >
+          ‹ Volver al inicio
+        </button>
         <div className={styles.selectionHeader}>
           <h1>
             NUESTROS DIFERENTES<br />
