@@ -191,7 +191,7 @@ function LeftProfileColumn({ profile, isAdmin = false }) {
           <div className={styles.relationItem}>
             <div className={styles.relationHeader}>
               <img src="/assets/scout-logo.png" alt="scout icon" className={styles.relationIcon} />
-              <h4>Scout</h4>
+              <h4>Profesional</h4>
             </div>
             <div className={styles.relationInfo}>
               {profile.scout?._id ? (
