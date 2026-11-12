@@ -2,7 +2,18 @@ const mongoose = require("mongoose");
 
 const DonationSchema = new mongoose.Schema({
   athlete: { type: mongoose.Schema.Types.ObjectId, ref: "Deportista", required: true },
-  category: { type: String, enum: ["nutrition", "equipment", "methodology"], required: true },
+  category: {
+    type: String,
+    enum: [
+      "nutrition",
+      "equipment",
+      "methodology",
+      "sponsor_open",
+      "sponsor_social_media",
+      "sponsor_jersey",
+    ],
+    required: true,
+  },
   amount: { type: Number, required: true },
   currency: { type: String, default: "eur" },
   donorName: { type: String, default: "" },

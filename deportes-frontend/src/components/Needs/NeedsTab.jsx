@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./NeedsTab.module.css";
 import { useLanguage } from "../../context/LanguageContext";
 import { apiFetch } from "../../config/fetchWithAuth";
+import SponsorTiers from "./SponsorTiers.jsx";
 
 const CATEGORIES = ["nutrition", "equipment", "methodology"];
 
@@ -44,6 +45,8 @@ function NeedsTab({ profile, isMyProfile }) {
           />
         ))}
       </ul>
+
+      <SponsorTiers profile={profile} isMyProfile={isMyProfile} />
 
       {donatingCategory && (
         <DonateModal

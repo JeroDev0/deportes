@@ -14,6 +14,12 @@ const CATEGORY_LABELS = {
   methodology: "Metodologías",
 };
 
+// Niveles de patrocinio fijos para toda la plataforma (no editables por el deportista)
+const SPONSOR_TIERS = {
+  social_media: { field: "socialMedia", amount: 50, totalSlots: 8, label: "Placement en Redes Sociales" },
+  jersey: { field: "jersey", amount: 200, totalSlots: 3, label: "Placement en Camiseta" },
+};
+
 // ==================== ACTUALIZAR METAS DE NECESIDADES (solo el propio deportista) ====================
 router.put("/needs/:id", auth, async (req, res) => {
   try {
@@ -51,24 +57,57 @@ router.put("/needs/:id", auth, async (req, res) => {
 // ==================== CREAR SESIÓN DE PAGO (Stripe Checkout) ====================
 router.post("/checkout-session", async (req, res) => {
   try {
-    const { athleteId, category, amount, donorName, donorEmail } = req.body;
+    const { athleteId, donationType, category, tier, amount, donorName, donorEmail } = req.body;
+    const type = donationType === "sponsor" ? "sponsor" : "need";
 
-    if (!athleteId || !category || !amount) {
-      return res.status(400).json({ error: "athleteId, category y amount son requeridos" });
-    }
-    if (!VALID_CATEGORIES.includes(category)) {
-      return res.status(400).json({ error: "Categoría no válida" });
-    }
-    const numericAmount = Number(amount);
-    if (!numericAmount || numericAmount < 1) {
-      return res.status(400).json({ error: "El monto debe ser al menos 1" });
+    if (!athleteId) {
+      return res.status(400).json({ error: "athleteId es requerido" });
     }
 
-    const athlete = await Deportista.findById(athleteId).select("name lastName");
+    const athlete = await Deportista.findById(athleteId).select("name lastName sponsorSlots");
     if (!athlete) return res.status(404).json({ error: "Deportista no encontrado" });
 
-    const frontendUrl = process.env.FRONTEND_URL || "https://deportes-directory.netlify.app";
     const athleteName = `${athlete.name} ${athlete.lastName || ""}`.trim();
+    let productName, productDescription, unitAmountCents, metadataExtra;
+
+    if (type === "need") {
+      if (!category || !VALID_CATEGORIES.includes(category)) {
+        return res.status(400).json({ error: "Categoría no válida" });
+      }
+      const numericAmount = Number(amount);
+      if (!numericAmount || numericAmount < 1) {
+        return res.status(400).json({ error: "El monto debe ser al menos 1" });
+      }
+      productName = `Donación · ${CATEGORY_LABELS[category]} · ${athleteName}`;
+      productDescription = "BKME Sports compra lo necesario y se lo entrega directamente al deportista.";
+      unitAmountCents = Math.round(numericAmount * 100);
+      metadataExtra = { category };
+    } else {
+      if (!tier || !["open", "social_media", "jersey"].includes(tier)) {
+        return res.status(400).json({ error: "Nivel de patrocinio no válido" });
+      }
+
+      if (tier === "open") {
+        const numericAmount = Number(amount);
+        if (!numericAmount || numericAmount < 1) {
+          return res.status(400).json({ error: "El monto debe ser al menos 1" });
+        }
+        productName = `Sponsor sin retorno · ${athleteName}`;
+        unitAmountCents = Math.round(numericAmount * 100);
+      } else {
+        const tierConfig = SPONSOR_TIERS[tier];
+        const taken = athlete.sponsorSlots?.[tierConfig.field]?.taken || 0;
+        if (taken >= tierConfig.totalSlots) {
+          return res.status(400).json({ error: "Este nivel de patrocinio ya no tiene cupos disponibles" });
+        }
+        productName = `${tierConfig.label} · ${athleteName}`;
+        unitAmountCents = tierConfig.amount * 100;
+      }
+      productDescription = "Patrocinio directo al deportista a través de BKME Sports.";
+      metadataExtra = { tier };
+    }
+
+    const frontendUrl = process.env.FRONTEND_URL || "https://deportes-directory.netlify.app";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -78,19 +117,17 @@ router.post("/checkout-session", async (req, res) => {
         {
           price_data: {
             currency: "eur",
-            product_data: {
-              name: `Donación · ${CATEGORY_LABELS[category]} · ${athleteName}`,
-              description: "BKME Sports compra lo necesario y se lo entrega directamente al deportista.",
-            },
-            unit_amount: Math.round(numericAmount * 100),
+            product_data: { name: productName, description: productDescription },
+            unit_amount: unitAmountCents,
           },
           quantity: 1,
         },
       ],
       metadata: {
         athleteId: String(athleteId),
-        category,
+        donationType: type,
         donorName: donorName || "",
+        ...metadataExtra,
       },
       success_url: `${frontendUrl}/profile/${athleteId}?donation=success`,
       cancel_url: `${frontendUrl}/profile/${athleteId}?donation=cancelled`,
@@ -119,11 +156,38 @@ router.post("/webhook", async (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    const { athleteId, category, donorName } = session.metadata || {};
+    const { athleteId, donationType, category, tier, donorName } = session.metadata || {};
     const amount = (session.amount_total || 0) / 100;
+    const donorEmail = session.customer_details?.email || "";
 
     try {
-      if (athleteId && category && VALID_CATEGORIES.includes(category)) {
+      if (!athleteId) return res.json({ received: true });
+
+      if (donationType === "sponsor") {
+        let donationCategory = "sponsor_open";
+
+        if (tier === "social_media" || tier === "jersey") {
+          const tierConfig = SPONSOR_TIERS[tier];
+          donationCategory = tier === "social_media" ? "sponsor_social_media" : "sponsor_jersey";
+          await Deportista.findOneAndUpdate(
+            { _id: athleteId, [`sponsorSlots.${tierConfig.field}.taken`]: { $lt: tierConfig.totalSlots } },
+            { $inc: { [`sponsorSlots.${tierConfig.field}.taken`]: 1 } }
+          );
+        }
+
+        await Donation.create({
+          athlete: athleteId,
+          category: donationCategory,
+          amount,
+          currency: session.currency || "eur",
+          donorName: donorName || "",
+          donorEmail,
+          stripeSessionId: session.id,
+          status: "completed",
+        });
+
+        console.log(`✅ Patrocinio registrado: ${amount}€ (${tier || "open"}) para deportista ${athleteId}`);
+      } else if (category && VALID_CATEGORIES.includes(category)) {
         await Deportista.findByIdAndUpdate(athleteId, {
           $inc: { [`needs.${category}.raisedAmount`]: amount },
         });
@@ -134,7 +198,7 @@ router.post("/webhook", async (req, res) => {
           amount,
           currency: session.currency || "eur",
           donorName: donorName || "",
-          donorEmail: session.customer_details?.email || "",
+          donorEmail,
           stripeSessionId: session.id,
           status: "completed",
         });

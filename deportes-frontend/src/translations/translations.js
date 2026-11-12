@@ -178,6 +178,25 @@ export const translations = {
     needs_donation_success: "¡Gracias por tu donación! El equipo de BKME se encargará de hacerla llegar.",
     needs_donation_cancelled: "El pago fue cancelado.",
 
+    // Sponsor – SponsorTiers
+    sponsor_section_title: "Sponsor",
+    sponsor_without_return_title: "Sponsor sin retorno",
+    sponsor_without_return_desc: "Apoya al deportista solo porque te gusta lo que hace.",
+    sponsor_amount_label: "Monto (€)",
+    sponsor_donate_prefix: "Sponsor",
+    sponsor_exclusive_title: "Obtén acceso exclusivo",
+    sponsor_exclusive_desc: "Contacta al deportista para ofrecer un apoyo individual o una propuesta de patrocinio.",
+    sponsor_contact_button: "Contactar al deportista",
+    sponsor_contact_subject: "Interés en patrocinar a un deportista BKME",
+    sponsor_contact_body: "Hola, quiero ofrecer apoyo o patrocinio al deportista:",
+    sponsor_social_title: "Placement en Redes Sociales",
+    sponsor_social_desc: "El patrocinador será mencionado en el perfil de redes sociales del deportista.",
+    sponsor_jersey_title: "Placement en Camiseta",
+    sponsor_jersey_desc: "El patrocinador aparecerá como parche en el pecho de la camiseta durante al menos 12 meses.",
+    sponsor_slots_available: "cupos disponibles",
+    sponsor_sold_out: "Agotado",
+    sponsor_error: "No se pudo iniciar el patrocinio. Intenta de nuevo.",
+
     // Bienestar – SaludMentalTab
     bien_subtitle: "Herramientas de bienestar y rendimiento mental — solo visible para ti",
     bien_tab_dashboard: "Bienestar", bien_tab_checkin: "Check-in",
@@ -608,6 +627,25 @@ export const translations = {
     needs_donation_success: "Thank you for your donation! The BKME team will take care of delivering it.",
     needs_donation_cancelled: "The payment was cancelled.",
 
+    // Sponsor – SponsorTiers
+    sponsor_section_title: "Sponsor",
+    sponsor_without_return_title: "Sponsor without Return",
+    sponsor_without_return_desc: "Support the athlete just because you like what they do.",
+    sponsor_amount_label: "Amount (€)",
+    sponsor_donate_prefix: "Sponsor",
+    sponsor_exclusive_title: "Get exclusive access",
+    sponsor_exclusive_desc: "Contact the athlete to offer individual support or a sponsorship proposal.",
+    sponsor_contact_button: "Contact Athlete",
+    sponsor_contact_subject: "Interest in sponsoring a BKME athlete",
+    sponsor_contact_body: "Hello, I'd like to offer support or sponsorship to the athlete:",
+    sponsor_social_title: "Social Media Placement",
+    sponsor_social_desc: "The sponsor will be mentioned on the athlete's social media profile.",
+    sponsor_jersey_title: "Jersey Placement",
+    sponsor_jersey_desc: "The sponsor will appear as a patch on the jersey chest for at least 12 months.",
+    sponsor_slots_available: "slots available",
+    sponsor_sold_out: "Sold out",
+    sponsor_error: "Could not start the sponsorship. Please try again.",
+
     // Wellbeing – SaludMentalTab
     bien_subtitle: "Wellbeing and mental performance tools — visible only to you",
     bien_tab_dashboard: "Wellbeing", bien_tab_checkin: "Check-in",
@@ -1034,6 +1072,25 @@ export const translations = {
     needs_edit_error: "Aktualisierung fehlgeschlagen. Bitte erneut versuchen.",
     needs_donation_success: "Danke für deine Spende! Das BKME-Team sorgt für die Lieferung.",
     needs_donation_cancelled: "Die Zahlung wurde abgebrochen.",
+
+    // Sponsor – SponsorTiers
+    sponsor_section_title: "Sponsor",
+    sponsor_without_return_title: "Sponsoring ohne Gegenleistung",
+    sponsor_without_return_desc: "Unterstütze den Athleten einfach, weil dir gefällt, was er/sie tut.",
+    sponsor_amount_label: "Betrag (€)",
+    sponsor_donate_prefix: "Sponsern",
+    sponsor_exclusive_title: "Exklusiven Zugang erhalten",
+    sponsor_exclusive_desc: "Kontaktiere den Athleten, um individuelle Unterstützung oder ein Sponsoring-Angebot anzubieten.",
+    sponsor_contact_button: "Athlet kontaktieren",
+    sponsor_contact_subject: "Interesse am Sponsoring eines BKME-Athleten",
+    sponsor_contact_body: "Hallo, ich möchte dem Athleten Unterstützung oder Sponsoring anbieten:",
+    sponsor_social_title: "Social-Media-Platzierung",
+    sponsor_social_desc: "Der Sponsor wird im Social-Media-Profil des Athleten erwähnt.",
+    sponsor_jersey_title: "Trikot-Platzierung",
+    sponsor_jersey_desc: "Der Sponsor erscheint für mindestens 12 Monate als Patch auf der Trikotbrust.",
+    sponsor_slots_available: "verfügbare Plätze",
+    sponsor_sold_out: "Ausverkauft",
+    sponsor_error: "Das Sponsoring konnte nicht gestartet werden. Bitte erneut versuchen.",
 
     // Wohlbefinden – SaludMentalTab
     bien_subtitle: "Wohlbefindens- und mentale Leistungstools — nur für dich sichtbar",

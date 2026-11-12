@@ -1,3 +1,6 @@
 # Landing de referencia (no forma parte del repo)
 /landing/
 bkme-sports-landing-page-development.zip
+
+# Configuración local del editor
+.vscode/

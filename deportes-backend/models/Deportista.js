@@ -81,6 +81,12 @@ const DeportistaSchema = new mongoose.Schema({
     },
   },
 
+  // 🤝 Cupos de patrocinio (niveles fijos de plataforma, vía Stripe)
+  sponsorSlots: {
+    socialMedia: { taken: { type: Number, default: 0 } },
+    jersey: { taken: { type: Number, default: 0 } },
+  },
+
   // 🔗 Relaciones con BD (IDs)
   scout: { type: mongoose.Schema.Types.ObjectId, ref: "Scout", default: null },
   sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Sponsor", default: null },
