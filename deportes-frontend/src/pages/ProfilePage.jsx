@@ -8,6 +8,7 @@ import CenterProfileColumn from "../components/Profile/CenterProfileColumn.jsx";
 import RightProfileColumn from "../components/Profile/RightProfileColumn.jsx";
 import ProfileFeed from "../components/Profile/Feed/ProfileFeed.jsx";
 import SaludMentalTab from "../components/SaludMental/SaludMentalTab.jsx";
+import NeedsTab from "../components/Needs/NeedsTab.jsx";
 import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
@@ -74,6 +75,13 @@ function ProfilePage() {
               {t("tab_professional")}
             </button>
             <button
+              className={`${styles.toggleBtn} ${viewMode === "needs" ? styles.active : ""}`}
+              onClick={() => setViewMode("needs")}
+              type="button"
+            >
+              {t("tab_needs")}
+            </button>
+            <button
               className={`${styles.toggleBtn} ${viewMode === "social" ? styles.active : ""}`}
               onClick={() => setViewMode("social")}
               type="button"
@@ -97,6 +105,9 @@ function ProfilePage() {
               isMyProfile={isMyProfile}
               onNavigateToFeed={() => setViewMode("social")}
             />
+          )}
+          {viewMode === "needs" && (
+            <NeedsTab profile={profile} isMyProfile={isMyProfile} />
           )}
           {viewMode === "social" && (
             <ProfileFeed profileId={profile._id} isMyProfile={isMyProfile} />

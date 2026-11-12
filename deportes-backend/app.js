@@ -18,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/donations/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 const authRoutes = require("./routes/auth");
@@ -57,6 +58,9 @@ app.use("/recursos", recursosRoutes);
 
 const sesionesRoutes = require("./routes/sesiones");
 app.use("/sesiones", sesionesRoutes);
+
+const donationsRoutes = require("./routes/donations");
+app.use("/donations", donationsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

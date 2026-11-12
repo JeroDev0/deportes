@@ -62,6 +62,25 @@ const DeportistaSchema = new mongoose.Schema({
 
   registrationDate: { type: Date, default: Date.now },
 
+  // 💚 Necesidades (donaciones vía Stripe — BKME compra lo requerido y se lo entrega al deportista)
+  needs: {
+    nutrition: {
+      description: { type: String, default: "" },
+      goalAmount: { type: Number, default: 0 },
+      raisedAmount: { type: Number, default: 0 },
+    },
+    equipment: {
+      description: { type: String, default: "" },
+      goalAmount: { type: Number, default: 0 },
+      raisedAmount: { type: Number, default: 0 },
+    },
+    methodology: {
+      description: { type: String, default: "" },
+      goalAmount: { type: Number, default: 0 },
+      raisedAmount: { type: Number, default: 0 },
+    },
+  },
+
   // 🔗 Relaciones con BD (IDs)
   scout: { type: mongoose.Schema.Types.ObjectId, ref: "Scout", default: null },
   sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Sponsor", default: null },

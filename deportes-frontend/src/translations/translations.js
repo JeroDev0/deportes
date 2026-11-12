@@ -149,8 +149,34 @@ export const translations = {
 
     // Pestañas de perfil
     tab_professional: "Perfil Profesional",
+    tab_needs: "Necesidades",
     tab_social: "Perfil Social",
     tab_wellbeing: "Bienestar",
+
+    // Necesidades – NeedsTab
+    needs_subtitle: "Apoya a este deportista aportando a sus necesidades reales",
+    needs_disclaimer: "BKME recibe el aporte y compra directamente lo que el deportista necesita para entregárselo. No se transfiere dinero en efectivo.",
+    needs_category_nutrition: "Nutrición",
+    needs_category_equipment: "Equipamiento",
+    needs_category_methodology: "Metodologías",
+    needs_no_description: "Este deportista aún no ha descrito esta necesidad.",
+    needs_raised_of_goal: "recaudado de la meta",
+    needs_donate_button: "Donar",
+    needs_donate_amount_label: "Monto a donar (€)",
+    needs_donate_name_label: "Tu nombre (opcional)",
+    needs_donate_email_label: "Tu correo (opcional)",
+    needs_donate_cancel: "Cancelar",
+    needs_donate_confirm: "Continuar al pago",
+    needs_donate_processing: "Procesando...",
+    needs_donate_error: "No se pudo iniciar el pago. Intenta de nuevo.",
+    needs_edit_button: "Editar necesidad",
+    needs_edit_goal_label: "Meta general (€)",
+    needs_edit_description_label: "Descripción",
+    needs_edit_save: "Guardar",
+    needs_edit_saved: "Necesidad actualizada correctamente.",
+    needs_edit_error: "No se pudo actualizar. Intenta de nuevo.",
+    needs_donation_success: "¡Gracias por tu donación! El equipo de BKME se encargará de hacerla llegar.",
+    needs_donation_cancelled: "El pago fue cancelado.",
 
     // Bienestar – SaludMentalTab
     bien_subtitle: "Herramientas de bienestar y rendimiento mental — solo visible para ti",
@@ -553,8 +579,34 @@ export const translations = {
 
     // Profile tabs
     tab_professional: "Professional Profile",
+    tab_needs: "Needs",
     tab_social: "Social Profile",
     tab_wellbeing: "Wellbeing",
+
+    // Needs – NeedsTab
+    needs_subtitle: "Support this athlete by contributing to their real needs",
+    needs_disclaimer: "BKME receives the contribution and directly purchases what the athlete needs to deliver it to them. No cash is transferred.",
+    needs_category_nutrition: "Nutrition",
+    needs_category_equipment: "Equipment",
+    needs_category_methodology: "Methodologies",
+    needs_no_description: "This athlete hasn't described this need yet.",
+    needs_raised_of_goal: "raised of goal",
+    needs_donate_button: "Donate",
+    needs_donate_amount_label: "Amount to donate (€)",
+    needs_donate_name_label: "Your name (optional)",
+    needs_donate_email_label: "Your email (optional)",
+    needs_donate_cancel: "Cancel",
+    needs_donate_confirm: "Continue to payment",
+    needs_donate_processing: "Processing...",
+    needs_donate_error: "Could not start the payment. Please try again.",
+    needs_edit_button: "Edit need",
+    needs_edit_goal_label: "Overall goal (€)",
+    needs_edit_description_label: "Description",
+    needs_edit_save: "Save",
+    needs_edit_saved: "Need updated successfully.",
+    needs_edit_error: "Could not update. Please try again.",
+    needs_donation_success: "Thank you for your donation! The BKME team will take care of delivering it.",
+    needs_donation_cancelled: "The payment was cancelled.",
 
     // Wellbeing – SaludMentalTab
     bien_subtitle: "Wellbeing and mental performance tools — visible only to you",
@@ -954,8 +1006,34 @@ export const translations = {
 
     // Profil-Tabs
     tab_professional: "Professionelles Profil",
+    tab_needs: "Bedürfnisse",
     tab_social: "Soziales Profil",
     tab_wellbeing: "Wohlbefinden",
+
+    // Bedürfnisse – NeedsTab
+    needs_subtitle: "Unterstütze diesen Athleten, indem du zu seinen echten Bedürfnissen beiträgst",
+    needs_disclaimer: "BKME erhält den Beitrag und kauft direkt das, was der Athlet benötigt, um es ihm zu liefern. Es wird kein Bargeld überwiesen.",
+    needs_category_nutrition: "Ernährung",
+    needs_category_equipment: "Ausrüstung",
+    needs_category_methodology: "Methodik",
+    needs_no_description: "Dieser Athlet hat dieses Bedürfnis noch nicht beschrieben.",
+    needs_raised_of_goal: "vom Ziel erreicht",
+    needs_donate_button: "Spenden",
+    needs_donate_amount_label: "Spendenbetrag (€)",
+    needs_donate_name_label: "Dein Name (optional)",
+    needs_donate_email_label: "Deine E-Mail (optional)",
+    needs_donate_cancel: "Abbrechen",
+    needs_donate_confirm: "Weiter zur Zahlung",
+    needs_donate_processing: "Verarbeitung...",
+    needs_donate_error: "Zahlung konnte nicht gestartet werden. Bitte erneut versuchen.",
+    needs_edit_button: "Bedürfnis bearbeiten",
+    needs_edit_goal_label: "Gesamtziel (€)",
+    needs_edit_description_label: "Beschreibung",
+    needs_edit_save: "Speichern",
+    needs_edit_saved: "Bedürfnis erfolgreich aktualisiert.",
+    needs_edit_error: "Aktualisierung fehlgeschlagen. Bitte erneut versuchen.",
+    needs_donation_success: "Danke für deine Spende! Das BKME-Team sorgt für die Lieferung.",
+    needs_donation_cancelled: "Die Zahlung wurde abgebrochen.",
 
     // Wohlbefinden – SaludMentalTab
     bien_subtitle: "Wohlbefindens- und mentale Leistungstools — nur für dich sichtbar",

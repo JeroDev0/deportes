@@ -1,0 +1,268 @@
+.wrapper {
+  width: 100%;
+  background: #0d3d1f;
+  color: #BCFFBC;
+  font-family: 'Inter', 'Arial', sans-serif;
+  box-sizing: border-box;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.moduleHeader {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.moduleTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.moduleIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: invert(89%) sepia(6%) saturate(1077%) hue-rotate(65deg) brightness(105%) contrast(101%);
+}
+
+.moduleTitle h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.moduleSubtitle {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  color: #BCFFBC;
+  opacity: 0.85;
+}
+
+.disclaimer {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #BCFFBC;
+  line-height: 1.4;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+/* ── Lista de necesidades ── */
+.needsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.item:last-child { border-bottom: none; }
+
+.itemRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.itemIcon {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: invert(89%) sepia(6%) saturate(1077%) hue-rotate(65deg) brightness(105%) contrast(101%);
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.itemDescription {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #BCFFBC;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.itemAmount {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progressFill {
+  height: 100%;
+  background: #4caf50;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.itemActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editLink {
+  background: transparent;
+  border: none;
+  color: #1aff75;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.donateBtn {
+  background: #1aff75;
+  color: #0d3d1f;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.donateBtn:hover { opacity: 0.85; }
+
+/* ── Modal ── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 16, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.modal {
+  background: #0d3d1f;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 20px;
+  width: 100%;
+  max-width: 380px;
+  box-sizing: border-box;
+  color: #BCFFBC;
+}
+
+.modalTitle {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.modalLabel {
+  display: block;
+  font-size: 0.7rem;
+  color: #BCFFBC;
+  opacity: 0.85;
+  margin: 10px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.modalInput,
+.modalTextarea {
+  width: 100%;
+  background: #0a2e17;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 9px 10px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.modalInput:focus,
+.modalTextarea:focus {
+  outline: none;
+  border-color: #1aff75;
+}
+
+.modalTextarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.modalError {
+  margin: 10px 0 0;
+  font-size: 0.72rem;
+  color: #ffb3b3;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.modalCancelBtn,
+.modalConfirmBtn {
+  flex: 1;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  border: none;
+}
+
+.modalCancelBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #BCFFBC;
+}
+
+.modalConfirmBtn {
+  background: #1aff75;
+  color: #0d3d1f;
+}
+.modalConfirmBtn:disabled,
+.modalCancelBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .itemAmount { font-size: 0.78rem; }
+  .donateBtn { padding: 7px 14px; }
+}
