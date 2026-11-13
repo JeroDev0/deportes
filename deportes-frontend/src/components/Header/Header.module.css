@@ -113,6 +113,13 @@
 }
 
 /* =====================================
+   SELECTOR DE IDIOMA MÓVIL
+===================================== */
+.langToggleMobile {
+  display: none;
+}
+
+/* =====================================
    MENÚ MÓVIL PROFESIONAL (MEJORADO)
 ===================================== */
 .navMobile {
@@ -231,6 +238,7 @@
   }
 
   .container {
+    position: relative;
     max-width: 100%;
     height: 56px;
     padding: 0 1rem;
@@ -239,6 +247,25 @@
 
   .navDesktop {
     display: none;
+  }
+
+  .langToggleMobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #eaf6ff;
+    border: 1px solid #4a7a9b;
+    border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    cursor: pointer;
   }
 
   .navMobile {
@@ -299,6 +326,12 @@
 
   .container {
     padding: 0 0.5rem;
+  }
+
+  .langToggleMobile {
+    right: 0.5rem;
+    padding: 3px 7px;
+    font-size: 0.65rem;
   }
 
   .logo {

@@ -176,11 +176,20 @@
     gap: 6px;
     padding: 6px;
     margin-bottom: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .viewToggle::-webkit-scrollbar {
+    display: none;
   }
 
   .toggleBtn {
-    padding: 8px 10px;
-    font-size: 0.85rem;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 0.78rem;
     font-weight: 600;
   }
   
@@ -197,7 +206,7 @@
   }
   
   .toggleBtn {
-    padding: 7px 8px;
-    font-size: 0.8rem;
+    padding: 7px 11px;
+    font-size: 0.72rem;
   }
 }

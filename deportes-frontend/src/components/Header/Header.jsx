@@ -80,6 +80,8 @@ const IconRegister = () => (
   </svg>
 );
 
+const LANGS = ["es", "en", "de"];
+
 function Header() {
   const { user, logout, getProfileRoute } = useAuth();
   const { lang, setLang, t } = useLanguage();
@@ -89,6 +91,11 @@ function Header() {
   const handleLogout = () => {
     logout();
     navigate("/");
+  };
+
+  const cycleLang = () => {
+    const nextIndex = (LANGS.indexOf(lang) + 1) % LANGS.length;
+    setLang(LANGS[nextIndex]);
   };
 
   // Función para determinar si una ruta está activa
@@ -172,6 +179,17 @@ function Header() {
             ))}
           </div>
         </nav>
+
+        {/* Selector de idioma móvil (cicla ES → EN → DE) */}
+        <button
+          type="button"
+          onClick={cycleLang}
+          className={styles.langToggleMobile}
+          aria-label={t("nav_change_language")}
+          title={t("nav_change_language")}
+        >
+          {lang.toUpperCase()}
+        </button>
       </div>
 
       {/* Menú móvil fijo abajo (iconos + texto) */}

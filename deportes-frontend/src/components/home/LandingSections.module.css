@@ -3,6 +3,7 @@
 .proof,
 .profileSection,
 .mental,
+.wellbeing,
 .city,
 .benefits,
 .testimonial,
@@ -17,6 +18,7 @@
 .proof *,
 .profileSection *,
 .mental *,
+.wellbeing *,
 .city *,
 .benefits *,
 .testimonial *,
@@ -946,6 +948,12 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
+  .profileGrid,
+  .mentalGrid,
+  .cityGrid {
+    grid-template-columns: 1fr;
+  }
+
   .mockStatsGrid,
   .mentalStatsGrid {
     grid-template-columns: repeat(3, 1fr);

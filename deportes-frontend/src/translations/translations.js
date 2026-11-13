@@ -3,6 +3,7 @@ export const translations = {
     // Navegación
     nav_home: "Inicio", nav_search: "Buscar", nav_profile: "Perfil",
     nav_logout: "Salir", nav_login: "Iniciar sesión", nav_register: "Registro",
+    nav_change_language: "Cambiar idioma",
 
     // Home banner
     home_title1: "Impulsa el Talento Local,",
@@ -484,6 +485,7 @@ export const translations = {
   en: {
     nav_home: "Home", nav_search: "Search", nav_profile: "Profile",
     nav_logout: "Logout", nav_login: "Login", nav_register: "Register",
+    nav_change_language: "Change language",
 
     home_title1: "Empower Local Talent,",
     home_title2: "Fuel the Future of Sport",
@@ -930,6 +932,7 @@ export const translations = {
   de: {
     nav_home: "Startseite", nav_search: "Suchen", nav_profile: "Profil",
     nav_logout: "Abmelden", nav_login: "Anmelden", nav_register: "Registrieren",
+    nav_change_language: "Sprache ändern",
 
     home_title1: "Lokale Talente fördern,",
     home_title2: "Die Zukunft des Sports gestalten",
