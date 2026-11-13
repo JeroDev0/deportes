@@ -93,11 +93,6 @@ function Header() {
     navigate("/");
   };
 
-  const cycleLang = () => {
-    const nextIndex = (LANGS.indexOf(lang) + 1) % LANGS.length;
-    setLang(LANGS[nextIndex]);
-  };
-
   // Función para determinar si una ruta está activa
   const isActive = (path) => {
     if (path === "/") {
@@ -180,16 +175,20 @@ function Header() {
           </div>
         </nav>
 
-        {/* Selector de idioma móvil (cicla ES → EN → DE) */}
-        <button
-          type="button"
-          onClick={cycleLang}
+        {/* Selector de idioma móvil */}
+        <select
+          value={lang}
+          onChange={(e) => setLang(e.target.value)}
           className={styles.langToggleMobile}
           aria-label={t("nav_change_language")}
           title={t("nav_change_language")}
         >
-          {lang.toUpperCase()}
-        </button>
+          {LANGS.map((l) => (
+            <option key={l} value={l}>
+              {l.toUpperCase()}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Menú móvil fijo abajo (iconos + texto) */}

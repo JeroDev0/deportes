@@ -257,15 +257,20 @@
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    background: transparent;
+    background: #0d2635;
     color: #eaf6ff;
     border: 1px solid #4a7a9b;
     border-radius: 4px;
-    padding: 4px 9px;
+    padding: 4px 20px 4px 9px;
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 0.05em;
     cursor: pointer;
+  }
+
+  .langToggleMobile option {
+    background: #0d2635;
+    color: #eaf6ff;
   }
 
   .navMobile {
