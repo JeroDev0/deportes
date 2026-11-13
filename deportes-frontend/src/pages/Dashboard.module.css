@@ -4,10 +4,19 @@
 
 .dashboardPage {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: #07111c;
   color: #fff;
   font-family: 'Arial', sans-serif;
   padding-bottom: 4rem;
+  overflow-x: hidden;
+}
+
+.dashboardPage * {
+  box-sizing: border-box;
 }
 
 /* ── Profile Type Tabs ── */
